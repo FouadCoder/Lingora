@@ -1,3 +1,7 @@
 {
-    "hello": "Hello World"
+    "home": "Home",
+    "translate": "Translate",
+    "library": "Library",
+    "practice": "Practice",
+    "profile": "Profile"
 }
