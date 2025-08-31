@@ -52,27 +52,27 @@ class _NavState extends State<Nav> {
             SalomonBottomBarItem(
               icon: const Icon(Icons.home_rounded),
               title: Text("home".tr()),
-              selectedColor: Theme.of(context).colorScheme.primary,
+              selectedColor: Theme.of(context).colorScheme.secondary,
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.translate_rounded),
               title: Text("translate".tr()),
-              selectedColor: Colors.orange,
+              selectedColor: Theme.of(context).colorScheme.secondary,
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.book_rounded),
               title: Text("library".tr()),
-              selectedColor: Colors.purple,
+              selectedColor: Theme.of(context).colorScheme.secondary,
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.flag_rounded),
               title: Text("practice".tr()),
-              selectedColor: Colors.teal,
+              selectedColor: Theme.of(context).colorScheme.secondary,
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.person_rounded),
               title: Text("profile".tr()),
-              selectedColor: Colors.redAccent,
+              selectedColor: Theme.of(context).colorScheme.secondary,
             ),
           ],
         ),
