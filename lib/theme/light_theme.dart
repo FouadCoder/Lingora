@@ -3,9 +3,9 @@ import 'package:lingora/core/app_colors.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-  scaffoldBackgroundColor: AppColors.bg,
+  scaffoldBackgroundColor: AppColors.lightBgDark,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.bgLight,
+    backgroundColor: AppColors.lightBgDark,
     foregroundColor: AppColors.text,
     elevation: 0,
     surfaceTintColor: Colors.transparent,
@@ -13,10 +13,10 @@ ThemeData lightTheme = ThemeData(
   colorScheme: const ColorScheme.light(
     primary: AppColors.text,
     secondary: AppColors.brandOrange,
-    surface: AppColors.bgLight,
-    onPrimary: Colors.white,
+    surface: AppColors.lightBg,
+    onPrimary: AppColors.lightBgLight,
     onSecondary: AppColors.text,
-    onSurface: AppColors.text,
+    onSurface: AppColors.bg,
     outline: AppColors.textMuted,
     shadow: Colors.black12,
   ),
@@ -43,7 +43,7 @@ ThemeData lightTheme = ThemeData(
 
   // Cards
   cardTheme: const CardTheme(
-    color: AppColors.bgLight,
+    color: AppColors.lightBgDark,
     elevation: 1,
     margin: EdgeInsets.all(8),
     shape: RoundedRectangleBorder(
@@ -71,9 +71,9 @@ ThemeData lightTheme = ThemeData(
 
   // Text
   textTheme: const TextTheme(
-    bodySmall: TextStyle(fontSize: 14, color: AppColors.textMuted),
-    bodyMedium: TextStyle(fontSize: 16, color: AppColors.text),
+    bodySmall: TextStyle(fontSize: 14, color: AppColors.lightTextMuted),
+    bodyMedium: TextStyle(fontSize: 16, color: AppColors.lightText),
     titleMedium: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.text),
+        fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.lightText),
   ),
 );

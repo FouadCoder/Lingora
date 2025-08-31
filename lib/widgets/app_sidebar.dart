@@ -1,0 +1,108 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:sidebarx/sidebarx.dart';
+
+class AppSidebar extends StatelessWidget {
+  final SidebarXController controller;
+
+  const AppSidebar({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final divider =
+        Divider(color: Theme.of(context).colorScheme.surface, height: 1);
+
+    return SidebarX(
+      controller: controller,
+      theme: SidebarXTheme(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow,
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        hoverColor: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+        selectedItemTextPadding: const EdgeInsets.only(left: 50),
+        itemTextPadding:
+            const EdgeInsets.only(left: 50), // Increased spacing even more
+        itemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.transparent,
+            width: 1,
+          ),
+        ),
+        selectedItemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        textStyle: Theme.of(context).textTheme.bodyMedium,
+        selectedTextStyle: TextStyle(
+          color: Theme.of(context).colorScheme.secondary,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.onSurface,
+          size: 20,
+        ),
+        selectedIconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.secondary,
+          size: 20,
+        ),
+      ),
+      extendedTheme: SidebarXTheme(
+        width: 250, // Increased width for better spacing
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow,
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+      ),
+      footerDivider: divider,
+      footerItems: [
+        SidebarXItem(
+          icon: Icons.settings_rounded,
+          label: "settings".tr(),
+        ),
+      ],
+      items: [
+        SidebarXItem(
+          icon: Icons.home_rounded,
+          label: "home".tr(),
+        ),
+        SidebarXItem(
+          icon: Icons.translate_rounded,
+          label: "translate".tr(),
+        ),
+        SidebarXItem(
+          icon: Icons.book_rounded,
+          label: "library".tr(),
+        ),
+        SidebarXItem(
+          icon: Icons.flag_rounded,
+          label: "practice".tr(),
+        ),
+        SidebarXItem(
+          icon: Icons.person_rounded,
+          label: "profile".tr(),
+        ),
+      ],
+    );
+  }
+}

@@ -14,8 +14,8 @@ ThemeData darkTheme = ThemeData(
   colorScheme: const ColorScheme.dark(
     primary: AppColors.text,
     secondary: AppColors.brandOrange, // tweak if needed
-    surface: AppColors.bgLight,
-    onPrimary: AppColors.bg,
+    surface: AppColors.bg,
+    onPrimary: AppColors.bgLight,
     onSecondary: AppColors.text,
     onSurface: AppColors.text,
     outline: AppColors.textMuted,
