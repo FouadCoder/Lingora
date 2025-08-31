@@ -11,10 +11,10 @@ ThemeData lightTheme = ThemeData(
     surfaceTintColor: Colors.transparent,
   ),
   colorScheme: const ColorScheme.light(
-    primary: AppColors.text,
+    primary: AppColors.lightText,
+    onPrimary: AppColors.lightBgLight,
     secondary: AppColors.brandOrange,
     surface: AppColors.lightBg,
-    onPrimary: AppColors.lightBgLight,
     onSecondary: AppColors.text,
     onSurface: AppColors.bg,
     outline: AppColors.textMuted,

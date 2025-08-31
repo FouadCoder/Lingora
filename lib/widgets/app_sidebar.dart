@@ -30,7 +30,12 @@ class AppSidebar extends StatelessWidget {
             ),
           ],
         ),
-        hoverColor: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+        hoverColor: Theme.of(context).colorScheme.primary,
+        hoverTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onPrimary),
+        hoverIconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
         selectedItemTextPadding: const EdgeInsets.only(left: 50),
         itemTextPadding:
             const EdgeInsets.only(left: 50), // Increased spacing even more
@@ -43,20 +48,18 @@ class AppSidebar extends StatelessWidget {
         ),
         selectedItemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         textStyle: Theme.of(context).textTheme.bodyMedium,
-        selectedTextStyle: TextStyle(
-          color: Theme.of(context).colorScheme.secondary,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
+        selectedTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.primary),
         iconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Theme.of(context).colorScheme.primary,
           size: 20,
         ),
         selectedIconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.primary,
           size: 20,
         ),
       ),
