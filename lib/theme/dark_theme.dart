@@ -6,7 +6,7 @@ ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: AppColors.bgDark,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.bg,
+    backgroundColor: AppColors.bgDark,
     foregroundColor: AppColors.text,
     elevation: 0,
     surfaceTintColor: Colors.transparent,

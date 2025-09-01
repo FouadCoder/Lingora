@@ -4,5 +4,17 @@
     "library": "Library",
     "practice": "Practice",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "save": "Save",
+    "learn": "Learn",
+    "us_english": "US English",
+    "sa_arabic": "SA Arabic",
+    "english": "English",
+    "arabic": "Arabic",
+    "translate_button": "Translate",
+    "word_info": "Word Info",
+    "meaning": "Meaning",
+    "examples": "Examples",
+    "pronunciation": "Pronunciation",
+    "alternative_translations": "Alternative translations"
 }

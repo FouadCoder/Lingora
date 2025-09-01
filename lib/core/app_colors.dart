@@ -3,8 +3,8 @@ import 'dart:ui';
 class AppColors {
   static const Color brandOrange = Color(0xFFFF6F00);
   // Dark mode
-  static const Color bgDark = Color(0xFF000000);
-  static const Color bg = Color(0xFF0D0D0D);
+  static const Color bgDark = Color(0xFF000000); // Pure black
+  static const Color bg = Color(0xFF121212);
   static const Color bgLight = Color(0xFF1A1A1A);
 
   static const Color text = Color(0xFFF2F2F2);
