@@ -20,10 +20,6 @@ class LanguageSelector extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: theme.colorScheme.outline.withOpacity(0.3),
-          width: 1,
-        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +38,7 @@ class LanguageSelector extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: theme.colorScheme.outline.withOpacity(0.1),
+                color: theme.colorScheme.onPrimary,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(

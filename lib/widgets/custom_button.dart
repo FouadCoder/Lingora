@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+import 'package:lingora/core/app_constants.dart';
+
+class CustomButton extends StatelessWidget {
+  final String text;
+  final Color color;
+  final Color textColor;
+  final VoidCallback function;
+  final double? width;
+  final double? height;
+  final double borderRadius;
+  final Gradient? gradient;
+  final Border? border;
+  final bool isLoading;
+
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.color,
+    required this.function,
+    required this.textColor,
+    this.gradient,
+    this.height,
+    this.borderRadius = 8,
+    this.isLoading = false,
+    this.border,
+    this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: isLoading ? () {} : function,
+      child: Container(
+        width: width ?? AppButtonSizes.width(context),
+        height: height ?? AppButtonSizes.height(context),
+        decoration: BoxDecoration(
+          border: border,
+          borderRadius: BorderRadius.circular(borderRadius),
+          gradient: gradient,
+          color: gradient == null ? color : null,
+        ),
+        alignment: Alignment.center,
+        child: isLoading
+            ? SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 4,
+                  valueColor: AlwaysStoppedAnimation<Color>(textColor),
+                ),
+              )
+            : Text(
+                text,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+      ),
+    );
+  }
+}

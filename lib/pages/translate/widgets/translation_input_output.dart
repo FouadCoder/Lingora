@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:lingora/widgets/textfield.dart';
 
 class TranslationInputOutput extends StatelessWidget {
   final TextEditingController inputController;
@@ -25,10 +26,6 @@ class TranslationInputOutput extends StatelessWidget {
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: theme.colorScheme.outline.withOpacity(0.3),
-              width: 1,
-            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,20 +88,13 @@ class TranslationInputOutput extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Input Text Field
-              TextField(
+              CustomTextfield(
                 controller: inputController,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.zero,
-                ),
-                maxLines: null,
-                minLines: 3,
+                hintText: 'translation_hint'.tr(),
+                highLight: false,
+                highlightText: '',
+                height: 72,
               ),
-
               const SizedBox(height: 12),
 
               // Translate Button
@@ -149,10 +139,6 @@ class TranslationInputOutput extends StatelessWidget {
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: theme.colorScheme.outline.withOpacity(0.3),
-              width: 1,
-            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

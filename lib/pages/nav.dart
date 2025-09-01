@@ -5,7 +5,7 @@ import 'package:lingora/pages/home.dart';
 import 'package:lingora/pages/library.dart';
 import 'package:lingora/pages/practice.dart';
 import 'package:lingora/pages/profile.dart';
-import 'package:lingora/pages/translate.dart';
+import 'package:lingora/pages/translate/translate.dart';
 import 'package:lingora/widgets/app_sidebar.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -44,26 +44,23 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: AppPlatform.isDesktop(context)
-            ? Row(
-                children: [
-                  // Side bar
-                  AppSidebar(controller: controllerSideBar),
+      body: AppPlatform.isDesktop(context)
+          ? Row(
+              children: [
+                // Side bar
+                AppSidebar(controller: controllerSideBar),
 
-                  // Content
-                  Expanded(
-                    child: pages[controllerSideBar.selectedIndex],
-                  ),
-                ],
-              )
-            : pages[currentPage],
-      ),
+                // Content
+                Expanded(
+                  child: pages[controllerSideBar.selectedIndex],
+                ),
+              ],
+            )
+          : pages[currentPage],
       bottomNavigationBar: AppPlatform.isDesktop(context)
           ? null
           : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               child: SalomonBottomBar(
                 currentIndex: currentPage,
                 onTap: (i) => setState(() => currentPage = i),

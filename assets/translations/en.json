@@ -16,5 +16,6 @@
     "meaning": "Meaning",
     "examples": "Examples",
     "pronunciation": "Pronunciation",
-    "alternative_translations": "Alternative translations"
+    "alternative_translations": "Alternative translations",
+    "translation_hint": "Enter text to translate..."
 }
