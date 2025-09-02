@@ -44,8 +44,7 @@ class CustomTextfield extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      margin: EdgeInsets.only(
-          top: AppDimens.spacingXLarge, bottom: AppDimens.spacingLarge),
+      margin: const EdgeInsets.only(top: 12, bottom: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

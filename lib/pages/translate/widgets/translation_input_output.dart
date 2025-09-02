@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/textfield.dart';
 
 class TranslationInputOutput extends StatelessWidget {
@@ -99,34 +100,12 @@ class TranslationInputOutput extends StatelessWidget {
 
               // Translate Button
               Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: onTranslate,
-                      borderRadius: BorderRadius.circular(8),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Center(
-                          child: Text(
-                            'translate_button'.tr(),
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                  alignment: Alignment.bottomRight,
+                  child: CustomButton(
+                      text: 'translate_button'.tr(),
+                      color: theme.colorScheme.secondary,
+                      function: onTranslate,
+                      textColor: theme.colorScheme.onSecondary)),
             ],
           ),
         ),

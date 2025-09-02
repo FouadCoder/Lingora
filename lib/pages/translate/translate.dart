@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:lingora/core/app_colors.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/pages/translate/widgets/translation_input_output.dart';
 import 'package:lingora/pages/translate/widgets/language_selector.dart';
-import 'package:lingora/widgets/action_buttons.dart';
 import 'package:lingora/pages/translate/widgets/info_cards.dart';
+import 'package:lingora/data/langauges_list.dart';
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({super.key});
@@ -16,12 +14,17 @@ class TranslateScreen extends StatefulWidget {
 
 class _TranslateScreenState extends State<TranslateScreen> {
   final TextEditingController _inputController = TextEditingController();
-  bool _isSwapped = false;
+  late Language translateFrom;
+  late Language translateTo;
 
   @override
   void initState() {
     super.initState();
     _inputController.text = "Nice"; // Mock data
+
+    // Initialize with default languages
+    translateFrom = LanguageData.getLanguageByCode("en")!;
+    translateTo = LanguageData.getLanguageByCode("ar")!;
   }
 
   @override
@@ -46,10 +49,23 @@ class _TranslateScreenState extends State<TranslateScreen> {
               children: [
                 // Language Selector
                 LanguageSelector(
-                  isSwapped: _isSwapped,
+                  translateFrom: translateFrom,
+                  translateTo: translateTo,
                   onSwap: () {
                     setState(() {
-                      _isSwapped = !_isSwapped;
+                      final temp = translateFrom;
+                      translateFrom = translateTo;
+                      translateTo = temp;
+                    });
+                  },
+                  onTaptranslateTo: (Language language) {
+                    setState(() {
+                      translateTo = language;
+                    });
+                  },
+                  onTaptranslateFrom: (Language language) {
+                    setState(() {
+                      translateFrom = language;
                     });
                   },
                 ),
@@ -59,10 +75,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
                 // Translation Input/Output
                 TranslationInputOutput(
                   inputController: _inputController,
-                  isSwapped: _isSwapped,
-                  onTranslate: () {
-                    // TODO: Implement translate functionality
-                  },
+                  isSwapped: false,
+                  onTranslate: () {},
                 ),
 
                 const SizedBox(height: 24),

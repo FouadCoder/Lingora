@@ -17,5 +17,11 @@
     "examples": "Examples",
     "pronunciation": "Pronunciation",
     "alternative_translations": "Alternative translations",
-    "translation_hint": "Enter text to translate..."
+    "translation_hint": "Enter text to translate...",
+    "no_language_found": "No languages found",
+    "select_language": "Select Language",
+    "select_source_language": "Select Source Language",
+    "select_target_language": "Select Target Language",
+    "search_languages": "Search languages..."
+
 }

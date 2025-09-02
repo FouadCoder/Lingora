@@ -46,4 +46,11 @@ class AppButtonSizes {
     if (AppPlatform.isDesktop(context)) return 200;
     return screenWidth;
   }
+
+  static double textSize(BuildContext context) {
+    if (AppPlatform.isPhone(context)) return 16;
+    if (AppPlatform.isTablet(context)) return 18;
+    if (AppPlatform.isDesktop(context)) return 14;
+    return 16; // fallback
+  }
 }
