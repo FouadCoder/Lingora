@@ -113,7 +113,6 @@ class LanguagePickerSheet extends StatelessWidget {
                         : null,
                     onTap: () {
                       onLanguageSelected(language);
-                      print("Language ===================== $language");
                       Navigator.of(context).pop();
                     },
                   ),

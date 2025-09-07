@@ -15,6 +15,8 @@ dependencies:
   go_router: ^15.1.2
   salomon_bottom_bar: ^3.3.2
   sidebarx: ^0.17.2
+  flutter_bloc: ^9.1.1
+  another_flushbar: ^1.12.31
   # intl: ^0.19.0
   # percent_indicator: ^4.2.5
   # supabase_flutter: ^2.10.0  # Temporarily commented out due to app_links compatibility issue

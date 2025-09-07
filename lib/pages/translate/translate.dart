@@ -4,6 +4,7 @@ import 'package:lingora/pages/translate/widgets/translation_input_output.dart';
 import 'package:lingora/pages/translate/widgets/language_selector.dart';
 import 'package:lingora/pages/translate/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/widgets/flushbar.dart';
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({super.key});
@@ -76,7 +77,14 @@ class _TranslateScreenState extends State<TranslateScreen> {
                 TranslationInputOutput(
                   inputController: _inputController,
                   isSwapped: false,
-                  onTranslate: () {},
+                  onTranslate: () {
+                    showSnackBar(
+                        context,
+                        "",
+                        "Thanks for using our app ",
+                        Icons.verified_rounded,
+                        Theme.of(context).colorScheme.secondary);
+                  },
                 ),
 
                 const SizedBox(height: 24),
