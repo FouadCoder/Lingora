@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/textfield.dart';
 
 class TranslationInputOutput extends StatelessWidget {
-  final TextEditingController inputController;
-  final bool isSwapped;
+  final TextEditingController controller;
   final VoidCallback onTranslate;
+  final bool isLoading;
 
   const TranslationInputOutput({
     super.key,
-    required this.inputController,
-    required this.isSwapped,
+    required this.controller,
     required this.onTranslate,
+    required this.isLoading,
   });
 
   @override
@@ -90,11 +92,14 @@ class TranslationInputOutput extends StatelessWidget {
 
               // Input Text Field
               CustomTextfield(
-                controller: inputController,
+                controller: controller,
                 hintText: 'translation_hint'.tr(),
                 highLight: false,
                 highlightText: '',
                 height: 72,
+                onChange: (value) {
+                  context.read<TranslateCubit>().updateInput(value);
+                },
               ),
               const SizedBox(height: 12),
 
@@ -102,6 +107,7 @@ class TranslationInputOutput extends StatelessWidget {
               Align(
                   alignment: Alignment.bottomRight,
                   child: CustomButton(
+                      isLoading: isLoading,
                       text: 'translate_button'.tr(),
                       color: theme.colorScheme.secondary,
                       function: onTranslate,
@@ -112,7 +118,7 @@ class TranslationInputOutput extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // Arabic Output Box
+        // Output Box
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(

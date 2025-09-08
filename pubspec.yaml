@@ -17,6 +17,8 @@ dependencies:
   sidebarx: ^0.17.2
   flutter_bloc: ^9.1.1
   another_flushbar: ^1.12.31
+  dio: ^5.7.0
+  google_generative_ai: ^0.4.7
   # intl: ^0.19.0
   # percent_indicator: ^4.2.5
   # supabase_flutter: ^2.10.0  # Temporarily commented out due to app_links compatibility issue

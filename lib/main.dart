@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/router/routes.dart';
 import 'package:lingora/theme/dark_theme.dart';
-import 'package:lingora/theme/light_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,13 +22,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: darkTheme,
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      routerConfig: router,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<TranslateCubit>(
+              create: (context) => TranslateCubit()) // Translate
+        ],
+        child: MaterialApp.router(
+          theme: darkTheme,
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          routerConfig: router,
+        ));
   }
 }

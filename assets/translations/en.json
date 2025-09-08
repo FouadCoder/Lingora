@@ -22,6 +22,9 @@
     "select_language": "Select Language",
     "select_source_language": "Select Source Language",
     "select_target_language": "Select Target Language",
-    "search_languages": "Search languages..."
+    "search_languages": "Search languages...",
+    "translation_failed": "Couldn’t process that — Try again",
+    "translation_success_points": "New word unlocked! +5 XP",
+    "translation_input_empty": "Please enter text to translate."
 
 }
