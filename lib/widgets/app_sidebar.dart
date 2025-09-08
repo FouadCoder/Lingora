@@ -30,12 +30,12 @@ class AppSidebar extends StatelessWidget {
             ),
           ],
         ),
-        hoverColor: Theme.of(context).colorScheme.primary,
+        hoverColor: Theme.of(context).colorScheme.onPrimary,
         hoverTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onPrimary),
+            color: Theme.of(context).colorScheme.primary),
         hoverIconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+            IconThemeData(color: Theme.of(context).colorScheme.primary),
         selectedItemTextPadding: const EdgeInsets.only(left: 50),
         itemTextPadding:
             const EdgeInsets.only(left: 50), // Increased spacing even more
