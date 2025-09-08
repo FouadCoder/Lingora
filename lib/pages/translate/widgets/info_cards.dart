@@ -1,62 +1,104 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:lingora/pages/translate/widgets/translate_header.dart';
+import 'package:lingora/models/translate.dart';
 
 class InfoCards extends StatelessWidget {
   final bool isDesktop;
   final bool isTablet;
+  final Translate model;
 
   const InfoCards({
     super.key,
     required this.isDesktop,
     required this.isTablet,
+    required this.model,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
+    final hasTranslated = model.translated.trim().isNotEmpty;
+    final hasWord = model.original.trim().isNotEmpty;
+    final hasMeaning = model.meaning.trim().isNotEmpty;
+    final hasExamples = model.examples.isNotEmpty;
+    final hasSynonyms = model.synonyms.isNotEmpty;
 
+    // Build the cards in display order, including only sections that have data.
+    // This keeps the UI clean by omitting empty sections entirely.
+    final List<Widget> availableCards = [
+      if (hasTranslated) _buildTranslatedCard(theme, context),
+      if (hasWord) _buildWordInfoCard(theme, context),
+      if (hasMeaning) _buildMeaningCard(theme, context),
+      if (hasExamples) _buildExamplesCard(theme, context),
+      if (hasSynonyms) _buildSynonymsCard(theme, context),
+    ];
+
+    // Render non-empty cards responsively:
+    // Desktop (width > 1000): horizontal row with equal-width cards and 16px gaps.
+    // Tablet (600 < width ≤ 1000) & Phone (≤ 600): vertical stack with 16px gaps.
     if (isDesktop) {
-      // Desktop layout - horizontal cards
+      // Desktop layout (width > 1000)
+      // Build equal-width row children and insert 16px gaps between cards.
+      final List<Widget> rowChildren = [];
+      for (final card in availableCards) {
+        if (rowChildren.isNotEmpty) {
+          rowChildren.add(const SizedBox(width: 16));
+        }
+        rowChildren.add(Expanded(child: card));
+      }
+      // Center the row and align items to the top so headers line up nicely.
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(child: _buildWordInfoCard(theme, context)),
-          const SizedBox(width: 16),
-          Expanded(child: _buildMeaningCard(theme, context)),
-          const SizedBox(width: 16),
-          Expanded(child: _buildExamplesCard(theme, context)),
-        ],
-      );
-    } else if (isTablet) {
-      // Tablet layout - 2x2 grid
-      return Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(child: _buildWordInfoCard(theme, context)),
-              const SizedBox(width: 16),
-              Expanded(child: _buildMeaningCard(theme, context)),
-            ],
-          ),
-          const SizedBox(height: 16),
-          _buildExamplesCard(theme, context),
-        ],
+        children: rowChildren,
       );
     } else {
-      // Mobile layout - vertical stack
-      return Column(
-        children: [
-          _buildWordInfoCard(theme, context),
-          const SizedBox(height: 16),
-          _buildMeaningCard(theme, context),
-          const SizedBox(height: 16),
-          _buildExamplesCard(theme, context),
-        ],
-      );
+      // Tablet & Phone layout (≤ 1000):
+      // - If isTablet is true, it's a Tablet (600 < width ≤ 1000)
+      // - Otherwise it's a Phone (width ≤ 600)
+      // Stack cards vertically and insert a 16px gap before each card except the first.
+      final List<Widget> columnChildren = [];
+      for (final card in availableCards) {
+        if (columnChildren.isNotEmpty) {
+          columnChildren.add(const SizedBox(height: 16));
+        }
+        columnChildren.add(card);
+      }
+      return Column(children: columnChildren);
     }
+  }
+
+  Widget _buildTranslatedCard(TextTheme theme, BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: isDesktop || isTablet ? 200 : 100,
+      ),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TranslatHeader(
+            icon: MaterialCommunityIcons.translate,
+            title: 'translated'.tr(),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            model.translated,
+            style: theme.titleMedium?.copyWith(
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildWordInfoCard(TextTheme theme, BuildContext context) {
@@ -64,7 +106,7 @@ class InfoCards extends StatelessWidget {
 
     return Container(
       constraints: BoxConstraints(
-        minHeight: isDesktop || isTablet ? 200 : 150, // Minimum height
+        minHeight: isDesktop || isTablet ? 200 : 100, // Minimum height
       ),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -75,28 +117,16 @@ class InfoCards extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header with icon
-          Row(
-            children: [
-              Icon(
-                Icons.book_outlined,
-                color: colorScheme.secondary,
-                size: 20,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'word_info'.tr(),
-                style: theme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+          TranslatHeader(
+            icon: Icons.book_outlined,
+            title: 'word_info'.tr(),
           ),
 
           const SizedBox(height: 16),
 
-          // Word
+          // Original word
           Text(
-            "nice",
+            model.original,
             style: theme.bodyMedium?.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -107,7 +137,7 @@ class InfoCards extends StatelessWidget {
 
           // Part of Speech
           Text(
-            "Adjective",
+            model.pos,
             style: theme.bodySmall?.copyWith(
               color: colorScheme.outline,
             ),
@@ -126,7 +156,7 @@ class InfoCards extends StatelessWidget {
           const SizedBox(height: 4),
 
           Text(
-            "/latif - jayid/",
+            model.pronunciation,
             style: theme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
             ),
@@ -141,7 +171,7 @@ class InfoCards extends StatelessWidget {
 
     return Container(
       constraints: BoxConstraints(
-        minHeight: isDesktop || isTablet ? 200 : 150, // Minimum height
+        minHeight: isDesktop || isTablet ? 200 : 100, // Minimum height
       ),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -152,28 +182,16 @@ class InfoCards extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header with icon
-          Row(
-            children: [
-              Icon(
-                Icons.lightbulb_outline,
-                color: Colors.amber,
-                size: 20,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'meaning'.tr(),
-                style: theme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+          TranslatHeader(
+            icon: Icons.lightbulb_outline,
+            title: 'meaning'.tr(),
           ),
 
           const SizedBox(height: 16),
 
           // Definition
           Text(
-            "Givingtractive Giving pleasure or satisfaction; pleasant or attractiveGiving pleasure or satisfaction; pleasant or attractive Giving pleasure or satisfaction; pleasant or attractiveg pleasure or satisfaction; pleasant or attractive",
+            model.meaning,
             style: theme.bodyMedium?.copyWith(
               height: 1.4,
             ),
@@ -199,21 +217,9 @@ class InfoCards extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header with icon
-          Row(
-            children: [
-              Icon(
-                Icons.chat_bubble_outline,
-                color: Colors.green,
-                size: 20,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'examples'.tr(),
-                style: theme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+          TranslatHeader(
+            icon: Icons.format_quote,
+            title: 'examples'.tr(),
           ),
 
           const SizedBox(height: 16),
@@ -221,49 +227,73 @@ class InfoCards extends StatelessWidget {
           // Example sentences
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildExampleSentence(
-                  theme, "That's a nice dress you're wearing."),
-              const SizedBox(height: 8),
-              _buildExampleSentence(theme, "She has a very nice personality."),
-              _buildExampleSentence(
-                  theme, "That's a nice dress you're wearing."),
-              const SizedBox(height: 8),
-              _buildExampleSentence(theme, "She has a very nice personality."),
-              _buildExampleSentence(
-                  theme, "That's a nice dress you're wearing."),
-              const SizedBox(height: 8),
-              _buildExampleSentence(theme, "She has a very nice personality."),
-            ],
+            children: model.examples.map((example) {
+              return Container(
+                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.only(top: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                child: Text(
+                  example,
+                  style: theme.bodySmall,
+                ),
+              );
+            }).toList(),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildExampleSentence(TextTheme theme, String sentence) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 6,
-          height: 6,
-          margin: const EdgeInsets.only(top: 8, right: 12),
-          decoration: const BoxDecoration(
-            color: Colors.green,
-            shape: BoxShape.circle,
+  Widget _buildSynonymsCard(TextTheme theme, BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: isDesktop || isTablet ? 200 : 150,
+      ),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header with icon
+          TranslatHeader(
+            icon: MaterialCommunityIcons.cards,
+            title: 'synonyms'.tr(),
           ),
-        ),
-        Expanded(
-          child: Text(
-            sentence,
-            style: theme.bodyMedium?.copyWith(
-              fontStyle: FontStyle.italic,
-              height: 1.4,
-            ),
+
+          const SizedBox(height: 16),
+
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: model.synonyms
+                .map((word) => _synonymChip(word, context))
+                .toList(),
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+
+  Widget _synonymChip(String word, BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: colorScheme.onPrimary,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        word,
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
     );
   }
 }

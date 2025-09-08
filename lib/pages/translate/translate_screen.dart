@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/translate/widgets/translation_input_output.dart';
+import 'package:lingora/pages/translate/widgets/translation_input.dart';
 import 'package:lingora/pages/translate/widgets/language_selector.dart';
 import 'package:lingora/pages/translate/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
@@ -122,10 +122,13 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   BlocBuilder<TranslateCubit, TranslateState>(
                     builder: (context, state) {
                       bool isLoading = state.status == TranslateStatus.loading;
+                      bool isSuccess =
+                          state.status == TranslateStatus.success &&
+                              state.result != null;
                       return Column(
                         children: [
                           // Translation Input/Output
-                          TranslationInputOutput(
+                          TranslationInput(
                             controller: _inputController,
                             isLoading: isLoading,
                             onTranslate: () {
@@ -136,10 +139,12 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           const SizedBox(height: 24),
 
                           // Info Cards
-                          InfoCards(
-                            isDesktop: isDesktop,
-                            isTablet: isTablet,
-                          ),
+                          if (isSuccess)
+                            InfoCards(
+                              isDesktop: isDesktop,
+                              isTablet: isTablet,
+                              model: state.result!,
+                            ),
                         ],
                       );
                     },

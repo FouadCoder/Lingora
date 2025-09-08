@@ -5,12 +5,12 @@ import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/textfield.dart';
 
-class TranslationInputOutput extends StatelessWidget {
+class TranslationInput extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onTranslate;
   final bool isLoading;
 
-  const TranslationInputOutput({
+  const TranslationInput({
     super.key,
     required this.controller,
     required this.onTranslate,
@@ -112,86 +112,6 @@ class TranslationInputOutput extends StatelessWidget {
                       color: theme.colorScheme.secondary,
                       function: onTranslate,
                       textColor: theme.colorScheme.onSecondary)),
-            ],
-          ),
-        ),
-
-        const SizedBox(height: 16),
-
-        // Output Box
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header with label and icons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'arabic'.tr(),
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.outline,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          // TODO: Implement copy functionality
-                        },
-                        icon: Icon(
-                          Icons.copy_outlined,
-                          color: theme.colorScheme.outline,
-                          size: 20,
-                        ),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                      ),
-                      const SizedBox(width: 8),
-                      IconButton(
-                        onPressed: () {
-                          // TODO: Implement speaker functionality
-                        },
-                        icon: Icon(
-                          Icons.volume_up_outlined,
-                          color: theme.colorScheme.outline,
-                          size: 20,
-                        ),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-
-              // Arabic Text
-              Text(
-                "لطيف - جيد",
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  height: 1.5,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              // Pronunciation
-              Text(
-                "/latif - jayid/",
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.outline,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
             ],
           ),
         ),

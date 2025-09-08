@@ -5,7 +5,7 @@ import 'package:lingora/pages/home.dart';
 import 'package:lingora/pages/library.dart';
 import 'package:lingora/pages/practice.dart';
 import 'package:lingora/pages/profile.dart';
-import 'package:lingora/pages/translate/translate.dart';
+import 'package:lingora/pages/translate/translate_screen.dart';
 import 'package:lingora/widgets/app_sidebar.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:sidebarx/sidebarx.dart';

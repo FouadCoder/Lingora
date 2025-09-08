@@ -15,6 +15,7 @@
     "word_info": "Word Info",
     "meaning": "Meaning",
     "examples": "Examples",
+    "synonyms": "Synonyms",
     "pronunciation": "Pronunciation",
     "alternative_translations": "Alternative translations",
     "translation_hint": "Enter text to translate...",
@@ -25,6 +26,8 @@
     "search_languages": "Search languages...",
     "translation_failed": "Couldn’t process that — Try again",
     "translation_success_points": "New word unlocked! +5 XP",
-    "translation_input_empty": "Please enter text to translate."
+    "translation_input_empty": "Please enter text to translate.",
+    "translation_not_found": "Translation not found",
+    "translated": "Translated"
 
 }

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/keys.dart';
+import 'package:lingora/models/translate.dart';
 
 class TranslateCubit extends Cubit<TranslateState> {
   TranslateCubit() : super(const TranslateState());
@@ -17,7 +18,6 @@ class TranslateCubit extends Cubit<TranslateState> {
   void updateInput(String text) {
     emit(state.copyWith(
       inputText: text,
-      status: TranslateStatus.initial,
     ));
   }
 
@@ -39,7 +39,6 @@ class TranslateCubit extends Cubit<TranslateState> {
 
   // translate Text from Hugging Face model
   Future<String> fetchTranslateWords(String from, String to) async {
-    print("To ========== $to From ========= $from");
     Dio dio = Dio();
     final url = 'https://api-inference.huggingface.co/models/$model-$from-$to';
 
@@ -57,7 +56,7 @@ class TranslateCubit extends Cubit<TranslateState> {
 
     // Res
     final data = response.data;
-    String translated = state.translatedText;
+    String translated = '';
     if (data is List &&
         data.isNotEmpty &&
         data[0] is Map &&
@@ -71,27 +70,29 @@ class TranslateCubit extends Cubit<TranslateState> {
   Future fetchWordsDetails(String from, String to) async {
     final prompt = '''
 Act as a dictionary. Explain "${state.inputText.trim()}".
+- Include pos (part of speech) and pronunciation as top-level fields
 - meaning: short definition in "$to"
-- examples: 2–3 sentences in "$to"
+- examples: 2–3 sentences in "$to" (plain text only, no language codes)
 - synonyms: list in "$from"
 
-Reply ONLY with valid JSON:
-{ "meaning": ..., "examples": [...], "synonyms": [...] }
+Reply ONLY with valid JSON in this format:
+{
+  "pos": "...",           // e.g., "noun", "verb"
+  "pronunciation": "...", // e.g., "/nɪs/"
+  "meaning": "...",
+  "examples": ["...", "..."],
+  "synonyms": ["...", "..."]
+}
 ''';
 
     final res = await modelGemini.generateContent([Content.text(prompt)]);
 
     // Raw text
     final raw = res.text ?? '';
-    // print('rse Ai Gemini ========================= $raw');
-
     // If it's JSON, parse it
     final cleaned = raw.replaceAll(RegExp(r'```(json)?|```'), '').trim();
 
     final data = jsonDecode(cleaned) as Map<String, dynamic>;
-    print('meaning: ${data['meaning']}');
-    print('examples: ${data['examples']}');
-    print('synonyms: ${data['synonyms']}');
     return data;
   }
 
@@ -107,15 +108,32 @@ Reply ONLY with valid JSON:
 
       final from = (state.sourceLanguage.code);
       final to = (state.targetLanguage.code);
-
       String translated = await fetchTranslateWords(from, to);
+      final detailsWord = await fetchWordsDetails(from, to);
+      final data = {
+        "original": state.inputText.trim(),
+        "translated": translated,
+        "meaning": detailsWord["meaning"],
+        "examples": detailsWord["examples"],
+        "synonyms": detailsWord["synonyms"],
+        "pos": detailsWord["pos"],
+        "pronunciation": detailsWord["pronunciation"],
+        "translateFrom": state.sourceLanguage,
+        "translateTo": state.targetLanguage,
+      };
+      Translate translate = Translate.fromJson(data);
 
-      print(
-          "Transalted ======================================================== $translated");
-      await fetchWordsDetails(from, to);
-
-      emit(state.copyWith(
-          status: TranslateStatus.success, translatedText: translated));
+      print("Translated =================");
+      print("Original: ${translate.original}");
+      print("Translated: ${translate.translated}");
+      print("POS: ${translate.pos}");
+      print("Pronunciation: ${translate.pronunciation}");
+      print("Meaning: ${translate.meaning}");
+      print("Examples: ${translate.examples}");
+      print("Synonyms: ${translate.synonyms}");
+      print("From: ${translate.translateFrom.code}");
+      print("To: ${translate.translateTo.code}");
+      emit(state.copyWith(status: TranslateStatus.success, result: translate));
     } catch (e) {
       print("Error ============================= $e");
       emit(state.copyWith(status: TranslateStatus.failure));
@@ -124,6 +142,6 @@ Reply ONLY with valid JSON:
 
   // Clear the current translation result
   void clearResult() {
-    emit(state.copyWith(translatedText: '', status: TranslateStatus.initial));
+    emit(state.copyWith(result: null, status: TranslateStatus.initial));
   }
 }

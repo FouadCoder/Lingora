@@ -1,18 +1,19 @@
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/models/translate.dart';
 
 enum TranslateStatus { initial, loading, success, failure, empty }
 
 class TranslateState {
   final TranslateStatus status;
   final String inputText;
-  final String translatedText;
+  final Translate? result;
   final Language sourceLanguage;
   final Language targetLanguage;
 
   const TranslateState({
     this.status = TranslateStatus.initial,
     this.inputText = '',
-    this.translatedText = '',
+    this.result,
     this.sourceLanguage = const Language(
       name: 'English',
       nativeName: 'British English',
@@ -32,14 +33,14 @@ class TranslateState {
   TranslateState copyWith({
     TranslateStatus? status,
     String? inputText,
-    String? translatedText,
+    Translate? result,
     Language? sourceLanguage,
     Language? targetLanguage,
   }) {
     return TranslateState(
       status: status ?? this.status,
       inputText: inputText ?? this.inputText,
-      translatedText: translatedText ?? this.translatedText,
+      result: result ?? this.result,
       sourceLanguage: sourceLanguage ?? this.sourceLanguage,
       targetLanguage: targetLanguage ?? this.targetLanguage,
     );
