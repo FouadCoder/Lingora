@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
@@ -39,20 +40,26 @@ class TranslateCubit extends Cubit<TranslateState> {
 
   // translate Text from Hugging Face model
   Future<String> fetchTranslateWords(String from, String to) async {
-    Dio dio = Dio();
+    Dio dio = Dio(BaseOptions(
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
+    ));
     final url = 'https://api-inference.huggingface.co/models/$model-$from-$to';
 
     // Send request
-    final response = await dio.post(
-      url,
-      data: {"inputs": state.inputText.trim()},
-      options: Options(
-        headers: {
-          "Authorization": "Bearer $apiHuggingFace",
-          "Content-Type": "application/json",
-        },
-      ),
-    );
+    final response = await dio
+        .post(
+          url,
+          data: {"inputs": state.inputText.trim()},
+          options: Options(
+            headers: {
+              "Authorization": "Bearer $apiHuggingFace",
+              "Content-Type": "application/json",
+            },
+          ),
+        )
+        .timeout(const Duration(seconds: 30));
 
     // Res
     final data = response.data;
@@ -85,7 +92,8 @@ Reply ONLY with valid JSON in this format:
 }
 ''';
 
-    final res = await modelGemini.generateContent([Content.text(prompt)]);
+    final res = await modelGemini.generateContent(
+        [Content.text(prompt)]).timeout(const Duration(seconds: 30));
 
     // Raw text
     final raw = res.text ?? '';
@@ -98,13 +106,13 @@ Reply ONLY with valid JSON in this format:
 
   //translation
   Future<void> translate() async {
-    emit(state.copyWith(status: TranslateStatus.loading));
-
     try {
       if (state.inputText.trim().isEmpty) {
         emit(state.copyWith(status: TranslateStatus.empty));
         return;
       }
+      emit(state.copyWith(status: TranslateStatus.loading));
+      print("Start loading =====================================");
 
       final from = (state.sourceLanguage.code);
       final to = (state.targetLanguage.code);
