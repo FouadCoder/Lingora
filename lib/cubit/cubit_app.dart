@@ -101,6 +101,14 @@ Reply ONLY with valid JSON in this format:
     final cleaned = raw.replaceAll(RegExp(r'```(json)?|```'), '').trim();
 
     final data = jsonDecode(cleaned) as Map<String, dynamic>;
+
+    // Clean trailing dots from examples
+    if (data['examples'] is List) {
+      data['examples'] = (data['examples'] as List)
+          .map((e) => e is String ? e.replaceAll(RegExp(r'\.$'), '') : e)
+          .toList();
+    }
+
     return data;
   }
 

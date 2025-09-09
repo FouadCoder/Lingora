@@ -3,12 +3,9 @@ import 'package:lingora/core/platfrom.dart';
 
 class AppDimens {
   // Spacing
-  static const double spacingXS = 4;
-  static const double spacingS = 8;
-  static const double spacingM = 12;
+
+  static const double spacingM = 8;
   static const double spacingL = 16;
-  static const double spacingXL = 24;
-  static const double spacingXXL = 32;
 
   // Container padding
   static const double paddingS = 8;

@@ -8,6 +8,7 @@ import 'package:lingora/pages/translate/widgets/translation_input.dart';
 import 'package:lingora/pages/translate/widgets/language_selector.dart';
 import 'package:lingora/pages/translate/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/widgets/app_container.dart';
 import 'package:lingora/widgets/flushbar.dart';
 
 class TranslateScreen extends StatefulWidget {
@@ -80,77 +81,71 @@ class _TranslateScreenState extends State<TranslateScreen> {
               break;
           }
         },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // Language Selector
-                  LanguageSelector(
-                    translateFrom: translateFrom,
-                    translateTo: translateTo,
-                    onSwap: () {
-                      setState(() {
-                        final temp = translateFrom;
-                        translateFrom = translateTo;
-                        translateTo = temp;
-                      });
-                      context.read<TranslateCubit>().swapLanguages();
-                    },
-                    onTaptranslateTo: (Language language) {
-                      setState(() {
-                        translateTo = language;
-                      });
-                      context.read<TranslateCubit>().updateLanguages(
-                            from: translateFrom,
-                            to: translateTo,
-                          );
-                    },
-                    onTaptranslateFrom: (Language language) {
-                      setState(() {
-                        translateFrom = language;
-                      });
-                      context.read<TranslateCubit>().updateLanguages(
-                            from: translateFrom,
-                            to: translateTo,
-                          );
-                    },
-                  ),
+        child: AppContainer(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Language Selector
+                LanguageSelector(
+                  translateFrom: translateFrom,
+                  translateTo: translateTo,
+                  onSwap: () {
+                    setState(() {
+                      final temp = translateFrom;
+                      translateFrom = translateTo;
+                      translateTo = temp;
+                    });
+                    context.read<TranslateCubit>().swapLanguages();
+                  },
+                  onTaptranslateTo: (Language language) {
+                    setState(() {
+                      translateTo = language;
+                    });
+                    context.read<TranslateCubit>().updateLanguages(
+                          from: translateFrom,
+                          to: translateTo,
+                        );
+                  },
+                  onTaptranslateFrom: (Language language) {
+                    setState(() {
+                      translateFrom = language;
+                    });
+                    context.read<TranslateCubit>().updateLanguages(
+                          from: translateFrom,
+                          to: translateTo,
+                        );
+                  },
+                ),
 
-                  const SizedBox(height: 24),
-                  BlocBuilder<TranslateCubit, TranslateState>(
-                    builder: (context, state) {
-                      bool isLoading = state.status == TranslateStatus.loading;
-                      bool isSuccess =
-                          state.status == TranslateStatus.success &&
-                              state.result != null;
-                      return Column(
-                        children: [
-                          // Translation Input/Output
-                          TranslationInput(
-                            controller: _inputController,
-                            isLoading: isLoading,
-                            onTranslate: () {
-                              context.read<TranslateCubit>().translate();
-                            },
+                const SizedBox(height: 16),
+                BlocBuilder<TranslateCubit, TranslateState>(
+                  builder: (context, state) {
+                    bool isLoading = state.status == TranslateStatus.loading;
+                    bool isSuccess = state.status == TranslateStatus.success &&
+                        state.result != null;
+                    return Column(
+                      children: [
+                        // Translation Input/Output
+                        TranslationInput(
+                          controller: _inputController,
+                          isLoading: isLoading,
+                          onTranslate: () {
+                            context.read<TranslateCubit>().translate();
+                          },
+                        ),
+
+                        // Info Cards
+                        if (isSuccess)
+                          InfoCards(
+                            isDesktop: isDesktop,
+                            isTablet: isTablet,
+                            model: state.result!,
                           ),
-
-                          const SizedBox(height: 24),
-
-                          // Info Cards
-                          if (isSuccess)
-                            InfoCards(
-                              isDesktop: isDesktop,
-                              isTablet: isTablet,
-                              model: state.result!,
-                            ),
-                        ],
-                      );
-                    },
-                  )
-                ],
-              ),
+                      ],
+                    );
+                  },
+                )
+              ],
             ),
           ),
         ),

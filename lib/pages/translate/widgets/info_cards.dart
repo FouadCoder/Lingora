@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/pages/translate/widgets/translate_header.dart';
 import 'package:lingora/models/translate.dart';
 
@@ -25,52 +27,58 @@ class InfoCards extends StatelessWidget {
     final hasExamples = model.examples.isNotEmpty;
     final hasSynonyms = model.synonyms.isNotEmpty;
 
-    // Build the cards in display order, including only sections that have data.
-    // This keeps the UI clean by omitting empty sections entirely.
+    // For text
+    bool isRightSide() {
+      if (model.translateTo.code == "en") return true;
+      return false;
+    }
+
     final List<Widget> availableCards = [
-      if (hasTranslated) _buildTranslatedCard(theme, context),
+      if (hasTranslated) _buildTranslatedCard(theme, context, isRightSide()),
       if (hasWord) _buildWordInfoCard(theme, context),
-      if (hasMeaning) _buildMeaningCard(theme, context),
-      if (hasExamples) _buildExamplesCard(theme, context),
+      if (hasMeaning) _buildMeaningCard(theme, context, isRightSide()),
       if (hasSynonyms) _buildSynonymsCard(theme, context),
     ];
 
-    // Render non-empty cards responsively:
-    // Desktop (width > 1000): horizontal row with equal-width cards and 16px gaps.
-    // Tablet (600 < width ≤ 1000) & Phone (≤ 600): vertical stack with 16px gaps.
-    if (isDesktop) {
-      // Desktop layout (width > 1000)
-      // Build equal-width row children and insert 16px gaps between cards.
-      final List<Widget> rowChildren = [];
-      for (final card in availableCards) {
-        if (rowChildren.isNotEmpty) {
-          rowChildren.add(const SizedBox(width: 16));
-        }
-        rowChildren.add(Expanded(child: card));
+    int getCrossAxisCount() {
+      if (AppPlatform.isDesktop(context)) {
+        return availableCards.length; // desktop: all in one row
       }
-      // Center the row and align items to the top so headers line up nicely.
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: rowChildren,
-      );
-    } else {
-      // Tablet & Phone layout (≤ 1000):
-      // - If isTablet is true, it's a Tablet (600 < width ≤ 1000)
-      // - Otherwise it's a Phone (width ≤ 600)
-      // Stack cards vertically and insert a 16px gap before each card except the first.
-      final List<Widget> columnChildren = [];
-      for (final card in availableCards) {
-        if (columnChildren.isNotEmpty) {
-          columnChildren.add(const SizedBox(height: 16));
-        }
-        columnChildren.add(card);
-      }
-      return Column(children: columnChildren);
+      if (AppPlatform.isTablet(context)) return 2; // tablet
+      return 1; // phone
     }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: [
+            MasonryGridView.builder(
+              shrinkWrap: true,
+              physics:
+                  const NeverScrollableScrollPhysics(), // so it fits inside scroll
+              itemCount: availableCards.length,
+              gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: getCrossAxisCount(),
+              ),
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 8,
+              itemBuilder: (context, index) {
+                return availableCards[index];
+              },
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            // Examples
+            if (hasExamples) _buildExamplesCard(theme, context, isRightSide()),
+          ],
+        );
+      },
+    );
   }
 
-  Widget _buildTranslatedCard(TextTheme theme, BuildContext context) {
+  Widget _buildTranslatedCard(
+      TextTheme theme, BuildContext context, bool isRightSide) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -83,17 +91,23 @@ class InfoCards extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TranslatHeader(
             icon: MaterialCommunityIcons.translate,
             title: 'translated'.tr(),
           ),
           const SizedBox(height: 16),
-          Text(
-            model.translated,
-            style: theme.titleMedium?.copyWith(
-              height: 1.4,
+          Align(
+            alignment: isRightSide
+                ? AlignmentDirectional.centerStart
+                : AlignmentDirectional.centerEnd,
+            child: Text(
+              model.translated,
+              style: theme.titleMedium?.copyWith(
+                height: 1.4,
+              ),
+              textAlign: isRightSide ? TextAlign.right : TextAlign.left,
             ),
           ),
         ],
@@ -166,7 +180,8 @@ class InfoCards extends StatelessWidget {
     );
   }
 
-  Widget _buildMeaningCard(TextTheme theme, BuildContext context) {
+  Widget _buildMeaningCard(
+      TextTheme theme, BuildContext context, bool isRightSide) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -179,7 +194,6 @@ class InfoCards extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header with icon
           TranslatHeader(
@@ -190,10 +204,16 @@ class InfoCards extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Definition
-          Text(
-            model.meaning,
-            style: theme.bodyMedium?.copyWith(
-              height: 1.4,
+          Align(
+            alignment: isRightSide
+                ? AlignmentDirectional.centerStart
+                : AlignmentDirectional.centerEnd,
+            child: Text(
+              model.meaning,
+              style: theme.bodyMedium?.copyWith(
+                height: 1.4,
+              ),
+              textAlign: isRightSide ? TextAlign.right : TextAlign.left,
             ),
           ),
         ],
@@ -201,12 +221,13 @@ class InfoCards extends StatelessWidget {
     );
   }
 
-  Widget _buildExamplesCard(TextTheme theme, BuildContext context) {
+  Widget _buildExamplesCard(
+      TextTheme theme, BuildContext context, bool isRightSide) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       constraints: BoxConstraints(
-        minHeight: isDesktop || isTablet ? 200 : 150, // Minimum height
+        minHeight: isDesktop || isTablet ? 150 : 150, // Minimum height
       ),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -214,7 +235,6 @@ class InfoCards extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header with icon
           TranslatHeader(
@@ -225,8 +245,10 @@ class InfoCards extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Example sentences
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Wrap(
+            spacing: 8, // horizontal gap between items
+            runSpacing: 8, // vertical gap between rows
+            alignment: isRightSide ? WrapAlignment.end : WrapAlignment.start,
             children: model.examples.map((example) {
               return Container(
                 padding: const EdgeInsets.all(12),
