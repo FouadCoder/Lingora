@@ -28,6 +28,8 @@
     "translation_success_points": "New word unlocked! +5 XP",
     "translation_input_empty": "Please enter text to translate.",
     "translation_not_found": "Translation not found",
-    "translated": "Translated"
+    "translated": "Translated",
+    "no_word": "Not available",
+    "no_translation": "No Translation"
 
 }
