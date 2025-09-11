@@ -32,26 +32,29 @@ class WordCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                word.word,
-                style: theme.titleMedium,
+              Expanded(
+                child: Text(
+                  word.word,
+                  style: theme.titleMedium,
+                ),
               ),
               const SizedBox(width: 8),
-              Icon(Icons.arrow_forward, color: colorScheme.outline),
-              const SizedBox(width: 8),
-              Text(
-                word.translation,
-                style: theme.titleMedium,
+              Expanded(
+                child: Text(
+                  word.translation,
+                  style: theme.titleMedium?.copyWith(color: Color(0xFFFF914D)),
+                ),
               ),
-              const Spacer(),
               IconButton(
                 onPressed: () {},
                 icon: Icon(Icons.volume_up),
                 color: colorScheme.outline,
                 style: IconButton.styleFrom(
-                    hoverColor: colorScheme.onSurface,
-                    focusColor: colorScheme.onSurface),
+                  hoverColor: colorScheme.onSurface,
+                  focusColor: colorScheme.onSurface,
+                ),
               )
             ],
           ),
@@ -68,7 +71,7 @@ class WordCard extends StatelessWidget {
                   ?.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           // definition
           Text(
             "meaning".tr(),

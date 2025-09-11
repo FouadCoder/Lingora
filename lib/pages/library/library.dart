@@ -14,8 +14,8 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreenState extends State<LibraryScreen> {
   final exampleWord = Word(
-    word: "water",
-    translation: "ماء",
+    word: "water waterwaterwaterwaterwater",
+    translation: "waterwaterwaterwaterwater",
     partOfSpeech: "Noun",
     definition:
         "A colorless, transparent, odorless liquid essential transparent, odorless liquid essential transparent, odorless liquid essential",
