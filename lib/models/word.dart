@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 class Word {
   final String word;
   final String translation;
-  final String type;
+  final String partOfSpeech;
   final String definition;
   final String example;
   final String category;
@@ -12,7 +12,7 @@ class Word {
   Word(
       {required this.word,
       required this.translation,
-      required this.type,
+      required this.partOfSpeech,
       required this.definition,
       required this.example,
       required this.category,
@@ -22,7 +22,7 @@ class Word {
     return Word(
       word: json['word'] ?? "no_word".tr(),
       translation: json['translation'] ?? "no_translation".tr(),
-      type: json['type'] ?? '',
+      partOfSpeech: json['partOfSpeech'] ?? '',
       definition: json['definition'] ?? '',
       example: json['example'] ?? '',
       category: json['category'] ?? '',

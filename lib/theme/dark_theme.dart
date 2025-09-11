@@ -13,13 +13,13 @@ ThemeData darkTheme = ThemeData(
   ),
   colorScheme: const ColorScheme.dark(
     primary: AppColors.text,
-    secondary: AppColors.brandOrange, // tweak if needed
+    secondary: AppColors.brandOrange,
     surface: AppColors.bg,
     onPrimary: AppColors.bgLight,
     onSecondary: AppColors.text,
-    onSurface: AppColors.text,
+    onSurface: AppColors.bgLight,
     outline: AppColors.textMuted,
-    shadow: Colors.black54,
+    shadow: Colors.white24,
   ),
 
   // Buttons
