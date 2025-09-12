@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/models/word.dart';
-import 'package:lingora/pages/library/library_card.dart';
+import 'package:lingora/pages/library_screen/widgets/library_card.dart';
 import 'package:lingora/widgets/app_container.dart';
 
 class LibraryScreen extends StatefulWidget {

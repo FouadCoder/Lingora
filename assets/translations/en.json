@@ -31,6 +31,7 @@
     "translation_not_found": "Translation not found",
     "translated": "Translated",
     "no_word": "Not available",
-    "no_translation": "No Translation"
+    "no_translation": "No Translation",
+    "translated_at": "Translated at"
 
 }

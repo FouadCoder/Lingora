@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/pages/translate/widgets/language_picker_sheet.dart';
+import 'package:lingora/pages/translate_screen/widgets/language_picker_sheet.dart';
 
 class LanguageSelector extends StatelessWidget {
   final Function(Language) onTaptranslateFrom;

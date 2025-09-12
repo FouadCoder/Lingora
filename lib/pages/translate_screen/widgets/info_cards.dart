@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/platfrom.dart';
-import 'package:lingora/pages/translate/widgets/translate_header.dart';
+import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
 import 'package:lingora/models/translate.dart';
 
 class InfoCards extends StatelessWidget {
@@ -246,12 +246,12 @@ class InfoCards extends StatelessWidget {
 
           // Example sentences
           Wrap(
-            spacing: 8, // horizontal gap between items
-            runSpacing: 8, // vertical gap between rows
+            spacing: 4, // horizontal gap between items
+            runSpacing: 4, // vertical gap between rows
             alignment: isRightSide ? WrapAlignment.end : WrapAlignment.start,
             children: model.examples.map((example) {
               return Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(8),
                 margin: const EdgeInsets.only(top: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),

@@ -11,8 +11,8 @@ class AppContainer extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1200), // cap width
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 16, vertical: 16), // side padding
+          padding:
+              const EdgeInsets.only(top: 35, right: 16, left: 16, bottom: 10),
           child: child,
         ),
       ),
