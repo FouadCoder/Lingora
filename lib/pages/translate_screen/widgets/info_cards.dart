@@ -29,7 +29,7 @@ class InfoCards extends StatelessWidget {
 
     // For text
     bool isRightSide() {
-      if (model.translateTo.code == "en") return true;
+      if (model.translateTo?.code == "en") return true;
       return false;
     }
 

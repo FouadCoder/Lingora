@@ -147,8 +147,8 @@ Reply ONLY with valid JSON in this format:
       print("Meaning: ${translate.meaning}");
       print("Examples: ${translate.examples}");
       print("Synonyms: ${translate.synonyms}");
-      print("From: ${translate.translateFrom.code}");
-      print("To: ${translate.translateTo.code}");
+      print("From: ${translate.translateFrom?.code}");
+      print("To: ${translate.translateTo?.code}");
       emit(state.copyWith(status: TranslateStatus.success, result: translate));
     } catch (e) {
       print("Error ============================= $e");
