@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/data/langauges_list.dart';
 
 class Translate {
-  final String id;
+  final String? id;
   final String? userId;
   final String? categoryId;
   final String original;
@@ -19,7 +19,7 @@ class Translate {
   final DateTime? deletedAt;
 
   const Translate({
-    required this.id,
+    this.id,
     this.userId,
     this.categoryId,
     required this.original,
@@ -38,7 +38,7 @@ class Translate {
 
   factory Translate.fromJson(Map<String, dynamic> json) {
     return Translate(
-      id: json['id'] ?? '',
+      id: json['id'],
       userId: json['user_id'],
       categoryId: json['category_id'],
       original: json['original'] ?? "",

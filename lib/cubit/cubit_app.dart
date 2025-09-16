@@ -7,6 +7,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/keys.dart';
 import 'package:lingora/models/translate.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TranslateCubit extends Cubit<TranslateState> {
   TranslateCubit() : super(const TranslateState());
@@ -112,6 +113,36 @@ Reply ONLY with valid JSON in this format:
     return data;
   }
 
+  // Save in server
+  Future saveWord(Translate translate) async {
+    Map word = {
+      "user_id": translate.userId,
+      "category_id": translate.categoryId,
+      "original": translate.original,
+      "translated": translate.translated,
+      "pos": translate.pos,
+      "pronunciation": translate.pronunciation,
+      "meaning": translate.meaning,
+      "examples": translate.examples,
+      "synonyms": translate.synonyms,
+      "translate_from": translate.translateFrom?.code,
+      "translate_to": translate.translateTo?.code,
+      "created_at": translate.createdAt.toIso8601String(),
+      "updated_at": translate.updatedAt.toIso8601String(),
+      "deleted_at": translate.deletedAt?.toIso8601String(),
+    };
+
+    print("Data before sending to server -============================ $word");
+
+    final response = await Supabase.instance.client
+        .from('translated_words')
+        .insert(word)
+        .select()
+        .single();
+
+    return response;
+  }
+
   //translation
   Future<void> translate() async {
     try {
@@ -149,6 +180,8 @@ Reply ONLY with valid JSON in this format:
       print("Synonyms: ${translate.synonyms}");
       print("From: ${translate.translateFrom?.code}");
       print("To: ${translate.translateTo?.code}");
+      final res = await saveWord(translate);
+      print("res from server ============= $res");
       emit(state.copyWith(status: TranslateStatus.success, result: translate));
     } catch (e) {
       print("Error ============================= $e");
