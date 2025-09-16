@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:lingora/cubit/cubit_app.dart';
+import 'package:lingora/keys.dart';
 import 'package:lingora/router/routes.dart';
 import 'package:lingora/theme/dark_theme.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Supabase.initialize(url: supabaseURL, anonKey: supabaseAnonKey);
   await Hive.initFlutter(); //  Hive database
   await Hive.openBox("db"); //  Hive database
   runApp(EasyLocalization(
