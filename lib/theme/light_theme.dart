@@ -76,4 +76,8 @@ ThemeData lightTheme = ThemeData(
     titleMedium: TextStyle(
         fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.lightText),
   ),
+
+// shimmerBox(height: 26); for titleMedium text
+// shimmerBox(height: 20);  for bodyMedium
+// shimmerBox(height: 18); for bodySmall
 );

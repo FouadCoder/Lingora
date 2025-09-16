@@ -77,4 +77,8 @@ ThemeData darkTheme = ThemeData(
     titleMedium: TextStyle(
         fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.text),
   ),
+
+// shimmerBox(height: 26 , radius: 12); for titleMedium text
+// shimmerBox(height: 20 , radius: 8);  for bodyMedium
+// shimmerBox(height: 18 , radius : 6); for bodySmall
 );
