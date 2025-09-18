@@ -223,7 +223,8 @@ class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
             "updatedAt: ${word.updatedAt}, "
             "deletedAt: ${word.deletedAt}");
       }
-      emit(state.copyWith(status: FetchTranslatedLibraryStatus.success));
+      emit(state.copyWith(
+          status: FetchTranslatedLibraryStatus.success, libraryWords: words));
     } catch (e) {
       emit(state.copyWith(status: FetchTranslatedLibraryStatus.failure));
     }

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
 import 'package:lingora/models/translate.dart';
 
@@ -28,15 +29,12 @@ class InfoCards extends StatelessWidget {
     final hasSynonyms = model.synonyms.isNotEmpty;
 
     // For text
-    bool isRightSide() {
-      if (model.translateTo?.code == "en") return true;
-      return false;
-    }
+    bool isRightSideText = isRightSide(model.translateTo!.code);
 
     final List<Widget> availableCards = [
-      if (hasTranslated) _buildTranslatedCard(theme, context, isRightSide()),
+      if (hasTranslated) _buildTranslatedCard(theme, context, isRightSideText),
       if (hasWord) _buildWordInfoCard(theme, context),
-      if (hasMeaning) _buildMeaningCard(theme, context, isRightSide()),
+      if (hasMeaning) _buildMeaningCard(theme, context, isRightSideText),
       if (hasSynonyms) _buildSynonymsCard(theme, context),
     ];
 
@@ -70,7 +68,8 @@ class InfoCards extends StatelessWidget {
               height: 8,
             ),
             // Examples
-            if (hasExamples) _buildExamplesCard(theme, context, isRightSide()),
+            if (hasExamples)
+              _buildExamplesCard(theme, context, isRightSideText),
           ],
         );
       },

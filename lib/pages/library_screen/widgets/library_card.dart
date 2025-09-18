@@ -14,38 +14,50 @@ class WordCard extends StatelessWidget {
     final theme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
+    List chipsData = [
+      {
+        "text": word.pos,
+        "textColor": colorScheme.secondary,
+      },
+      {
+        "text": "Test category",
+        "textColor": colorScheme.secondary,
+      },
+      {
+        "text": word.createdAt.toReadableDate(),
+        "textColor": theme.bodySmall?.color,
+      },
+    ];
+
     return Container(
       padding: EdgeInsets.all(AppDimens.paddingM),
       margin: EdgeInsets.only(top: 8),
       decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.white.withOpacity(0.2), // Increased opacity
-              blurRadius: 5,
-              spreadRadius: 0.1,
-              offset: Offset(0, 4),
-            ),
-          ]),
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Text(
-                  word.original,
-                  style: theme.titleMedium,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  word.translated,
-                  style: theme.titleMedium?.copyWith(color: Color(0xFFFF914D)),
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    word.original,
+                    style: theme.titleMedium,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    word.translated,
+                    style:
+                        theme.titleMedium?.copyWith(color: Color(0xFFFF914D)),
+                  ),
+                ],
               ),
               IconButton(
                 onPressed: () {},
@@ -57,19 +69,6 @@ class WordCard extends StatelessWidget {
                 ),
               )
             ],
-          ),
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            decoration: BoxDecoration(
-              color: colorScheme.secondary,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              word.pos,
-              style: theme.bodySmall
-                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
-            ),
           ),
           const SizedBox(height: 8),
           // definition
@@ -86,6 +85,7 @@ class WordCard extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
+
           // Example
           Container(
             padding: const EdgeInsets.all(12),
@@ -101,22 +101,20 @@ class WordCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Row(
-            children: [
-              Chip(
-                label: Text(
-                  "Test category",
-                  style:
-                      theme.bodySmall?.copyWith(color: colorScheme.secondary),
+            children: List.generate(chipsData.length, (index) {
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 2),
+                child: Chip(
+                  label: Text(
+                    chipsData[index]["text"],
+                    style: theme.bodySmall
+                        ?.copyWith(color: chipsData[index]["textColor"]),
+                  ),
+                  backgroundColor: colorScheme.onPrimary,
+                  side: BorderSide.none,
                 ),
-                backgroundColor: colorScheme.onPrimary,
-                side: BorderSide.none,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                word.createdAt.toReadableDate(),
-                style: theme.bodySmall?.copyWith(color: colorScheme.outline),
-              ),
-            ],
+              );
+            }),
           )
         ],
       ),

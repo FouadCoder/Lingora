@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
+import 'package:lingora/pages/library_screen/widgets/library_card.dart';
 import 'package:lingora/pages/library_screen/widgets/library_loading_card.dart';
 import 'package:lingora/widgets/app_container.dart';
 
@@ -50,6 +51,23 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   mainAxisSpacing: 8,
                   itemBuilder: (context, index) {
                     return LibraryLoadingCard();
+                  },
+                );
+              }
+
+              // Success
+              else if (state.status == FetchTranslatedLibraryStatus.success) {
+                return MasonryGridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: state.libraryWords.length,
+                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: getCrossAxisCount(),
+                  ),
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 8,
+                  itemBuilder: (context, index) {
+                    return WordCard(word: state.libraryWords[index]);
                   },
                 );
               }
