@@ -9,6 +9,7 @@ import 'package:lingora/keys.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Translate
 class TranslateCubit extends Cubit<TranslateState> {
   TranslateCubit() : super(const TranslateState());
 
@@ -192,5 +193,39 @@ Reply ONLY with valid JSON in this format:
   // Clear the current translation result
   void clearResult() {
     emit(state.copyWith(result: null, status: TranslateStatus.initial));
+  }
+}
+
+// Get translate words
+class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
+  FetchTranslatedLibraryCubit() : super(const FetchTranslatedLibraryState());
+
+  void getLibrary() async {
+    try {
+      emit(state.copyWith(status: FetchTranslatedLibraryStatus.loading));
+      //TODO update to get only words for this user
+      final List<dynamic> data =
+          await Supabase.instance.client.from('translated_words').select();
+      List<Translate> words = data.map((e) => Translate.fromJson(e)).toList();
+
+      for (final word in words) {
+        print("id: ${word.id}, "
+            "original: ${word.original}, "
+            "translated: ${word.translated}, "
+            "pos: ${word.pos}, "
+            "pronunciation: ${word.pronunciation}, "
+            "meaning: ${word.meaning}, "
+            "examples: ${word.examples}, "
+            "synonyms: ${word.synonyms}, "
+            "from: ${word.translateFrom?.code}, "
+            "to: ${word.translateTo?.code}, "
+            "createdAt: ${word.createdAt}, "
+            "updatedAt: ${word.updatedAt}, "
+            "deletedAt: ${word.deletedAt}");
+      }
+      emit(state.copyWith(status: FetchTranslatedLibraryStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: FetchTranslatedLibraryStatus.failure));
+    }
   }
 }

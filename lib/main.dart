@@ -31,7 +31,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<TranslateCubit>(
-              create: (context) => TranslateCubit()) // Translate
+              create: (context) => TranslateCubit()), // Translate
+          BlocProvider<FetchTranslatedLibraryCubit>(
+              create: (context) =>
+                  FetchTranslatedLibraryCubit()) // Get Translated words
         ],
         child: MaterialApp.router(
           theme: darkTheme,

@@ -46,3 +46,26 @@ class TranslateState {
     );
   }
 }
+
+// Get translate
+
+enum FetchTranslatedLibraryStatus { initial, loading, success, failure, empty }
+
+class FetchTranslatedLibraryState {
+  final FetchTranslatedLibraryStatus status;
+  final List<Translate> libraryWords;
+
+  const FetchTranslatedLibraryState(
+      {this.status = FetchTranslatedLibraryStatus.initial,
+      this.libraryWords = const []});
+
+  FetchTranslatedLibraryState copyWith({
+    FetchTranslatedLibraryStatus? status,
+    List<Translate>? libraryWords,
+  }) {
+    return FetchTranslatedLibraryState(
+      status: status ?? this.status,
+      libraryWords: libraryWords ?? this.libraryWords,
+    );
+  }
+}

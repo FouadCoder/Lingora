@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/extensions/theme_data.dart';
@@ -57,13 +56,6 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
             ],
           ),
           const SizedBox(height: 8),
-          Text(
-            "meaning".tr(),
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: colorScheme.outline,
-            ),
-          ),
-          const SizedBox(height: 2),
           shimmerBox(
             context,
             height: theme.shimmerHeightBodyMedium,
@@ -86,7 +78,7 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
           shimmerBox(
             context,
             height: theme.shimmerHeightBodySmall,
-            width: 70,
+            width: 80,
             radius: theme.shimmerRadiusBodySmall,
           ),
         ],

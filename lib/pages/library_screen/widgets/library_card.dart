@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/extensions/datetime_style.dart';
-import 'package:lingora/models/word.dart';
+import 'package:lingora/models/translate.dart';
 
 class WordCard extends StatelessWidget {
-  final Word word;
+  final Translate word;
 
   const WordCard({super.key, required this.word});
 
@@ -36,14 +36,14 @@ class WordCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  word.word,
+                  word.original,
                   style: theme.titleMedium,
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  word.translation,
+                  word.translated,
                   style: theme.titleMedium?.copyWith(color: Color(0xFFFF914D)),
                 ),
               ),
@@ -66,7 +66,7 @@ class WordCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              word.partOfSpeech,
+              word.pos,
               style: theme.bodySmall
                   ?.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
             ),
@@ -81,7 +81,7 @@ class WordCard extends StatelessWidget {
             height: 2,
           ),
           Text(
-            word.definition,
+            word.meaning,
             style: theme.bodyMedium,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -95,7 +95,7 @@ class WordCard extends StatelessWidget {
               color: Theme.of(context).colorScheme.onPrimary,
             ),
             child: Text(
-              word.example,
+              word.examples[0],
               style: theme.bodySmall,
             ),
           ),
@@ -104,7 +104,7 @@ class WordCard extends StatelessWidget {
             children: [
               Chip(
                 label: Text(
-                  word.category,
+                  "Test category",
                   style:
                       theme.bodySmall?.copyWith(color: colorScheme.secondary),
                 ),
@@ -113,7 +113,7 @@ class WordCard extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                word.transaltedTime.toReadableDate(),
+                word.createdAt.toReadableDate(),
                 style: theme.bodySmall?.copyWith(color: colorScheme.outline),
               ),
             ],
