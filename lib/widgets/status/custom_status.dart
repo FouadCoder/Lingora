@@ -59,7 +59,7 @@ class CustomState extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 4,
                 ),
                 // message
                 Text(

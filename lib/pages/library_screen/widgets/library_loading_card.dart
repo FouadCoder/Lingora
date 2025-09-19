@@ -21,14 +21,6 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white.withOpacity(0.2),
-            blurRadius: 5,
-            spreadRadius: 0.010,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

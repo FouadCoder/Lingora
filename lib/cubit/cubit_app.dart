@@ -204,8 +204,6 @@ class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
 
   void getLibrary() async {
     try {
-      emit(state.copyWith(status: FetchTranslatedLibraryStatus.failure));
-      return;
       // If loaded before
       if (state.status == FetchTranslatedLibraryStatus.success) {
         emit(state.copyWith(

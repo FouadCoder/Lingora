@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
@@ -96,7 +97,6 @@ class InfoCards extends StatelessWidget {
             icon: MaterialCommunityIcons.translate,
             title: 'translated'.tr(),
           ),
-          const SizedBox(height: 16),
           Align(
             alignment: isRightSide
                 ? AlignmentDirectional.centerStart
@@ -134,8 +134,6 @@ class InfoCards extends StatelessWidget {
             icon: Icons.book_outlined,
             title: 'word_info'.tr(),
           ),
-
-          const SizedBox(height: 16),
 
           // Original word
           Text(
@@ -187,10 +185,10 @@ class InfoCards extends StatelessWidget {
       constraints: BoxConstraints(
         minHeight: isDesktop || isTablet ? 200 : 100, // Minimum height
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppDimens.paddingM),
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppDimens.radiusL),
       ),
       child: Column(
         children: [
@@ -199,8 +197,6 @@ class InfoCards extends StatelessWidget {
             icon: Icons.lightbulb_outline,
             title: 'meaning'.tr(),
           ),
-
-          const SizedBox(height: 16),
 
           // Definition
           Align(
@@ -240,8 +236,6 @@ class InfoCards extends StatelessWidget {
             icon: Icons.format_quote,
             title: 'examples'.tr(),
           ),
-
-          const SizedBox(height: 16),
 
           // Example sentences
           Wrap(
@@ -288,8 +282,6 @@ class InfoCards extends StatelessWidget {
             icon: MaterialCommunityIcons.cards,
             title: 'synonyms'.tr(),
           ),
-
-          const SizedBox(height: 16),
 
           Wrap(
             spacing: 12,

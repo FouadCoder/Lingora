@@ -37,7 +37,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
     return Scaffold(
       body: BlocListener<FetchTranslatedLibraryCubit,
           FetchTranslatedLibraryState>(
-        // listenWhen: (prev, curr) => prev.status != curr.status,
         listener: (context, state) {
           if (state.status == FetchTranslatedLibraryStatus.failure) {
             showSnackBar(

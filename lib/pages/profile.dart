@@ -1,4 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
+import 'package:lingora/widgets/app_container.dart';
+import 'package:lingora/widgets/custom_swtich.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -8,8 +13,63 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final ValueNotifier<bool> darkController = ValueNotifier(false);
+  final ValueNotifier<bool> notificationsController = ValueNotifier(false);
+  final ValueNotifier<bool> soundController = ValueNotifier(false);
+
+  @override
+  void dispose() {
+    darkController.dispose();
+    notificationsController.dispose();
+    soundController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: AppContainer(
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 150,
+            ), // Todo delete this
+            // Setting
+            Container(
+              padding: EdgeInsets.all(AppDimens.paddingM),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(AppDimens.radiusL)),
+              child: Column(
+                children: [
+                  TranslatHeader(icon: Icons.settings, title: "settings".tr()),
+                  CustomSwtich(
+                      title: 'dark_mode'.tr(),
+                      description: 'dark_mode_description'.tr(),
+                      onChanged: (value) {},
+                      controller: darkController,
+                      icon: Icons.nightlight_round),
+                  CustomSwtich(
+                      title: 'push_notifications'.tr(),
+                      description: 'push_notifications_description'.tr(),
+                      onChanged: (value) {},
+                      controller: notificationsController,
+                      icon: Icons.notifications),
+                  CustomSwtich(
+                      title: 'sound_effects'.tr(),
+                      description: 'sound_effects_description'.tr(),
+                      onChanged: (value) {},
+                      controller: soundController,
+                      icon: Icons.volume_up),
+                ],
+              ),
+            )
+
+            // Aaccount
+          ],
+        ),
+      )),
+    );
   }
 }
