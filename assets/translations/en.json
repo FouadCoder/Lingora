@@ -32,6 +32,10 @@
     "translated": "Translated",
     "no_word": "Not available",
     "no_translation": "No Translation",
-    "translated_at": "Translated at"
+    "translated_at": "Translated at",
+    "error_words_title": "Something went wrong!",
+    "error_words_message": "We couldn’t load your library words right now. Please try again",
+    "try_again": "Try again",
+    "snack_word_error": "Couldn’t load your library words"
 
 }

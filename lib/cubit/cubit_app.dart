@@ -200,13 +200,28 @@ Reply ONLY with valid JSON in this format:
 class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
   FetchTranslatedLibraryCubit() : super(const FetchTranslatedLibraryState());
 
+  Map libraryWords = {};
+
   void getLibrary() async {
     try {
+      emit(state.copyWith(status: FetchTranslatedLibraryStatus.failure));
+      return;
+      // If loaded before
+      if (state.status == FetchTranslatedLibraryStatus.success) {
+        emit(state.copyWith(
+            status: FetchTranslatedLibraryStatus.success,
+            libraryWords: List<Translate>.from(libraryWords.values)));
+        return;
+      }
       emit(state.copyWith(status: FetchTranslatedLibraryStatus.loading));
       //TODO update to get only words for this user
       final List<dynamic> data =
           await Supabase.instance.client.from('translated_words').select();
       List<Translate> words = data.map((e) => Translate.fromJson(e)).toList();
+      // To load same list from local again next time
+      for (final w in words) {
+        libraryWords[w.id] = w;
+      }
 
       for (final word in words) {
         print("id: ${word.id}, "
