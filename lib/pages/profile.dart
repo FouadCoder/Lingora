@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/extensions/theme_data.dart';
 import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/app_container.dart';
@@ -68,12 +70,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 TranslatHeader(icon: Icons.person, title: "account".tr()),
                 CustomButton(
-                    text: "",
+                    text: "export_data".tr(),
                     color: Colors.transparent,
-                    border: Border.all(
-                        color: Theme.of(context).colorScheme.outline, width: 2),
+                    border:
+                        Border.all(color: Theme.of(context).border, width: 2),
                     function: () {},
-                    borderRadius: 8,
+                    icon: Icons.book,
+                    borderRadius: 12,
+                    textColor: Theme.of(context).textTheme.bodyMedium?.color ??
+                        Colors.black),
+                SizedBox(
+                  height: AppDimens.spacingM,
+                ),
+                CustomButton(
+                    text: "logout".tr(),
+                    color: Colors.transparent,
+                    border:
+                        Border.all(color: Theme.of(context).border, width: 2),
+                    function: () {},
+                    icon: Icons.logout,
+                    iconColor: Theme.of(context).colorScheme.error,
+                    borderRadius: 12,
                     textColor: Theme.of(context).textTheme.bodyMedium?.color ??
                         Colors.black),
               ],

@@ -3,7 +3,7 @@ import 'package:lingora/core/platfrom.dart';
 
 class AppDimens {
   // Spacing
-
+  static const double spacingS = 4;
   static const double spacingM = 8;
   static const double spacingL = 16;
 

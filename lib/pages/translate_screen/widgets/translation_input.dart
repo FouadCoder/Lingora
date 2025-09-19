@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/cubit/cubit_app.dart';
+import 'package:lingora/extensions/theme_data.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/textfield.dart';
@@ -96,6 +97,7 @@ class TranslationInput extends StatelessWidget {
                 onChange: (value) {
                   context.read<TranslateCubit>().updateInput(value);
                 },
+                borderColor: theme.border,
               ),
               const SizedBox(height: 12),
 

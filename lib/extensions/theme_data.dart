@@ -20,3 +20,16 @@ extension ShimmerTheme on ThemeData {
   double get shimmerRadiusBodyMedium => 10;
   double get shimmerRadiusBodySmall => 8;
 }
+
+extension BorderTheme on ThemeData {
+  // Border colors for dark/light backgrounds
+  Color get borderDark => brightness == Brightness.light
+      ? Color(0xFF2E2E2E) // light theme fallback
+      : Color(0xFF1A1A1A); // dark theme
+
+  Color get border =>
+      brightness == Brightness.light ? Color(0xFFCCCCCC) : Color(0xFF242424);
+
+  Color get borderLight =>
+      brightness == Brightness.light ? Color(0xFFE0E0E0) : Color(0xFF2E2E2E);
+}
