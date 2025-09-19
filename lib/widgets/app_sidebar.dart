@@ -98,8 +98,8 @@ class AppSidebar extends StatelessWidget {
           label: "library".tr(),
         ),
         SidebarXItem(
-          icon: Icons.flag_rounded,
-          label: "practice".tr(),
+          icon: Icons.insert_chart_outlined,
+          label: "Insights".tr(),
         ),
         SidebarXItem(
           icon: Icons.person_rounded,

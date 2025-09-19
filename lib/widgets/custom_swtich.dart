@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lingora/core/app_constants.dart';
 
 class CustomSwtich extends StatelessWidget {
   final String title;
@@ -21,7 +22,8 @@ class CustomSwtich extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimens.radiusXL)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Row(
@@ -31,7 +33,7 @@ class CustomSwtich extends StatelessWidget {
               child: Icon(
                 icon,
                 color: theme.colorScheme.primary,
-                size: 20,
+                size: AppDimens.iconM,
               ),
             ),
             const SizedBox(width: 12),

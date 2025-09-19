@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/extensions/theme_data.dart';
 import 'package:lingora/widgets/app_card.dart';
@@ -49,7 +50,7 @@ class TranslationInput extends StatelessWidget {
                         icon: Icon(
                           Icons.camera_alt_outlined,
                           color: theme.colorScheme.outline,
-                          size: 20,
+                          size: AppDimens.iconM,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
@@ -62,7 +63,7 @@ class TranslationInput extends StatelessWidget {
                         icon: Icon(
                           Icons.mic_outlined,
                           color: theme.colorScheme.outline,
-                          size: 20,
+                          size: AppDimens.iconM,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
@@ -75,7 +76,7 @@ class TranslationInput extends StatelessWidget {
                         icon: Icon(
                           Icons.volume_up_outlined,
                           color: theme.colorScheme.outline,
-                          size: 20,
+                          size: AppDimens.iconM,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),

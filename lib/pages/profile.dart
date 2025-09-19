@@ -76,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Border.all(color: Theme.of(context).border, width: 2),
                     function: () {},
                     icon: Icons.book,
-                    borderRadius: 12,
+                    borderRadius: AppDimens.radiusL,
                     textColor: Theme.of(context).textTheme.bodyMedium?.color ??
                         Colors.black),
                 SizedBox(
@@ -90,9 +90,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     function: () {},
                     icon: Icons.logout,
                     iconColor: Theme.of(context).colorScheme.error,
-                    borderRadius: 12,
-                    textColor: Theme.of(context).textTheme.bodyMedium?.color ??
-                        Colors.black),
+                    borderRadius: AppDimens.radiusL,
+                    textColor: Theme.of(context).colorScheme.error),
               ],
             ))
           ],

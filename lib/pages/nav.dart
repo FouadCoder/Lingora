@@ -24,13 +24,14 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   late int currentPage;
   late List pages;
-  final controllerSideBar =
-      SidebarXController(selectedIndex: 0, extended: true); // For side bar
+  late SidebarXController controllerSideBar;
 
   @override
   void initState() {
     super.initState();
     currentPage = widget.indexPage;
+    controllerSideBar =
+        SidebarXController(selectedIndex: widget.indexPage, extended: true);
 
     pages = [
       HomeScreen(),
@@ -81,8 +82,8 @@ class _NavState extends State<Nav> {
                     selectedColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SalomonBottomBarItem(
-                    icon: const Icon(Icons.flag_rounded),
-                    title: Text("practice".tr()),
+                    icon: const Icon(Icons.insert_chart_outlined),
+                    title: Text("Insights".tr()),
                     selectedColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SalomonBottomBarItem(

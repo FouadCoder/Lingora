@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
     required this.textColor,
     this.gradient,
     this.height,
-    this.borderRadius = 16,
+    this.borderRadius = AppDimens.radiusXL,
     this.isLoading = false,
     this.border,
     this.width,
