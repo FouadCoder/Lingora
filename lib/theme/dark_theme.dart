@@ -18,7 +18,7 @@ ThemeData darkTheme = ThemeData(
     onPrimary: AppColors.bgLight,
     onSecondary: AppColors.text,
     onSurface: AppColors.bgLight,
-    outline: AppColors.textMuted,
+    outline: AppColors.bg,
     shadow: Colors.white24,
   ),
 

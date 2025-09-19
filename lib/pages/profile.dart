@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
+import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/app_container.dart';
+import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/custom_swtich.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -36,11 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 150,
             ), // Todo delete this
             // Setting
-            Container(
-              padding: EdgeInsets.all(AppDimens.paddingM),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(AppDimens.radiusL)),
+            AppCard(
               child: Column(
                 children: [
                   TranslatHeader(icon: Icons.settings, title: "settings".tr()),
@@ -64,9 +61,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       icon: Icons.volume_up),
                 ],
               ),
-            )
-
+            ),
             // Aaccount
+            AppCard(
+                child: Column(
+              children: [
+                TranslatHeader(icon: Icons.person, title: "account".tr()),
+                CustomButton(
+                    text: "",
+                    color: Colors.transparent,
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.outline, width: 2),
+                    function: () {},
+                    borderRadius: 8,
+                    textColor: Theme.of(context).textTheme.bodyMedium?.color ??
+                        Colors.black),
+              ],
+            ))
           ],
         ),
       )),

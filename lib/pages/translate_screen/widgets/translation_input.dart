@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/cubit/cubit_app.dart';
+import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/textfield.dart';
 
@@ -24,12 +25,7 @@ class TranslationInput extends StatelessWidget {
     return Column(
       children: [
         // English Input Box
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(12),
-          ),
+        AppCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -42,6 +42,9 @@
     "push_notifications": "Push Notifications",
     "push_notifications_description": "Reminders and achievements",
     "sound_effects": "Sound Effects",
-    "sound_effects_description": "Quiz feedback and pronunciations"
+    "sound_effects_description": "Quiz feedback and pronunciations",
+    "account": "Account",
+    "export_data": "Export my vocabulary list",
+    "Logout": "Log Out"
 
 }

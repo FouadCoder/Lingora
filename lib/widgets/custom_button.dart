@@ -12,6 +12,7 @@ class CustomButton extends StatelessWidget {
   final Gradient? gradient;
   final Border? border;
   final bool isLoading;
+  final IconData? icon;
 
   const CustomButton({
     super.key,
@@ -21,10 +22,11 @@ class CustomButton extends StatelessWidget {
     required this.textColor,
     this.gradient,
     this.height,
-    this.borderRadius = 8,
+    this.borderRadius = 16,
     this.isLoading = false,
     this.border,
     this.width,
+    this.icon,
   });
 
   @override

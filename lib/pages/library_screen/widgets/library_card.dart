@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/extensions/datetime_style.dart';
 import 'package:lingora/models/translate.dart';
+import 'package:lingora/widgets/app_card.dart';
 
 class WordCard extends StatelessWidget {
   final Translate word;
@@ -20,7 +20,7 @@ class WordCard extends StatelessWidget {
         "textColor": colorScheme.secondary,
       },
       {
-        "text": "Test category",
+        "text": "Test category ",
         "textColor": colorScheme.secondary,
       },
       {
@@ -29,13 +29,7 @@ class WordCard extends StatelessWidget {
       },
     ];
 
-    return Container(
-      padding: EdgeInsets.all(AppDimens.paddingM),
-      margin: EdgeInsets.only(top: 8),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-      ),
+    return AppCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -100,19 +94,18 @@ class WordCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          Row(
+          Wrap(
+            spacing: 4,
+            runSpacing: 4,
             children: List.generate(chipsData.length, (index) {
-              return Container(
-                margin: EdgeInsets.symmetric(horizontal: 2),
-                child: Chip(
-                  label: Text(
-                    chipsData[index]["text"],
-                    style: theme.bodySmall
-                        ?.copyWith(color: chipsData[index]["textColor"]),
-                  ),
-                  backgroundColor: colorScheme.onPrimary,
-                  side: BorderSide.none,
+              return Chip(
+                label: Text(
+                  chipsData[index]["text"],
+                  style: theme.bodySmall
+                      ?.copyWith(color: chipsData[index]["textColor"]),
                 ),
+                backgroundColor: colorScheme.onPrimary,
+                side: BorderSide.none,
               );
             }),
           )
