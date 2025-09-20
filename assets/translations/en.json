@@ -45,6 +45,8 @@
     "sound_effects_description": "Quiz feedback and pronunciations",
     "account": "Account",
     "export_data": "Export my vocabulary list",
-    "Logout": "Log Out"
+    "Logout": "Log Out",
+    "next": "Next",
+    "get_statred": "Get started"
 
 }
