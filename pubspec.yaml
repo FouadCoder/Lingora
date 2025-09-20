@@ -32,8 +32,8 @@ dependencies:
   hive_flutter: ^1.1.0
   lottie: ^3.2.0
   smooth_page_indicator: ^1.2.1
-  # flutter_launcher_icons: ^0.14.4
-  # flutter_native_splash: ^2.4.4
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.4
   # speech_to_text: ^7.0.0
   # audioplayers: ^6.4.0
   # awesome_notifications: ^0.10.0
@@ -51,3 +51,19 @@ flutter:
     - assets/
     - assets/translations/
     - assets/animation/
+    - assets/logo/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/logo/lingora_logo.png"
+  adaptive_icon_background: "#000000" # Pure black background
+  adaptive_icon_foreground: "assets/logo/lingora_logo.png" # For adaptive icons on Android
+
+flutter_native_splash:
+  color: "#000000" # Pure black background
+  image: "assets/logo/lingora_logo.png" # Path to your splash image
+  android: true
+  ios: true
+  web: false
