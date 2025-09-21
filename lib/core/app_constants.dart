@@ -13,7 +13,7 @@ class AppDimens {
 
   // Spacing for content and titles
   static const double titleContentBetween = 24.0;
-  static const double cardInternal = 16.0;
+  static const double sectionSpacing = 16.0;
 
   // Smaller spacing values for elements
   static const double buttonTagHorizontal = 8.0;

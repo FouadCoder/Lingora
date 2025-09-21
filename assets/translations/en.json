@@ -58,7 +58,10 @@
     "login_button": "Login",
     "login_with_google": "Login with Google",
     "no_account": "Don't have an account?",
+    "have_account": "Do you have an account?",
     "signup_button": "Sign Up",
+    "signup_with_google": "Sign up with Google",
+
 
     "error_invalid_email": "Please enter a valid email address",
     "error_email_format": "Email must contain '@' and end correctly",

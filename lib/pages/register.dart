@@ -7,14 +7,14 @@ import 'package:lingora/widgets/app_container.dart';
 import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/textfield.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -73,28 +73,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 )),
 
             SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-
-            // Forget password ?
-            Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: GestureDetector(
-                onTap: () {},
-                child: Text(
-                  'forgot_password'.tr(),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            ),
-
-            SizedBox(
               height: AppDimens.sectionBetween,
             ),
 
-            // Login Button
+            // Sign up Button
             CustomButton(
-                text: 'login_button'.tr(),
+                text: 'signup_button'.tr(),
                 color: Theme.of(context).colorScheme.secondary,
                 function: () {},
                 textColor: Colors.white),
@@ -105,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             // Google
             CustomButton(
-                text: 'login_with_google'.tr(),
+                text: 'signup_with_google'.tr(),
                 color: Colors.transparent,
                 border: Border.all(
                     width: 2, color: Theme.of(context).colorScheme.outline),
@@ -120,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'no_account'.tr(),
+                  'have_account'.tr(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(
@@ -128,10 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    context.go('/register');
+                    context.go('/login');
                   },
                   child: Text(
-                    'signup_button'.tr(),
+                    'login_button'.tr(),
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.secondary),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lingora/core/app_constants.dart';
 
 class AppContainer extends StatelessWidget {
   final Widget child;
@@ -11,8 +12,7 @@ class AppContainer extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1200), // cap width
         child: Padding(
-          padding:
-              const EdgeInsets.only(top: 35, right: 16, left: 16, bottom: 10),
+          padding: EdgeInsets.all(AppDimens.wrapperPadding),
           child: child,
         ),
       ),
