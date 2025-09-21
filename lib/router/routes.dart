@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lingora/pages/login.dart';
 import 'package:lingora/pages/nav.dart';
 import 'package:lingora/pages/onboarding/onboarding_screen.dart';
 
@@ -35,5 +36,6 @@ GoRouter router = GoRouter(initialLocation: '/onboarding', routes: [
       ),
     ),
   ]),
-  GoRoute(path: '/onboarding', builder: (context, state) => OnboardingScreen())
+  GoRoute(path: '/onboarding', builder: (context, state) => OnboardingScreen()),
+  GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
 ]);

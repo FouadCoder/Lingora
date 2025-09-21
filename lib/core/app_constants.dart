@@ -7,6 +7,18 @@ class AppDimens {
   static const double spacingM = 8;
   static const double spacingL = 16;
 
+  static const double wrapperPadding = 24.0;
+  static const double sectionBetween = 32.0;
+  static const double subElementBetween = 8.0;
+
+  // Spacing for content and titles
+  static const double titleContentBetween = 24.0;
+  static const double cardInternal = 16.0;
+
+  // Smaller spacing values for elements
+  static const double buttonTagHorizontal = 8.0;
+  static const double elementBetween = 6.0;
+
   // Container padding
   static const double paddingS = 8;
   static const double paddingM = 16;

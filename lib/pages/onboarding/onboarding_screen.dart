@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lingora/pages/onboarding/onboarding_widget.dart';
 import 'package:lingora/widgets/app_container.dart';
 import 'package:lingora/widgets/custom_button.dart';
@@ -101,7 +102,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           duration: const Duration(milliseconds: 600),
                           curve: Curves.fastOutSlowIn,
                         );
+                        return;
                       }
+                      context.go('/login');
                     },
                     textColor: Colors.white),
               ),

@@ -91,7 +91,8 @@ class TranslationInput extends StatelessWidget {
               // Input Text Field
               CustomTextfield(
                 controller: controller,
-                hintText: 'translation_hint'.tr(),
+                label: '',
+                hint: 'translation_hint'.tr(),
                 highLight: false,
                 highlightText: '',
                 height: 72,

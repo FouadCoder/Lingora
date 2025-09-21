@@ -4,7 +4,7 @@ import 'package:lingora/core/app_constants.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final Color color;
-  final Color textColor;
+  final Color? textColor;
   final bool isLoading;
   final VoidCallback function;
   final double? width;
@@ -53,7 +53,8 @@ class CustomButton extends StatelessWidget {
                   width: 24,
                   child: CircularProgressIndicator(
                     strokeWidth: 4,
-                    valueColor: AlwaysStoppedAnimation<Color>(textColor),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).colorScheme.secondary),
                   ),
                 )
               : Row(
@@ -67,13 +68,14 @@ class CustomButton extends StatelessWidget {
                             iconColor ?? Theme.of(context).colorScheme.primary,
                       ),
                     SizedBox(
-                      width: AppDimens.spacingM,
+                      width: AppDimens.elementBetween,
                     ),
                     // button text
                     Text(
                       text,
                       style: TextStyle(
-                        color: textColor,
+                        color: textColor ??
+                            Theme.of(context).textTheme.bodyMedium!.color,
                         fontSize: AppButtonSizes.textSize(context),
                         fontWeight: FontWeight.w600,
                       ),
