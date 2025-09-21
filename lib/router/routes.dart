@@ -1,11 +1,16 @@
 import 'package:go_router/go_router.dart';
+import 'package:lingora/pages/auth_gate.dart';
 import 'package:lingora/pages/login.dart';
 import 'package:lingora/pages/nav.dart';
 import 'package:lingora/pages/onboarding/onboarding_screen.dart';
 import 'package:lingora/pages/register.dart';
 
 GoRouter router = GoRouter(initialLocation: '/onboarding', routes: [
-  GoRoute(path: '/', builder: (context, state) => Nav(), routes: [
+  GoRoute(
+    path: '/',
+    builder: (context, state) => AuthGate(),
+  ),
+  GoRoute(path: '/nav', builder: (context, state) => Nav(), routes: [
     GoRoute(
       path: '/home',
       builder: (context, state) => Nav(

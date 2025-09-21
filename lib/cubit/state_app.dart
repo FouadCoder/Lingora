@@ -1,6 +1,8 @@
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/models/translate.dart';
 
+// Translate
+
 enum TranslateStatus { initial, loading, success, failure, empty }
 
 class TranslateState {
@@ -66,6 +68,35 @@ class FetchTranslatedLibraryState {
     return FetchTranslatedLibraryState(
       status: status ?? this.status,
       libraryWords: libraryWords ?? this.libraryWords,
+    );
+  }
+}
+
+// Auth
+
+enum AuthAppStatus {
+  initial,
+  loading,
+  success,
+  successLogin,
+  error,
+  wrongPassword,
+  noInternet,
+  unauthenticated
+}
+
+class AuthAppState {
+  final AuthAppStatus status;
+
+  AuthAppState({
+    this.status = AuthAppStatus.initial,
+  });
+
+  AuthAppState copyWith({
+    AuthAppStatus? status,
+  }) {
+    return AuthAppState(
+      status: status ?? this.status,
     );
   }
 }

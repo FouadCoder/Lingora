@@ -17,11 +17,13 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -68,6 +70,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: passwordController,
                 hint: 'password_hint'.tr(),
                 label: 'password_label'.tr(),
+                prefixIcon: Icon(
+                  Icons.shield,
+                )),
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
+
+            CustomTextfield(
+                controller: confirmPasswordController,
+                hint: 'confirm_password_hint'.tr(),
+                label: 'confirm_password_label'.tr(),
                 prefixIcon: Icon(
                   Icons.shield,
                 )),

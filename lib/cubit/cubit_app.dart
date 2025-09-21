@@ -243,3 +243,77 @@ class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
     }
   }
 }
+
+// Auth
+class AuthAppCubit extends Cubit<AuthAppState> {
+  AuthAppCubit() : super(AuthAppState());
+
+  // Login
+  Future<void> login(String email, String password) async {
+    try {
+      emit(state.copyWith(status: AuthAppStatus.loading));
+      await Supabase.instance.client.auth.signInWithPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+      emit(state.copyWith(status: AuthAppStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: AuthAppStatus.error));
+    }
+  }
+
+  // Sign up
+  Future<void> signUp(String email, String password) async {
+    try {
+      emit(state.copyWith(status: AuthAppStatus.loading));
+      await Supabase.instance.client.auth.signUp(
+        email: email.trim(),
+        password: password.trim(),
+      );
+      emit(state.copyWith(status: AuthAppStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: AuthAppStatus.error));
+    }
+  }
+
+  // Logout
+  Future<void> logout() async {
+    try {
+      emit(state.copyWith(status: AuthAppStatus.loading));
+      await Supabase.instance.client.auth.signOut();
+      emit(state.copyWith(status: AuthAppStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: AuthAppStatus.error));
+    }
+  }
+
+  // Launch
+  Future<void> launch() async {
+    try {
+      emit(state.copyWith(status: AuthAppStatus.loading));
+
+      // Check current user
+      final session = Supabase.instance.client.auth.currentSession;
+      if (session != null) {
+        emit(state.copyWith(
+          status: AuthAppStatus.success,
+        ));
+      } else {
+        emit(state.copyWith(status: AuthAppStatus.unauthenticated));
+      }
+
+      // Listen to changes
+      Supabase.instance.client.auth.onAuthStateChange.listen((authState) {
+        if (authState.session != null) {
+          emit(state.copyWith(
+            status: AuthAppStatus.success,
+          ));
+        } else {
+          emit(state.copyWith(status: AuthAppStatus.unauthenticated));
+        }
+      });
+    } catch (e) {
+      emit(state.copyWith(status: AuthAppStatus.unauthenticated));
+    }
+  }
+}

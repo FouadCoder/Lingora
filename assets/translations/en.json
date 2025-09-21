@@ -54,6 +54,8 @@
     "email_hint": "Write your email",
     "password_label": "Password",
     "password_hint": "Write your password",
+    "confirm_password_label": "Confirm Password",
+    "confirm_password_hint": "Re-enter your password",
     "forgot_password": "Forgot password?",
     "login_button": "Login",
     "login_with_google": "Login with Google",

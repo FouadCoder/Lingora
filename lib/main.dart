@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
               create: (context) => TranslateCubit()), // Translate
           BlocProvider<FetchTranslatedLibraryCubit>(
               create: (context) =>
-                  FetchTranslatedLibraryCubit()) // Get Translated words
+                  FetchTranslatedLibraryCubit()), // Get Translated words
+          BlocProvider<AuthAppCubit>(
+              create: (context) => AuthAppCubit()) // Auth
         ],
         child: MaterialApp.router(
           theme: darkTheme,
