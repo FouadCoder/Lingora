@@ -1,15 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/material.dart';
 
-void showSnackBar(BuildContext context, String title, String message,
-    IconData icon, Color iconColor) {
+void showSnackBar(
+  BuildContext context, {
+  String? title,
+  String? message,
+  IconData? icon,
+  Color? iconColor,
+}) {
   Flushbar(
-    title: title.isEmpty ? null : title,
-    message: message,
-    icon: Icon(
-      icon,
-      color: iconColor,
-    ),
+    title: (title?.isEmpty ?? true) ? null : title,
+    message: message, // if it's null, Flushbar just won’t show it
+    icon: icon != null ? Icon(icon, color: iconColor) : null,
     margin: const EdgeInsets.all(10),
     padding: const EdgeInsets.all(16),
     duration: const Duration(seconds: 4),

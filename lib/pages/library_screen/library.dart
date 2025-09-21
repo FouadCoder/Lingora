@@ -41,10 +41,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
           if (state.status == FetchTranslatedLibraryStatus.failure) {
             showSnackBar(
               context,
-              '',
-              'snack_word_error'.tr(),
-              Icons.error_outline,
-              Theme.of(context).colorScheme.error,
+              message: 'snack_word_error'.tr(),
+              icon: Icons.error_outline,
+              iconColor: Theme.of(context).colorScheme.error,
             );
           }
         },

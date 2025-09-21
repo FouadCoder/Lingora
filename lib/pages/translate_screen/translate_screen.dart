@@ -48,34 +48,35 @@ class _TranslateScreenState extends State<TranslateScreen> {
         listenWhen: (prev, curr) => prev.status != curr.status,
         listener: (context, state) {
           final theme = Theme.of(context);
+
           switch (state.status) {
             case TranslateStatus.empty:
               showSnackBar(
                 context,
-                '',
-                'translation_input_empty'.tr(),
-                Icons.info_outline,
-                theme.colorScheme.primary,
+                message: 'translation_input_empty'.tr(),
+                icon: Icons.info_outline,
+                iconColor: theme.colorScheme.primary,
               );
               break;
+
             case TranslateStatus.failure:
               showSnackBar(
                 context,
-                '',
-                'translation_failed'.tr(),
-                Icons.error_outline,
-                theme.colorScheme.error,
+                message: 'translation_failed'.tr(),
+                icon: Icons.error_outline,
+                iconColor: theme.colorScheme.error,
               );
               break;
+
             case TranslateStatus.success:
               showSnackBar(
                 context,
-                '',
-                'translation_success_points'.tr(),
-                Icons.verified_rounded,
-                theme.colorScheme.secondary,
+                message: 'translation_success_points'.tr(),
+                icon: Icons.verified_rounded,
+                iconColor: theme.colorScheme.secondary,
               );
               break;
+
             case TranslateStatus.loading:
             case TranslateStatus.initial:
               break;
