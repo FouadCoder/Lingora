@@ -282,7 +282,7 @@ class AuthAppCubit extends Cubit<AuthAppState> {
             password: password.trim(),
           )
           .timeout(Duration(seconds: 15));
-      emit(state.copyWith(status: AuthAppStatus.successLogin));
+      emit(state.copyWith(status: AuthAppStatus.success));
     }
     //* Auth Errors
     on AuthException catch (e) {
@@ -349,7 +349,7 @@ class AuthAppCubit extends Cubit<AuthAppState> {
             password: password.trim(),
           )
           .timeout(const Duration(seconds: 15));
-      emit(state.copyWith(status: AuthAppStatus.successLogin));
+      emit(state.copyWith(status: AuthAppStatus.success));
     }
     //* Auth Error
     on AuthException catch (e) {
@@ -394,6 +394,7 @@ class AuthAppCubit extends Cubit<AuthAppState> {
   Future<void> launch() async {
     try {
       emit(state.copyWith(status: AuthAppStatus.loading));
+      print("AP AUTH WORKING =================================");
 
       // Check current user
       final session = Supabase.instance.client.auth.currentSession;

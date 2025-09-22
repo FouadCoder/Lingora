@@ -45,7 +45,6 @@
     "sound_effects_description": "Quiz feedback and pronunciations",
     "account": "Account",
     "export_data": "Export my vocabulary list",
-    "Logout": "Log Out",
     "next": "Next",
 
 
@@ -74,6 +73,10 @@
     "error_wrong_confirm_password": "Passwords do not match",
     "error_no_internet": "No internet connection. Please try again",
     "error_wrong_password": "Incorrect password",
-    "error_account_exists": "An account with this email already exists"
+    "error_account_exists": "An account with this email already exists",
+    "stay": "Stay",
+    "isThisGoodbye": "Is this goodbye?",
+    "leaveMessage": "We've loved having you around. Logging out means we'll have to say goodbye — for now.If you decide to leave, know that we'll miss you and can't wait for your return",
+    "logout": "Logout"
 
 }

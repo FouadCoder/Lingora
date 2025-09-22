@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<AuthAppCubit, AuthAppState>(
       listener: (context, state) {
         // Success
-        if (state.status == AuthAppStatus.successLogin && context.mounted) {
+        if (state.status == AuthAppStatus.success && context.mounted) {
           context.go('/nav');
         }
         // Error

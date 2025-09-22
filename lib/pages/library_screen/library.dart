@@ -9,7 +9,7 @@ import 'package:lingora/pages/library_screen/widgets/library_card.dart';
 import 'package:lingora/pages/library_screen/widgets/library_loading_card.dart';
 import 'package:lingora/widgets/app_container.dart';
 import 'package:lingora/widgets/flushbar.dart';
-import 'package:lingora/widgets/status/custom_status.dart';
+import 'package:lingora/widgets/custom_status.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
