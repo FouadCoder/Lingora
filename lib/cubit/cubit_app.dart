@@ -393,30 +393,22 @@ class AuthAppCubit extends Cubit<AuthAppState> {
   // Launch
   Future<void> launch() async {
     try {
-      emit(state.copyWith(status: AuthAppStatus.loading));
+      emit(state.copyWith(status: AuthAppStatus.checkingSession));
       print("AP AUTH WORKING =================================");
 
       // Check current user
       final session = Supabase.instance.client.auth.currentSession;
       if (session != null) {
+        print("Current User ===============================");
         emit(state.copyWith(
-          status: AuthAppStatus.success,
+          status: AuthAppStatus.authenticated,
         ));
       } else {
+        print("unauthenticated User ===============================");
         emit(state.copyWith(status: AuthAppStatus.unauthenticated));
       }
-
-      // Listen to changes
-      Supabase.instance.client.auth.onAuthStateChange.listen((authState) {
-        if (authState.session != null) {
-          emit(state.copyWith(
-            status: AuthAppStatus.success,
-          ));
-        } else {
-          emit(state.copyWith(status: AuthAppStatus.unauthenticated));
-        }
-      });
     } catch (e) {
+      print("ERROR User ===============================");
       emit(state.copyWith(status: AuthAppStatus.unauthenticated));
     }
   }

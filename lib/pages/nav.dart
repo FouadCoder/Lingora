@@ -83,7 +83,7 @@ class _NavState extends State<Nav> {
                   ),
                   SalomonBottomBarItem(
                     icon: const Icon(Icons.insert_chart_outlined),
-                    title: Text("Insights".tr()),
+                    title: Text("insights".tr()),
                     selectedColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SalomonBottomBarItem(

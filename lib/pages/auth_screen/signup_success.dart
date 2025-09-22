@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lingora/widgets/app_container.dart';
 import 'package:lingora/widgets/custom_status.dart';
 
@@ -39,7 +40,9 @@ class _SignupSuccessScreenState extends State<SignupSuccessScreen>
         message: 'signup_success_message'.tr(),
         buttonText: 'signup_success_button'.tr(),
         color: Theme.of(context).colorScheme.secondary,
-        onTap: () {},
+        onTap: () {
+          context.go('/nav');
+        },
         isFullScreen: true,
         titleColor: Theme.of(context).colorScheme.secondary,
       )),

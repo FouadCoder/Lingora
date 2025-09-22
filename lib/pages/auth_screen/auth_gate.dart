@@ -5,32 +5,40 @@ import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/nav.dart';
 
-class AuthGate extends StatefulWidget {
-  const AuthGate({
-    super.key,
-  });
-
-  @override
-  State<AuthGate> createState() => _AuthGateState();
-}
-
-class _AuthGateState extends State<AuthGate> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<AuthAppCubit>().launch();
-  }
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthAppCubit, AuthAppState>(
-      builder: (context, state) {
-        if (state.status == AuthAppStatus.success) {
-          return Nav();
-        } else {
-          return const LoginScreen();
-        }
-      },
+    return Scaffold(
+      body: BlocBuilder<AuthAppCubit, AuthAppState>(
+        buildWhen: (prev, curr) {
+          final shouldBuild = curr.status == AuthAppStatus.checkingSession ||
+              curr.status == AuthAppStatus.authenticated ||
+              curr.status == AuthAppStatus.unauthenticated;
+
+          print("UI buildWhen =============================== $shouldBuild");
+          return shouldBuild;
+        },
+        builder: (context, state) {
+          print("UI WORKING  ===============================");
+          if (state.status == AuthAppStatus.checkingSession) {
+            print("UI LOADING  ===============================");
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary,
+                strokeWidth: 4,
+              ),
+            );
+          } else if (state.status == AuthAppStatus.authenticated) {
+            print("UI NAV  ===============================");
+            return const Nav();
+          } else {
+            print("UI LOGIN   ===============================");
+            return const LoginScreen();
+          }
+        },
+      ),
     );
   }
 }

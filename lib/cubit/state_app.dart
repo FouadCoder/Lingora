@@ -78,8 +78,9 @@ enum AuthAppStatus {
   initial,
   loading,
   success,
-  successLogin,
   error,
+  checkingSession,
+  authenticated,
   unauthenticated,
 }
 
