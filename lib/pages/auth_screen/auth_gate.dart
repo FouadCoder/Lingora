@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/login.dart';
+import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/nav.dart';
 
 class AuthGate extends StatefulWidget {

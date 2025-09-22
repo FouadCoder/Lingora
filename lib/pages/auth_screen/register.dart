@@ -125,7 +125,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   color: Colors.transparent,
                   border: Border.all(
                       width: 2, color: Theme.of(context).colorScheme.outline),
-                  function: () {},
+                  function: () {
+                    context.push('/signup_success'); //TODO remove this
+                  },
                   textColor: Colors.white),
 
               SizedBox(

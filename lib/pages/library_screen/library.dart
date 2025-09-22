@@ -98,7 +98,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         textColor: Colors.white,
                         color: Theme.of(context).colorScheme.secondary,
                         animation: "assets/animation/error_boat_orange.json",
-                        spaceInScreen: 0.0,
                         title: 'error_words_title'.tr(),
                         message: 'error_words_message'.tr(),
                         buttonText: 'try_again'.tr(),
