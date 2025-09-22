@@ -31,26 +31,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  final Map<AuthErrorType, String> authErrorMessages = {
+    AuthErrorType.emptyData: 'error_empty_data'.tr(),
+    AuthErrorType.invalidEmail: 'error_invalid_email'.tr(),
+    AuthErrorType.shortPassword: 'error_short_password'.tr(),
+    AuthErrorType.wrongConfirmPassword: 'error_wrong_confirm_password'.tr(),
+    AuthErrorType.noInternet: 'error_no_internet'.tr(),
+    AuthErrorType.wrongPassword: 'error_wrong_password'.tr(),
+    AuthErrorType.accountExists: 'error_account_exists'.tr(),
+  };
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: BlocListener<AuthAppCubit, AuthAppState>(
-        listener: (context, state) {
-          // Success
-          if (state.status == AuthAppStatus.success) {
-          }
-          // Error
-          else if (state.status == AuthAppStatus.error) {
-            showSnackBar(
-              context,
-              message: 'error_words_title'.tr(),
-              icon: Icons.error_outline,
-              iconColor: Theme.of(context).colorScheme.error,
-            );
-          }
-        },
-        child: AppContainer(
+    return BlocListener<AuthAppCubit, AuthAppState>(
+      listener: (context, state) {
+        // Success
+        if (state.status == AuthAppStatus.successLogin && context.mounted) {
+          context.go('/signup_success');
+        }
+        // Error
+        else if (state.status == AuthAppStatus.error) {
+          final message =
+              authErrorMessages[state.errorType] ?? 'error_words_title'.tr();
+
+          showSnackBar(
+            context,
+            message: message,
+            icon: Icons.error_outline,
+            iconColor: Theme.of(context).colorScheme.error,
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: AppContainer(
             child: SingleChildScrollView(
           child: Column(
             children: [
@@ -109,11 +123,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               // Sign up Button
-              CustomButton(
-                  text: 'signup_button'.tr(),
-                  color: Theme.of(context).colorScheme.secondary,
-                  function: () {},
-                  textColor: Colors.white),
+              BlocBuilder<AuthAppCubit, AuthAppState>(
+                builder: (context, state) {
+                  bool isLoading = state.status == AuthAppStatus.loading;
+                  return CustomButton(
+                      text: 'signup_button'.tr(),
+                      isLoading: isLoading,
+                      color: Theme.of(context).colorScheme.secondary,
+                      function: () {
+                        context.read<AuthAppCubit>().signUp(
+                            emailController.text,
+                            passwordController.text,
+                            confirmPasswordController.text);
+                      },
+                      textColor: Colors.white);
+                },
+              ),
+              // I Love you 🖤 :)
+              //* I love you more :)
 
               SizedBox(
                 height: AppDimens.sectionSpacing,
@@ -125,9 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   color: Colors.transparent,
                   border: Border.all(
                       width: 2, color: Theme.of(context).colorScheme.outline),
-                  function: () {
-                    context.push('/signup_success'); //TODO remove this
-                  },
+                  function: () {},
                   textColor: Colors.white),
 
               SizedBox(

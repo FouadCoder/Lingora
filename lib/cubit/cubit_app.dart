@@ -252,26 +252,129 @@ class AuthAppCubit extends Cubit<AuthAppState> {
   Future<void> login(String email, String password) async {
     try {
       emit(state.copyWith(status: AuthAppStatus.loading));
-      await Supabase.instance.client.auth.signInWithPassword(
-        email: email.trim(),
-        password: password.trim(),
-      );
-      emit(state.copyWith(status: AuthAppStatus.success));
+
+      // Empty
+      if (email.isEmpty || password.isEmpty) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error, errorType: AuthErrorType.emptyData));
+        return;
+      }
+
+      // Email
+      if (!email.trim().endsWith('@gmail.com')) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error,
+            errorType: AuthErrorType.invalidEmail));
+        return;
+      }
+
+      // Password
+      if (password.length < 8) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error,
+            errorType: AuthErrorType.shortPassword));
+        return;
+      }
+
+      await Supabase.instance.client.auth
+          .signInWithPassword(
+            email: email.trim(),
+            password: password.trim(),
+          )
+          .timeout(Duration(seconds: 15));
+      emit(state.copyWith(status: AuthAppStatus.successLogin));
+    }
+    //* Auth Errors
+    on AuthException catch (e) {
+      if (e.message.contains("Invalid login credentials")) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error,
+            errorType: AuthErrorType.wrongPassword));
+      } else if (e.message.contains("SocketException") ||
+          e.message.contains("Failed host lookup")) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error, errorType: AuthErrorType.noInternet));
+      }
+    }
+    //* Time out
+    on TimeoutException catch (_) {
+      emit(state.copyWith(
+          status: AuthAppStatus.error, errorType: AuthErrorType.noInternet));
     } catch (e) {
       emit(state.copyWith(status: AuthAppStatus.error));
     }
   }
 
   // Sign up
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(
+      String email, String password, String confirmPassword) async {
     try {
       emit(state.copyWith(status: AuthAppStatus.loading));
-      await Supabase.instance.client.auth.signUp(
-        email: email.trim(),
-        password: password.trim(),
-      );
-      emit(state.copyWith(status: AuthAppStatus.success));
-    } catch (e) {
+
+      // Empty
+      if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error, errorType: AuthErrorType.emptyData));
+        return;
+      }
+
+      // Email
+      if (!email.trim().endsWith('@gmail.com')) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error,
+            errorType: AuthErrorType.invalidEmail));
+        return;
+      }
+
+      // Password
+      if (password.length < 8) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error,
+            errorType: AuthErrorType.shortPassword));
+        return;
+      }
+
+      // Confirm password
+      if (password != confirmPassword) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error,
+            errorType: AuthErrorType.wrongConfirmPassword));
+        return;
+      }
+
+      // Sign up
+      await Supabase.instance.client.auth
+          .signUp(
+            email: email.trim(),
+            password: password.trim(),
+          )
+          .timeout(const Duration(seconds: 15));
+      emit(state.copyWith(status: AuthAppStatus.successLogin));
+    }
+    //* Auth Error
+    on AuthException catch (e) {
+      // Account Exist
+      if (e.message.contains("User already registered")) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error,
+            errorType: AuthErrorType.accountExists));
+      }
+      // No internet
+      else if (e.message.contains("SocketException") ||
+          e.message.contains("Failed host lookup")) {
+        emit(state.copyWith(
+            status: AuthAppStatus.error, errorType: AuthErrorType.noInternet));
+      }
+    }
+    //* Time out
+    on TimeoutException catch (_) {
+      emit(state.copyWith(
+          status: AuthAppStatus.error, errorType: AuthErrorType.noInternet));
+    }
+
+    //* Other error
+    catch (e) {
+      print("Sign Up Error ======================== $e");
       emit(state.copyWith(status: AuthAppStatus.error));
     }
   }

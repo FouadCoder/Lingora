@@ -80,23 +80,35 @@ enum AuthAppStatus {
   success,
   successLogin,
   error,
+  unauthenticated,
+}
+
+enum AuthErrorType {
   wrongPassword,
+  wrongConfirmPassword,
+  shortPassword,
+  emptyData,
+  invalidEmail,
   noInternet,
-  unauthenticated
+  accountExists
 }
 
 class AuthAppState {
   final AuthAppStatus status;
+  final AuthErrorType? errorType; // only set if status == error
 
   AuthAppState({
     this.status = AuthAppStatus.initial,
+    this.errorType,
   });
 
   AuthAppState copyWith({
     AuthAppStatus? status,
+    AuthErrorType? errorType,
   }) {
     return AuthAppState(
       status: status ?? this.status,
+      errorType: errorType ?? this.errorType,
     );
   }
 }

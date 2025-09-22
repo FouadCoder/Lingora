@@ -67,8 +67,13 @@
     "signup_success_title": "Account Created",
     "signup_success_message": "Welcome aboard! Your account is ready — start exploring, practicing, and growing your language skills today.",
     "signup_success_button": "Let's Get Started",
+    "error_empty_data": "Please fill out all required fields",
     "error_invalid_email": "Please enter a valid email address",
     "error_email_format": "Email must contain '@' and end correctly",
-    "error_short_password": "Password must be at least 8 characters long"
+    "error_short_password": "Password must be at least 8 characters long",
+    "error_wrong_confirm_password": "Passwords do not match",
+    "error_no_internet": "No internet connection. Please try again",
+    "error_wrong_password": "Incorrect password",
+    "error_account_exists": "An account with this email already exists"
 
 }

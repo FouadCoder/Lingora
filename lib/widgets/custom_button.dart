@@ -48,15 +48,15 @@ class CustomButton extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: isLoading
-              ? SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 4,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).colorScheme.secondary),
-                  ),
-                )
+              ? loadingWidget ??
+                  SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 4,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -70,6 +70,7 @@ class CustomButton extends StatelessWidget {
                     SizedBox(
                       width: AppDimens.elementBetween,
                     ),
+
                     // button text
                     Text(
                       text,
