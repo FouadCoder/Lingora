@@ -67,6 +67,9 @@ class LanguagePickerSheet extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(
+            height: AppDimens.titleContentBetween,
+          ),
 
           // Languages list
           Expanded(

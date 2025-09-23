@@ -17,7 +17,6 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.all(AppDimens.paddingM),
-      margin: const EdgeInsets.only(top: 2, bottom: 8),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
@@ -36,7 +35,7 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
                   radius: theme.shimmerRadiusTitleMedium,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: AppDimens.subElementBetween),
               Expanded(
                 child: shimmerBox(
                   context,
@@ -47,7 +46,7 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: AppDimens.sectionSpacing),
           shimmerBox(
             context,
             height: theme.shimmerHeightBodyMedium,
@@ -66,7 +65,7 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
             width: double.infinity,
             radius: theme.shimmerRadiusBodyMedium,
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: AppDimens.sectionSpacing),
           shimmerBox(
             context,
             height: theme.shimmerHeightBodySmall,

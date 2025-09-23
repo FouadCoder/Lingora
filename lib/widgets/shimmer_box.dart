@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/extensions/theme_data.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -16,7 +17,7 @@ Widget shimmerBox(
     baseColor: theme.shimmerBase,
     highlightColor: theme.shimmerHighlight,
     child: Container(
-      margin: EdgeInsets.only(top: 5),
+      margin: EdgeInsets.only(top: AppDimens.subElementBetween),
       width: w,
       height: h,
       decoration: BoxDecoration(

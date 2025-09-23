@@ -92,6 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     TranslatHeader(
                         icon: Icons.settings, title: "settings".tr()),
+                    SizedBox(
+                      height: AppDimens.sectionSpacing,
+                    ),
                     CustomSwtich(
                         title: 'dark_mode'.tr(),
                         description: 'dark_mode_description'.tr(),
@@ -113,11 +116,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: AppDimens.sectionSpacing,
+              ),
               // Aaccount
               AppCard(
                   child: Column(
                 children: [
                   TranslatHeader(icon: Icons.person, title: "account".tr()),
+                  SizedBox(
+                    height: AppDimens.sectionSpacing,
+                  ),
                   CustomButton(
                       text: "export_data".tr(),
                       color: Colors.transparent,
@@ -130,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Theme.of(context).textTheme.bodyMedium?.color ??
                               Colors.black),
                   SizedBox(
-                    height: AppDimens.spacingM,
+                    height: AppDimens.sectionSpacing,
                   ),
                   // Logout
                   BlocBuilder<AuthAppCubit, AuthAppState>(

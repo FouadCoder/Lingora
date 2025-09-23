@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
@@ -59,14 +60,14 @@ class InfoCards extends StatelessWidget {
               gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: getCrossAxisCount(),
               ),
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 2,
+              crossAxisSpacing: AppDimens.cardBetween,
+              mainAxisSpacing: AppDimens.cardBetween,
               itemBuilder: (context, index) {
                 return availableCards[index];
               },
             ),
             SizedBox(
-              height: 2,
+              height: AppDimens.cardBetween,
             ),
             // Examples
             if (hasExamples)
@@ -91,6 +92,10 @@ class InfoCards extends StatelessWidget {
               icon: MaterialCommunityIcons.translate,
               title: 'translated'.tr(),
             ),
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
+            // Translated words
             Align(
               alignment: isRightSide
                   ? AlignmentDirectional.centerStart
@@ -126,6 +131,10 @@ class InfoCards extends StatelessWidget {
               title: 'word_info'.tr(),
             ),
 
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
+
             // Original word
             Text(
               model.original,
@@ -134,8 +143,9 @@ class InfoCards extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
-            const SizedBox(height: 8),
+            SizedBox(
+              height: AppDimens.elementBetween,
+            ),
 
             // Part of Speech
             Text(
@@ -145,7 +155,9 @@ class InfoCards extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 12),
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
 
             // Pronunciation
             Text(
@@ -155,7 +167,9 @@ class InfoCards extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 4),
+            SizedBox(
+              height: AppDimens.elementBetween,
+            ),
 
             Text(
               model.pronunciation,
@@ -182,6 +196,9 @@ class InfoCards extends StatelessWidget {
             TranslatHeader(
               icon: Icons.lightbulb_outline,
               title: 'meaning'.tr(),
+            ),
+            SizedBox(
+              height: AppDimens.sectionSpacing,
             ),
 
             // Definition
@@ -217,16 +234,18 @@ class InfoCards extends StatelessWidget {
               icon: Icons.format_quote,
               title: 'examples'.tr(),
             ),
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
 
             // Example sentences
             Wrap(
-              spacing: 4, // horizontal gap between items
-              runSpacing: 4, // vertical gap between rows
+              spacing: AppDimens.buttonTagHorizontal,
+              runSpacing: AppDimens.buttonTagHorizontal,
               alignment: isRightSide ? WrapAlignment.end : WrapAlignment.start,
               children: model.examples.map((example) {
                 return Container(
                   padding: const EdgeInsets.all(8),
-                  margin: const EdgeInsets.only(top: 8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: Theme.of(context).colorScheme.onPrimary,
@@ -258,10 +277,13 @@ class InfoCards extends StatelessWidget {
               icon: MaterialCommunityIcons.cards,
               title: 'synonyms'.tr(),
             ),
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
 
             Wrap(
-              spacing: 12,
-              runSpacing: 12,
+              spacing: AppDimens.buttonTagHorizontal,
+              runSpacing: AppDimens.buttonTagHorizontal,
               children: model.synonyms
                   .map((word) => _synonymChip(word, context))
                   .toList(),

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/extensions/datetime_style.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/widgets/app_card.dart';
@@ -30,86 +31,87 @@ class WordCard extends StatelessWidget {
     ];
 
     return AppCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    word.original,
-                    style: theme.titleMedium,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    word.translated,
-                    style:
-                        theme.titleMedium?.copyWith(color: Color(0xFFFF914D)),
-                  ),
-                ],
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.volume_up),
-                color: colorScheme.outline,
-                style: IconButton.styleFrom(
-                  hoverColor: colorScheme.onSurface,
-                  focusColor: colorScheme.onSurface,
+      child: GestureDetector(
+        onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      word.original,
+                      style: theme.titleMedium,
+                    ),
+                    SizedBox(width: AppDimens.subElementBetween),
+                    Text(
+                      word.translated,
+                      style:
+                          theme.titleMedium?.copyWith(color: Color(0xFFFF914D)),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
-          const SizedBox(height: 8),
-          // definition
-          Text(
-            "meaning".tr(),
-            style: theme.bodyMedium?.copyWith(color: colorScheme.outline),
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Text(
-            word.meaning,
-            style: theme.bodyMedium,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.volume_up),
+                  color: colorScheme.outline,
+                  style: IconButton.styleFrom(
+                    hoverColor: colorScheme.onSurface,
+                    focusColor: colorScheme.onSurface,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: AppDimens.sectionSpacing),
+            // definition
+            Text(
+              "meaning".tr(),
+              style: theme.bodyMedium?.copyWith(color: colorScheme.outline),
+            ),
+            SizedBox(height: AppDimens.elementBetween),
+            Text(
+              word.meaning,
+              style: theme.bodyMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(height: AppDimens.sectionSpacing),
 
-          // Example
-          Container(
-            padding: const EdgeInsets.all(12),
-            margin: const EdgeInsets.only(top: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.onPrimary,
+            // Example
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              child: Text(
+                word.examples[0],
+                style: theme.bodySmall,
+              ),
             ),
-            child: Text(
-              word.examples[0],
-              style: theme.bodySmall,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Wrap(
-            spacing: 4,
-            runSpacing: 4,
-            children: List.generate(chipsData.length, (index) {
-              return Chip(
-                label: Text(
-                  chipsData[index]["text"],
-                  style: theme.bodySmall
-                      ?.copyWith(color: chipsData[index]["textColor"]),
-                ),
-                backgroundColor: colorScheme.onPrimary,
-                side: BorderSide.none,
-              );
-            }),
-          )
-        ],
+            SizedBox(height: AppDimens.sectionSpacing),
+            Wrap(
+              spacing: AppDimens.buttonTagHorizontal,
+              runSpacing: 4,
+              children: List.generate(chipsData.length, (index) {
+                return Chip(
+                  label: Text(
+                    chipsData[index]["text"],
+                    style: theme.bodySmall
+                        ?.copyWith(color: chipsData[index]["textColor"]),
+                  ),
+                  backgroundColor: colorScheme.onPrimary,
+                  side: BorderSide.none,
+                );
+              }),
+            )
+          ],
+        ),
       ),
     );
   }

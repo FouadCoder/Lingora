@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
@@ -43,49 +44,50 @@ class _TranslateScreenState extends State<TranslateScreen> {
     final isDesktop = AppPlatform.isDesktop(context);
     final isTablet = AppPlatform.isTablet(context);
 
-    return Scaffold(
-      body: BlocListener<TranslateCubit, TranslateState>(
-        listenWhen: (prev, curr) => prev.status != curr.status,
-        listener: (context, state) {
-          final theme = Theme.of(context);
+    return BlocListener<TranslateCubit, TranslateState>(
+      listenWhen: (prev, curr) => prev.status != curr.status,
+      listener: (context, state) {
+        final theme = Theme.of(context);
 
-          switch (state.status) {
-            case TranslateStatus.empty:
-              showSnackBar(
-                context,
-                message: 'translation_input_empty'.tr(),
-                icon: Icons.info_outline,
-                iconColor: theme.colorScheme.primary,
-              );
-              break;
+        switch (state.status) {
+          case TranslateStatus.empty:
+            showSnackBar(
+              context,
+              message: 'translation_input_empty'.tr(),
+              icon: Icons.info_outline,
+              iconColor: theme.colorScheme.primary,
+            );
+            break;
 
-            case TranslateStatus.failure:
-              showSnackBar(
-                context,
-                message: 'translation_failed'.tr(),
-                icon: Icons.error_outline,
-                iconColor: theme.colorScheme.error,
-              );
-              break;
+          case TranslateStatus.failure:
+            showSnackBar(
+              context,
+              message: 'translation_failed'.tr(),
+              icon: Icons.error_outline,
+              iconColor: theme.colorScheme.error,
+            );
+            break;
 
-            case TranslateStatus.success:
-              showSnackBar(
-                context,
-                message: 'translation_success_points'.tr(),
-                icon: Icons.verified_rounded,
-                iconColor: theme.colorScheme.secondary,
-              );
-              break;
+          case TranslateStatus.success:
+            showSnackBar(
+              context,
+              message: 'translation_success_points'.tr(),
+              icon: Icons.verified_rounded,
+              iconColor: theme.colorScheme.secondary,
+            );
+            break;
 
-            case TranslateStatus.loading:
-            case TranslateStatus.initial:
-              break;
-          }
-        },
-        child: AppContainer(
+          case TranslateStatus.loading:
+          case TranslateStatus.initial:
+            break;
+        }
+      },
+      child: Scaffold(
+        body: AppContainer(
           child: SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(height: AppDimens.sectionBetween),
                 // Language Selector
                 LanguageSelector(
                   translateFrom: translateFrom,
@@ -118,7 +120,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   },
                 ),
 
-                const SizedBox(height: 16),
+                SizedBox(height: AppDimens.sectionBetween),
+
                 BlocBuilder<TranslateCubit, TranslateState>(
                   builder: (context, state) {
                     bool isLoading = state.status == TranslateStatus.loading;
@@ -134,8 +137,9 @@ class _TranslateScreenState extends State<TranslateScreen> {
                             context.read<TranslateCubit>().translate();
                           },
                         ),
+                        SizedBox(height: AppDimens.sectionBetween),
 
-                        // Info Cards
+                        // Info
                         if (isSuccess)
                           InfoCards(
                             isDesktop: isDesktop,

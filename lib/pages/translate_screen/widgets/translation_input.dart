@@ -55,7 +55,7 @@ class TranslationInput extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: AppDimens.buttonTagHorizontal),
                       IconButton(
                         onPressed: () {
                           // TODO: Implement microphone functionality
@@ -68,7 +68,7 @@ class TranslationInput extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: AppDimens.buttonTagHorizontal),
                       IconButton(
                         onPressed: () {
                           // TODO: Implement speaker functionality
@@ -86,7 +86,7 @@ class TranslationInput extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 12),
+              SizedBox(height: AppDimens.sectionSpacing),
 
               // Input Text Field
               CustomTextfield(
@@ -101,7 +101,8 @@ class TranslationInput extends StatelessWidget {
                 },
                 borderColor: theme.border,
               ),
-              const SizedBox(height: 12),
+
+              SizedBox(height: AppDimens.sectionSpacing),
 
               // Translate Button
               Align(

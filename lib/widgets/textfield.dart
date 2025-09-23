@@ -97,6 +97,10 @@ class CustomTextfield extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(
               hintText: hint,
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
               prefixIcon: prefixIcon,
               prefixIconColor: prefixIconColor ?? theme.colorScheme.primary,
               alignLabelWithHint: true,

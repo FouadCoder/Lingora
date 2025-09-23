@@ -21,11 +21,10 @@ class CustomSwtich extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimens.radiusXL)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Row(
           children: [
             Container(
@@ -36,7 +35,7 @@ class CustomSwtich extends StatelessWidget {
                 size: AppDimens.iconM,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: AppDimens.elementBetween),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +46,7 @@ class CustomSwtich extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(width: AppDimens.elementBetween),
                   Text(
                     description,
                     style: theme.textTheme.bodySmall,
@@ -57,6 +56,7 @@ class CustomSwtich extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(width: AppDimens.elementBetween),
             ValueListenableBuilder<bool>(
               valueListenable: controller,
               builder: (context, value, _) {

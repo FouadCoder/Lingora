@@ -52,7 +52,7 @@ class LanguageSelector extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: .0),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -75,7 +75,7 @@ class LanguageSelector extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppDimens.spacingL),
+          SizedBox(width: AppDimens.buttonTagHorizontal),
 
           // Swap Button
           GestureDetector(
@@ -93,7 +93,7 @@ class LanguageSelector extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppDimens.spacingL),
+          SizedBox(width: AppDimens.buttonTagHorizontal),
 
           // Target Language
           GestureDetector(

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
@@ -63,8 +64,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         SliverSimpleGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: getCrossAxisCount(),
                     ),
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 8,
+                    crossAxisSpacing: AppDimens.cardBetween,
+                    mainAxisSpacing: AppDimens.cardBetween,
                     itemBuilder: (context, index) {
                       return LibraryLoadingCard();
                     },
@@ -81,8 +82,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         SliverSimpleGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: getCrossAxisCount(),
                     ),
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 8,
+                    crossAxisSpacing: AppDimens.cardBetween,
+                    mainAxisSpacing: AppDimens.cardBetween,
                     itemBuilder: (context, index) {
                       return WordCard(word: state.libraryWords[index]);
                     },

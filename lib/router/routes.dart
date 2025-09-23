@@ -5,6 +5,7 @@ import 'package:lingora/pages/auth_screen/signup_success.dart';
 import 'package:lingora/pages/nav.dart';
 import 'package:lingora/pages/onboarding/onboarding_screen.dart';
 import 'package:lingora/pages/auth_screen/register.dart';
+import 'package:lingora/pages/word_details/word_details_screen.dart';
 
 GoRouter router = GoRouter(initialLocation: '/', routes: [
   GoRoute(
@@ -13,31 +14,35 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
   ),
   GoRoute(path: '/nav', builder: (context, state) => Nav(), routes: [
     GoRoute(
-      path: '/home',
+      path: 'home',
       builder: (context, state) => Nav(
         indexPage: 0,
       ),
     ),
     GoRoute(
-      path: '/translate',
+      path: 'translate',
       builder: (context, state) => Nav(
         indexPage: 1,
       ),
     ),
     GoRoute(
-      path: '/library',
-      builder: (context, state) => Nav(
-        indexPage: 2,
-      ),
-    ),
+        path: 'library',
+        builder: (context, state) => Nav(
+              indexPage: 2,
+            ),
+        routes: [
+          GoRoute(
+              path: 'word_details',
+              builder: (context, state) => WordDetailsScreen())
+        ]),
     GoRoute(
-      path: '/insights',
+      path: 'insights',
       builder: (context, state) => Nav(
         indexPage: 3,
       ),
     ),
     GoRoute(
-      path: '/profile',
+      path: 'profile',
       builder: (context, state) => Nav(
         indexPage: 4,
       ),
