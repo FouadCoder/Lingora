@@ -79,15 +79,18 @@ class TranslateCubit extends Cubit<TranslateState> {
   Future fetchWordsDetails(String from, String to) async {
     final prompt = '''
 Act as a dictionary. Explain "${state.inputText.trim()}".
-- Include pos (part of speech) and pronunciation as top-level fields
+
+- "original": corrected version of the input (fix casing, typos, etc.)
+- pos (part of speech) and pronunciation as top-level fields
 - meaning: short definition in "$to"
 - examples: 2–3 sentences in "$to" (plain text only, no language codes)
 - synonyms: list in "$from"
 
 Reply ONLY with valid JSON in this format:
 {
-  "pos": "...",           // e.g., "noun", "verb"
-  "pronunciation": "...", // e.g., "/nɪs/"
+  "original": "...",        // corrected form of the input
+  "pos": "...",             // e.g., "noun", "verb"
+  "pronunciation": "...",   // e.g., "/nɪs/"
   "meaning": "...",
   "examples": ["...", "..."],
   "synonyms": ["...", "..."]
@@ -159,7 +162,7 @@ Reply ONLY with valid JSON in this format:
       String translated = await fetchTranslateWords(from, to);
       final detailsWord = await fetchWordsDetails(from, to);
       final data = {
-        "original": state.inputText.trim(),
+        "original": detailsWord["original"],
         "translated": translated,
         "meaning": detailsWord["meaning"],
         "examples": detailsWord["examples"],
