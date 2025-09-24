@@ -5,7 +5,8 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/helper/direction_helper.dart';
-import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
+import 'package:lingora/pages/translate_screen/widgets/translate_cards.dart';
+import 'package:lingora/widgets/header.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/widgets/app_card.dart';
 
@@ -34,8 +35,8 @@ class InfoCards extends StatelessWidget {
     bool isRightSideText = isRightSide(model.translateTo!.code);
 
     final List<Widget> availableCards = [
-      if (hasTranslated) _buildTranslatedCard(theme, context, isRightSideText),
-      if (hasWord) _buildWordInfoCard(theme, context),
+      if (hasTranslated) WordTranslatedCard(model: model),
+      if (hasWord) WordInfoCard(model: model),
       if (hasMeaning) _buildMeaningCard(theme, context, isRightSideText),
       if (hasSynonyms) _buildSynonymsCard(theme, context),
     ];
@@ -78,111 +79,6 @@ class InfoCards extends StatelessWidget {
     );
   }
 
-  Widget _buildTranslatedCard(
-      TextTheme theme, BuildContext context, bool isRightSide) {
-    return AppCard(
-      child: Container(
-        constraints: BoxConstraints(
-          minHeight: isDesktop || isTablet ? 200 : 100,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TranslatHeader(
-              icon: MaterialCommunityIcons.translate,
-              title: 'translated'.tr(),
-            ),
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-            // Translated words
-            Align(
-              alignment: isRightSide
-                  ? AlignmentDirectional.centerStart
-                  : AlignmentDirectional.centerEnd,
-              child: Text(
-                model.translated,
-                style: theme.titleMedium?.copyWith(
-                  height: 1.4,
-                ),
-                textAlign: isRightSide ? TextAlign.right : TextAlign.left,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildWordInfoCard(TextTheme theme, BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: isDesktop || isTablet ? 200 : 100, // Minimum height
-      ),
-      child: AppCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with icon
-            TranslatHeader(
-              icon: Icons.book_outlined,
-              title: 'word_info'.tr(),
-            ),
-
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-
-            // Original word
-            Text(
-              model.original,
-              style: theme.bodyMedium?.copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: AppDimens.elementBetween,
-            ),
-
-            // Part of Speech
-            Text(
-              model.pos,
-              style: theme.bodySmall?.copyWith(
-                color: colorScheme.outline,
-              ),
-            ),
-
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-
-            // Pronunciation
-            Text(
-              'pronunciation'.tr(),
-              style: theme.bodySmall?.copyWith(
-                color: colorScheme.outline,
-              ),
-            ),
-
-            SizedBox(
-              height: AppDimens.elementBetween,
-            ),
-
-            Text(
-              model.pronunciation,
-              style: theme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildMeaningCard(
       TextTheme theme, BuildContext context, bool isRightSide) {
     return Container(
@@ -193,7 +89,7 @@ class InfoCards extends StatelessWidget {
         child: Column(
           children: [
             // Header with icon
-            TranslatHeader(
+            Header(
               icon: Icons.lightbulb_outline,
               title: 'meaning'.tr(),
             ),
@@ -230,7 +126,7 @@ class InfoCards extends StatelessWidget {
         child: Column(
           children: [
             // Header with icon
-            TranslatHeader(
+            Header(
               icon: Icons.format_quote,
               title: 'examples'.tr(),
             ),
@@ -273,7 +169,7 @@ class InfoCards extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header with icon
-            TranslatHeader(
+            Header(
               icon: MaterialCommunityIcons.cards,
               title: 'synonyms'.tr(),
             ),

@@ -76,7 +76,7 @@ class CustomTextfield extends StatelessWidget {
           ],
         ),
 
-        SizedBox(height: AppDimens.elementBetween),
+        if (label.isNotEmpty) SizedBox(height: AppDimens.elementBetween),
 
         // TextField Container
         Container(

@@ -129,7 +129,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         state.result != null;
                     return Column(
                       children: [
-                        // Translation Input/Output
+                        // Translation Input
                         TranslationInput(
                           controller: _inputController,
                           isLoading: isLoading,

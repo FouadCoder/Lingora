@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/extensions/datetime_style.dart';
 import 'package:lingora/models/translate.dart';
@@ -31,8 +32,10 @@ class WordCard extends StatelessWidget {
     ];
 
     return AppCard(
-      child: GestureDetector(
-        onTap: () {},
+      child: InkWell(
+        onTap: () {
+          context.push('/nav/library/word_details', extra: word);
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

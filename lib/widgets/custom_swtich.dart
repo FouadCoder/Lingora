@@ -21,6 +21,7 @@ class CustomSwtich extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Card(
+      margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimens.radiusXL)),
       child: Padding(

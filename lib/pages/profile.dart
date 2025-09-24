@@ -6,7 +6,7 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/extensions/theme_data.dart';
-import 'package:lingora/pages/translate_screen/widgets/translate_header.dart';
+import 'package:lingora/widgets/header.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/app_container.dart';
 import 'package:lingora/widgets/custom_alert.dart';
@@ -90,8 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               AppCard(
                 child: Column(
                   children: [
-                    TranslatHeader(
-                        icon: Icons.settings, title: "settings".tr()),
+                    Header(icon: Icons.settings, title: "settings".tr()),
                     SizedBox(
                       height: AppDimens.sectionSpacing,
                     ),
@@ -123,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               AppCard(
                   child: Column(
                 children: [
-                  TranslatHeader(icon: Icons.person, title: "account".tr()),
+                  Header(icon: Icons.person, title: "account".tr()),
                   SizedBox(
                     height: AppDimens.sectionSpacing,
                   ),

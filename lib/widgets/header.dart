@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 
-class TranslatHeader extends StatelessWidget {
+class Header extends StatelessWidget {
   final IconData icon;
   final String title;
-  const TranslatHeader({super.key, required this.icon, required this.title});
+  const Header({super.key, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {

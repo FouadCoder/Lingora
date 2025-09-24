@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lingora/models/translate.dart';
 import 'package:lingora/pages/auth_screen/auth_gate.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/auth_screen/signup_success.dart';
@@ -33,7 +34,8 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
         routes: [
           GoRoute(
               path: 'word_details',
-              builder: (context, state) => WordDetailsScreen())
+              builder: (context, state) =>
+                  WordDetailsScreen(model: state.extra as Translate))
         ]),
     GoRoute(
       path: 'insights',
