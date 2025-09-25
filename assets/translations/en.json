@@ -83,6 +83,8 @@
     "isThisGoodbye": "Is this goodbye?",
     "leaveMessage": "We've loved having you around. Logging out means we'll have to say goodbye — for now.If you decide to leave, know that we'll miss you and can't wait for your return",
     "logout": "Logout",
-    "category": "Category"
+    "category": "Category",
+    "empty_library_title": "No saved words yet",
+    "empty_library_message": "Translate and save words, and they’ll show up here for you to review anytime."
 
 }

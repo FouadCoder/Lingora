@@ -156,12 +156,13 @@ Reply ONLY with valid JSON in this format:
       }
       emit(state.copyWith(status: TranslateStatus.loading));
       print("Start loading =====================================");
-
+      final userId = Supabase.instance.client.auth.currentUser?.id;
       final from = (state.sourceLanguage.code);
       final to = (state.targetLanguage.code);
       String translated = await fetchTranslateWords(from, to);
       final detailsWord = await fetchWordsDetails(from, to);
       final data = {
+        "user_id": userId,
         "original": detailsWord["original"],
         "translated": translated,
         "meaning": detailsWord["meaning"],
@@ -208,37 +209,50 @@ class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
   void getLibrary() async {
     try {
       // If loaded before
-      if (state.status == FetchTranslatedLibraryStatus.success) {
+      if (state.status == FetchTranslatedLibraryStatus.success ||
+          state.status == FetchTranslatedLibraryStatus.empty) {
+        // Empty
+        if (state.status == FetchTranslatedLibraryStatus.empty) {
+          emit(state.copyWith(status: FetchTranslatedLibraryStatus.empty));
+          return;
+        }
+
+        // Success
         emit(state.copyWith(
             status: FetchTranslatedLibraryStatus.success,
             libraryWords: List<Translate>.from(libraryWords.values)));
         return;
       }
+
       emit(state.copyWith(status: FetchTranslatedLibraryStatus.loading));
-      //TODO update to get only words for this user
-      final List<dynamic> data =
-          await Supabase.instance.client.from('translated_words').select();
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      // If user is not logged in
+      if (userId == null) {
+        emit(state.copyWith(
+          status: FetchTranslatedLibraryStatus.failure,
+        ));
+        return;
+      }
+
+      // Get
+      final List<dynamic> data = await Supabase.instance.client
+          .from('translated_words')
+          .select()
+          .eq('user_id', userId);
       List<Translate> words = data.map((e) => Translate.fromJson(e)).toList();
       // To load same list from local again next time
       for (final w in words) {
         libraryWords[w.id] = w;
       }
 
-      for (final word in words) {
-        print("id: ${word.id}, "
-            "original: ${word.original}, "
-            "translated: ${word.translated}, "
-            "pos: ${word.pos}, "
-            "pronunciation: ${word.pronunciation}, "
-            "meaning: ${word.meaning}, "
-            "examples: ${word.examples}, "
-            "synonyms: ${word.synonyms}, "
-            "from: ${word.translateFrom?.code}, "
-            "to: ${word.translateTo?.code}, "
-            "createdAt: ${word.createdAt}, "
-            "updatedAt: ${word.updatedAt}, "
-            "deletedAt: ${word.deletedAt}");
+      // If empty
+      if (words.isEmpty) {
+        emit(state.copyWith(
+          status: FetchTranslatedLibraryStatus.empty,
+        ));
+        return;
       }
+
       emit(state.copyWith(
           status: FetchTranslatedLibraryStatus.success, libraryWords: words));
     } catch (e) {

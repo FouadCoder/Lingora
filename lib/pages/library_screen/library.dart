@@ -90,24 +90,36 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   );
                 }
 
+                // Empty
+                else if (state.status == FetchTranslatedLibraryStatus.empty) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: CustomState(
+                      color: Theme.of(context).colorScheme.secondary,
+                      animation: "assets/animation/empty_box_character.json",
+                      title: 'empty_library_title'.tr(),
+                      message: 'empty_library_message'.tr(),
+                      titleColor: Theme.of(context).colorScheme.secondary,
+                    ),
+                  );
+                }
+
                 // Error
                 else if (state.status == FetchTranslatedLibraryStatus.failure) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
-                    child: Center(
-                      child: CustomState(
-                        textColor: Colors.white,
-                        color: Theme.of(context).colorScheme.secondary,
-                        animation: "assets/animation/error_boat_orange.json",
-                        title: 'error_words_title'.tr(),
-                        message: 'error_words_message'.tr(),
-                        buttonText: 'try_again'.tr(),
-                        onTap: () {
-                          context
-                              .read<FetchTranslatedLibraryCubit>()
-                              .getLibrary();
-                        },
-                      ),
+                    child: CustomState(
+                      textColor: Colors.white,
+                      color: Theme.of(context).colorScheme.secondary,
+                      animation: "assets/animation/error_boat_orange.json",
+                      title: 'error_words_title'.tr(),
+                      message: 'error_words_message'.tr(),
+                      buttonText: 'try_again'.tr(),
+                      onTap: () {
+                        context
+                            .read<FetchTranslatedLibraryCubit>()
+                            .getLibrary();
+                      },
                     ),
                   );
                 }
