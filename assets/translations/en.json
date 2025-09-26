@@ -85,6 +85,6 @@
     "logout": "Logout",
     "category": "Category",
     "empty_library_title": "No saved words yet",
-    "empty_library_message": "Translate and save words, and they’ll show up here for you to review anytime."
-
+    "empty_library_message": "Translate and save words, and they’ll show up here for you to review anytime",
+    "translating": "Translating..."
 }

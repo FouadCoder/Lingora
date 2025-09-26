@@ -299,6 +299,10 @@ class AuthAppCubit extends Cubit<AuthAppState> {
             password: password.trim(),
           )
           .timeout(Duration(seconds: 15));
+
+      // Create profile & Analytics & Check if exist
+      await createProfileAndAnalytics();
+
       emit(state.copyWith(status: AuthAppStatus.success));
     }
     //* Auth Errors
@@ -318,7 +322,54 @@ class AuthAppCubit extends Cubit<AuthAppState> {
       emit(state.copyWith(
           status: AuthAppStatus.error, errorType: AuthErrorType.noInternet));
     } catch (e) {
+      print("Error ============================= $e");
+      final user = Supabase.instance.client.auth.currentUser;
+      if (user != null) {
+        await Supabase.instance.client.auth.signOut();
+      }
       emit(state.copyWith(status: AuthAppStatus.error));
+    }
+  }
+
+  // Create Profile & Analytics for new user
+  Future<void> createProfileAndAnalytics() async {
+    // Profile
+    final String? userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId == null) {
+      return;
+    }
+    bool profileExist = false;
+    bool analyticsExist = false;
+
+    final data = await Supabase.instance.client
+        .from('profiles')
+        .select()
+        .eq('id', userId)
+        .maybeSingle();
+    if (data != null) {
+      profileExist = true;
+    }
+
+    if (!profileExist) {
+      await Supabase.instance.client.from('profiles').upsert({
+        'id': userId,
+      });
+    }
+
+    // Analytics
+    final analyticsData = await Supabase.instance.client
+        .from('user_analytics')
+        .select()
+        .eq('user_id', userId)
+        .maybeSingle();
+    if (analyticsData != null) {
+      analyticsExist = true;
+    }
+
+    if (!analyticsExist) {
+      await Supabase.instance.client
+          .from('user_analytics')
+          .upsert({'user_id': userId, 'total_translations': 0});
     }
   }
 
@@ -366,6 +417,9 @@ class AuthAppCubit extends Cubit<AuthAppState> {
             password: password.trim(),
           )
           .timeout(const Duration(seconds: 15));
+
+      // Create profile & Analytics
+      await createProfileAndAnalytics();
       emit(state.copyWith(status: AuthAppStatus.success));
     }
     //* Auth Error
@@ -392,6 +446,11 @@ class AuthAppCubit extends Cubit<AuthAppState> {
     //* Other error
     catch (e) {
       print("Sign Up Error ======================== $e");
+      // Logout if error happened to avoid missing the profile
+      final user = Supabase.instance.client.auth.currentUser;
+      if (user != null) {
+        await Supabase.instance.client.auth.signOut();
+      }
       emit(state.copyWith(status: AuthAppStatus.error));
     }
   }

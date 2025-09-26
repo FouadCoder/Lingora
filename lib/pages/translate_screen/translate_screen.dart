@@ -10,6 +10,7 @@ import 'package:lingora/pages/translate_screen/widgets/language_selector.dart';
 import 'package:lingora/pages/translate_screen/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/widgets/app_container.dart';
+import 'package:lingora/widgets/custom_status.dart';
 import 'package:lingora/widgets/flushbar.dart';
 
 class TranslateScreen extends StatefulWidget {
@@ -138,6 +139,14 @@ class _TranslateScreenState extends State<TranslateScreen> {
                           },
                         ),
                         SizedBox(height: AppDimens.sectionBetween),
+
+                        // Loading widget
+                        if (isLoading)
+                          CustomState(
+                              animation: "assets/animation/loading_book.json",
+                              title: "translating".tr(),
+                              titleColor: Theme.of(context).colorScheme.outline,
+                              message: ""),
 
                         // Info
                         if (isSuccess)

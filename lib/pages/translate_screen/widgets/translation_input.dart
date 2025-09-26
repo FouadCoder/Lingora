@@ -109,10 +109,13 @@ class TranslationInput extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: CustomButton(
                       isLoading: isLoading,
+                      loadingWidget: Text('translating'.tr()),
                       text: 'translate_button'.tr(),
                       color: theme.colorScheme.secondary,
                       function: onTranslate,
-                      textColor: theme.colorScheme.onSecondary)),
+                      textColor: isLoading
+                          ? theme.colorScheme.outline
+                          : Colors.white)),
             ],
           ),
         ),
