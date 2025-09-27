@@ -92,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Header(icon: Icons.settings, title: "settings".tr()),
                     SizedBox(
-                      height: AppDimens.sectionSpacing,
+                      height: AppDimens.titleContentBetween,
                     ),
                     CustomSwtich(
                         title: 'dark_mode'.tr(),
@@ -100,12 +100,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onChanged: (value) {},
                         controller: darkController,
                         icon: Icons.nightlight_round),
+                    SizedBox(
+                      height: AppDimens.sectionSpacing,
+                    ),
                     CustomSwtich(
                         title: 'push_notifications'.tr(),
                         description: 'push_notifications_description'.tr(),
                         onChanged: (value) {},
                         controller: notificationsController,
                         icon: Icons.notifications),
+                    SizedBox(
+                      height: AppDimens.sectionSpacing,
+                    ),
                     CustomSwtich(
                         title: 'sound_effects'.tr(),
                         description: 'sound_effects_description'.tr(),
@@ -124,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Header(icon: Icons.person, title: "account".tr()),
                   SizedBox(
-                    height: AppDimens.sectionSpacing,
+                    height: AppDimens.titleContentBetween,
                   ),
                   CustomButton(
                       text: "export_data".tr(),

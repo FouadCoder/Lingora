@@ -59,7 +59,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   return MasonryGridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 4,
+                    itemCount: 8,
                     gridDelegate:
                         SliverSimpleGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: getCrossAxisCount(),

@@ -100,7 +100,7 @@ class WordCard extends StatelessWidget {
             SizedBox(height: AppDimens.sectionSpacing),
             Wrap(
               spacing: AppDimens.buttonTagHorizontal,
-              runSpacing: 4,
+              runSpacing: 0,
               children: List.generate(chipsData.length, (index) {
                 return Chip(
                   label: Text(

@@ -86,5 +86,9 @@
     "category": "Category",
     "empty_library_title": "No saved words yet",
     "empty_library_message": "Translate and save words, and they’ll show up here for you to review anytime",
-    "translating": "Translating..."
+    "translating": "Translating...",
+    "total_translations": "Total Translations",
+    "top_language": "Top Language",
+    "active_days": "Active Days",
+    "my_library": "My Library"
 }

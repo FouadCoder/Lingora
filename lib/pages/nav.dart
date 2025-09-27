@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/pages/home.dart';
 import 'package:lingora/pages/library_screen/library.dart';
-import 'package:lingora/pages/practice.dart';
+import 'package:lingora/pages/insights/insights.dart';
 import 'package:lingora/pages/profile.dart';
 import 'package:lingora/pages/translate_screen/translate_screen.dart';
 import 'package:lingora/widgets/app_sidebar.dart';
@@ -37,7 +37,7 @@ class _NavState extends State<Nav> {
       HomeScreen(),
       TranslateScreen(),
       LibraryScreen(),
-      PracticeScreen(),
+      InsightsScreen(),
       ProfileScreen(),
     ];
   }
