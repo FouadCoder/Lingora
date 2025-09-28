@@ -90,5 +90,9 @@
     "total_translations": "Total Translations",
     "top_language": "Top Language",
     "active_days": "Active Days",
-    "my_library": "My Library"
+    "my_library": "My Library",
+    "overview": "Overview",
+    "activity": "Activity",
+    "see_details": "See details",
+    "activity_in": "Activity in"
 }

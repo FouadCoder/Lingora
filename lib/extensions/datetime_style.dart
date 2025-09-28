@@ -4,4 +4,8 @@ extension DateTimeExtension on DateTime {
   String toReadableDate() {
     return DateFormat('MMM d, yyyy').format(this);
   }
+
+  String toMonthName() {
+    return DateFormat('MMMM').format(this); // e.g. "September"
+  }
 }

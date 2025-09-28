@@ -3,6 +3,7 @@ import 'package:lingora/models/translate.dart';
 import 'package:lingora/pages/auth_screen/auth_gate.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/auth_screen/signup_success.dart';
+import 'package:lingora/pages/insights/insights_details.dart';
 import 'package:lingora/pages/nav.dart';
 import 'package:lingora/pages/onboarding/onboarding_screen.dart';
 import 'package:lingora/pages/auth_screen/register.dart';
@@ -42,6 +43,11 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => Nav(
         indexPage: 3,
       ),
+      routes: [
+        GoRoute(
+            path: 'details',
+            builder: (context, state) => InsightsDetailsScreen())
+      ],
     ),
     GoRoute(
       path: 'profile',

@@ -21,6 +21,7 @@ class AnalyticsCard extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall,
+          overflow: TextOverflow.ellipsis,
         ),
         SizedBox(
           height: AppDimens.subElementBetween,
@@ -32,14 +33,15 @@ class AnalyticsCard extends StatelessWidget {
               .textTheme
               .titleMedium!
               .copyWith(color: Theme.of(context).colorScheme.secondary),
+          overflow: TextOverflow.ellipsis,
         ),
         SizedBox(
           height: AppDimens.sectionSpacing,
         ),
         // Icon
         SizedBox(
-          height: 100,
-          width: 100,
+          height: 80,
+          width: 80,
           child: Image.asset(iconName),
         )
       ],

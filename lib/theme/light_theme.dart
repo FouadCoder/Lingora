@@ -41,16 +41,6 @@ ThemeData lightTheme = ThemeData(
     ),
   ),
 
-  // Cards
-  cardTheme: const CardTheme(
-    color: AppColors.lightBgDark,
-    elevation: 1,
-    margin: EdgeInsets.all(8),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-    ),
-  ),
-
   // Inputs
   inputDecorationTheme: const InputDecorationTheme(
     border: OutlineInputBorder(
