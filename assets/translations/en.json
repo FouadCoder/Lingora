@@ -94,5 +94,8 @@
     "overview": "Overview",
     "activity": "Activity",
     "see_details": "See details",
-    "activity_in": "Activity in"
+    "activity_in": "Activity in",
+    "history": "History",
+    "favorites": "Favorites",
+    "notifications": "Notifications"
 }
