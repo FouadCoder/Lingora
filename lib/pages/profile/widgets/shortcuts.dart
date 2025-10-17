@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/pages/profile/widgets/shortcut_widget.dart';
+import 'package:lingora/widgets/shortcut_widget.dart';
 
 class ShortcutsProfile extends StatelessWidget {
   const ShortcutsProfile({super.key});
@@ -14,11 +14,12 @@ class ShortcutsProfile extends StatelessWidget {
       {"icon": Icons.notifications, "text": "notifications".tr()},
     ];
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(shortcuts.length, (index) {
         return Expanded(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: AppDimens.cardBetween),
+            margin: EdgeInsets.only(
+              right: index < shortcuts.length - 1 ? AppDimens.cardBetween : 0,
+            ),
             child: ShortcutWidget(
                 icon: shortcuts[index]["icon"], text: shortcuts[index]["text"]),
           ),

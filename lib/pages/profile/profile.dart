@@ -6,7 +6,7 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/extensions/theme_data.dart';
-import 'package:lingora/widgets/shortcuts.dart';
+import 'package:lingora/pages/profile/widgets/shortcuts.dart';
 import 'package:lingora/widgets/header.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/app_container.dart';
@@ -84,16 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: 150,
-              ), // Todo delete this
-              // XP
-
-              // Shortcuts
-              ShortcutsProfile(),
-              SizedBox(
-                height: AppDimens.sectionSpacing,
-              ),
               // Setting
               AppCard(
                 child: Column(

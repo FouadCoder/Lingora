@@ -12,7 +12,12 @@ class AppContainer extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1200), // cap width
         child: Padding(
-          padding: EdgeInsets.all(AppDimens.wrapperPadding),
+          padding: EdgeInsets.only(
+            top: AppDimens.wrapperPadding + MediaQuery.of(context).padding.top,
+            left: AppDimens.wrapperPadding,
+            right: AppDimens.wrapperPadding,
+            bottom: AppDimens.wrapperPadding,
+          ),
           child: child,
         ),
       ),

@@ -88,7 +88,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: AppDimens.sectionBetween),
                 // Language Selector
                 LanguageSelector(
                   translateFrom: translateFrom,

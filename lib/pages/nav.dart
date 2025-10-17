@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lingora/core/platfrom.dart';
-import 'package:lingora/pages/home.dart';
+import 'package:lingora/pages/home/home.dart';
 import 'package:lingora/pages/library_screen/library.dart';
 import 'package:lingora/pages/insights/insights.dart';
 import 'package:lingora/pages/profile/profile.dart';
