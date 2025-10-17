@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/widgets/shortcut_widget.dart';
 
-class ShortcutsProfile extends StatelessWidget {
-  const ShortcutsProfile({super.key});
+class ShortcutsHome extends StatelessWidget {
+  const ShortcutsHome({super.key});
 
   @override
   Widget build(BuildContext context) {

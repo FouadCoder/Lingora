@@ -22,8 +22,6 @@ class CustomSwtich extends StatelessWidget {
 
     return Card(
       margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDimens.radiusXL)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Row(
@@ -67,7 +65,7 @@ class CustomSwtich extends StatelessWidget {
                     controller.value = val;
                     onChanged(val);
                   },
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   inactiveThumbColor: theme.colorScheme.surface,
                   inactiveTrackColor: theme.colorScheme.outline,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

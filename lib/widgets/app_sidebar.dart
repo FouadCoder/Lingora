@@ -102,8 +102,8 @@ class AppSidebar extends StatelessWidget {
           label: "Insights".tr(),
         ),
         SidebarXItem(
-          icon: Icons.person_rounded,
-          label: "profile".tr(),
+          icon: Icons.settings,
+          label: "settings".tr(),
         ),
       ],
     );

@@ -4,7 +4,7 @@ import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/pages/home/home.dart';
 import 'package:lingora/pages/library_screen/library.dart';
 import 'package:lingora/pages/insights/insights.dart';
-import 'package:lingora/pages/profile/profile.dart';
+import 'package:lingora/pages/setting/setting.dart';
 import 'package:lingora/pages/translate_screen/translate_screen.dart';
 import 'package:lingora/widgets/app_sidebar.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -38,7 +38,7 @@ class _NavState extends State<Nav> {
       TranslateScreen(),
       LibraryScreen(),
       InsightsScreen(),
-      ProfileScreen(),
+      SettingScreen(),
     ];
   }
 
@@ -87,8 +87,8 @@ class _NavState extends State<Nav> {
                     selectedColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SalomonBottomBarItem(
-                    icon: const Icon(Icons.person_rounded),
-                    title: Text("profile".tr()),
+                    icon: const Icon(Icons.settings),
+                    title: Text("settings".tr()),
                     selectedColor: Theme.of(context).colorScheme.secondary,
                   ),
                 ],

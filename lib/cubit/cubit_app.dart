@@ -40,113 +40,6 @@ class TranslateCubit extends Cubit<TranslateState> {
     ));
   }
 
-  // translate Text from Hugging Face model
-  Future<String> fetchTranslateWords(String from, String to) async {
-    Dio dio = Dio(BaseOptions(
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 30),
-      sendTimeout: const Duration(seconds: 30),
-    ));
-    final url = 'https://api-inference.huggingface.co/models/$model-$from-$to';
-
-    // Send request
-    final response = await dio
-        .post(
-          url,
-          data: {"inputs": state.inputText.trim()},
-          options: Options(
-            headers: {
-              "Authorization": "Bearer $apiHuggingFace",
-              "Content-Type": "application/json",
-            },
-          ),
-        )
-        .timeout(const Duration(seconds: 30));
-
-    // Res
-    final data = response.data;
-    String translated = '';
-    if (data is List &&
-        data.isNotEmpty &&
-        data[0] is Map &&
-        data[0]['translation_text'] is String) {
-      translated = data[0]['translation_text'] as String;
-    }
-    return translated;
-  }
-
-  // Get meaning , examples , Synonyms
-  Future fetchWordsDetails(String from, String to) async {
-    final prompt = '''
-Act as a dictionary. Explain "${state.inputText.trim()}".
-
-- "original": corrected version of the input (fix casing, typos, etc.)
-- pos (part of speech) and pronunciation as top-level fields
-- meaning: short definition in "$to"
-- examples: 2–3 sentences in "$to" (plain text only, no language codes)
-- synonyms: list in "$from"
-
-Reply ONLY with valid JSON in this format:
-{
-  "original": "...",        // corrected form of the input
-  "pos": "...",             // e.g., "noun", "verb"
-  "pronunciation": "...",   // e.g., "/nɪs/"
-  "meaning": "...",
-  "examples": ["...", "..."],
-  "synonyms": ["...", "..."]
-}
-''';
-
-    final res = await modelGemini.generateContent(
-        [Content.text(prompt)]).timeout(const Duration(seconds: 30));
-
-    // Raw text
-    final raw = res.text ?? '';
-    // If it's JSON, parse it
-    final cleaned = raw.replaceAll(RegExp(r'```(json)?|```'), '').trim();
-
-    final data = jsonDecode(cleaned) as Map<String, dynamic>;
-
-    // Clean trailing dots from examples
-    if (data['examples'] is List) {
-      data['examples'] = (data['examples'] as List)
-          .map((e) => e is String ? e.replaceAll(RegExp(r'\.$'), '') : e)
-          .toList();
-    }
-
-    return data;
-  }
-
-  // Save in server
-  Future saveWord(Translate translate) async {
-    Map word = {
-      "user_id": translate.userId,
-      "category_id": translate.categoryId,
-      "original": translate.original,
-      "translated": translate.translated,
-      "pos": translate.pos,
-      "pronunciation": translate.pronunciation,
-      "meaning": translate.meaning,
-      "examples": translate.examples,
-      "synonyms": translate.synonyms,
-      "translate_from": translate.translateFrom?.code,
-      "translate_to": translate.translateTo?.code,
-      "created_at": translate.createdAt.toIso8601String(),
-      "updated_at": translate.updatedAt.toIso8601String(),
-      "deleted_at": translate.deletedAt?.toIso8601String(),
-    };
-
-    print("Data before sending to server -============================ $word");
-
-    final response = await Supabase.instance.client
-        .from('translated_words')
-        .insert(word)
-        .select()
-        .single();
-
-    return response;
-  }
-
   //translation
   Future<void> translate() async {
     try {
@@ -159,34 +52,20 @@ Reply ONLY with valid JSON in this format:
       final userId = Supabase.instance.client.auth.currentUser?.id;
       final from = (state.sourceLanguage.code);
       final to = (state.targetLanguage.code);
-      String translated = await fetchTranslateWords(from, to);
-      final detailsWord = await fetchWordsDetails(from, to);
-      final data = {
+
+      // Translate
+      final res =
+          await Supabase.instance.client.functions.invoke('translate', body: {
         "user_id": userId,
-        "original": detailsWord["original"],
-        "translated": translated,
-        "meaning": detailsWord["meaning"],
-        "examples": detailsWord["examples"],
-        "synonyms": detailsWord["synonyms"],
-        "pos": detailsWord["pos"],
-        "pronunciation": detailsWord["pronunciation"],
-        "translateFrom": state.sourceLanguage,
-        "translateTo": state.targetLanguage,
-      };
+        "input": state.inputText,
+        "translate_from": from,
+        "translate_to": to,
+      });
+      final data = res.data;
+      print("Input ============== ${state.inputText}");
+      print("Data ================ $data");
       Translate translate = Translate.fromJson(data);
 
-      print("Translated =================");
-      print("Original: ${translate.original}");
-      print("Translated: ${translate.translated}");
-      print("POS: ${translate.pos}");
-      print("Pronunciation: ${translate.pronunciation}");
-      print("Meaning: ${translate.meaning}");
-      print("Examples: ${translate.examples}");
-      print("Synonyms: ${translate.synonyms}");
-      print("From: ${translate.translateFrom?.code}");
-      print("To: ${translate.translateTo?.code}");
-      final res = await saveWord(translate);
-      print("res from server ============= $res");
       emit(state.copyWith(status: TranslateStatus.success, result: translate));
     } catch (e) {
       print("Error ============================= $e");

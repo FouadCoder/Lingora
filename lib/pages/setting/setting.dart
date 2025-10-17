@@ -6,7 +6,6 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/extensions/theme_data.dart';
-import 'package:lingora/pages/profile/widgets/shortcuts.dart';
 import 'package:lingora/widgets/header.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/app_container.dart';
@@ -15,14 +14,14 @@ import 'package:lingora/widgets/custom_button.dart';
 import 'package:lingora/widgets/custom_swtich.dart';
 import 'package:lingora/widgets/flushbar.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _SettingScreenState extends State<SettingScreen> {
   final ValueNotifier<bool> darkController = ValueNotifier(false);
   final ValueNotifier<bool> notificationsController = ValueNotifier(false);
   final ValueNotifier<bool> soundController = ValueNotifier(false);

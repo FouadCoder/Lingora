@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/pages/home/widgets/level_card.dart';
-import 'package:lingora/pages/profile/widgets/shortcuts.dart';
+import 'package:lingora/pages/home/widgets/shortcuts.dart';
 import 'package:lingora/widgets/app_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: AppDimens.sectionSpacing,
             ),
             // Shortcuts
-            ShortcutsProfile(),
+            ShortcutsHome(),
             SizedBox(
               height: AppDimens.sectionSpacing,
             ),
