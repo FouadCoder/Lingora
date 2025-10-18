@@ -113,3 +113,24 @@ class AuthAppState {
     );
   }
 }
+
+// History
+enum FetchHistoryStatus { initial, loading, success, failure, empty }
+
+class FetchHistoryState {
+  final FetchHistoryStatus status;
+  final Map history;
+
+  const FetchHistoryState(
+      {this.status = FetchHistoryStatus.initial, this.history = const {}});
+
+  FetchHistoryState copyWith({
+    FetchHistoryStatus? status,
+    Map? history,
+  }) {
+    return FetchHistoryState(
+      status: status ?? this.status,
+      history: history ?? this.history,
+    );
+  }
+}

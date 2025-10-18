@@ -99,5 +99,9 @@
     "favorites": "Favorites",
     "notifications": "Notifications",
     "progress_to_next_level": "Progress to Next Level",
-    "your_points": "Your Points"
+    "your_points": "Your Points",
+    "emptyHistoryTitle": "No history yet",
+    "emptyHistoryMessage": "Your recent translations will appear here",
+    "loading_History": "Loading your history",
+    "errorHistoryMessage": "We couldn't load your translation history. Please try again"
 }

@@ -89,6 +89,8 @@ class _LevelCardState extends State<LevelCard> {
             padding: EdgeInsets.zero,
             progressColor: Theme.of(context).colorScheme.secondary,
             animation: true,
+            animationDuration: 800,
+            curve: Curves.easeInOut,
             backgroundColor: Theme.of(context).colorScheme.onSurface,
           )
         ],
