@@ -6,7 +6,7 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/library_screen/collections.dart';
+import 'package:lingora/pages/library_screen/widgets/collections_library.dart';
 import 'package:lingora/pages/library_screen/widgets/library_card.dart';
 import 'package:lingora/pages/library_screen/widgets/library_loading_card.dart';
 import 'package:lingora/widgets/app_container.dart';
@@ -86,7 +86,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       SizedBox(
                         height: AppDimens.titleContentBetween,
                       ),
-                      Collections(),
+                      CollectionsLibrary(),
 
                       SizedBox(
                         height: AppDimens.sectionBetween,

@@ -5,8 +5,8 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/widgets/app_card.dart';
 
-class Collections extends StatelessWidget {
-  const Collections({super.key});
+class CollectionsLibrary extends StatelessWidget {
+  const CollectionsLibrary({super.key});
 
   @override
   Widget build(BuildContext context) {
