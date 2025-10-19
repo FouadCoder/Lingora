@@ -103,5 +103,10 @@
     "emptyHistoryTitle": "No history yet",
     "emptyHistoryMessage": "Your recent translations will appear here",
     "loading_History": "Loading your history",
-    "errorHistoryMessage": "We couldn't load your translation history. Please try again"
+    "errorHistoryMessage": "We couldn't load your translation history. Please try again",
+    "learning_feed": "Learning Feed",
+    "collections": "Collections",
+    "learning": "Learning",
+    "saved": "Saved",
+    "mastered": "Mastered"
 }

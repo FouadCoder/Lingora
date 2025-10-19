@@ -65,10 +65,7 @@ class _HistoryState extends State<History> {
                           // Headline
                           Text(
                             "$dateKey".toReadableDate(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.start,
                           ),

@@ -120,7 +120,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   },
                 ),
 
-                SizedBox(height: AppDimens.sectionBetween),
+                SizedBox(height: AppDimens.sectionSpacing),
 
                 BlocBuilder<TranslateCubit, TranslateState>(
                   builder: (context, state) {
@@ -137,7 +137,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
                             context.read<TranslateCubit>().translate();
                           },
                         ),
-                        SizedBox(height: AppDimens.sectionBetween),
 
                         // Loading widget
                         if (isLoading)
@@ -146,6 +145,10 @@ class _TranslateScreenState extends State<TranslateScreen> {
                               title: "translating".tr(),
                               titleColor: Theme.of(context).colorScheme.outline,
                               message: ""),
+
+                        SizedBox(
+                          height: AppDimens.sectionBetween,
+                        ),
 
                         // Info
                         if (isSuccess)

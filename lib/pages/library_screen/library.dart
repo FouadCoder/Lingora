@@ -6,6 +6,7 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
+import 'package:lingora/pages/library_screen/collections.dart';
 import 'package:lingora/pages/library_screen/widgets/library_card.dart';
 import 'package:lingora/pages/library_screen/widgets/library_loading_card.dart';
 import 'package:lingora/widgets/app_container.dart';
@@ -74,19 +75,47 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
                 // Success
                 else if (state.status == FetchTranslatedLibraryStatus.success) {
-                  return MasonryGridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.libraryWords.length,
-                    gridDelegate:
-                        SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: getCrossAxisCount(),
-                    ),
-                    crossAxisSpacing: AppDimens.cardBetween,
-                    mainAxisSpacing: AppDimens.cardBetween,
-                    itemBuilder: (context, index) {
-                      return WordCard(word: state.libraryWords[index]);
-                    },
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Collections
+                      Text(
+                        "collections".tr(),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      SizedBox(
+                        height: AppDimens.titleContentBetween,
+                      ),
+                      Collections(),
+
+                      SizedBox(
+                        height: AppDimens.sectionBetween,
+                      ),
+                      // Words
+                      Text(
+                        "learning_feed".tr(),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      SizedBox(
+                        height: AppDimens.titleContentBetween,
+                      ),
+
+                      MasonryGridView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.libraryWords.length,
+                        gridDelegate:
+                            SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: getCrossAxisCount(),
+                        ),
+                        crossAxisSpacing: AppDimens.cardBetween,
+                        mainAxisSpacing: AppDimens.cardBetween,
+                        itemBuilder: (context, index) {
+                          return WordCard(word: state.libraryWords[index]);
+                        },
+                      ),
+                    ],
                   );
                 }
 

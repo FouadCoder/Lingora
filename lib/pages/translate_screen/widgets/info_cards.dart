@@ -54,6 +54,7 @@ class InfoCards extends StatelessWidget {
         return Column(
           children: [
             MasonryGridView.builder(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               physics:
                   const NeverScrollableScrollPhysics(), // so it fits inside scroll
