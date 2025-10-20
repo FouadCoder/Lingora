@@ -4,6 +4,7 @@ import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/nav.dart';
+import 'package:lingora/pages/onboarding/onboarding_screen.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -32,7 +33,7 @@ class AuthGate extends StatelessWidget {
             );
           } else if (state.status == AuthAppStatus.authenticated) {
             print("UI NAV  ===============================");
-            return const Nav();
+            return const OnboardingScreen(); // Todo change it later
           } else {
             print("UI LOGIN   ===============================");
             return const LoginScreen();

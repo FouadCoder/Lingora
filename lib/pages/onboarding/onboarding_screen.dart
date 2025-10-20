@@ -13,30 +13,50 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen>
+    with TickerProviderStateMixin {
   final pageController = PageController();
   int currentIndex = 0;
+  late AnimationController _rocketAnimationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _rocketAnimationController = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1500));
+  }
+
+  @override
+  void dispose() {
+    _rocketAnimationController.dispose();
+    super.dispose();
+  }
+
   //Todo update the content
   final List onboardingData = [
     {
-      "title": "Learn Smarter",
-      "message": "Build your vocabulary with personalized practice every day.",
-      "image": "assets/test.png",
+      "title": "onboarding_1_title".tr(),
+      "message": "onboarding_1_message".tr(),
+      "animation": "assets/animation/world_language.json",
+      "repeat": true,
     },
     {
-      "title": "Track Progress",
-      "message": "Stay motivated by watching your skills grow over time.",
-      "image": "assets/test.png",
+      "title": "onboarding_2_title".tr(),
+      "message": "onboarding_2_message".tr(),
+      "animation": "assets/animation/Idea_books.json",
+      "repeat": false,
     },
     {
-      "title": "Practice Anywhere",
-      "message": "Quick sessions that fit right into your daily routine.",
-      "image": "assets/test.png",
+      "title": "onboarding_3_title".tr(),
+      "message": "onboarding_3_message".tr(),
+      "animation": "assets/animation/analysis.json",
+      "repeat": true,
     },
     {
-      "title": "Join the Community",
-      "message": "Connect with learners worldwide and share your journey.",
-      "image": "assets/test.png",
+      "title": "onboarding_4_title".tr(),
+      "message": "onboarding_4_message".tr(),
+      "animation": "assets/animation/rocket_launch.json",
+      "repeat": false,
     },
   ];
 
@@ -49,7 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.30,
+                height: MediaQuery.of(context).size.height * 0.15,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary, // top
                   borderRadius: const BorderRadius.only(
@@ -82,9 +102,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   controller: pageController,
                   children: List.generate(onboardingData.length, (index) {
                     return OnboardingWidget(
-                        imageName: onboardingData[index]["image"],
+                        animation: onboardingData[index]["animation"],
                         mainText: onboardingData[index]["title"],
-                        description: onboardingData[index]["message"]);
+                        description: onboardingData[index]["message"],
+                        repeat: onboardingData[index]["repeat"],
+                        animationController: index == onboardingData.length - 1
+                            ? _rocketAnimationController
+                            : null);
                   }),
                 ),
               ),
@@ -96,7 +120,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ? "get_statred".tr()
                         : "next".tr(),
                     color: Theme.of(context).colorScheme.secondary,
-                    function: () {
+                    function: () async {
                       if (currentIndex != onboardingData.length - 1) {
                         pageController.nextPage(
                           duration: const Duration(milliseconds: 600),
@@ -104,7 +128,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         );
                         return;
                       }
-                      context.go('/login');
+                      // Trigger rocket animation and wait for it to complete
+                      await _rocketAnimationController.forward();
+                      // Navigate to login after animation completes
+                      if (mounted) {
+                        context.go('/login');
+                      }
                     },
                     textColor: Colors.white),
               ),

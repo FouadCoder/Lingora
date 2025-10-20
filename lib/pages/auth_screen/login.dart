@@ -125,34 +125,56 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: AppDimens.sectionBetween,
               ),
 
-              // Login Button
-              BlocBuilder<AuthAppCubit, AuthAppState>(
-                builder: (context, state) {
-                  bool isLoading = state.status == AuthAppStatus.loading;
-                  return CustomButton(
-                      isLoading: isLoading,
-                      text: 'login_button'.tr(),
-                      color: Theme.of(context).colorScheme.secondary,
-                      function: () {
-                        context.read<AuthAppCubit>().login(
-                            emailController.text, passwordController.text);
-                      },
-                      textColor: Colors.white);
-                },
-              ),
+              LayoutBuilder(builder: (context, _) {
+                // Login
+                Widget loginButton = BlocBuilder<AuthAppCubit, AuthAppState>(
+                  builder: (context, state) {
+                    bool isLoading = state.status == AuthAppStatus.loading;
+                    return CustomButton(
+                        isLoading: isLoading,
+                        text: 'login_button'.tr(),
+                        color: Theme.of(context).colorScheme.secondary,
+                        function: () {
+                          context.read<AuthAppCubit>().login(
+                              emailController.text, passwordController.text);
+                        },
+                        textColor: Colors.white);
+                  },
+                );
+                // Google
+                Widget googleButton = // Google
+                    CustomButton(
+                        text: 'login_with_google'.tr(),
+                        color: Colors.transparent,
+                        border: Border.all(
+                            width: 2,
+                            color: Theme.of(context).colorScheme.outline),
+                        function: () {},
+                        textColor: Colors.white);
 
-              SizedBox(
-                height: AppDimens.sectionSpacing,
-              ),
-
-              // Google
-              CustomButton(
-                  text: 'login_with_google'.tr(),
-                  color: Colors.transparent,
-                  border: Border.all(
-                      width: 2, color: Theme.of(context).colorScheme.outline),
-                  function: () {},
-                  textColor: Colors.white),
+                if (AppPlatform.isPhone(context)) {
+                  return Column(
+                    children: [
+                      loginButton,
+                      SizedBox(
+                        height: AppDimens.sectionSpacing,
+                      ),
+                      googleButton
+                    ],
+                  );
+                } else {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      googleButton,
+                      SizedBox(
+                        width: AppDimens.buttonTagHorizontal,
+                      ),
+                      loginButton,
+                    ],
+                  );
+                }
+              }),
 
               SizedBox(
                 height: AppDimens.sectionBetween,

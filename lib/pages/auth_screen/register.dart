@@ -122,38 +122,55 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: AppDimens.sectionBetween,
               ),
 
-              // Sign up Button
-              BlocBuilder<AuthAppCubit, AuthAppState>(
-                builder: (context, state) {
-                  bool isLoading = state.status == AuthAppStatus.loading;
-                  return CustomButton(
-                      text: 'signup_button'.tr(),
-                      isLoading: isLoading,
-                      color: Theme.of(context).colorScheme.secondary,
-                      function: () {
-                        context.read<AuthAppCubit>().signUp(
-                            emailController.text,
-                            passwordController.text,
-                            confirmPasswordController.text);
-                      },
-                      textColor: Colors.white);
-                },
-              ),
-              // I Love you 🖤 :)
-              //* I love you more :)
+              LayoutBuilder(builder: (context, _) {
+                Widget signUpButton = BlocBuilder<AuthAppCubit, AuthAppState>(
+                  builder: (context, state) {
+                    bool isLoading = state.status == AuthAppStatus.loading;
+                    return CustomButton(
+                        text: 'signup_button'.tr(),
+                        isLoading: isLoading,
+                        color: Theme.of(context).colorScheme.secondary,
+                        function: () {
+                          context.read<AuthAppCubit>().signUp(
+                              emailController.text,
+                              passwordController.text,
+                              confirmPasswordController.text);
+                        },
+                        textColor: Colors.white);
+                  },
+                );
 
-              SizedBox(
-                height: AppDimens.sectionSpacing,
-              ),
+                // Google
+                Widget googleButton = CustomButton(
+                    text: 'signup_with_google'.tr(),
+                    color: Colors.transparent,
+                    border: Border.all(
+                        width: 2, color: Theme.of(context).colorScheme.outline),
+                    function: () {},
+                    textColor: Colors.white);
 
-              // Google
-              CustomButton(
-                  text: 'signup_with_google'.tr(),
-                  color: Colors.transparent,
-                  border: Border.all(
-                      width: 2, color: Theme.of(context).colorScheme.outline),
-                  function: () {},
-                  textColor: Colors.white),
+                if (AppPlatform.isPhone(context)) {
+                  return Column(
+                    children: [
+                      signUpButton,
+                      SizedBox(
+                        height: AppDimens.sectionSpacing,
+                      )
+                    ],
+                  );
+                } else {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      googleButton,
+                      SizedBox(
+                        width: AppDimens.buttonTagHorizontal,
+                      ),
+                      signUpButton
+                    ],
+                  );
+                }
+              }),
 
               SizedBox(
                 height: AppDimens.sectionBetween,

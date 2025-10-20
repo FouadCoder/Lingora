@@ -108,5 +108,13 @@
     "collections": "Collections",
     "learning": "Learning",
     "saved": "Saved",
-    "mastered": "Mastered"
+    "mastered": "Mastered",
+    "onboarding_1_title": "Translate to Any Language",
+    "onboarding_1_message": "Instantly translate and learn new words in any language you choose",
+    "onboarding_2_title": "Organize in Collections",
+    "onboarding_2_message": "Save your translations into organized collections for easy review",
+    "onboarding_3_title": "Learn & Analyze",
+    "onboarding_3_message": "Track your progress, get insights, and learn smarter",
+    "onboarding_4_title": "Get Started",
+    "onboarding_4_message": "Begin your journey to master new languages with us"
 }

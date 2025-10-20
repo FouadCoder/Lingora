@@ -4,7 +4,8 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/widgets/app_card.dart';
 
 class CollectionsTranslate extends StatefulWidget {
-  const CollectionsTranslate({super.key});
+  final bool hideNotifications;
+  const CollectionsTranslate({super.key, this.hideNotifications = false});
 
   @override
   State<CollectionsTranslate> createState() => _CollectionsTranslateState();
@@ -27,7 +28,8 @@ class _CollectionsTranslateState extends State<CollectionsTranslate> {
     ];
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: List.generate(collections.length, (index) {
+      children: List.generate(widget.hideNotifications ? 4 : collections.length,
+          (index) {
         bool isNotification = index == collections.length - 1;
         bool isSelected = index == selectedIndex;
         bool isActiveNoti = isNotification && isActiveNotifications;

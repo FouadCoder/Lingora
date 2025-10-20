@@ -5,6 +5,7 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/extensions/datetime_style.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/models/translate.dart';
+import 'package:lingora/pages/translate_screen/widgets/collections.dart';
 import 'package:lingora/pages/translate_screen/widgets/translate_cards.dart';
 import 'package:lingora/widgets/app_container.dart';
 import 'package:lingora/widgets/custom_swtich.dart';
@@ -139,18 +140,11 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
             ),
 
             // Category
-            Header(icon: MaterialCommunityIcons.tag, title: 'category'.tr()),
-            CustomTextfield(
-              controller: TextEditingController(),
-              label: '',
-              hint: '',
-              readOnly: true,
-              onTap: () {},
-              suffixIcon: Icon(
-                Icons.arrow_drop_down,
-                color: Theme.of(context).colorScheme.outline,
-              ),
-            ),
+            Header(icon: MaterialCommunityIcons.tag, title: 'collection'.tr()),
+            Center(
+                child: CollectionsTranslate(
+              hideNotifications: true,
+            )),
 
             // Notes
             SizedBox(

@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
+import 'package:lottie/lottie.dart';
 
 class OnboardingWidget extends StatelessWidget {
-  final String imageName;
+  final String animation;
   final String mainText;
   final String description;
+  final AnimationController? animationController;
+  final bool? repeat;
   const OnboardingWidget({
     super.key,
-    required this.imageName,
+    required this.animation,
     required this.mainText,
     required this.description,
+    this.repeat = true,
+    this.animationController,
   });
 
   @override
@@ -26,10 +31,8 @@ class OnboardingWidget extends StatelessWidget {
             decoration: const BoxDecoration(color: Colors.transparent),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.radiusXL),
-                child: Image.asset(
-                  imageName,
-                  fit: BoxFit.cover,
-                )),
+                child: Lottie.asset(animation,
+                    controller: animationController, repeat: repeat)),
           ),
           const SizedBox(height: 40),
           // Main Text
