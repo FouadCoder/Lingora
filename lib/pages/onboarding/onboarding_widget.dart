@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/platfrom.dart';
 import 'package:lottie/lottie.dart';
 
 class OnboardingWidget extends StatelessWidget {
@@ -19,39 +22,43 @@ class OnboardingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          // Container for the images
-          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-          Container(
-            padding: const EdgeInsets.all(AppDimens.paddingM),
-            height: MediaQuery.of(context).size.height * 0.45,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(color: Colors.transparent),
+    double animationHeight = AppPlatform.isPhone(context)
+        ? min(MediaQuery.of(context).size.height * 0.50, 350)
+        : min(MediaQuery.of(context).size.height * 0.50, 600);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: AppDimens.sectionBetween),
+        // Container for the images
+        Container(
+          padding: const EdgeInsets.all(AppDimens.paddingM),
+          height: animationHeight,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(color: Colors.transparent),
+          child: Center(
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppDimens.radiusXL),
                 child: Lottie.asset(animation,
                     controller: animationController, repeat: repeat)),
           ),
-          const SizedBox(height: 40),
-          // Main Text
-          Text(
-            mainText,
-            style: Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 4),
-          // description
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppDimens.paddingM),
-            child: Text(description,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).textTheme.bodySmall!.color),
-                textAlign: TextAlign.center),
-          ),
-        ],
-      ),
+        ),
+        SizedBox(height: AppDimens.sectionBetween),
+        // Main Text
+        Text(
+          mainText,
+          style: Theme.of(context).textTheme.titleMedium,
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: AppDimens.subElementBetween),
+        // description
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppDimens.paddingM),
+          child: Text(description,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).textTheme.bodySmall!.color),
+              textAlign: TextAlign.center),
+        ),
+      ],
     );
   }
 }

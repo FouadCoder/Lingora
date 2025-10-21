@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -69,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: min(MediaQuery.of(context).size.height * 0.15, 250),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary, // top
                   borderRadius: const BorderRadius.only(
@@ -87,67 +89,70 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           ),
           // Content
           AppContainer(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Page view to switch between Pages
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.7,
-                child: PageView(
-                  onPageChanged: (val) {
-                    setState(() {
-                      currentIndex = val;
-                    });
-                  },
-                  controller: pageController,
-                  children: List.generate(onboardingData.length, (index) {
-                    return OnboardingWidget(
-                        animation: onboardingData[index]["animation"],
-                        mainText: onboardingData[index]["title"],
-                        description: onboardingData[index]["message"],
-                        repeat: onboardingData[index]["repeat"],
-                        animationController: index == onboardingData.length - 1
-                            ? _rocketAnimationController
-                            : null);
-                  }),
-                ),
-              ),
-              // Button
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-                child: CustomButton(
-                    text: currentIndex == onboardingData.length - 1
-                        ? "get_statred".tr()
-                        : "next".tr(),
-                    color: Theme.of(context).colorScheme.secondary,
-                    function: () async {
-                      if (currentIndex != onboardingData.length - 1) {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 600),
-                          curve: Curves.fastOutSlowIn,
-                        );
-                        return;
-                      }
-                      // Trigger rocket animation and wait for it to complete
-                      await _rocketAnimationController.forward();
-                      // Navigate to login after animation completes
-                      if (mounted) {
-                        context.go('/login');
-                      }
+              child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Page view to switch between Pages
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: PageView(
+                    onPageChanged: (val) {
+                      setState(() {
+                        currentIndex = val;
+                      });
                     },
-                    textColor: Colors.white),
-              ),
-              // Animation for switch
-              SmoothPageIndicator(
-                controller: pageController,
-                count: 4,
-                effect: ExpandingDotsEffect(
-                    activeDotColor: Theme.of(context).colorScheme.primary),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                    controller: pageController,
+                    children: List.generate(onboardingData.length, (index) {
+                      return OnboardingWidget(
+                          animation: onboardingData[index]["animation"],
+                          mainText: onboardingData[index]["title"],
+                          description: onboardingData[index]["message"],
+                          repeat: onboardingData[index]["repeat"],
+                          animationController:
+                              index == onboardingData.length - 1
+                                  ? _rocketAnimationController
+                                  : null);
+                    }),
+                  ),
+                ),
+                // Button
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+                  child: CustomButton(
+                      text: currentIndex == onboardingData.length - 1
+                          ? "get_statred".tr()
+                          : "next".tr(),
+                      color: Theme.of(context).colorScheme.secondary,
+                      function: () async {
+                        if (currentIndex != onboardingData.length - 1) {
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 600),
+                            curve: Curves.fastOutSlowIn,
+                          );
+                          return;
+                        }
+                        // Trigger rocket animation and wait for it to complete
+                        await _rocketAnimationController.forward();
+                        // Navigate to login after animation completes
+                        if (mounted) {
+                          context.go('/login');
+                        }
+                      },
+                      textColor: Colors.white),
+                ),
+                // Animation for switch
+                SmoothPageIndicator(
+                  controller: pageController,
+                  count: 4,
+                  effect: ExpandingDotsEffect(
+                      activeDotColor: Theme.of(context).colorScheme.primary),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           )),
         ],
       ),
