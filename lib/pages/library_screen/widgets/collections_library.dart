@@ -52,8 +52,8 @@ class CollectionsLibrary extends StatelessWidget {
               children: [
                 Image.asset(
                   collections[index]["path"],
-                  height: 48,
-                  width: 48,
+                  height: 32,
+                  width: 32,
                 ),
                 Text(
                   collections[index]["name"],

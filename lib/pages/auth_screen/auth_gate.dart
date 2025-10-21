@@ -33,7 +33,7 @@ class AuthGate extends StatelessWidget {
             );
           } else if (state.status == AuthAppStatus.authenticated) {
             print("UI NAV  ===============================");
-            return const OnboardingScreen(); // Todo change it later
+            return const Nav();
           } else {
             print("UI LOGIN   ===============================");
             return const LoginScreen();

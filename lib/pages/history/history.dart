@@ -161,7 +161,9 @@ class _HistoryState extends State<History> {
                 message: 'error_words_message'.tr(),
                 buttonText: 'try_again'.tr(),
                 onTap: () {
-                  context.read<HistoryCubit>().fetchHistory();
+                  if (mounted) {
+                    context.read<HistoryCubit>().fetchHistory();
+                  }
                 },
               );
             }

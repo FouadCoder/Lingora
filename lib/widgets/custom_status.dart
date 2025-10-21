@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/widgets/custom_button.dart';
 import 'package:lottie/lottie.dart';
 
@@ -35,6 +38,13 @@ class CustomState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    double smallAnimationHeight = AppPlatform.isPhone(context)
+        ? min(MediaQuery.of(context).size.height * 0.30, 300)
+        : min(MediaQuery.of(context).size.height * 0.35, 500);
+
+    double fullAnimationHeight = AppPlatform.isPhone(context)
+        ? min(MediaQuery.of(context).size.height * 0.50, 350)
+        : min(MediaQuery.of(context).size.height * 0.50, 600);
 
     return Center(
       child: Container(
@@ -46,12 +56,9 @@ class CustomState extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: isFullScreen
-                      ? MediaQuery.of(context).size.height * 0.60
-                      : MediaQuery.of(context).size.height * 0.30,
-                  width: isFullScreen
-                      ? MediaQuery.of(context).size.width
-                      : MediaQuery.of(context).size.width * 0.60,
+                  height:
+                      isFullScreen ? fullAnimationHeight : smallAnimationHeight,
+                  width: MediaQuery.of(context).size.width * 0.8,
                   child:
                       Lottie.asset(animation, controller: animationController),
                 ),
