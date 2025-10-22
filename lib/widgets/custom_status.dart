@@ -39,11 +39,11 @@ class CustomState extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     double smallAnimationHeight = AppPlatform.isPhone(context)
-        ? min(MediaQuery.of(context).size.height * 0.30, 300)
+        ? min(MediaQuery.of(context).size.height * 0.25, 300)
         : min(MediaQuery.of(context).size.height * 0.35, 500);
 
     double fullAnimationHeight = AppPlatform.isPhone(context)
-        ? min(MediaQuery.of(context).size.height * 0.50, 350)
+        ? min(MediaQuery.of(context).size.height * 0.45, 350)
         : min(MediaQuery.of(context).size.height * 0.50, 600);
 
     return Center(
