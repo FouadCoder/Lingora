@@ -1,5 +1,6 @@
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/models/translate.dart';
+import 'package:lingora/models/favorite.dart';
 
 // Translate
 
@@ -131,6 +132,29 @@ class FetchHistoryState {
     return FetchHistoryState(
       status: status ?? this.status,
       history: history ?? this.history,
+    );
+  }
+}
+
+// Favorites
+enum FavoritesStatus { initial, loading, success, failure, empty }
+
+class FavoritesState {
+  final FavoritesStatus status;
+  final List<Favorite> favorites;
+
+  const FavoritesState({
+    this.status = FavoritesStatus.initial,
+    this.favorites = const [],
+  });
+
+  FavoritesState copyWith({
+    FavoritesStatus? status,
+    List<Favorite>? favorites,
+  }) {
+    return FavoritesState(
+      status: status ?? this.status,
+      favorites: favorites ?? this.favorites,
     );
   }
 }

@@ -6,7 +6,6 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/extensions/string_extension.dart';
-import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/app_container.dart';

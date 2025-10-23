@@ -116,5 +116,13 @@
     "onboarding_3_title": "Learn & Analyze",
     "onboarding_3_message": "Track your progress, get insights, and learn smarter",
     "onboarding_4_title": "Get Started",
-    "onboarding_4_message": "Begin your journey to master new languages with us"
+    "onboarding_4_message": "Begin your journey to master new languages with us",
+    "loading": "Loading...",
+    "no_favorites": "No Favorites Yet",
+    "no_favorites_message": "Start adding words to your favorites and they'll appear here",
+    "error_occurred": "An error occurred",
+    "error": "Error",
+    "error_loading_word": "Error loading word",
+    "remove_from_favorites": "Remove from favorites",
+    "add_to_favorites": "Add to favorites"
 }

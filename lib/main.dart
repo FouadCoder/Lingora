@@ -41,6 +41,8 @@ class MyApp extends StatelessWidget {
           ), // Auth
           BlocProvider<HistoryCubit>(
               create: (context) => HistoryCubit()), // History
+          BlocProvider<FavoritesCubit>(
+              create: (context) => FavoritesCubit()), // Favorites
         ],
         child: MaterialApp.router(
           theme: darkTheme,
