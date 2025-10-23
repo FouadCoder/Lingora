@@ -521,10 +521,12 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       }
 
       if (favorites.isEmpty) {
+        print("Empty Favorites ==================== $favorites");
         emit(state.copyWith(status: FavoritesStatus.empty));
         return;
       }
 
+      print("Success Favorites ==================== $favorites");
       emit(state.copyWith(
         status: FavoritesStatus.success,
         favorites: favorites,

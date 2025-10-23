@@ -3,6 +3,7 @@ import 'package:lingora/models/translate.dart';
 import 'package:lingora/pages/auth_screen/auth_gate.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/auth_screen/signup_success.dart';
+import 'package:lingora/pages/favorites_screen/favorites.dart';
 import 'package:lingora/pages/history/history.dart';
 import 'package:lingora/pages/insights/insights_details.dart';
 import 'package:lingora/pages/nav.dart';
@@ -22,7 +23,11 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
               indexPage: 0,
             ),
         routes: [
-          GoRoute(path: 'history', builder: (context, state) => History())
+          GoRoute(path: 'history', builder: (context, state) => History()),
+          GoRoute(
+            path: 'favorites',
+            builder: (context, state) => FavoritesScreen(),
+          ),
         ]),
     GoRoute(
       path: 'translate',

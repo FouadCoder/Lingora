@@ -15,7 +15,11 @@ class ShortcutsHome extends StatelessWidget {
         "text": "history".tr(),
         "route": "/nav/home/history"
       },
-      {"icon": Icons.favorite, "text": "favorites".tr(), "route": ""},
+      {
+        "icon": Icons.favorite,
+        "text": "favorites".tr(),
+        "route": "/nav/home/favorites"
+      },
       {"icon": Icons.notifications, "text": "notifications".tr(), "route": ""},
     ];
     return Row(

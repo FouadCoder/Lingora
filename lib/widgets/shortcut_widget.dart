@@ -14,16 +14,18 @@ class ShortcutWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AppCard(
-        height: 90,
+        height: 85,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Icon
-            Icon(icon, size: 24, color: Theme.of(context).colorScheme.primary),
+            Icon(icon, size: 22, color: Theme.of(context).colorScheme.primary),
             SizedBox(height: AppDimens.elementBetween),
             // Text
             Text(
               text,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
               textAlign: TextAlign.center,
