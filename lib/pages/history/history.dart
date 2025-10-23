@@ -152,18 +152,21 @@ class _HistoryState extends State<History> {
 
             // Error
             else if (state.status == FetchHistoryStatus.failure) {
-              return CustomState(
-                textColor: Colors.white,
-                color: Theme.of(context).colorScheme.secondary,
-                animation: "assets/animation/error_boat_orange.json",
-                title: 'error_words_title'.tr(),
-                message: 'error_words_message'.tr(),
-                buttonText: 'try_again'.tr(),
-                onTap: () {
-                  if (mounted) {
-                    context.read<HistoryCubit>().fetchHistory();
-                  }
-                },
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.80,
+                child: CustomState(
+                  textColor: Colors.white,
+                  color: Theme.of(context).colorScheme.secondary,
+                  animation: "assets/animation/error_boat_orange.json",
+                  title: 'error_words_title'.tr(),
+                  message: 'error_words_message'.tr(),
+                  buttonText: 'try_again'.tr(),
+                  onTap: () {
+                    if (mounted) {
+                      context.read<HistoryCubit>().fetchHistory();
+                    }
+                  },
+                ),
               );
             }
 

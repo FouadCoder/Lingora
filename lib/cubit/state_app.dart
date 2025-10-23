@@ -139,22 +139,28 @@ class FetchHistoryState {
 // Favorites
 enum FavoritesStatus { initial, loading, success, failure, empty }
 
+enum FavoritesActionStatus { idle, loading, success, failure }
+
 class FavoritesState {
   final FavoritesStatus status;
   final List<Favorite> favorites;
+  final FavoritesActionStatus actionStatus;
 
   const FavoritesState({
     this.status = FavoritesStatus.initial,
     this.favorites = const [],
+    this.actionStatus = FavoritesActionStatus.idle,
   });
 
   FavoritesState copyWith({
     FavoritesStatus? status,
     List<Favorite>? favorites,
+    FavoritesActionStatus? actionStatus,
   }) {
     return FavoritesState(
       status: status ?? this.status,
       favorites: favorites ?? this.favorites,
+      actionStatus: actionStatus ?? this.actionStatus,
     );
   }
 }

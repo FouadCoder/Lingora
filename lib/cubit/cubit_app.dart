@@ -525,7 +525,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         emit(state.copyWith(status: FavoritesStatus.empty));
         return;
       }
-
+      print("Len ====================== ${favorites.length}");
       print("Success Favorites ==================== $favorites");
       emit(state.copyWith(
         status: FavoritesStatus.success,
@@ -568,8 +568,8 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         favorites: List<Favorite>.from(favoritesMap.values),
       ));
     } catch (e) {
-      print("Error adding to favorites: $e");
-      emit(state.copyWith(status: FavoritesStatus.failure));
+      print(" ===================== Error adding to favorites: $e");
+      emit(state.copyWith(actionStatus: FavoritesActionStatus.failure));
     }
   }
 
@@ -607,7 +607,7 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       }
     } catch (e) {
       print("Error removing from favorites: $e");
-      emit(state.copyWith(status: FavoritesStatus.failure));
+      emit(state.copyWith(actionStatus: FavoritesActionStatus.failure));
     }
   }
 

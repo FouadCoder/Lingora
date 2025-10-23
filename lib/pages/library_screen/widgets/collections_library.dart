@@ -47,21 +47,28 @@ class CollectionsLibrary extends StatelessWidget {
           return GestureDetector(
             onTap: collections[index]["onTap"],
             child: AppCard(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Theme.of(context).colorScheme.surface,
+                      Theme.of(context).colorScheme.secondary
+                    ]),
                 child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Image.asset(
-                  collections[index]["path"],
-                  height: 32,
-                  width: 32,
-                ),
-                Text(
-                  collections[index]["name"],
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            )),
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image.asset(
+                      collections[index]["path"],
+                      height: 24,
+                      width: 24,
+                    ),
+                    Text(
+                      collections[index]["name"],
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                )),
           );
         });
   }

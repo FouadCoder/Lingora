@@ -1,16 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/extensions/datetime_style.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/widgets/app_card.dart';
 
-class WordCard extends StatelessWidget {
+class WordCard extends StatefulWidget {
   final Translate word;
 
   const WordCard({super.key, required this.word});
 
+  @override
+  State<WordCard> createState() => _WordCardState();
+}
+
+class _WordCardState extends State<WordCard> {
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
@@ -18,7 +26,7 @@ class WordCard extends StatelessWidget {
 
     List chipsData = [
       {
-        "text": word.pos,
+        "text": widget.word.pos,
         "textColor": colorScheme.secondary,
       },
       {
@@ -26,7 +34,7 @@ class WordCard extends StatelessWidget {
         "textColor": colorScheme.secondary,
       },
       {
-        "text": word.createdAt.toReadableDate(),
+        "text": widget.word.createdAt.toReadableDate(),
         "textColor": theme.bodySmall?.color,
       },
     ];
@@ -34,7 +42,7 @@ class WordCard extends StatelessWidget {
     return AppCard(
       child: InkWell(
         onTap: () {
-          context.push('/nav/library/word_details', extra: word);
+          context.push('/nav/library/word_details', extra: widget.word);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,26 +56,54 @@ class WordCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      word.original,
+                      widget.word.original,
                       style: theme.titleMedium,
                     ),
                     SizedBox(width: AppDimens.subElementBetween),
                     Text(
-                      word.translated,
+                      widget.word.translated,
                       style:
                           theme.titleMedium?.copyWith(color: Color(0xFFFF914D)),
                     ),
                   ],
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.volume_up),
-                  color: colorScheme.outline,
-                  style: IconButton.styleFrom(
-                    hoverColor: colorScheme.onSurface,
-                    focusColor: colorScheme.onSurface,
-                  ),
-                )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    //  Heart
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        setState(() => isFavorite = !isFavorite);
+                        if (isFavorite) {
+                          context
+                              .read<FavoritesCubit>()
+                              .addToFavorites(widget.word.id!);
+                        } else {
+                          context
+                              .read<FavoritesCubit>()
+                              .removeFromFavorites(widget.word.id!);
+                        }
+                      },
+                      child: Icon(
+                        Icons.favorite,
+                        color: isFavorite ? Colors.red : colorScheme.outline,
+                      ),
+                    ),
+                    SizedBox(width: AppDimens.sectionSpacing),
+                    // 🔊 Sound
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        // play sound
+                      },
+                      child: Icon(
+                        Icons.volume_up,
+                        color: colorScheme.outline,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             SizedBox(height: AppDimens.sectionSpacing),
@@ -78,7 +114,7 @@ class WordCard extends StatelessWidget {
             ),
             SizedBox(height: AppDimens.elementBetween),
             Text(
-              word.meaning,
+              widget.word.meaning,
               style: theme.bodyMedium,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -93,7 +129,7 @@ class WordCard extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
               child: Text(
-                word.examples[0],
+                widget.word.examples[0],
                 style: theme.bodySmall,
               ),
             ),
