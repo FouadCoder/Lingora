@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
               create: (context) => HistoryCubit()), // History
           BlocProvider<FavoritesCubit>(
               create: (context) => FavoritesCubit()), // Favorites
+          BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
         ],
         child: MaterialApp.router(
           theme: darkTheme,

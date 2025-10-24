@@ -1,4 +1,5 @@
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/models/level.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/models/favorite.dart';
 
@@ -161,6 +162,34 @@ class FavoritesState {
       status: status ?? this.status,
       favorites: favorites ?? this.favorites,
       actionStatus: actionStatus ?? this.actionStatus,
+    );
+  }
+}
+
+// Level
+enum LevelStatus { initial, loading, success, failure }
+
+// In state_app.dart
+class LevelState {
+  final LevelStatus status;
+  final Level? level;
+  final int? xp;
+
+  const LevelState({
+    this.status = LevelStatus.initial,
+    this.level,
+    this.xp,
+  });
+
+  LevelState copyWith({
+    LevelStatus? status,
+    Level? level,
+    int? xp,
+  }) {
+    return LevelState(
+      status: status ?? this.status,
+      level: level ?? this.level,
+      xp: xp ?? this.xp,
     );
   }
 }

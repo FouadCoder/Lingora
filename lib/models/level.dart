@@ -11,7 +11,7 @@ class Level {
     if (xp >= levels.last.requiredXp) {
       return levels.last;
     }
-
+    // XP >= requiredXp
     for (int i = levels.length; i >= 0; --i) {
       if (xp >= levels[i].requiredXp) {
         return levels[i];

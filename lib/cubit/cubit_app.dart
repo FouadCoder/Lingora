@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/keys.dart';
+import 'package:lingora/models/level.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/models/favorite.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -615,5 +616,53 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   void clearFavoritesMap() {
     favoritesMap.clear();
     emit(state.copyWith(status: FavoritesStatus.initial));
+  }
+}
+
+// Level
+class LevelCubit extends Cubit<LevelState> {
+  LevelCubit() : super(const LevelState());
+
+  int _xp = 0;
+
+  // Get XP from server
+  Future<void> fetchXp() async {
+    try {
+      emit(state.copyWith(status: LevelStatus.loading));
+
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        emit(state.copyWith(status: LevelStatus.failure));
+        return;
+      }
+
+      // Get XP
+      final response = await Supabase.instance.client
+          .from('user_analytics')
+          .select('xp')
+          .eq('user_id', userId)
+          .isFilter('deleted_at', null)
+          .single();
+
+      // Get Current lvl , required xp to next level
+      _xp = response['xp'] as int;
+      final level = Level.getLevel(_xp);
+
+      emit(state.copyWith(
+        status: LevelStatus.success,
+        level: level,
+        xp: _xp,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: LevelStatus.failure,
+      ));
+    }
+  }
+
+  // Clear XP
+  void clear() {
+    _xp = 0;
+    emit(const LevelState());
   }
 }
