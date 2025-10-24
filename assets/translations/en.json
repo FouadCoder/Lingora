@@ -129,5 +129,6 @@
     "empty_favorites_title": "No favorites yet",
     "empty_favorites_message": "Your favorite words will appear here",
     "error_favorites_title": "Oops! Something went wrong",
-    "error_favorites_message": "We couldn't load your favorites. Please check your connection and try again"
+    "error_favorites_message": "We couldn't load your favorites. Please check your connection and try again",
+    "your_vocabulary": "Words You’re Learning"
 }

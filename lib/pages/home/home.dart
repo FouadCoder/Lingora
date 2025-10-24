@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/pages/home/widgets/level_card.dart';
 import 'package:lingora/pages/home/widgets/shortcuts.dart';
+import 'package:lingora/pages/home/widgets/vocabulary_swiper.dart';
 import 'package:lingora/widgets/app_container.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: AppContainer(
           child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Level Card
             LevelCard(),
@@ -27,8 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
             // Shortcuts
             ShortcutsHome(),
             SizedBox(
-              height: AppDimens.sectionSpacing,
+              height: AppDimens.sectionBetween,
             ),
+            // Vocabulary from library
+            VocabularySwiper(),
           ],
         ),
       )),
