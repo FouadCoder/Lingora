@@ -181,7 +181,7 @@ class AuthAppCubit extends Cubit<AuthAppState> {
           .timeout(Duration(seconds: 15));
 
       // Create profile & Analytics & Check if exist
-      await createProfileAndAnalytics();
+      await createProfile();
 
       emit(state.copyWith(status: AuthAppStatus.success));
     }
@@ -211,46 +211,18 @@ class AuthAppCubit extends Cubit<AuthAppState> {
     }
   }
 
-  // Create Profile & Analytics for new user
-  Future<void> createProfileAndAnalytics() async {
-    // Profile
+  // Create Profile
+  Future<void> createProfile() async {
+    //
     final String? userId = Supabase.instance.client.auth.currentUser?.id;
     if (userId == null) {
       return;
     }
-    bool profileExist = false;
-    bool analyticsExist = false;
 
-    final data = await Supabase.instance.client
-        .from('profiles')
-        .select()
-        .eq('id', userId)
-        .maybeSingle();
-    if (data != null) {
-      profileExist = true;
-    }
-
-    if (!profileExist) {
-      await Supabase.instance.client.from('profiles').upsert({
-        'id': userId,
-      });
-    }
-
-    // Analytics
-    final analyticsData = await Supabase.instance.client
-        .from('user_analytics')
-        .select()
-        .eq('user_id', userId)
-        .maybeSingle();
-    if (analyticsData != null) {
-      analyticsExist = true;
-    }
-
-    if (!analyticsExist) {
-      await Supabase.instance.client
-          .from('user_analytics')
-          .upsert({'user_id': userId, 'total_translations': 0});
-    }
+    await Supabase.instance.client.from('profiles').upsert(
+      {'id': userId},
+      onConflict: 'id', // do nothing if the profile already exists
+    );
   }
 
   // Sign up
@@ -298,8 +270,8 @@ class AuthAppCubit extends Cubit<AuthAppState> {
           )
           .timeout(const Duration(seconds: 15));
 
-      // Create profile & Analytics
-      await createProfileAndAnalytics();
+      // Create profile
+      await createProfile();
       emit(state.copyWith(status: AuthAppStatus.success));
     }
     //* Auth Error
