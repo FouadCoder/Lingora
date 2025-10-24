@@ -5,7 +5,6 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/models/translate.dart';
-import 'package:lingora/pages/translate_screen/widgets/collections.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/header.dart';
 

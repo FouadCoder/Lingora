@@ -4,7 +4,6 @@ import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/nav.dart';
-import 'package:lingora/pages/onboarding/onboarding_screen.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
