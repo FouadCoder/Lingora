@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Level Card
-            LevelCard(),
+            UserProgressCard(),
             SizedBox(
               height: AppDimens.sectionSpacing,
             ),

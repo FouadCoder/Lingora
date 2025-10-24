@@ -624,12 +624,22 @@ class LevelCubit extends Cubit<LevelState> {
   LevelCubit() : super(const LevelState());
 
   int _xp = 0;
+  Level? _level;
 
   // Get XP from server
   Future<void> fetchXp() async {
     try {
-      emit(state.copyWith(status: LevelStatus.loading));
+      // check if success
+      if (state.status == LevelStatus.success) {
+        emit(state.copyWith(
+          status: LevelStatus.success,
+          level: _level,
+          xp: _xp,
+        ));
+        return;
+      }
 
+      emit(state.copyWith(status: LevelStatus.loading));
       final userId = Supabase.instance.client.auth.currentUser?.id;
       if (userId == null) {
         emit(state.copyWith(status: LevelStatus.failure));
@@ -646,14 +656,17 @@ class LevelCubit extends Cubit<LevelState> {
 
       // Get Current lvl , required xp to next level
       _xp = response['xp'] as int;
-      final level = Level.getLevel(_xp);
+      _level = Level.getNextLevel(_xp);
 
+      print(
+          "=================================== XP: ${response['xp']} // Level ${_level!.number}   Requried XP ${_level!.requiredXp} ");
       emit(state.copyWith(
         status: LevelStatus.success,
-        level: level,
+        level: _level,
         xp: _xp,
       ));
     } catch (e) {
+      print("=================================== Error getting XP: $e");
       emit(state.copyWith(
         status: LevelStatus.failure,
       ));
@@ -663,6 +676,7 @@ class LevelCubit extends Cubit<LevelState> {
   // Clear XP
   void clear() {
     _xp = 0;
+    _level = null;
     emit(const LevelState());
   }
 }

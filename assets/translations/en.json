@@ -26,7 +26,7 @@
     "select_target_language": "Select Target Language",
     "search_languages": "Search languages...",
     "translation_failed": "Couldn’t process that — Try again",
-    "translation_success_points": "New word unlocked! +5 XP",
+    "translation_success_points": "New word unlocked! +10 XP",
     "translation_input_empty": "Please enter text to translate.",
     "translation_not_found": "Translation not found",
     "translated": "Translated",
@@ -130,5 +130,6 @@
     "empty_favorites_message": "Your favorite words will appear here",
     "error_favorites_title": "Oops! Something went wrong",
     "error_favorites_message": "We couldn't load your favorites. Please check your connection and try again",
-    "your_vocabulary": "Words You’re Learning"
+    "your_vocabulary": "Words You’re Learning",
+    "unavailable": "Unavailable"
 }
