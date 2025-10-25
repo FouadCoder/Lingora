@@ -1,0 +1,131 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/cubit/cubit_app.dart';
+import 'package:lingora/cubit/state_app.dart';
+import 'package:lingora/models/user_analytics.dart';
+import 'package:lingora/pages/insights/widgets/analytics_card.dart';
+import 'package:lingora/widgets/custom_status.dart';
+
+class AnalyticeWidget extends StatefulWidget {
+  const AnalyticeWidget({super.key});
+
+  @override
+  State<AnalyticeWidget> createState() => _AnalyticeWidgetState();
+}
+
+class _AnalyticeWidgetState extends State<AnalyticeWidget> {
+  int getCrossAxisCount() {
+    if (AppPlatform.isDesktop(context)) return 4;
+    if (AppPlatform.isTablet(context)) return 2;
+    if (AppPlatform.isPhone(context)) return 2;
+    return 1;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AnalyticsCubit>().getAnalysis();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "overview".tr(),
+          style: Theme.of(context).textTheme.titleMedium,
+          textAlign: TextAlign.start,
+        ),
+        SizedBox(
+          height: AppDimens.titleContentBetween,
+        ),
+        BlocBuilder<AnalyticsCubit, UserAnalyticsState>(
+          builder: (context, state) {
+            // Loading
+            if (state.status == UserAnalyticsStatus.loading) {
+              return MasonryGridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 4,
+                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: getCrossAxisCount(),
+                ),
+                crossAxisSpacing: AppDimens.cardBetween,
+                mainAxisSpacing: AppDimens.cardBetween,
+                itemBuilder: (context, index) {
+                  return AnalyticsCardLoading();
+                },
+              );
+            }
+            // Success
+            if (state.status == UserAnalyticsStatus.success) {
+              final UserAnalytics analytics = state.userAnalytics!;
+
+              List cardAnalytics = [
+                {
+                  "label": "total_translations".tr(),
+                  "analytics": analytics.totalTranslations.toString(),
+                  "iconName": "assets/icons/trophy_52.png",
+                },
+                {
+                  "label": "level".tr(),
+                  "analytics": analytics.level.number.toString(),
+                  "iconName": "assets/icons/medal_94.png",
+                },
+                {
+                  "label": "my_library".tr(),
+                  "analytics": analytics.totalLibraryWords.toString(),
+                  "iconName": "assets/icons/book.png",
+                },
+                {
+                  "label": "active_days".tr(),
+                  "analytics": analytics.activeDays.toString(),
+                  "iconName": "assets/icons/hot_sale.png",
+                },
+              ];
+
+              return MasonryGridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 4,
+                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: getCrossAxisCount(),
+                ),
+                crossAxisSpacing: AppDimens.cardBetween,
+                mainAxisSpacing: AppDimens.cardBetween,
+                itemBuilder: (context, index) {
+                  return AnalyticsCard(
+                      label: cardAnalytics[index]["label"],
+                      analytics: cardAnalytics[index]["analytics"],
+                      iconName: cardAnalytics[index]["iconName"]);
+                },
+              );
+            }
+
+            // Error
+            if (state.status == UserAnalyticsStatus.failure) {
+              return CustomState(
+                textColor: Colors.white,
+                color: Theme.of(context).colorScheme.secondary,
+                animation: "assets/animation/error_cat.json",
+                title: 'analytics_error_title'.tr(),
+                message: 'analytics_error_messages'.tr(),
+                buttonText: 'try_again'.tr(),
+                onTap: () {
+                  context.read<AnalyticsCubit>().getAnalysis();
+                },
+              );
+            }
+
+            return Container();
+          },
+        ),
+      ],
+    );
+  }
+}

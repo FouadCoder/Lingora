@@ -7,7 +7,7 @@ Widget shimmerBox(
   BuildContext context, {
   double? width,
   double? height,
-  double radius = 8,
+  double radius = 12,
 }) {
   final theme = Theme.of(context);
   final w = width ?? double.infinity; // fallback width

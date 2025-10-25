@@ -132,5 +132,7 @@
     "error_favorites_message": "We couldn't load your favorites. Please check your connection and try again",
     "your_vocabulary": "Words You’re Learning",
     "unavailable": "Unavailable",
-    "level": "Level"
+    "level": "Level",
+    "analytics_error_title": "Well, this is awkward…",
+    "analytics_error_messages": "We couldn’t load your analysis right now. Don’t worry — your progress is safe!"
 }

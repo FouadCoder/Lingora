@@ -2,6 +2,7 @@ import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/models/level.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/models/favorite.dart';
+import 'package:lingora/models/user_analytics.dart';
 
 // Translate
 
@@ -190,6 +191,29 @@ class LevelState {
       status: status ?? this.status,
       level: level ?? this.level,
       xp: xp ?? this.xp,
+    );
+  }
+}
+
+// User Analytics
+enum UserAnalyticsStatus { initial, loading, success, failure }
+
+class UserAnalyticsState {
+  final UserAnalyticsStatus status;
+  final UserAnalytics? userAnalytics;
+
+  const UserAnalyticsState({
+    this.status = UserAnalyticsStatus.initial,
+    this.userAnalytics,
+  });
+
+  UserAnalyticsState copyWith({
+    UserAnalyticsStatus? status,
+    UserAnalytics? userAnalytics,
+  }) {
+    return UserAnalyticsState(
+      status: status ?? this.status,
+      userAnalytics: userAnalytics ?? this.userAnalytics,
     );
   }
 }

@@ -1,12 +1,10 @@
 import 'package:contribution_heatmap/contribution_heatmap.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/pages/insights/widgets/activity_heatmap.dart';
-import 'package:lingora/pages/insights/widgets/analytics_card.dart';
+import 'package:lingora/pages/insights/widgets/analytic_widget.dart';
 import 'package:lingora/widgets/app_container.dart';
 
 class InsightsScreen extends StatefulWidget {
@@ -19,36 +17,6 @@ class InsightsScreen extends StatefulWidget {
 class _InsightsScreenState extends State<InsightsScreen> {
   @override
   Widget build(BuildContext context) {
-    int getCrossAxisCount() {
-      if (AppPlatform.isDesktop(context)) return 4;
-      if (AppPlatform.isTablet(context)) return 2;
-      if (AppPlatform.isPhone(context)) return 2;
-      return 1;
-    }
-
-    List cardAnalytics = [
-      {
-        "label": "total_translations".tr(),
-        "analytics": "100",
-        "iconName": "assets/icons/trophy_52.png",
-      },
-      {
-        "label": "level".tr(),
-        "analytics": "12",
-        "iconName": "assets/icons/medal_94.png",
-      },
-      {
-        "label": "my_library".tr(),
-        "analytics": "10",
-        "iconName": "assets/icons/book.png",
-      },
-      {
-        "label": "active_days".tr(),
-        "analytics": "10",
-        "iconName": "assets/icons/hot_sale.png",
-      },
-    ];
-
     return Scaffold(
       appBar: AppBar(),
       body: AppContainer(
@@ -56,32 +24,8 @@ class _InsightsScreenState extends State<InsightsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Overview
-            Text(
-              "overview".tr(),
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.start,
-            ),
-            SizedBox(
-              height: AppDimens.titleContentBetween,
-            ),
-            // Cards
-            MasonryGridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 4,
-              gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: getCrossAxisCount(),
-              ),
-              crossAxisSpacing: AppDimens.cardBetween,
-              mainAxisSpacing: AppDimens.cardBetween,
-              itemBuilder: (context, index) {
-                return AnalyticsCard(
-                    label: cardAnalytics[index]["label"],
-                    analytics: cardAnalytics[index]["analytics"],
-                    iconName: cardAnalytics[index]["iconName"]);
-              },
-            ),
+            // Overview analytics
+            AnalyticeWidget(),
 
             SizedBox(
               height: AppDimens.sectionBetween,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/widgets/app_card.dart';
+import 'package:lingora/widgets/shimmer_box.dart';
 
 class AnalyticsCard extends StatelessWidget {
   final String label;
@@ -46,5 +47,33 @@ class AnalyticsCard extends StatelessWidget {
         )
       ],
     ));
+  }
+}
+
+class AnalyticsCardLoading extends StatelessWidget {
+  const AnalyticsCardLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      child: Column(
+        children: [
+          // Label placeholder
+          shimmerBox(
+            context,
+            width: 60,
+            height: 16,
+          ),
+          SizedBox(height: AppDimens.subElementBetween),
+          // Icon placeholder
+          shimmerBox(
+            context,
+            width: 64,
+            height: 64,
+            radius: 8,
+          ),
+        ],
+      ),
+    );
   }
 }
