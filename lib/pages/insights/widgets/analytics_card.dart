@@ -40,8 +40,8 @@ class AnalyticsCard extends StatelessWidget {
         ),
         // Icon
         SizedBox(
-          height: 80,
-          width: 80,
+          height: 64,
+          width: 64,
           child: Image.asset(iconName),
         )
       ],

@@ -33,9 +33,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
         "iconName": "assets/icons/trophy_52.png",
       },
       {
-        "label": "top_language".tr(),
-        "analytics": "English",
-        "iconName": "assets/icons/flag.png",
+        "label": "level".tr(),
+        "analytics": "12",
+        "iconName": "assets/icons/medal_94.png",
       },
       {
         "label": "my_library".tr(),
@@ -85,18 +85,6 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
             SizedBox(
               height: AppDimens.sectionBetween,
-            ),
-
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                "activity".tr(),
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(
-              height: AppDimens.titleContentBetween,
             ),
 
             // Year title
