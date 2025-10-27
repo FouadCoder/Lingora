@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/keys.dart';
 import 'package:lingora/models/level.dart';
@@ -9,6 +10,9 @@ import 'package:lingora/models/translate.dart';
 import 'package:lingora/models/favorite.dart';
 import 'package:lingora/models/user_analytics.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+// Local Database
+final db = Hive.box("db");
 
 // Translate
 class TranslateCubit extends Cubit<TranslateState> {
@@ -704,12 +708,60 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
 class CategoryCubit extends Cubit<CategoryState> {
   CategoryCubit() : super(const CategoryState());
 
+  // Save category in local
+  Future<Map> saveCategoryLocal(String userId, String categoryName) async {
+    List categories = [];
+    Map category = {};
+    DateTime now = DateTime.now();
+    bool requestFromServer = false;
+
+    // Get last updated time
+    DateTime? lastUpdated = await db.get("lastUpdateCategory");
+    if (lastUpdated == null) {
+      requestFromServer = true;
+    }
+
+    // Check if more than 7 days
+    if (lastUpdated != null) {
+      final diff = now.difference(lastUpdated);
+      if (diff.inDays > 7) {
+        requestFromServer = true;
+      }
+    }
+
+    // If request from server
+    if (requestFromServer) {
+      final res = await Supabase.instance.client
+          .from('categories')
+          .select('id , name')
+          .eq("user_id", userId)
+          .isFilter('deleted_at', null);
+      categories = res;
+
+      // Save categories in local
+      await db.put("categories", categories);
+      await db.put("lastUpdateCategory", DateTime.now());
+
+      print("Server  =================== Categories: $categories");
+    }
+
+    // request from local
+    if (!requestFromServer) {
+      categories = await db.get("categories");
+      print("Local  =================== Categories: $categories");
+    }
+
+    category =
+        categories.where((element) => element['name'] == categoryName).first;
+    return category;
+  }
+
   // Add word to category
-  Future<void> addWordToCategory(String wordId, String categoryId) async {
+  Future<void> addWordToCategory(String wordId, String categoryName) async {
     try {
       emit(state.copyWith(status: CategoryStatus.loading));
       // Check ID
-      if (wordId.isEmpty || categoryId.isEmpty) {
+      if (wordId.isEmpty || categoryName.isEmpty) {
         emit(state.copyWith(status: CategoryStatus.failure));
         return;
       }
@@ -720,23 +772,16 @@ class CategoryCubit extends Cubit<CategoryState> {
         return;
       }
       // Get category Id
-      final res = await Supabase.instance.client
-          .from('categories')
-          .select('id')
-          .eq("user_id", userId)
-          .eq('name', categoryId)
-          .isFilter('deleted_at', null)
-          .single();
-
+      Map category = await saveCategoryLocal(userId, categoryName);
       // Update word category
       await Supabase.instance.client
           .from('translated_words')
-          .update({'category_id': res['id']})
+          .update({'category_id': category['id']})
           .eq('id', wordId)
           .isFilter('deleted_at', null);
 
       print(
-          "==============================  $wordId // $categoryId // Category Id ==== ${res['id']}");
+          "===================== $wordId // $categoryName // Category Id ==== ${category['id']}");
 
       emit(state.copyWith(status: CategoryStatus.success));
     } catch (e) {
