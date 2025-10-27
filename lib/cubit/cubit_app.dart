@@ -699,3 +699,49 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
     }
   }
 }
+
+// Category
+class CategoryCubit extends Cubit<CategoryState> {
+  CategoryCubit() : super(const CategoryState());
+
+  // Add word to category
+  Future<void> addWordToCategory(String wordId, String categoryId) async {
+    try {
+      emit(state.copyWith(status: CategoryStatus.loading));
+      // Check ID
+      if (wordId.isEmpty || categoryId.isEmpty) {
+        emit(state.copyWith(status: CategoryStatus.failure));
+        return;
+      }
+      // User Id
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        emit(state.copyWith(status: CategoryStatus.failure));
+        return;
+      }
+      // Get category Id
+      final res = await Supabase.instance.client
+          .from('categories')
+          .select('id')
+          .eq("user_id", userId)
+          .eq('name', categoryId)
+          .isFilter('deleted_at', null)
+          .single();
+
+      // Update word category
+      await Supabase.instance.client
+          .from('translated_words')
+          .update({'category_id': res['id']})
+          .eq('id', wordId)
+          .isFilter('deleted_at', null);
+
+      print(
+          "==============================  $wordId // $categoryId // Category Id ==== ${res['id']}");
+
+      emit(state.copyWith(status: CategoryStatus.success));
+    } catch (e) {
+      print("============================== Error adding word to category: $e");
+      emit(state.copyWith(status: CategoryStatus.failure));
+    }
+  }
+}

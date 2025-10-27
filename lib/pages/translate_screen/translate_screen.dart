@@ -5,7 +5,7 @@ import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/translate_screen/widgets/collections.dart';
+import 'package:lingora/pages/translate_screen/widgets/collections_category.dart';
 import 'package:lingora/pages/translate_screen/widgets/translation_input.dart';
 import 'package:lingora/pages/translate_screen/widgets/language_selector.dart';
 import 'package:lingora/pages/translate_screen/widgets/info_cards.dart';
@@ -153,7 +153,11 @@ class _TranslateScreenState extends State<TranslateScreen> {
 
                         // Info
 
-                        if (isSuccess) CollectionsTranslate(),
+                        if (isSuccess)
+                          CollectionsTranslate(
+                            wordId: state.result!.id ?? "",
+                            hideNotifications: false,
+                          ),
                         if (isSuccess)
                           SizedBox(
                             height: AppDimens.sectionSpacing,

@@ -217,3 +217,22 @@ class UserAnalyticsState {
     );
   }
 }
+
+// Category
+enum CategoryStatus { initial, loading, success, failure }
+
+class CategoryState {
+  final CategoryStatus status;
+
+  const CategoryState({
+    this.status = CategoryStatus.initial,
+  });
+
+  CategoryState copyWith({
+    CategoryStatus? status,
+  }) {
+    return CategoryState(
+      status: status ?? this.status,
+    );
+  }
+}

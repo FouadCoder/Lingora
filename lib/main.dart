@@ -46,6 +46,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
           BlocProvider<AnalyticsCubit>(
               create: (context) => AnalyticsCubit()), // User Analytics
+          BlocProvider<CategoryCubit>(
+              create: (context) => CategoryCubit()), // Category
         ],
         child: MaterialApp.router(
           theme: darkTheme,
