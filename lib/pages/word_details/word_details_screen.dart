@@ -44,14 +44,16 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
         child: Column(
           children: [
             // Translated
-            WordTranslatedCard(model: widget.model),
+            //TODO FIX THIS MODEL
+            // WordTranslatedCard(model: widget.model),
 
             SizedBox(
               height: AppDimens.subElementBetween,
             ),
 
             // Word Info
-            WordInfoCard(model: widget.model),
+            //TODO FIX THIS MODEL
+            // WordInfoCard(model: widget.model),
 
             SizedBox(
               height: AppDimens.sectionBetween,

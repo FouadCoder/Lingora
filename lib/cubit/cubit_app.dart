@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/keys.dart';
 import 'package:lingora/models/level.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/models/favorite.dart';
@@ -13,76 +11,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Local Database
 final db = Hive.box("db");
-
-// Translate
-class TranslateCubit extends Cubit<TranslateState> {
-  TranslateCubit() : super(const TranslateState());
-
-  // Gemini Ai Model
-  final modelGemini =
-      GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKeygeminiModel);
-
-  // Update input text
-  void updateInput(String text) {
-    emit(state.copyWith(
-      inputText: text,
-    ));
-  }
-
-  // Update selected languages
-  void updateLanguages({from, to}) {
-    emit(state.copyWith(
-      sourceLanguage: from ?? state.sourceLanguage,
-      targetLanguage: to ?? state.targetLanguage,
-    ));
-  }
-
-  // Swap languages
-  void swapLanguages() {
-    emit(state.copyWith(
-      sourceLanguage: state.targetLanguage,
-      targetLanguage: state.sourceLanguage,
-    ));
-  }
-
-  //translation
-  Future<void> translate() async {
-    try {
-      if (state.inputText.trim().isEmpty) {
-        emit(state.copyWith(status: TranslateStatus.empty));
-        return;
-      }
-      emit(state.copyWith(status: TranslateStatus.loading));
-      print("Start loading =====================================");
-      final userId = Supabase.instance.client.auth.currentUser?.id;
-      final from = (state.sourceLanguage.code);
-      final to = (state.targetLanguage.code);
-
-      // Translate
-      final res =
-          await Supabase.instance.client.functions.invoke('translate', body: {
-        "user_id": userId,
-        "input": state.inputText,
-        "translate_from": from,
-        "translate_to": to,
-      });
-      final data = res.data;
-      print("Input ============== ${state.inputText}");
-      print("Data ================ $data");
-      Translate translate = Translate.fromJson(data);
-
-      emit(state.copyWith(status: TranslateStatus.success, result: translate));
-    } catch (e) {
-      print("Error ============================= $e");
-      emit(state.copyWith(status: TranslateStatus.failure));
-    }
-  }
-
-  // Clear the current translation result
-  void clearResult() {
-    emit(state.copyWith(result: null, status: TranslateStatus.initial));
-  }
-}
 
 // Get translate words
 class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
@@ -759,6 +687,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   // Add word to category
   Future<void> addWordToCategory(String wordId, String categoryName) async {
     try {
+      print("===================== $wordId // $categoryName");
       emit(state.copyWith(status: CategoryStatus.loading));
       // Check ID
       if (wordId.isEmpty || categoryName.isEmpty) {

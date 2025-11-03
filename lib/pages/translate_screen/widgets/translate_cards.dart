@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 import 'package:lingora/helper/direction_helper.dart';
-import 'package:lingora/models/translate.dart';
 import 'package:lingora/widgets/app_card.dart';
 import 'package:lingora/widgets/header.dart';
 
 // Word translated
 class WordTranslatedCard extends StatelessWidget {
-  final Translate model;
+  final TranslateEntity model;
   const WordTranslatedCard({super.key, required this.model});
 
   @override
@@ -58,7 +58,7 @@ class WordTranslatedCard extends StatelessWidget {
 
 // Word Info card
 class WordInfoCard extends StatelessWidget {
-  final Translate model;
+  final TranslateEntity model;
   const WordInfoCard({super.key, required this.model});
 
   @override

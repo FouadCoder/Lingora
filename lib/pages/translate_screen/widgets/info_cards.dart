@@ -4,16 +4,16 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/app_constants.dart';
 import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/pages/translate_screen/widgets/translate_cards.dart';
 import 'package:lingora/widgets/header.dart';
-import 'package:lingora/models/translate.dart';
 import 'package:lingora/widgets/app_card.dart';
 
 class InfoCards extends StatelessWidget {
   final bool isDesktop;
   final bool isTablet;
-  final Translate model;
+  final TranslateEntity model;
 
   const InfoCards({
     super.key,
