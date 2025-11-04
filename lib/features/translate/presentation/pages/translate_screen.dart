@@ -7,7 +7,7 @@ import 'package:lingora/features/translate/presentation/cubit/translate_cubit.da
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
 import 'package:lingora/pages/translate_screen/widgets/collections_category.dart';
 import 'package:lingora/pages/translate_screen/widgets/translation_input.dart';
-import 'package:lingora/pages/translate_screen/widgets/language_selector.dart';
+import 'package:lingora/features/translate/presentation/widgets/language_selector.dart';
 import 'package:lingora/pages/translate_screen/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/widgets/app_container.dart';
@@ -90,36 +90,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
             child: Column(
               children: [
                 // Language Selector
-                LanguageSelector(
-                  translateFrom: translateFrom,
-                  translateTo: translateTo,
-                  onSwap: () {
-                    setState(() {
-                      final temp = translateFrom;
-                      translateFrom = translateTo;
-                      translateTo = temp;
-                    });
-                    context.read<TranslateCubit>().swapLanguages();
-                  },
-                  onTaptranslateTo: (Language language) {
-                    setState(() {
-                      translateTo = language;
-                    });
-                    context.read<TranslateCubit>().updateLanguages(
-                          from: translateFrom,
-                          to: translateTo,
-                        );
-                  },
-                  onTaptranslateFrom: (Language language) {
-                    setState(() {
-                      translateFrom = language;
-                    });
-                    context.read<TranslateCubit>().updateLanguages(
-                          from: translateFrom,
-                          to: translateTo,
-                        );
-                  },
-                ),
+                LanguageSelector(),
 
                 SizedBox(height: AppDimens.sectionSpacing),
 
