@@ -6,7 +6,7 @@ import 'package:lingora/core/platfrom.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
 import 'package:lingora/pages/translate_screen/widgets/collections_category.dart';
-import 'package:lingora/pages/translate_screen/widgets/translation_input.dart';
+import 'package:lingora/features/translate/presentation/widgets/translate_input.dart';
 import 'package:lingora/features/translate/presentation/widgets/language_selector.dart';
 import 'package:lingora/pages/translate_screen/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
@@ -103,11 +103,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                       children: [
                         // Translation Input
                         TranslationInput(
-                          controller: _inputController,
                           isLoading: isLoading,
-                          onTranslate: () {
-                            context.read<TranslateCubit>().translate();
-                          },
                         ),
 
                         // Loading widget
