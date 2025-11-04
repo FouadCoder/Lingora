@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 
 class AppDimens {
   // Spacing

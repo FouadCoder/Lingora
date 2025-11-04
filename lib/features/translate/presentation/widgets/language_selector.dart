@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
-import 'package:lingora/pages/translate_screen/widgets/language_picker_sheet.dart';
-import 'package:lingora/widgets/app_card.dart';
+import 'package:lingora/features/translate/presentation/widgets/language_picker_sheet.dart';
+import 'package:lingora/core/widgets/app_card.dart';
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({super.key});

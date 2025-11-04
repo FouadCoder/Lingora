@@ -5,8 +5,8 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
-import 'package:lingora/router/routes.dart';
-import 'package:lingora/theme/dark_theme.dart';
+import 'package:lingora/config/router/routes.dart';
+import 'package:lingora/config/theme/dark_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

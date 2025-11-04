@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/utils/app_constants.dart';
 
 class CustomTextfield extends StatelessWidget {
   final TextEditingController controller;
@@ -24,6 +24,7 @@ class CustomTextfield extends StatelessWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? textInputFormatter;
   final double? height;
+  final double? borderRadius;
 
   const CustomTextfield(
       {super.key,
@@ -43,6 +44,7 @@ class CustomTextfield extends StatelessWidget {
       this.keyboardType,
       this.textInputFormatter,
       this.height,
+      this.borderRadius,
       this.prefixIcon,
       this.prefixIconColor});
 
@@ -83,7 +85,7 @@ class CustomTextfield extends StatelessWidget {
           height: height ?? 48, // Standard height for text fields
           decoration: BoxDecoration(
             color: backgroundColor ?? theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(borderRadius ?? 12),
             border: Border.all(
               color: borderColor ??
                   (highLight

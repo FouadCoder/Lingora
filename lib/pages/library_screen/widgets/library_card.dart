@@ -2,11 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/extensions/datetime_style.dart';
+import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/models/translate.dart';
-import 'package:lingora/widgets/app_card.dart';
+import 'package:lingora/core/widgets/app_card.dart';
 
 class WordCard extends StatefulWidget {
   final Translate word;

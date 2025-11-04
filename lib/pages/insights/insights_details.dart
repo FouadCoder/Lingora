@@ -1,11 +1,11 @@
 import 'package:contribution_heatmap/contribution_heatmap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/core/platfrom.dart';
-import 'package:lingora/extensions/datetime_style.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
+import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/pages/insights/widgets/activity_heatmap.dart';
-import 'package:lingora/widgets/app_container.dart';
+import 'package:lingora/core/widgets/app_container.dart';
 
 class InsightsDetailsScreen extends StatelessWidget {
   const InsightsDetailsScreen({super.key});

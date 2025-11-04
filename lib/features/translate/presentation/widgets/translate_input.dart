@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/core/platfrom.dart';
-import 'package:lingora/extensions/theme_data.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
+import 'package:lingora/core/extensions/theme_data.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
-import 'package:lingora/widgets/app_card.dart';
-import 'package:lingora/widgets/custom_button.dart';
-import 'package:lingora/widgets/textfield.dart';
+import 'package:lingora/core/widgets/app_card.dart';
+import 'package:lingora/core/widgets/custom_button.dart';
+import 'package:lingora/core/widgets/textfield.dart';
 
 class TranslationInput extends StatefulWidget {
   final bool isLoading;
@@ -86,6 +86,7 @@ class _TranslationInputState extends State<TranslationInput> {
                   context.read<TranslateCubit>().updateInput(value);
                 },
                 borderColor: theme.border,
+                borderRadius: AppDimens.radiusM,
               ),
             ],
           ),

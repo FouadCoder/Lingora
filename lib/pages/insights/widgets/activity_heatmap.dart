@@ -1,6 +1,6 @@
 import 'package:contribution_heatmap/contribution_heatmap.dart';
 import 'package:flutter/material.dart';
-import 'package:lingora/widgets/app_card.dart';
+import 'package:lingora/core/widgets/app_card.dart';
 
 class ActivityHeatmap extends StatelessWidget {
   final List<ContributionEntry> entries;

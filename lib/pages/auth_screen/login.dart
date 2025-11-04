@@ -2,14 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/widgets/app_container.dart';
-import 'package:lingora/widgets/custom_button.dart';
-import 'package:lingora/widgets/flushbar.dart';
-import 'package:lingora/widgets/textfield.dart';
+import 'package:lingora/core/widgets/app_container.dart';
+import 'package:lingora/core/widgets/custom_button.dart';
+import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/core/widgets/textfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

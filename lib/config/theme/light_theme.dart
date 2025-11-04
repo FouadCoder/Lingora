@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 
-import 'package:lingora/core/app_colors.dart';
-
-ThemeData darkTheme = ThemeData(
-  brightness: Brightness.dark,
-  scaffoldBackgroundColor: AppColors.bgDark,
+ThemeData lightTheme = ThemeData(
+  brightness: Brightness.light,
+  scaffoldBackgroundColor: AppColors.lightBgDark,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.bgDark,
+    backgroundColor: AppColors.lightBgDark,
     foregroundColor: AppColors.text,
     elevation: 0,
     surfaceTintColor: Colors.transparent,
   ),
-  colorScheme: const ColorScheme.dark(
-    primary: AppColors.text,
+  colorScheme: const ColorScheme.light(
+    primary: AppColors.lightText,
+    onPrimary: AppColors.lightBgLight,
     secondary: AppColors.brandOrange,
-    surface: AppColors.bg,
-    onPrimary: AppColors.bgLight,
+    surface: AppColors.lightBg,
     onSecondary: AppColors.text,
-    onSurface: AppColors.bgLight,
+    onSurface: AppColors.bg,
     outline: AppColors.textMuted,
-    shadow: Colors.white24,
+    shadow: Colors.black12,
   ),
 
   // Buttons
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: AppColors.text,
-      foregroundColor: AppColors.bgDark,
+      backgroundColor: AppColors.brandOrange,
+      foregroundColor: Colors.white,
       minimumSize: const Size.fromHeight(56),
       textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -34,8 +33,8 @@ ThemeData darkTheme = ThemeData(
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: AppColors.text,
-      side: const BorderSide(color: AppColors.textMuted),
+      foregroundColor: AppColors.brandOrange,
+      side: const BorderSide(color: AppColors.brandOrange, width: 1.5),
       minimumSize: const Size.fromHeight(56),
       textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -53,7 +52,7 @@ ThemeData darkTheme = ThemeData(
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColors.text, width: 2),
+      borderSide: BorderSide(color: AppColors.brandOrange, width: 2),
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
     labelStyle: TextStyle(color: AppColors.text),
@@ -62,18 +61,18 @@ ThemeData darkTheme = ThemeData(
 
   // Text
   textTheme: const TextTheme(
-    bodySmall: TextStyle(fontSize: 14, color: AppColors.textMuted),
-    bodyMedium: TextStyle(fontSize: 16, color: AppColors.text),
+    bodySmall: TextStyle(fontSize: 14, color: AppColors.lightTextMuted),
+    bodyMedium: TextStyle(fontSize: 16, color: AppColors.lightText),
     titleMedium: TextStyle(
-        fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.text),
+        fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.lightText),
     displayLarge: TextStyle(
-      fontSize: 36,
+      fontSize: 34,
       fontWeight: FontWeight.bold,
-      color: AppColors.text,
+      color: AppColors.lightText,
     ),
   ),
 
-// shimmerBox(height: 26 , radius: 12); for titleMedium text
-// shimmerBox(height: 20 , radius: 8);  for bodyMedium
-// shimmerBox(height: 18 , radius : 6); for bodySmall
+// shimmerBox(height: 26); for titleMedium text
+// shimmerBox(height: 20);  for bodyMedium
+// shimmerBox(height: 18); for bodySmall
 );

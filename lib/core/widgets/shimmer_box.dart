@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/extensions/theme_data.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/extensions/theme_data.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget shimmerBox(

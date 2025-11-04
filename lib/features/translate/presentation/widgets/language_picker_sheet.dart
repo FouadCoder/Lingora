@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/data/langauges_list.dart';
 
 class LanguagePickerSheet extends StatelessWidget {
@@ -103,7 +103,7 @@ class LanguagePickerSheet extends StatelessWidget {
                                       : Theme.of(context)
                                           .colorScheme
                                           .onSurface
-                                          .withOpacity(0.7),
+                                          .withValues(alpha: 0.7),
                                 ),
                           )
                         : null,

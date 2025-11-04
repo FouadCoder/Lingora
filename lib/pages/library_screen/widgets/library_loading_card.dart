@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/extensions/theme_data.dart';
-import 'package:lingora/widgets/shimmer_box.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/extensions/theme_data.dart';
+import 'package:lingora/core/widgets/shimmer_box.dart';
 
 class LibraryLoadingCard extends StatefulWidget {
   const LibraryLoadingCard({super.key});

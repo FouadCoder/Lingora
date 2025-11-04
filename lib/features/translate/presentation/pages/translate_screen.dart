@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
+
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
-import 'package:lingora/pages/translate_screen/widgets/collections_category.dart';
+import 'package:lingora/features/translate/presentation/widgets/translate_collections.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_input.dart';
 import 'package:lingora/features/translate/presentation/widgets/language_selector.dart';
-import 'package:lingora/pages/translate_screen/widgets/info_cards.dart';
+import 'package:lingora/features/translate/presentation/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/widgets/app_container.dart';
-import 'package:lingora/widgets/custom_status.dart';
-import 'package:lingora/widgets/flushbar.dart';
+import 'package:lingora/core/widgets/app_container.dart';
+import 'package:lingora/core/widgets/custom_status.dart';
+import 'package:lingora/core/widgets/flushbar.dart';
 
 class TranslateScreen extends StatefulWidget {
   const TranslateScreen({super.key});
@@ -117,8 +118,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         SizedBox(
                           height: AppDimens.sectionBetween,
                         ),
-
-                        // Info
 
                         if (isSuccess)
                           CollectionsTranslate(

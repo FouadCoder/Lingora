@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lingora/core/app_constants.dart';
+import 'package:lingora/core/utils/app_constants.dart';
 
 class CustomSwtich extends StatelessWidget {
   final String title;

@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/widgets/shortcut_widget.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/widgets/shortcut_widget.dart';
 
 class ShortcutsHome extends StatelessWidget {
   const ShortcutsHome({super.key});

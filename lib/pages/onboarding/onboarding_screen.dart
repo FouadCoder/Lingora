@@ -4,8 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lingora/pages/onboarding/onboarding_widget.dart';
-import 'package:lingora/widgets/app_container.dart';
-import 'package:lingora/widgets/custom_button.dart';
+import 'package:lingora/core/widgets/app_container.dart';
+import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {

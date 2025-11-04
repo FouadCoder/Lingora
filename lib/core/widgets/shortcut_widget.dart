@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/widgets/app_card.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/widgets/app_card.dart';
 
 class ShortcutWidget extends StatelessWidget {
   final IconData icon;

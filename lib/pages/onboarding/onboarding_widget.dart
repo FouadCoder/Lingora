@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/core/platfrom.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lottie/lottie.dart';
 
 class OnboardingWidget extends StatelessWidget {

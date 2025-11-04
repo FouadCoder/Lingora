@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/core/platfrom.dart';
-import 'package:lingora/widgets/app_card.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
+import 'package:lingora/core/widgets/app_card.dart';
 
 class CollectionsLibrary extends StatelessWidget {
   const CollectionsLibrary({super.key});

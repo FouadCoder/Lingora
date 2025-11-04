@@ -1,16 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:lingora/core/app_constants.dart';
-import 'package:lingora/extensions/datetime_style.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/models/translate.dart';
-import 'package:lingora/pages/translate_screen/widgets/collections_category.dart';
-import 'package:lingora/pages/translate_screen/widgets/translate_cards.dart';
-import 'package:lingora/widgets/app_container.dart';
-import 'package:lingora/widgets/custom_swtich.dart';
-import 'package:lingora/widgets/header.dart';
-import 'package:lingora/widgets/textfield.dart';
+import 'package:lingora/features/translate/presentation/widgets/translate_collections.dart';
+import 'package:lingora/core/widgets/app_container.dart';
+import 'package:lingora/core/widgets/custom_swtich.dart';
+import 'package:lingora/core/widgets/header.dart';
+import 'package:lingora/core/widgets/textfield.dart';
 
 class WordDetailsScreen extends StatefulWidget {
   final Translate model;

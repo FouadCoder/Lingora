@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lingora/widgets/app_container.dart';
-import 'package:lingora/widgets/custom_status.dart';
+import 'package:lingora/core/widgets/app_container.dart';
+import 'package:lingora/core/widgets/custom_status.dart';
 
 class SignupSuccessScreen extends StatefulWidget {
   const SignupSuccessScreen({super.key});
