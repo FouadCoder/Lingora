@@ -5,6 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/config/router/routes.dart';
 import 'package:lingora/config/theme/dark_theme.dart';
@@ -36,6 +37,10 @@ class MyApp extends StatelessWidget {
                   injection<TranslateCubit>()), // Get Translated words
           BlocProvider<LibraryCubit>(
               create: (context) => injection<LibraryCubit>()), // Library
+          BlocProvider<NotesCubit>(
+              create: (context) => injection<NotesCubit>()), // Notes
+
+          //TODO adjust the cuibits below
           BlocProvider<AuthAppCubit>(
             create: (context) => AuthAppCubit()..launch(),
             lazy: false,

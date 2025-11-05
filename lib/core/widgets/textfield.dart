@@ -81,61 +81,67 @@ class CustomTextfield extends StatelessWidget {
         if (label.isNotEmpty) SizedBox(height: AppDimens.elementBetween),
 
         // TextField Container
-        Container(
-          height: height ?? 48, // Standard height for text fields
-          decoration: BoxDecoration(
-            color: backgroundColor ?? theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(borderRadius ?? 12),
-            border: Border.all(
-              color: borderColor ??
-                  (highLight
-                      ? theme.colorScheme.error
-                      : theme.colorScheme.outline.withOpacity(0.1)),
-              width: 1,
-            ),
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: height ?? 48,
           ),
-          child: TextFormField(
-            onChanged: onChange,
-            controller: controller,
-            decoration: InputDecoration(
-              hintText: hint,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 16,
+          child: Container(
+            decoration: BoxDecoration(
+              color: backgroundColor ?? theme.colorScheme.surface,
+              borderRadius: BorderRadius.circular(borderRadius ?? 12),
+              border: Border.all(
+                color: borderColor ??
+                    (highLight
+                        ? theme.colorScheme.error
+                        : theme.colorScheme.outline.withValues(alpha: 0.1)),
+                width: 1,
               ),
-              prefixIcon: prefixIcon,
-              prefixIconColor: prefixIconColor ?? theme.colorScheme.primary,
-              alignLabelWithHint: true,
-              hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.outline,
-              ),
-
-              border: InputBorder
-                  .none, // Remove default border since we have custom container
-              enabledBorder: InputBorder.none, // Remove enabled state border
-              focusedBorder: InputBorder.none, // Remove focused state border
-              errorBorder: InputBorder.none, // Remove error state border
-              focusedErrorBorder:
-                  InputBorder.none, // Remove focused error state border
-              disabledBorder: InputBorder.none, // Remove disabled state border
-              filled: false, // Don't fill since we have custom container
-              suffixIcon: suffixIcon != null
-                  ? Padding(
-                      padding:
-                          const EdgeInsets.only(right: 8), // Button padding
-                      child: suffixIcon,
-                    )
-                  : null,
-              counterText: '',
             ),
-            style: theme.textTheme.bodyMedium,
-            keyboardType: keyboardType,
-            inputFormatters: textInputFormatter,
-            minLines: 1,
-            maxLines: null,
-            readOnly: readOnly,
-            onTap: onTap,
-            maxLength: maxLength,
+            child: TextFormField(
+              onChanged: onChange,
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: hint,
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+                prefixIcon: prefixIcon,
+                prefixIconColor: prefixIconColor ?? theme.colorScheme.primary,
+                alignLabelWithHint: true,
+                hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.outline,
+                ),
+
+                border: InputBorder
+                    .none, // Remove default border since we have custom container
+                enabledBorder: InputBorder.none, // Remove enabled state border
+                focusedBorder: InputBorder.none, // Remove focused state border
+                errorBorder: InputBorder.none, // Remove error state border
+                focusedErrorBorder:
+                    InputBorder.none, // Remove focused error state border
+                disabledBorder:
+                    InputBorder.none, // Remove disabled state border
+                filled: false, // Don't fill since we have custom container
+                suffixIcon: suffixIcon != null
+                    ? Padding(
+                        padding:
+                            const EdgeInsets.only(right: 8), // Button padding
+                        child: suffixIcon,
+                      )
+                    : null,
+                counterText: '',
+              ),
+              style: theme.textTheme.bodyMedium,
+              keyboardType: keyboardType,
+              inputFormatters: textInputFormatter,
+              minLines: 1,
+              expands: false,
+              maxLines: null,
+              readOnly: readOnly,
+              onTap: onTap,
+              maxLength: maxLength,
+            ),
           ),
         ),
 

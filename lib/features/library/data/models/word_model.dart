@@ -58,8 +58,10 @@ class WordModel {
       translateTo: json["translate_to"] != null
           ? LanguageData.getLanguageByCode(json["translate_to"])
           : LanguageData.getLanguageByCode("ar"),
-      note: (json['notes'] != null && (json['notes'] as List).isNotEmpty)
-          ? NoteModel.fromJson((json['notes'] as List).first)
+      note: json['notes'] != null
+          ? (json['notes'] is List && (json['notes'] as List).isNotEmpty
+              ? NoteModel.fromJson((json['notes'] as List).first)
+              : NoteModel.fromJson(json['notes'] as Map<String, dynamic>))
           : NoteModel.empty(),
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),

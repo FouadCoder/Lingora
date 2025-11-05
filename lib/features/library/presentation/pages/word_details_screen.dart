@@ -145,7 +145,10 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
               height: AppDimens.sectionBetween,
             ),
             // Notes
-            LibraryNotes(noteEntity: widget.model.note),
+            LibraryNotes(
+              noteEntity: widget.model.note,
+              wordId: widget.model.id,
+            ),
 
             // Reminders
             SizedBox(

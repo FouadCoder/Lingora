@@ -4,6 +4,11 @@ import 'package:lingora/features/library/data/repositories_impl/library_reposito
 import 'package:lingora/features/library/domain/repositories/library_repository.dart';
 import 'package:lingora/features/library/domain/usecases/get_library_usecase.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/notes/data/datasources/notes_remote_data.dart';
+import 'package:lingora/features/notes/data/repositories_impl/notes_repository_impl.dart';
+import 'package:lingora/features/notes/domain/repositories/notes_repository.dart';
+import 'package:lingora/features/notes/domain/usecases/update_note_usecase.dart';
+import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:lingora/features/translate/data/datasources/translate_remote_data.dart';
 import 'package:lingora/features/translate/data/repositories_impl/translate_repository_impl.dart';
 import 'package:lingora/features/translate/domain/repositories/translate_repository.dart';
@@ -22,12 +27,15 @@ Future<void> setupInjection() async {
   // Database
   injection.registerSingleton(TranslateRemoteData(injection()));
   injection.registerSingleton(LibraryRemoteData(injection()));
+  injection.registerSingleton(NotesRemoteData(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
       () => TranslateRepositoryImpl(injection()));
   injection.registerLazySingleton<LibraryRepository>(
       () => LibraryRepositoryImpl(injection()));
+  injection.registerLazySingleton<NotesRepository>(
+      () => NotesRepositoryImpl(injection()));
 
   //* Usecases
 
@@ -35,10 +43,13 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => TranslateUsecase(injection()));
   // Library
   injection.registerFactory(() => GetLibraryUsecase(injection()));
+  // Notes
+  injection.registerFactory(() => UpdateNoteUsecase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
       () => TranslateCubit(injection(), injection()));
   injection.registerFactory<LibraryCubit>(
       () => LibraryCubit(injection(), injection()));
+  injection.registerFactory(() => NotesCubit(injection(), injection()));
 }

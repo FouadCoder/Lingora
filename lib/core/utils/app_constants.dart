@@ -63,4 +63,13 @@ class AppButtonSizes {
     if (AppPlatform.isDesktop(context)) return 14;
     return 16; // fallback
   }
+
+  static double smallWidth(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    if (AppPlatform.isPhone(context)) return screenWidth * 0.5;
+    if (AppPlatform.isTablet(context)) return 220;
+    if (AppPlatform.isDesktop(context)) return 160;
+    return screenWidth * 0.5;
+  }
 }
