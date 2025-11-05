@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/library_screen/widgets/library_card.dart';
-import 'package:lingora/pages/library_screen/widgets/library_loading_card.dart';
+import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/library/presentation/cubit/library_state.dart';
+import 'package:lingora/features/library/presentation/widgets/library_card.dart';
+import 'package:lingora/features/library/presentation/widgets/library_loading_card.dart';
 
 class VocabularySwiper extends StatefulWidget {
   const VocabularySwiper({super.key});
@@ -24,7 +24,7 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
   @override
   void initState() {
     super.initState();
-    context.read<FetchTranslatedLibraryCubit>().getLibrary();
+    context.read<LibraryCubit>().getLibrary();
     timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (mounted) {
         cardSwiperController.swipe(CardSwiperDirection.left);
@@ -54,9 +54,8 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
         SizedBox(
           height: AppDimens.titleContentBetween,
         ),
-        BlocBuilder<FetchTranslatedLibraryCubit, FetchTranslatedLibraryState>(
-            builder: (context, state) {
-          if (state.status == FetchTranslatedLibraryStatus.loading) {
+        BlocBuilder<LibraryCubit, LibraryState>(builder: (context, state) {
+          if (state.status == LibraryStatus.loading) {
             // Loading
             return SizedBox(
               height: min(MediaQuery.of(context).size.height * 0.35, 350),
@@ -72,7 +71,7 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
           }
 
           // Success
-          else if (state.status == FetchTranslatedLibraryStatus.success) {
+          else if (state.status == LibraryStatus.success) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

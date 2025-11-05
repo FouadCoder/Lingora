@@ -12,68 +12,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // Local Database
 final db = Hive.box("db");
 
-// Get translate words
-class FetchTranslatedLibraryCubit extends Cubit<FetchTranslatedLibraryState> {
-  FetchTranslatedLibraryCubit() : super(const FetchTranslatedLibraryState());
-
-  Map libraryWords = {};
-
-  void getLibrary() async {
-    try {
-      // If loaded before
-      if (state.status == FetchTranslatedLibraryStatus.success ||
-          state.status == FetchTranslatedLibraryStatus.empty) {
-        // Empty
-        if (state.status == FetchTranslatedLibraryStatus.empty) {
-          emit(state.copyWith(status: FetchTranslatedLibraryStatus.empty));
-          return;
-        }
-
-        // Success
-        emit(state.copyWith(
-            status: FetchTranslatedLibraryStatus.success,
-            libraryWords: List<Translate>.from(libraryWords.values)));
-        return;
-      }
-
-      emit(state.copyWith(status: FetchTranslatedLibraryStatus.loading));
-      final userId = Supabase.instance.client.auth.currentUser?.id;
-      // If user is not logged in
-      if (userId == null) {
-        emit(state.copyWith(
-          status: FetchTranslatedLibraryStatus.failure,
-        ));
-        return;
-      }
-
-      // Get
-      final List<dynamic> data = await Supabase.instance.client
-          .from('translated_words')
-          .select()
-          .eq('user_id', userId)
-          .isFilter('deleted_at', null);
-      List<Translate> words = data.map((e) => Translate.fromJson(e)).toList();
-      // To load same list from local again next time
-      for (final w in words) {
-        libraryWords[w.id] = w;
-      }
-
-      // If empty
-      if (words.isEmpty) {
-        emit(state.copyWith(
-          status: FetchTranslatedLibraryStatus.empty,
-        ));
-        return;
-      }
-
-      emit(state.copyWith(
-          status: FetchTranslatedLibraryStatus.success, libraryWords: words));
-    } catch (e) {
-      emit(state.copyWith(status: FetchTranslatedLibraryStatus.failure));
-    }
-  }
-}
-
 // Auth
 class AuthAppCubit extends Cubit<AuthAppState> {
   AuthAppCubit() : super(AuthAppState());

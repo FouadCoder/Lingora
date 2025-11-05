@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lingora/core/injection.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_params.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_usecase.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
@@ -7,7 +6,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TranslateCubit extends Cubit<TranslateState> {
   final TranslateUsecase translateUsecase;
-  TranslateCubit(this.translateUsecase) : super(const TranslateState());
+  final SupabaseClient supabaseClient;
+  TranslateCubit(this.translateUsecase, this.supabaseClient)
+      : super(const TranslateState());
 
   // Update input text
   void updateInput(String text) {
@@ -38,7 +39,6 @@ class TranslateCubit extends Cubit<TranslateState> {
   }
 
   Future<void> translate() async {
-    final supabase = injection<SupabaseClient>();
     try {
       // If input is empty
       if (state.inputText.trim().isEmpty) {
@@ -48,7 +48,7 @@ class TranslateCubit extends Cubit<TranslateState> {
 
       // if userId is null
       emit(state.copyWith(status: TranslateStatus.loading));
-      final userId = supabase.auth.currentUser?.id;
+      final userId = supabaseClient.auth.currentUser?.id;
       if (userId == null) {
         emit(state.copyWith(status: TranslateStatus.failure));
         return;

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
+import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/config/router/routes.dart';
 import 'package:lingora/config/theme/dark_theme.dart';
@@ -33,9 +34,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<TranslateCubit>(
               create: (context) =>
                   injection<TranslateCubit>()), // Get Translated words
-          BlocProvider<FetchTranslatedLibraryCubit>(
-              create: (context) =>
-                  FetchTranslatedLibraryCubit()), // Get Translated words
+          BlocProvider<LibraryCubit>(
+              create: (context) => injection<LibraryCubit>()), // Library
           BlocProvider<AuthAppCubit>(
             create: (context) => AuthAppCubit()..launch(),
             lazy: false,

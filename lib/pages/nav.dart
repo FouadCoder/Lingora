@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/translate/presentation/pages/translate_screen.dart';
 import 'package:lingora/pages/home/home.dart';
-import 'package:lingora/pages/library_screen/library.dart';
+import 'package:lingora/features/library/presentation/pages/library_screen.dart';
 import 'package:lingora/pages/insights/insights.dart';
 import 'package:lingora/pages/setting/setting.dart';
 import 'package:lingora/core/widgets/app_sidebar.dart';

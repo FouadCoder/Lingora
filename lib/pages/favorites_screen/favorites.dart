@@ -6,7 +6,7 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/library_screen/widgets/library_card.dart';
+import 'package:lingora/features/library/presentation/widgets/library_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
@@ -75,8 +75,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   crossAxisSpacing: AppDimens.cardBetween,
                   mainAxisSpacing: AppDimens.cardBetween,
                   itemBuilder: (context, index) {
-                    return WordCard(
-                        word: state.favorites[index].translatedWord!);
+                    return Container(); // TODO FIX THIS LATER
+                    // return WordCard(
+                    //     word: state.favorites[index].translatedWord!);
                   },
                 );
               }

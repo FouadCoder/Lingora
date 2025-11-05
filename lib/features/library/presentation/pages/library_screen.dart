@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/library_screen/widgets/collections_library.dart';
-import 'package:lingora/pages/library_screen/widgets/library_card.dart';
-import 'package:lingora/pages/library_screen/widgets/library_loading_card.dart';
+import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/library/presentation/cubit/library_state.dart';
+import 'package:lingora/features/library/presentation/widgets/collections_library.dart';
+import 'package:lingora/features/library/presentation/widgets/library_card.dart';
+import 'package:lingora/features/library/presentation/widgets/library_loading_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
@@ -24,7 +24,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<FetchTranslatedLibraryCubit>().getLibrary();
+    context.read<LibraryCubit>().getLibrary();
   }
 
   @override
@@ -37,10 +37,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
     }
 
     return Scaffold(
-      body: BlocListener<FetchTranslatedLibraryCubit,
-          FetchTranslatedLibraryState>(
+      body: BlocListener<LibraryCubit, LibraryState>(
         listener: (context, state) {
-          if (state.status == FetchTranslatedLibraryStatus.failure) {
+          if (state.status == LibraryStatus.failure) {
             showSnackBar(
               context,
               message: 'snack_word_error'.tr(),
@@ -53,9 +52,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                BlocBuilder<FetchTranslatedLibraryCubit,
-                    FetchTranslatedLibraryState>(builder: (context, state) {
-                  if (state.status == FetchTranslatedLibraryStatus.loading) {
+                BlocBuilder<LibraryCubit, LibraryState>(
+                    builder: (context, state) {
+                  if (state.status == LibraryStatus.loading) {
                     // Loading
                     return MasonryGridView.builder(
                       shrinkWrap: true,
@@ -74,8 +73,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   }
 
                   // Success
-                  else if (state.status ==
-                      FetchTranslatedLibraryStatus.success) {
+                  else if (state.status == LibraryStatus.success) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -121,7 +119,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   }
 
                   // Empty
-                  else if (state.status == FetchTranslatedLibraryStatus.empty) {
+                  else if (state.status == LibraryStatus.empty) {
                     return SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: CustomState(
@@ -135,8 +133,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   }
 
                   // Error
-                  else if (state.status ==
-                      FetchTranslatedLibraryStatus.failure) {
+                  else if (state.status == LibraryStatus.failure) {
                     return SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: CustomState(
@@ -147,9 +144,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         message: 'error_words_message'.tr(),
                         buttonText: 'try_again'.tr(),
                         onTap: () {
-                          context
-                              .read<FetchTranslatedLibraryCubit>()
-                              .getLibrary();
+                          context.read<LibraryCubit>().getLibrary();
                         },
                       ),
                     );

@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:lingora/features/library/presentation/routes/library_routes.dart';
+import 'package:lingora/features/translate/presentation/routes/translate_routes.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/pages/auth_screen/auth_gate.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
@@ -71,3 +73,7 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
       path: '/signup_success',
       builder: (context, state) => SignupSuccessScreen()),
 ]);
+
+//! This is the new router
+GoRouter goRouterNew = GoRouter(
+    initialLocation: '/', routes: [...translateRoutes, ...libraryRoutes]);
