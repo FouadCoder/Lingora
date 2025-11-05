@@ -12,9 +12,7 @@ class LibraryRemoteData {
         .select('* , notes(*) , categories(*)')
         .eq('user_id', supabaseClient.auth.currentUser!.id)
         .isFilter('deleted_at', null);
-    for (var item in data) {
-      print("data Library =============== : $item");
-    }
+
     List<TranslateModel> words =
         data.map((e) => TranslateModel.fromJson(e)).toList();
     return words;
