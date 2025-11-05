@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
+import 'package:lingora/features/library/presentation/widgets/library_notes.dart';
+import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 import 'package:lingora/helper/direction_helper.dart';
-import 'package:lingora/models/translate.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_collections.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/header.dart';
-import 'package:lingora/core/widgets/textfield.dart';
 
 class WordDetailsScreen extends StatefulWidget {
-  final Translate model;
+  final TranslateEntity model;
   const WordDetailsScreen({super.key, required this.model});
 
   @override
@@ -20,14 +20,7 @@ class WordDetailsScreen extends StatefulWidget {
 }
 
 class _WordDetailsScreenState extends State<WordDetailsScreen> {
-  final TextEditingController noteController = TextEditingController();
   bool activeNotifications = false;
-
-  @override
-  void dispose() {
-    noteController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,13 +141,11 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
               wordId: widget.model.id ?? "", //! This can be null
             )),
 
-            // Notes
             SizedBox(
               height: AppDimens.sectionBetween,
             ),
-            Header(icon: MaterialCommunityIcons.pen, title: 'notes'.tr()),
-            CustomTextfield(
-                controller: noteController, label: '', hint: 'notes_hint'.tr()),
+            // Notes
+            LibraryNotes(),
 
             // Reminders
             SizedBox(
