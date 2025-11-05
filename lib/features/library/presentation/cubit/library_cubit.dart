@@ -28,6 +28,7 @@ class LibraryCubit extends Cubit<LibraryState> {
       emit(state.copyWith(
           status: LibraryStatus.success, libraryWords: libraryWords));
     } catch (e) {
+      print("Error loading library =================================$e");
       emit(state.copyWith(status: LibraryStatus.failure));
     }
   }

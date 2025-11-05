@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
+import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/features/library/presentation/pages/word_details_screen.dart';
 import 'package:lingora/features/library/presentation/routes/library_routes.dart';
-import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 import 'package:lingora/features/translate/presentation/routes/translate_routes.dart';
 import 'package:lingora/pages/auth_screen/auth_gate.dart';
 import 'package:lingora/pages/auth_screen/login.dart';
@@ -46,7 +46,7 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
           GoRoute(
               path: 'word_details',
               builder: (context, state) =>
-                  WordDetailsScreen(model: state.extra as TranslateEntity))
+                  WordDetailsScreen(model: state.extra as WordEntity))
         ]),
     GoRoute(
       path: 'insights',

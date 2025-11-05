@@ -1,4 +1,4 @@
-import 'package:lingora/features/translate/data/models/translate_model.dart';
+import 'package:lingora/features/library/data/models/word_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LibraryRemoteData {
@@ -6,15 +6,16 @@ class LibraryRemoteData {
 
   LibraryRemoteData(this.supabaseClient);
 
-  Future<List<TranslateModel>> getLibrary() async {
-    final List<dynamic> data = await supabaseClient
+  Future<List<WordModel>> getLibrary() async {
+    final List<Map<String, dynamic>> data = await supabaseClient
         .from('translated_words')
         .select('* , notes(*) , categories(*)')
         .eq('user_id', supabaseClient.auth.currentUser!.id)
         .isFilter('deleted_at', null);
-
-    List<TranslateModel> words =
-        data.map((e) => TranslateModel.fromJson(e)).toList();
+    for (var element in data) {
+      print(element);
+    }
+    List<WordModel> words = data.map((e) => WordModel.fromJson(e)).toList();
     return words;
   }
 }

@@ -8,8 +8,8 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/library/presentation/cubit/library_state.dart';
-import 'package:lingora/features/library/presentation/widgets/library_card.dart';
-import 'package:lingora/features/library/presentation/widgets/library_loading_card.dart';
+import 'package:lingora/features/library/presentation/widgets/word_card.dart';
+import 'package:lingora/features/library/presentation/widgets/word_card_loading.dart';
 
 class VocabularySwiper extends StatefulWidget {
   const VocabularySwiper({super.key});

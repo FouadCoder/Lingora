@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
-import 'package:lingora/features/library/presentation/widgets/library_notes.dart';
-import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
+import 'package:lingora/features/library/domain/entities/word_entity.dart';
+import 'package:lingora/features/library/presentation/widgets/note_widget.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_collections.dart';
 import 'package:lingora/core/widgets/app_container.dart';
@@ -12,7 +12,7 @@ import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/header.dart';
 
 class WordDetailsScreen extends StatefulWidget {
-  final TranslateEntity model;
+  final WordEntity model;
   const WordDetailsScreen({super.key, required this.model});
 
   @override
@@ -145,7 +145,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
               height: AppDimens.sectionBetween,
             ),
             // Notes
-            LibraryNotes(),
+            LibraryNotes(noteEntity: widget.model.note),
 
             // Reminders
             SizedBox(

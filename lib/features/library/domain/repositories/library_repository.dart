@@ -1,5 +1,5 @@
-import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
+import 'package:lingora/features/library/domain/entities/word_entity.dart';
 
 abstract class LibraryRepository {
-  Future<List<TranslateEntity>> getLibrary();
+  Future<List<WordEntity>> getLibrary();
 }

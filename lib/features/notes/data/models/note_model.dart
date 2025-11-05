@@ -19,6 +19,17 @@ class NoteModel {
     this.deletedAt,
   });
 
+  /// Creates an empty note with default values
+  factory NoteModel.empty() => NoteModel(
+        id: null,
+        wordId: null,
+        userId: null,
+        content: '',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        deletedAt: null,
+      );
+
   factory NoteModel.fromJson(Map<String, dynamic> json) {
     return NoteModel(
       id: json['id'] as String,
