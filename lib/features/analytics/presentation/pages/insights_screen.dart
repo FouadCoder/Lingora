@@ -3,8 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/pages/insights/widgets/activity_heatmap.dart';
-import 'package:lingora/pages/insights/widgets/analytic_widget.dart';
+import 'package:lingora/features/analytics/presentation/widgets/activity_heatmap.dart';
+import 'package:lingora/features/analytics/presentation/widgets/analytic_widget.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 
 class InsightsScreen extends StatefulWidget {

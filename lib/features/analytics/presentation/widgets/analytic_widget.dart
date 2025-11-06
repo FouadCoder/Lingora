@@ -6,8 +6,7 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/models/user_analytics.dart';
-import 'package:lingora/pages/insights/widgets/analytics_card.dart';
+import 'package:lingora/features/analytics/presentation/widgets/analytics_card.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 
 class AnalyticeWidget extends StatefulWidget {
@@ -46,53 +45,40 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
         ),
         BlocBuilder<AnalyticsCubit, UserAnalyticsState>(
           builder: (context, state) {
+            final isLoading = state.status == UserAnalyticsStatus.loading;
+            final analytics = state.userAnalytics;
+
+            final List<Map<String, String>> cardAnalytics = [
+              {
+                "label": "total_translations".tr(),
+                "analytics":
+                    isLoading ? "" : analytics!.totalTranslations.toString(),
+                "iconName": "assets/icons/trophy_52.png",
+              },
+              {
+                "label": "level".tr(),
+                "analytics":
+                    isLoading ? "" : analytics!.level.number.toString(),
+                "iconName": "assets/icons/medal_94.png",
+              },
+              {
+                "label": "my_library".tr(),
+                "analytics":
+                    isLoading ? "" : analytics!.totalLibraryWords.toString(),
+                "iconName": "assets/icons/book.png",
+              },
+              {
+                "label": "active_days".tr(),
+                "analytics": isLoading ? "" : analytics!.activeDays.toString(),
+                "iconName": "assets/icons/hot_sale.png",
+              },
+            ];
             // Loading
             if (state.status == UserAnalyticsStatus.loading) {
               return MasonryGridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 4,
-                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: getCrossAxisCount(),
-                ),
-                crossAxisSpacing: AppDimens.cardBetween,
-                mainAxisSpacing: AppDimens.cardBetween,
-                itemBuilder: (context, index) {
-                  return AnalyticsCardLoading();
-                },
-              );
-            }
-            // Success
-            if (state.status == UserAnalyticsStatus.success) {
-              final UserAnalytics analytics = state.userAnalytics!;
-
-              List cardAnalytics = [
-                {
-                  "label": "total_translations".tr(),
-                  "analytics": analytics.totalTranslations.toString(),
-                  "iconName": "assets/icons/trophy_52.png",
-                },
-                {
-                  "label": "level".tr(),
-                  "analytics": analytics.level.number.toString(),
-                  "iconName": "assets/icons/medal_94.png",
-                },
-                {
-                  "label": "my_library".tr(),
-                  "analytics": analytics.totalLibraryWords.toString(),
-                  "iconName": "assets/icons/book.png",
-                },
-                {
-                  "label": "active_days".tr(),
-                  "analytics": analytics.activeDays.toString(),
-                  "iconName": "assets/icons/hot_sale.png",
-                },
-              ];
-
-              return MasonryGridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 4,
+                itemCount: cardAnalytics.length,
                 gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: getCrossAxisCount(),
                 ),
@@ -100,9 +86,32 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
                 mainAxisSpacing: AppDimens.cardBetween,
                 itemBuilder: (context, index) {
                   return AnalyticsCard(
-                      label: cardAnalytics[index]["label"],
-                      analytics: cardAnalytics[index]["analytics"],
-                      iconName: cardAnalytics[index]["iconName"]);
+                    iconName: cardAnalytics[index]["iconName"]!,
+                    isLoading: true,
+                    label: cardAnalytics[index]["label"]!,
+                    analytics: "",
+                  );
+                },
+              );
+            }
+            // Success
+            if (state.status == UserAnalyticsStatus.success) {
+              return MasonryGridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: cardAnalytics.length,
+                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: getCrossAxisCount(),
+                ),
+                crossAxisSpacing: AppDimens.cardBetween,
+                mainAxisSpacing: AppDimens.cardBetween,
+                itemBuilder: (context, index) {
+                  return AnalyticsCard(
+                    label: cardAnalytics[index]["label"]!,
+                    analytics: cardAnalytics[index]["analytics"]!,
+                    iconName: cardAnalytics[index]["iconName"]!,
+                    isLoading: false,
+                  );
                 },
               );
             }

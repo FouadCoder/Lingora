@@ -7,11 +7,13 @@ class AnalyticsCard extends StatelessWidget {
   final String label;
   final String analytics;
   final String iconName;
+  final bool isLoading;
   const AnalyticsCard(
       {super.key,
       required this.label,
       required this.analytics,
-      required this.iconName});
+      required this.iconName,
+      required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +29,18 @@ class AnalyticsCard extends StatelessWidget {
         SizedBox(
           height: AppDimens.subElementBetween,
         ),
-        // Analytics numebr/text
-        Text(
-          analytics,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(color: Theme.of(context).colorScheme.secondary),
-          overflow: TextOverflow.ellipsis,
-        ),
+        // Analytics numebr
+        if (!isLoading)
+          Text(
+            analytics,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Theme.of(context).colorScheme.secondary),
+            overflow: TextOverflow.ellipsis,
+          ),
+        // If loading
+        if (isLoading) shimmerBox(context, width: 30, height: 30, radius: 6),
         SizedBox(
           height: AppDimens.sectionSpacing,
         ),
@@ -47,33 +52,5 @@ class AnalyticsCard extends StatelessWidget {
         )
       ],
     ));
-  }
-}
-
-class AnalyticsCardLoading extends StatelessWidget {
-  const AnalyticsCardLoading({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppCard(
-      child: Column(
-        children: [
-          // Label placeholder
-          shimmerBox(
-            context,
-            width: 60,
-            height: 16,
-          ),
-          SizedBox(height: AppDimens.subElementBetween),
-          // Icon placeholder
-          shimmerBox(
-            context,
-            width: 64,
-            height: 64,
-            radius: 8,
-          ),
-        ],
-      ),
-    );
   }
 }

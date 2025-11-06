@@ -4,7 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
-import 'package:lingora/pages/insights/widgets/activity_heatmap.dart';
+import 'package:lingora/features/analytics/presentation/widgets/activity_heatmap.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 
 class InsightsDetailsScreen extends StatelessWidget {

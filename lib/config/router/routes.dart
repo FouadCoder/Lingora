@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lingora/features/analytics/presentation/routes/analytics_routes.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/features/library/presentation/pages/word_details_screen.dart';
 import 'package:lingora/features/library/presentation/routes/library_routes.dart';
@@ -8,7 +9,7 @@ import 'package:lingora/pages/auth_screen/login.dart';
 import 'package:lingora/pages/auth_screen/signup_success.dart';
 import 'package:lingora/pages/favorites_screen/favorites.dart';
 import 'package:lingora/pages/history/history.dart';
-import 'package:lingora/pages/insights/insights_details.dart';
+import 'package:lingora/features/analytics/presentation/pages/insights_months_view.dart';
 import 'package:lingora/pages/nav.dart';
 import 'package:lingora/pages/onboarding/onboarding_screen.dart';
 import 'package:lingora/pages/auth_screen/register.dart';
@@ -76,4 +77,5 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
 
 //! This is the new router
 GoRouter goRouterNew = GoRouter(
-    initialLocation: '/', routes: [...translateRoutes, ...libraryRoutes]);
+    initialLocation: '/',
+    routes: [...translateRoutes, ...libraryRoutes, ...analyticsRoutes]);
