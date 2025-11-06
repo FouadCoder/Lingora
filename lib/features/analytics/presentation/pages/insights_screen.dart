@@ -1,11 +1,10 @@
-import 'package:contribution_heatmap/contribution_heatmap.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/features/analytics/presentation/widgets/activity_heatmap.dart';
 import 'package:lingora/features/analytics/presentation/widgets/analytic_widget.dart';
 import 'package:lingora/core/widgets/app_container.dart';
+import 'package:lingora/features/analytics/presentation/widgets/heatmap_card.dart';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -59,15 +58,27 @@ class _InsightsScreenState extends State<InsightsScreen> {
               height: AppDimens.sectionSpacing,
             ),
             // Analytics
-            Center(
-              child: ActivityHeatmap(
-                minDate: DateTime(2025, 1, 1),
-                maxDate: DateTime(2025, 12, 0),
-                entries: [
-                  ContributionEntry(DateTime(2025, 8, 15), 1),
-                  ContributionEntry(DateTime(2025, 8, 16), 2),
-                  ContributionEntry(DateTime(2025, 8, 17), 5),
-                ],
+            SizedBox(
+              height: 270,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 12,
+                itemBuilder: (context, index) {
+                  DateTime now = DateTime.now();
+                  DateTime minDate = DateTime(now.year, index + 1, 1);
+                  DateTime maxDate = DateTime(now.year, index + 2, 0);
+                  return Padding(
+                    padding: EdgeInsets.only(right: AppDimens.cardBetween),
+                    child: HeatmapCard(
+                        minDate: minDate,
+                        maxDate: maxDate,
+                        totalTranslations: 0,
+                        activeDays: 0,
+                        cellSize: 20,
+                        cellRadius: 2,
+                        hideDetails: true),
+                  );
+                },
               ),
             ),
           ],
