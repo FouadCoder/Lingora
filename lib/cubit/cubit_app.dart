@@ -6,7 +6,6 @@ import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/models/level.dart';
 import 'package:lingora/models/translate.dart';
 import 'package:lingora/models/favorite.dart';
-import 'package:lingora/models/user_analytics.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Local Database
@@ -521,52 +520,6 @@ class LevelCubit extends Cubit<LevelState> {
     _xp = 0;
     _level = null;
     emit(const LevelState());
-  }
-}
-
-// Analytics
-class AnalyticsCubit extends Cubit<UserAnalyticsState> {
-  AnalyticsCubit() : super(const UserAnalyticsState());
-
-  UserAnalytics? _userAnalytics;
-
-  // Get analysis
-  Future<void> getAnalysis() async {
-    try {
-      // check if success
-      if (state.status == UserAnalyticsStatus.success) {
-        emit(state.copyWith(
-          status: UserAnalyticsStatus.success,
-          userAnalytics: _userAnalytics,
-        ));
-        return;
-      }
-
-      emit(state.copyWith(status: UserAnalyticsStatus.loading));
-      final userId = Supabase.instance.client.auth.currentUser?.id;
-
-      if (userId == null) {
-        emit(state.copyWith(status: UserAnalyticsStatus.failure));
-        return;
-      }
-
-      // Get analysis
-      final response = await Supabase.instance.client
-          .from('user_analytics')
-          .select('total_translations, total_library_words, active_days, xp')
-          .eq('user_id', userId)
-          .isFilter('deleted_at', null)
-          .single();
-
-      _userAnalytics = UserAnalytics.fromJson(response);
-      emit(state.copyWith(
-        status: UserAnalyticsStatus.success,
-        userAnalytics: _userAnalytics,
-      ));
-    } catch (e) {
-      print("=========== Error getting analytics: $e");
-      emit(state.copyWith(status: UserAnalyticsStatus.failure));
-    }
   }
 }
 

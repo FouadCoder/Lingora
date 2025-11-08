@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:lingora/features/analytics/data/datasources/analytics_remote_data.dart';
+import 'package:lingora/features/analytics/data/repositories_impl/analytics_repository_impl.dart';
+import 'package:lingora/features/analytics/domain/repositories/analytics_repository.dart';
+import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
+import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/library/data/datasources/library_remote_data.dart';
 import 'package:lingora/features/library/data/repositories_impl/library_repository_impl.dart';
 import 'package:lingora/features/library/domain/repositories/library_repository.dart';
@@ -28,6 +33,7 @@ Future<void> setupInjection() async {
   injection.registerSingleton(TranslateRemoteData(injection()));
   injection.registerSingleton(LibraryRemoteData(injection()));
   injection.registerSingleton(NotesRemoteData(injection()));
+  injection.registerSingleton(AnalyticsRemoteData(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
@@ -36,6 +42,8 @@ Future<void> setupInjection() async {
       () => LibraryRepositoryImpl(injection()));
   injection.registerLazySingleton<NotesRepository>(
       () => NotesRepositoryImpl(injection()));
+  injection.registerLazySingleton<AnalyticsRepository>(
+      () => AnalyticsRepositoryImpl(injection()));
 
   //* Usecases
 
@@ -45,6 +53,8 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => GetLibraryUsecase(injection()));
   // Notes
   injection.registerFactory(() => UpdateNoteUsecase(injection()));
+  // Analytics
+  injection.registerFactory(() => GetAnalyticsUsecase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -52,4 +62,6 @@ Future<void> setupInjection() async {
   injection.registerFactory<LibraryCubit>(
       () => LibraryCubit(injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
+  injection.registerFactory<AnalyticsCubit>(
+      () => AnalyticsCubit(injection(), injection()));
 }

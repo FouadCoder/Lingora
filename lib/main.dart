@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
+import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
               create: (context) => injection<LibraryCubit>()), // Library
           BlocProvider<NotesCubit>(
               create: (context) => injection<NotesCubit>()), // Notes
+          BlocProvider<AnalyticsCubit>(
+              create: (context) =>
+                  injection<AnalyticsCubit>()), // User Analytics
 
           //TODO adjust the cuibits below
           BlocProvider<AuthAppCubit>(
@@ -50,8 +54,6 @@ class MyApp extends StatelessWidget {
           BlocProvider<FavoritesCubit>(
               create: (context) => FavoritesCubit()), // Favorites
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
-          BlocProvider<AnalyticsCubit>(
-              create: (context) => AnalyticsCubit()), // User Analytics
           BlocProvider<CategoryCubit>(
               create: (context) => CategoryCubit()), // Category
         ],
