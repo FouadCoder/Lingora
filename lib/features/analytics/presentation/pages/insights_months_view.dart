@@ -1,3 +1,4 @@
+import 'package:contribution_heatmap/contribution_heatmap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
@@ -43,6 +44,11 @@ class InsightsDetailsScreen extends StatelessWidget {
                   totalTranslations: 0,
                   activeDays: 0,
                   cellSize: 50,
+                  entries: [
+                    ContributionEntry(DateTime(2025, 8, 15), 1),
+                    ContributionEntry(DateTime(2025, 8, 16), 2),
+                    ContributionEntry(DateTime(2025, 8, 17), 5),
+                  ],
                 );
               },
             ),

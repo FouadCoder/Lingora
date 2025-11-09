@@ -1,33 +1,69 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/features/analytics/domain/usecases/analytics_params.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
+import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AnalyticsCubit extends Cubit<UserAnalyticsState> {
   final SupabaseClient supabaseClient;
   final GetAnalyticsUsecase getAnalyticsUsecase;
-  AnalyticsCubit(this.supabaseClient, this.getAnalyticsUsecase)
+  final GetDailyActivityUsercase getDailyActivitySummaryUsecase;
+  AnalyticsCubit(this.supabaseClient, this.getAnalyticsUsecase,
+      this.getDailyActivitySummaryUsecase)
       : super(const UserAnalyticsState());
 
   // Get analysis
   Future<void> getAnalysis() async {
     try {
-      emit(state.copyWith(status: UserAnalyticsStatus.loading));
+      emit(state.copyWith(
+          userAnalyticsStatus: UserAnalyticsRequestStatus.loading));
 
       final userId = supabaseClient.auth.currentUser?.id;
       if (userId == null) {
-        emit(state.copyWith(status: UserAnalyticsStatus.failure));
+        emit(state.copyWith(
+            userAnalyticsStatus: UserAnalyticsRequestStatus.failure));
         return;
       }
       // Get analytics
       final analytics = await getAnalyticsUsecase.call();
+
       emit(state.copyWith(
-        status: UserAnalyticsStatus.success,
+        userAnalyticsStatus: UserAnalyticsRequestStatus.success,
         userAnalytics: analytics,
       ));
     } catch (e) {
       print("=========== Error getting analytics: $e");
-      emit(state.copyWith(status: UserAnalyticsStatus.failure));
+      emit(state.copyWith(
+          userAnalyticsStatus: UserAnalyticsRequestStatus.failure));
+    }
+  }
+
+  // Get daily activity summary
+  Future<void> getDailyActivitySummary() async {
+    try {
+      emit(state.copyWith(
+          dailyActivityStatus: UserAnalyticsRequestStatus.loading));
+
+      final userId = supabaseClient.auth.currentUser?.id;
+      if (userId == null) {
+        emit(state.copyWith(
+            dailyActivityStatus: UserAnalyticsRequestStatus.failure));
+        return;
+      }
+
+      // Get daily activity summary
+      final dailyActivitySummary = await getDailyActivitySummaryUsecase
+          .call(AnalyticsParams(userId: userId));
+
+      emit(state.copyWith(
+        dailyActivityStatus: UserAnalyticsRequestStatus.success,
+        dailyActivity: dailyActivitySummary,
+      ));
+    } catch (e) {
+      print("=========== Error getting daily activity summary: $e");
+      emit(state.copyWith(
+          dailyActivityStatus: UserAnalyticsRequestStatus.failure));
     }
   }
 }

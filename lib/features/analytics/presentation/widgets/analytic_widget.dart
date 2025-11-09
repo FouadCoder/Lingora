@@ -25,12 +25,6 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    context.read<AnalyticsCubit>().getAnalysis();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +39,8 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
         ),
         BlocBuilder<AnalyticsCubit, UserAnalyticsState>(
           builder: (context, state) {
-            final isLoading = state.status == UserAnalyticsStatus.loading;
+            final isLoading =
+                state.userAnalyticsStatus == UserAnalyticsRequestStatus.loading;
             final analytics = state.userAnalytics;
 
             final List<Map<String, String>> cardAnalytics = [
@@ -74,7 +69,8 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
               },
             ];
             // Loading
-            if (state.status == UserAnalyticsStatus.loading) {
+            if (state.userAnalyticsStatus ==
+                UserAnalyticsRequestStatus.loading) {
               return MasonryGridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -95,7 +91,8 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
               );
             }
             // Success
-            if (state.status == UserAnalyticsStatus.success) {
+            if (state.userAnalyticsStatus ==
+                UserAnalyticsRequestStatus.success) {
               return MasonryGridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -117,7 +114,8 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
             }
 
             // Error
-            if (state.status == UserAnalyticsStatus.failure) {
+            if (state.userAnalyticsStatus ==
+                UserAnalyticsRequestStatus.failure) {
               return CustomState(
                 textColor: Colors.white,
                 color: Theme.of(context).colorScheme.secondary,

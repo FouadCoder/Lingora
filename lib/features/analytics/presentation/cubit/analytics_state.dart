@@ -1,23 +1,31 @@
+import 'package:lingora/features/analytics/domain/entities/daily_activity_entity.dart';
 import 'package:lingora/features/analytics/domain/entities/user_analytics_entity.dart';
 
-enum UserAnalyticsStatus { initial, loading, success, failure }
+enum UserAnalyticsRequestStatus { initial, loading, success, failure }
 
 class UserAnalyticsState {
-  final UserAnalyticsStatus status;
+  final UserAnalyticsRequestStatus dailyActivityStatus;
+  final UserAnalyticsRequestStatus userAnalyticsStatus;
   final UserAnalyticsEntity? userAnalytics;
-
+  final List<DailyActivityEntity>? dailyActivity;
   const UserAnalyticsState({
-    this.status = UserAnalyticsStatus.initial,
+    this.dailyActivityStatus = UserAnalyticsRequestStatus.initial,
+    this.userAnalyticsStatus = UserAnalyticsRequestStatus.initial,
     this.userAnalytics,
+    this.dailyActivity,
   });
 
   UserAnalyticsState copyWith({
-    UserAnalyticsStatus? status,
+    UserAnalyticsRequestStatus? dailyActivityStatus,
+    UserAnalyticsRequestStatus? userAnalyticsStatus,
     UserAnalyticsEntity? userAnalytics,
+    List<DailyActivityEntity>? dailyActivity,
   }) {
     return UserAnalyticsState(
-      status: status ?? this.status,
+      dailyActivityStatus: dailyActivityStatus ?? this.dailyActivityStatus,
+      userAnalyticsStatus: userAnalyticsStatus ?? this.userAnalyticsStatus,
       userAnalytics: userAnalytics ?? this.userAnalytics,
+      dailyActivity: dailyActivity ?? this.dailyActivity,
     );
   }
 }

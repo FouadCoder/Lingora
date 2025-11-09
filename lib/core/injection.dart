@@ -3,6 +3,7 @@ import 'package:lingora/features/analytics/data/datasources/analytics_remote_dat
 import 'package:lingora/features/analytics/data/repositories_impl/analytics_repository_impl.dart';
 import 'package:lingora/features/analytics/domain/repositories/analytics_repository.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
+import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/library/data/datasources/library_remote_data.dart';
 import 'package:lingora/features/library/data/repositories_impl/library_repository_impl.dart';
@@ -55,6 +56,7 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => UpdateNoteUsecase(injection()));
   // Analytics
   injection.registerFactory(() => GetAnalyticsUsecase(injection()));
+  injection.registerFactory(() => GetDailyActivityUsercase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -63,5 +65,5 @@ Future<void> setupInjection() async {
       () => LibraryCubit(injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
   injection.registerFactory<AnalyticsCubit>(
-      () => AnalyticsCubit(injection(), injection()));
+      () => AnalyticsCubit(injection(), injection(), injection()));
 }

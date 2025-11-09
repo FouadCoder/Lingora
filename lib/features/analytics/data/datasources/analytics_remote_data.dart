@@ -1,4 +1,6 @@
+import 'package:lingora/features/analytics/data/models/daily_activity_model.dart';
 import 'package:lingora/features/analytics/data/models/user_analytics_model.dart';
+import 'package:lingora/features/analytics/domain/usecases/analytics_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AnalyticsRemoteData {
@@ -16,5 +18,17 @@ class AnalyticsRemoteData {
         .single();
 
     return UserAnalyticsModel.fromJson(response);
+  }
+
+  Future<List<DailyActivityModel>> getDailyActivitySummary(
+      AnalyticsParams params) async {
+    final response = await supabaseClient
+        .from('daily_translation_summary')
+        .select()
+        .eq('user_id', params.userId);
+    print("Res Summary Daily =============== $response");
+    List<DailyActivityModel> dailyActivity =
+        response.map((e) => DailyActivityModel.fromJson(e)).toList();
+    return dailyActivity;
   }
 }

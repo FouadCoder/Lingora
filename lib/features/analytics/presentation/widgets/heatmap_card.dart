@@ -14,6 +14,7 @@ class HeatmapCard extends StatelessWidget {
   final double cellSize;
   final double cellRadius;
   final bool hideDetails;
+  final List<ContributionEntry> entries;
   const HeatmapCard(
       {super.key,
       required this.minDate,
@@ -22,7 +23,8 @@ class HeatmapCard extends StatelessWidget {
       required this.activeDays,
       this.cellSize = 15,
       this.cellRadius = 8,
-      this.hideDetails = false});
+      this.hideDetails = false,
+      required this.entries});
 
   @override
   Widget build(BuildContext context) {
@@ -104,11 +106,7 @@ class HeatmapCard extends StatelessWidget {
                 splittedMonthView: true,
                 showMonthLabels: false,
                 showWeekdayLabels: true,
-                entries: [
-                  ContributionEntry(DateTime(2025, 8, 15), 1),
-                  ContributionEntry(DateTime(2025, 8, 16), 2),
-                  ContributionEntry(DateTime(2025, 8, 17), 5),
-                ]),
+                entries: entries),
           ),
         ],
       ),
