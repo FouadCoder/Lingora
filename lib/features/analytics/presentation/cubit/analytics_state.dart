@@ -7,7 +7,7 @@ class UserAnalyticsState {
   final UserAnalyticsRequestStatus dailyActivityStatus;
   final UserAnalyticsRequestStatus userAnalyticsStatus;
   final UserAnalyticsEntity? userAnalytics;
-  final List<DailyActivityEntity>? dailyActivity;
+  final Map<int, Map<String, List<DailyActivityEntity>>>? dailyActivity;
   const UserAnalyticsState({
     this.dailyActivityStatus = UserAnalyticsRequestStatus.initial,
     this.userAnalyticsStatus = UserAnalyticsRequestStatus.initial,
@@ -19,7 +19,7 @@ class UserAnalyticsState {
     UserAnalyticsRequestStatus? dailyActivityStatus,
     UserAnalyticsRequestStatus? userAnalyticsStatus,
     UserAnalyticsEntity? userAnalytics,
-    List<DailyActivityEntity>? dailyActivity,
+    Map<int, Map<String, List<DailyActivityEntity>>>? dailyActivity,
   }) {
     return UserAnalyticsState(
       dailyActivityStatus: dailyActivityStatus ?? this.dailyActivityStatus,

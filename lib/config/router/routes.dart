@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lingora/features/analytics/domain/entities/daily_activity_entity.dart';
 import 'package:lingora/features/analytics/presentation/routes/analytics_routes.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/features/library/presentation/pages/word_details_screen.dart';
@@ -57,7 +58,9 @@ GoRouter router = GoRouter(initialLocation: '/', routes: [
       routes: [
         GoRoute(
             path: 'details',
-            builder: (context, state) => InsightsDetailsScreen())
+            builder: (context, state) => InsightsDetailsScreen(
+                entries: state.extra
+                    as Map<int, Map<String, List<DailyActivityEntity>>>?))
       ],
     ),
     GoRoute(
