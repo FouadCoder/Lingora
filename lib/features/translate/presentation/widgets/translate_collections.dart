@@ -2,10 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/features/library/domain/enums/collection_enum.dart';
 
 class CollectionsTranslate extends StatefulWidget {
   final bool hideNotifications;
@@ -22,16 +24,6 @@ class _CollectionsTranslateState extends State<CollectionsTranslate> {
   bool isActiveNotifications = false;
   @override
   Widget build(BuildContext context) {
-    List collections = [
-      {"name": "learning".tr(), "icon": Icons.school, "id": "Learning"},
-      {"name": "favorites".tr(), "icon": Icons.favorite, "id": "Favorites"},
-      {"name": "saved".tr(), "icon": Icons.bookmark, "id": "Saved"},
-      {"name": "mastered".tr(), "icon": Icons.emoji_events, "id": "Masters"},
-      {
-        "name": "notifications".tr(),
-        "icon": Icons.notifications,
-      },
-    ];
     return BlocListener<CategoryCubit, CategoryState>(
       listener: (context, state) {
         // Success
@@ -54,10 +46,14 @@ class _CollectionsTranslateState extends State<CollectionsTranslate> {
         }
       },
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: AppPlatform.isPhone(context)
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.end,
         children: List.generate(
-            widget.hideNotifications ? 4 : collections.length, (index) {
-          bool isNotification = index == collections.length - 1;
+            widget.hideNotifications ? 4 : CollectionType.values.length,
+            (index) {
+          bool isNotification =
+              CollectionType.values[index] == CollectionType.notifications;
           bool isSelected = index == selectedIndex;
           bool isActiveNoti = isNotification && isActiveNotifications;
           final backgroundColor = (isSelected || isActiveNoti)
@@ -75,20 +71,19 @@ class _CollectionsTranslateState extends State<CollectionsTranslate> {
                 setState(() {
                   selectedIndex = index;
                 });
-                context
-                    .read<CategoryCubit>()
-                    .addWordToCategory(widget.wordId, collections[index]["id"]);
+                context.read<CategoryCubit>().addWordToCategory(
+                    widget.wordId, CollectionType.values[index].id);
               }
             },
             child: Container(
               margin: EdgeInsets.only(
-                  right: index < collections.length - 1
+                  right: index < CollectionType.values.length - 1
                       ? AppDimens.buttonTagHorizontal
                       : 0),
               child: AppCard(
                   backgroundColor: backgroundColor,
                   child: Icon(
-                    collections[index]["icon"],
+                    CollectionType.values[index].icon,
                     size: 20,
                   )),
             ),
