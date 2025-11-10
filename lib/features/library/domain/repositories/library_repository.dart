@@ -1,5 +1,6 @@
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
+import 'package:lingora/features/library/domain/usecases/library_params.dart';
 
 abstract class LibraryRepository {
-  Future<List<WordEntity>> getLibrary();
+  Future<List<WordEntity>> getLibrary(LibraryParams params);
 }

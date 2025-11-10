@@ -21,10 +21,25 @@ class LibraryScreen extends StatefulWidget {
 }
 
 class _LibraryScreenState extends State<LibraryScreen> {
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
     context.read<LibraryCubit>().getLibrary();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 600) {
+        context.read<LibraryCubit>().loadMoreLibrary();
+        print("NEAR TO END =============================================");
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,6 +65,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
         },
         child: AppContainer(
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               children: [
                 BlocBuilder<LibraryCubit, LibraryState>(
@@ -99,11 +115,13 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           height: AppDimens.titleContentBetween,
                         ),
 
+                        // Words
                         MasonryGridView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: state.libraryWords.length,
+                          itemCount: state.libraryWords.length +
+                              (state.isLoadingMore ? 6 : 0),
                           gridDelegate:
                               SliverSimpleGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: getCrossAxisCount(),
@@ -111,7 +129,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           crossAxisSpacing: AppDimens.cardBetween,
                           mainAxisSpacing: AppDimens.cardBetween,
                           itemBuilder: (context, index) {
-                            return WordCard(word: state.libraryWords[index]);
+                            if (index < state.libraryWords.length) {
+                              return WordCard(word: state.libraryWords[index]);
+                            }
+                            return LibraryLoadingCard();
                           },
                         ),
                       ],
