@@ -1,75 +1,95 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
+import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/features/library/domain/enums/collection_enum.dart';
+import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/library/presentation/cubit/library_state.dart';
 
-class CollectionsLibrary extends StatelessWidget {
-  const CollectionsLibrary({super.key});
+class WordCollectionsWidget extends StatefulWidget {
+  final bool hideNotifications;
+  final String wordId;
+  const WordCollectionsWidget(
+      {super.key, this.hideNotifications = false, required this.wordId});
 
   @override
-  Widget build(BuildContext context) {
-    List collections = [
-      {
-        "name": "learning".tr(),
-        "path": "assets/icons/layer_10.png",
-        "onTap": () {}
-      },
-      {
-        "name": "favorites".tr(),
-        "path": "assets/icons/heart_72.png",
-        "onTap": () {}
-      },
-      {
-        "name": "saved".tr(),
-        "path": "assets/icons/bookmark_10.png",
-        "onTap": () {}
-      },
-      {
-        "name": "mastered".tr(),
-        "path": "assets/icons/trophy_10.png",
-        "onTap": () {}
-      },
-    ];
+  State<WordCollectionsWidget> createState() => _WordCollectionsWidgetState();
+}
 
-    return MasonryGridView.builder(
-        padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: AppPlatform.isPhone(context) ? 2 : 4,
-        ),
-        crossAxisSpacing: AppDimens.cardBetween,
-        mainAxisSpacing: AppDimens.cardBetween,
-        itemCount: collections.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: collections[index]["onTap"],
-            child: AppCard(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Theme.of(context).colorScheme.surface,
-                      Theme.of(context).colorScheme.secondary
-                    ]),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      collections[index]["path"],
-                      height: 24,
-                      width: 24,
-                    ),
-                    Text(
-                      collections[index]["name"],
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                )),
+class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
+  int selectedIndex = 0;
+  bool isActiveNotifications = false;
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<LibraryCubit, LibraryState>(
+      listener: (context, state) {
+        // Success
+        if (state.actionStatus == LibraryActionStatus.success) {
+          showSnackBar(
+            context,
+            message: 'word_added_to_collection'.tr(),
+            icon: Icons.verified_rounded,
+            iconColor: Theme.of(context).colorScheme.secondary,
           );
-        });
+        }
+        // Error
+        else if (state.actionStatus == LibraryActionStatus.failure) {
+          showSnackBar(
+            context,
+            message: 'something_went_wrong'.tr(),
+            icon: Icons.error_outline,
+            iconColor: Theme.of(context).colorScheme.error,
+          );
+        }
+      },
+      child: Row(
+        mainAxisAlignment: AppPlatform.isPhone(context)
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.end,
+        children: List.generate(
+            widget.hideNotifications ? 4 : CollectionType.values.length,
+            (index) {
+          bool isNotification =
+              CollectionType.values[index] == CollectionType.notifications;
+          bool isSelected = index == selectedIndex;
+          bool isActiveNoti = isNotification && isActiveNotifications;
+          final backgroundColor = (isSelected || isActiveNoti)
+              ? Theme.of(context).colorScheme.secondary
+              : Theme.of(context).colorScheme.onSurface;
+
+          return GestureDetector(
+            onTap: () {
+              if (isNotification) {
+                setState(() {
+                  isActiveNotifications = !isActiveNotifications;
+                });
+              }
+              if (!isNotification) {
+                setState(() {
+                  selectedIndex = index;
+                });
+                context.read<LibraryCubit>().updateWordCollection(
+                    widget.wordId, CollectionType.values[index]);
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.only(
+                  right: index < CollectionType.values.length - 1
+                      ? AppDimens.buttonTagHorizontal
+                      : 0),
+              child: AppCard(
+                  backgroundColor: backgroundColor,
+                  child: Icon(
+                    CollectionType.values[index].icon,
+                    size: 20,
+                  )),
+            ),
+          );
+        }),
+      ),
+    );
   }
 }

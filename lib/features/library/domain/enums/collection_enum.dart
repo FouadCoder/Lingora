@@ -34,5 +34,18 @@ extension CollectionTypeExt on CollectionType {
     }
   }
 
-  String get id => name.toLowerCase();
+  String get sourceName {
+    switch (this) {
+      case CollectionType.learning:
+        return "Learning";
+      case CollectionType.favorites:
+        return "Favorites";
+      case CollectionType.saved:
+        return "Saved";
+      case CollectionType.mastered:
+        return "Masters";
+      case CollectionType.notifications:
+        return "Notifications";
+    }
+  }
 }

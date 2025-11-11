@@ -24,7 +24,6 @@ class _InsightsScreenState extends State<InsightsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: AppContainer(
           child: SingleChildScrollView(
         child: Column(

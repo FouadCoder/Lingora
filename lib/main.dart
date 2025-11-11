@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
@@ -15,8 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setupInjection();
-  await Hive.initFlutter(); //  Hive database
-  await Hive.openBox("db"); //  Hive database
+
   runApp(EasyLocalization(
     supportedLocales: const [
       Locale('en'),
@@ -54,8 +52,6 @@ class MyApp extends StatelessWidget {
           BlocProvider<FavoritesCubit>(
               create: (context) => FavoritesCubit()), // Favorites
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
-          BlocProvider<CategoryCubit>(
-              create: (context) => CategoryCubit()), // Category
         ],
         child: MaterialApp.router(
           theme: darkTheme,

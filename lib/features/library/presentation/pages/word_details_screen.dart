@@ -6,7 +6,7 @@ import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/features/library/presentation/widgets/note_widget.dart';
 import 'package:lingora/helper/direction_helper.dart';
-import 'package:lingora/features/translate/presentation/widgets/translate_collections.dart';
+import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/header.dart';
@@ -135,8 +135,12 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
             // Category
             Header(icon: MaterialCommunityIcons.tag, title: 'collections'.tr()),
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
+
             Center(
-                child: CollectionsTranslate(
+                child: WordCollectionsWidget(
               hideNotifications: true,
               wordId: widget.model.id ?? "", //! This can be null
             )),

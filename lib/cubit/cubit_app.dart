@@ -132,6 +132,8 @@ class AuthAppCubit extends Cubit<AuthAppState> {
         return;
       }
 
+      print("Sign Up Email ======================== $email");
+
       // Sign up
       await Supabase.instance.client.auth
           .signUp(
@@ -140,12 +142,16 @@ class AuthAppCubit extends Cubit<AuthAppState> {
           )
           .timeout(const Duration(seconds: 15));
 
+      print("Sign Up Success ========================");
+
       // Create profile
       await createProfile();
+      print("Profile Created ========================");
       emit(state.copyWith(status: AuthAppStatus.success));
     }
     //* Auth Error
     on AuthException catch (e) {
+      print("Sign Up Error ======================== $e");
       // Account Exist
       if (e.message.contains("User already registered")) {
         emit(state.copyWith(
@@ -520,93 +526,5 @@ class LevelCubit extends Cubit<LevelState> {
     _xp = 0;
     _level = null;
     emit(const LevelState());
-  }
-}
-
-// Category
-class CategoryCubit extends Cubit<CategoryState> {
-  CategoryCubit() : super(const CategoryState());
-
-  // Save category in local
-  Future<Map> saveCategoryLocal(String userId, String categoryName) async {
-    List categories = [];
-    Map category = {};
-    DateTime now = DateTime.now();
-    bool requestFromServer = false;
-
-    // Get last updated time
-    DateTime? lastUpdated = await db.get("lastUpdateCategory");
-    if (lastUpdated == null) {
-      requestFromServer = true;
-    }
-
-    // Check if more than 7 days
-    if (lastUpdated != null) {
-      final diff = now.difference(lastUpdated);
-      if (diff.inDays > 7) {
-        requestFromServer = true;
-      }
-    }
-
-    // If request from server
-    if (requestFromServer) {
-      final res = await Supabase.instance.client
-          .from('categories')
-          .select('id , name')
-          .eq("user_id", userId)
-          .isFilter('deleted_at', null);
-      categories = res;
-
-      // Save categories in local
-      await db.put("categories", categories);
-      await db.put("lastUpdateCategory", DateTime.now());
-
-      print("Server  =================== Categories: $categories");
-    }
-
-    // request from local
-    if (!requestFromServer) {
-      categories = await db.get("categories");
-      print("Local  =================== Categories: $categories");
-    }
-
-    category =
-        categories.where((element) => element['name'] == categoryName).first;
-    return category;
-  }
-
-  // Add word to category
-  Future<void> addWordToCategory(String wordId, String categoryName) async {
-    try {
-      print("===================== $wordId // $categoryName");
-      emit(state.copyWith(status: CategoryStatus.loading));
-      // Check ID
-      if (wordId.isEmpty || categoryName.isEmpty) {
-        emit(state.copyWith(status: CategoryStatus.failure));
-        return;
-      }
-      // User Id
-      final userId = Supabase.instance.client.auth.currentUser?.id;
-      if (userId == null) {
-        emit(state.copyWith(status: CategoryStatus.failure));
-        return;
-      }
-      // Get category Id
-      Map category = await saveCategoryLocal(userId, categoryName);
-      // Update word category
-      await Supabase.instance.client
-          .from('translated_words')
-          .update({'category_id': category['id']})
-          .eq('id', wordId)
-          .isFilter('deleted_at', null);
-
-      print(
-          "===================== $wordId // $categoryName // Category Id ==== ${category['id']}");
-
-      emit(state.copyWith(status: CategoryStatus.success));
-    } catch (e) {
-      print("============================== Error adding word to category: $e");
-      emit(state.copyWith(status: CategoryStatus.failure));
-    }
   }
 }

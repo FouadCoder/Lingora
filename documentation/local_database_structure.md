@@ -7,7 +7,7 @@ Each box mirrors key server tables but is optimized for offline access and fast 
 
 ---
 
-### 1. 🗂️ `categories`
+### 1. 🗂️ `collections`
 
 | Field  | Type     | Description                   |
 | ------ | -------- | ----------------------------- |
@@ -19,11 +19,11 @@ Each box mirrors key server tables but is optimized for offline access and fast 
 
 ---
 
-### 2. 🕒 `last_updated`
+### 2. 🕒 `lastUpdatedTimeCollections`
 
-| Field                | Type       | Description                    | Section    |
-| -------------------- | ---------- | ------------------------------ | ---------- |
-| `lastUpdateCategory` | `datetime` | Last update time of categories | categories |
+| Field                        | Type       | Description                    | Section     |
+| ---------------------------- | ---------- | ------------------------------ | ----------- |
+| `lastUpdatedTimeCollections` | `datetime` | Last update time of categories | collections |
 
 > **Purpose:**  
 > Tracks the last time each section of cached data was refreshed.

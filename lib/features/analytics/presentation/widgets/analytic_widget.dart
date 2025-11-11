@@ -34,9 +34,6 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.start,
         ),
-        SizedBox(
-          height: AppDimens.titleContentBetween,
-        ),
         BlocBuilder<AnalyticsCubit, UserAnalyticsState>(
           builder: (context, state) {
             final isLoading =

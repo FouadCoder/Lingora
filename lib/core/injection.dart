@@ -1,14 +1,17 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lingora/features/analytics/data/datasources/analytics_remote_data.dart';
 import 'package:lingora/features/analytics/data/repositories_impl/analytics_repository_impl.dart';
 import 'package:lingora/features/analytics/domain/repositories/analytics_repository.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/library/data/datasources/library_local_data.dart';
 import 'package:lingora/features/library/data/datasources/library_remote_data.dart';
 import 'package:lingora/features/library/data/repositories_impl/library_repository_impl.dart';
 import 'package:lingora/features/library/domain/repositories/library_repository.dart';
 import 'package:lingora/features/library/domain/usecases/get_library_usecase.dart';
+import 'package:lingora/features/library/domain/usecases/update_word_collection_usecase.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/data/datasources/notes_remote_data.dart';
 import 'package:lingora/features/notes/data/repositories_impl/notes_repository_impl.dart';
@@ -29,10 +32,14 @@ Future<void> setupInjection() async {
   // Core
   await Supabase.initialize(url: supabaseURL, anonKey: supabaseAnonKey);
   injection.registerSingleton<SupabaseClient>(Supabase.instance.client);
+  await Hive.initFlutter(); //  Hive database
+  await Hive.openBox("db"); //  Hive database
+  injection.registerSingleton(Hive);
 
   // Database
   injection.registerSingleton(TranslateRemoteData(injection()));
   injection.registerSingleton(LibraryRemoteData(injection()));
+  injection.registerSingleton(LibraryLocalData());
   injection.registerSingleton(NotesRemoteData(injection()));
   injection.registerSingleton(AnalyticsRemoteData(injection()));
 
@@ -40,7 +47,7 @@ Future<void> setupInjection() async {
   injection.registerLazySingleton<TranslateRepository>(
       () => TranslateRepositoryImpl(injection()));
   injection.registerLazySingleton<LibraryRepository>(
-      () => LibraryRepositoryImpl(injection()));
+      () => LibraryRepositoryImpl(injection(), injection()));
   injection.registerLazySingleton<NotesRepository>(
       () => NotesRepositoryImpl(injection()));
   injection.registerLazySingleton<AnalyticsRepository>(
@@ -52,6 +59,7 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => TranslateUsecase(injection()));
   // Library
   injection.registerFactory(() => GetLibraryUsecase(injection()));
+  injection.registerFactory(() => UpdateWordCollectionUsecase(injection()));
   // Notes
   injection.registerFactory(() => UpdateNoteUsecase(injection()));
   // Analytics
@@ -62,7 +70,7 @@ Future<void> setupInjection() async {
   injection.registerFactory<TranslateCubit>(
       () => TranslateCubit(injection(), injection()));
   injection.registerFactory<LibraryCubit>(
-      () => LibraryCubit(injection(), injection()));
+      () => LibraryCubit(injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));

@@ -6,7 +6,6 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/library/presentation/cubit/library_state.dart';
-import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 import 'package:lingora/features/library/presentation/widgets/word_card.dart';
 import 'package:lingora/features/library/presentation/widgets/word_card_loading.dart';
 import 'package:lingora/core/widgets/app_container.dart';
@@ -31,7 +30,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 600) {
         context.read<LibraryCubit>().loadMoreLibrary();
-        print("NEAR TO END =============================================");
       }
     });
   }
@@ -101,7 +99,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         SizedBox(
                           height: AppDimens.titleContentBetween,
                         ),
-                        CollectionsLibrary(),
 
                         SizedBox(
                           height: AppDimens.sectionBetween,

@@ -6,7 +6,7 @@ import 'package:lingora/core/utils/platfrom.dart';
 
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
-import 'package:lingora/features/translate/presentation/widgets/translate_collections.dart';
+import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_input.dart';
 import 'package:lingora/features/translate/presentation/widgets/language_selector.dart';
 import 'package:lingora/features/translate/presentation/widgets/info_cards.dart';
@@ -120,7 +120,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                         ),
 
                         if (isSuccess)
-                          CollectionsTranslate(
+                          WordCollectionsWidget(
                             wordId: state.result!.id ?? "",
                             hideNotifications: false,
                           ),
