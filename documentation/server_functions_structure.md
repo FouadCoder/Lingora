@@ -69,3 +69,23 @@
 - Increment `active_days` by 1 in `user_analytics`
 
 - Update `updated_at` timestamp
+
+## update_collection_word_count
+
+**Trigger:** After update on `translated_words`
+
+**Tables affected:**
+
+- `collections`
+
+**Function purpose:**
+Keep each collection's `word_count` accurate when a word is moved from one collection to another.
+
+**Actions:**
+
+- If `collection_id` changes:
+
+  - Decrease `word_count` by 1 for the **old** collection (`OLD.collection_id`)
+  - Increase `word_count` by 1 for the **new** collection (`NEW.collection_id`)
+
+- Update `updated_at` timestamp for both affected collections
