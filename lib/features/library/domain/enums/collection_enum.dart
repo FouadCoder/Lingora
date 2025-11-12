@@ -34,6 +34,21 @@ extension CollectionTypeExt on CollectionType {
     }
   }
 
+  String get imagePath {
+    switch (this) {
+      case CollectionType.learning:
+        return "assets/icons/layer_10.png";
+      case CollectionType.favorites:
+        return "assets/icons/heart_72.png";
+      case CollectionType.saved:
+        return "assets/icons/bookmark_10.png";
+      case CollectionType.mastered:
+        return "assets/icons/trophy_10.png";
+      case CollectionType.notifications:
+        return "assets/icons/layer_10.png"; // Doesn't have image
+    }
+  }
+
   String get sourceName {
     switch (this) {
       case CollectionType.learning:
