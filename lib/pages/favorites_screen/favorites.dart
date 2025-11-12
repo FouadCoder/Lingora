@@ -6,7 +6,6 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/features/library/presentation/widgets/word_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';

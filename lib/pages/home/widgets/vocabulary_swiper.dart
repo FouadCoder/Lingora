@@ -83,7 +83,9 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
                     duration: const Duration(milliseconds: 400),
                     cardBuilder:
                         (context, index, percentThresholdX, percentThresholdY) {
-                      return WordCard(word: state.libraryWords[index]);
+                      return WordCard(
+                        word: state.libraryWords[index],
+                      );
                     },
                     cardsCount: state.libraryWords.length,
                   ),

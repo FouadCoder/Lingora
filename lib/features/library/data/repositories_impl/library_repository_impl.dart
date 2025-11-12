@@ -20,8 +20,7 @@ class LibraryRepositoryImpl implements LibraryRepository {
     return libraryWordsEntity;
   }
 
-  @override
-  Future<void> updateWordCollection(CollectionsParams params) async {
+  Future<String?> getCollectionId(String collectionName) async {
     // Get last updated time
     DateTime lastUpdatedTime =
         await libraryLocalData.getLastUpdatedTimeCollections();
@@ -44,8 +43,17 @@ class LibraryRepositoryImpl implements LibraryRepository {
 
     // Get collection id
     String? collectionId =
-        collectionsModel.firstWhere((e) => e.name == params.collectionName).id;
+        collectionsModel.firstWhere((e) => e.name == collectionName).id;
 
+    return collectionId;
+  }
+
+  @override
+  Future<void> updateWordCollection(CollectionsParams params) async {
+    String? collectionId = await getCollectionId(params.collectionName);
+    if (collectionId == null) {
+      throw Exception("Collection not found");
+    }
     // Update word collection
     await libraryRemoteData.updateWordCollection(CollectionsParams(
         collectionId: collectionId,

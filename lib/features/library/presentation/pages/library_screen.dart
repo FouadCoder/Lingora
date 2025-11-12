@@ -129,7 +129,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           mainAxisSpacing: AppDimens.cardBetween,
                           itemBuilder: (context, index) {
                             if (index < state.libraryWords.length) {
-                              return WordCard(word: state.libraryWords[index]);
+                              return WordCard(
+                                word: state.libraryWords[index],
+                              );
                             }
                             return LibraryLoadingCard();
                           },

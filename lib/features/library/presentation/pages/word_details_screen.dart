@@ -15,6 +15,7 @@ import 'package:lingora/core/widgets/header.dart';
 
 class WordDetailsScreen extends StatefulWidget {
   final WordEntity model;
+
   const WordDetailsScreen({super.key, required this.model});
 
   @override
@@ -32,167 +33,172 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
     bool isRightSideText = isRightSide(widget.model.translateTo!.code);
 
     return Scaffold(
-      appBar: AppBar(),
-      body: AppContainer(
+        appBar: AppBar(),
+        body: AppContainer(
           child: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Translated
-            WordTranslatedCard(
-              translated: widget.model.translated,
-            ),
-
-            SizedBox(
-              height: AppDimens.subElementBetween,
-            ),
-
-            // Word Info
-            WordInfoCard(
-              original: widget.model.original,
-              pos: widget.model.pos,
-              pronunciation: widget.model.pronunciation,
-            ),
-
-            SizedBox(
-              height: AppDimens.sectionBetween,
-            ),
-
-            // Meaning
-            Header(
-              icon: Icons.lightbulb_outline,
-              title: 'meaning'.tr(),
-            ),
-
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-
-            // Definition
-            Align(
-              alignment: isRightSideText
-                  ? AlignmentDirectional.centerStart
-                  : AlignmentDirectional.centerEnd,
-              child: Text(
-                widget.model.meaning,
-                style: theme.bodyMedium?.copyWith(
-                  height: 1.4,
+            child: Column(
+              children: [
+                // Translated
+                WordTranslatedCard(
+                  translated: widget.model.translated,
                 ),
-                textAlign: isRightSideText ? TextAlign.right : TextAlign.left,
-              ),
-            ),
-            SizedBox(
-              height: AppDimens.sectionBetween,
-            ),
 
-            // Synonyms
-            Header(
-              icon: MaterialCommunityIcons.cards,
-              title: 'synonyms'.tr(),
-            ),
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
+                SizedBox(
+                  height: AppDimens.subElementBetween,
+                ),
 
-            Wrap(
-              spacing: AppDimens.buttonTagHorizontal,
-              runSpacing: AppDimens.buttonTagHorizontal,
-              children: widget.model.synonyms
-                  .map((word) => _synonymChip(word, context))
-                  .toList(),
-            ),
+                // Word Info
+                WordInfoCard(
+                  original: widget.model.original,
+                  pos: widget.model.pos,
+                  pronunciation: widget.model.pronunciation,
+                ),
 
-            SizedBox(
-              height: AppDimens.sectionBetween,
-            ),
-            // Examples
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
 
-            Header(
-              icon: Icons.format_quote,
-              title: 'examples'.tr(),
-            ),
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
+                // Meaning
+                Header(
+                  icon: Icons.lightbulb_outline,
+                  title: 'meaning'.tr(),
+                ),
 
-            // Example sentences
-            Wrap(
-              spacing: AppDimens.buttonTagHorizontal,
-              runSpacing: AppDimens.buttonTagHorizontal,
-              alignment:
-                  isRightSideText ? WrapAlignment.end : WrapAlignment.start,
-              children: widget.model.examples.map((example) {
-                return Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+                SizedBox(
+                  height: AppDimens.sectionSpacing,
+                ),
+
+                // Definition
+                Align(
+                  alignment: isRightSideText
+                      ? AlignmentDirectional.centerStart
+                      : AlignmentDirectional.centerEnd,
                   child: Text(
-                    example,
-                    style: theme.bodySmall,
+                    widget.model.meaning,
+                    style: theme.bodyMedium?.copyWith(
+                      height: 1.4,
+                    ),
+                    textAlign:
+                        isRightSideText ? TextAlign.right : TextAlign.left,
                   ),
-                );
-              }).toList(),
-            ),
+                ),
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
 
-            SizedBox(
-              height: AppDimens.sectionBetween,
-            ),
+                // Synonyms
+                Header(
+                  icon: MaterialCommunityIcons.cards,
+                  title: 'synonyms'.tr(),
+                ),
+                SizedBox(
+                  height: AppDimens.sectionSpacing,
+                ),
 
-            // Collections
-            Header(icon: MaterialCommunityIcons.tag, title: 'collections'.tr()),
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
+                Wrap(
+                  spacing: AppDimens.buttonTagHorizontal,
+                  runSpacing: AppDimens.buttonTagHorizontal,
+                  children: widget.model.synonyms
+                      .map((word) => _synonymChip(word, context))
+                      .toList(),
+                ),
 
-            Center(
-                child: WordCollectionsWidget(
-              hideNotifications: true,
-              wordId: widget.model.id ?? "", //! This can be null
-              collection: CollectionType.values.firstWhere(
-                  (element) => element.name == widget.model.collection.name),
-            )),
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
+                // Examples
 
-            SizedBox(
-              height: AppDimens.sectionBetween,
-            ),
-            // Notes
-            LibraryNotes(
-              noteEntity: widget.model.note,
-              wordId: widget.model.id,
-            ),
+                Header(
+                  icon: Icons.format_quote,
+                  title: 'examples'.tr(),
+                ),
+                SizedBox(
+                  height: AppDimens.sectionSpacing,
+                ),
 
-            // Reminders
-            SizedBox(
-              height: AppDimens.sectionBetween,
-            ),
-            CustomSwtich(
-                title: 'reminders_title'.tr(),
-                description: activeNotifications
-                    ? 'reminders_active'.tr()
-                    : 'reminders_inactive'.tr(),
-                onChanged: (value) {
-                  setState(() {
-                    activeNotifications = value;
-                  });
-                },
-                controller: ValueNotifier(activeNotifications),
-                icon: activeNotifications
-                    ? Icons.notifications
-                    : Icons.notifications_off),
+                // Example sentences
+                Wrap(
+                  spacing: AppDimens.buttonTagHorizontal,
+                  runSpacing: AppDimens.buttonTagHorizontal,
+                  alignment:
+                      isRightSideText ? WrapAlignment.end : WrapAlignment.start,
+                  children: widget.model.examples.map((example) {
+                    return Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                      child: Text(
+                        example,
+                        style: theme.bodySmall,
+                      ),
+                    );
+                  }).toList(),
+                ),
 
-            // Translated at
-            SizedBox(
-              height: AppDimens.sectionBetween,
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
+
+                // Collections
+                Header(
+                    icon: MaterialCommunityIcons.tag,
+                    title: 'collections'.tr()),
+                SizedBox(
+                  height: AppDimens.sectionSpacing,
+                ),
+
+                Center(
+                    child: WordCollectionsWidget(
+                  hideNotifications: true,
+                  wordId: widget.model.id ?? "", //! This can be null
+                  collection: CollectionType.values.firstWhere(
+                      (element) =>
+                          element.sourceName == widget.model.collection.name,
+                      orElse: () => CollectionType.values.first),
+                )),
+
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
+                // Notes
+                LibraryNotes(
+                  noteEntity: widget.model.note,
+                  wordId: widget.model.id,
+                ),
+
+                // Reminders
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
+                CustomSwtich(
+                    title: 'reminders_title'.tr(),
+                    description: activeNotifications
+                        ? 'reminders_active'.tr()
+                        : 'reminders_inactive'.tr(),
+                    onChanged: (value) {
+                      setState(() {
+                        activeNotifications = value;
+                      });
+                    },
+                    controller: ValueNotifier(activeNotifications),
+                    icon: activeNotifications
+                        ? Icons.notifications
+                        : Icons.notifications_off),
+
+                // Translated at
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
+                Text(
+                  "${'translated_at'.tr()} ${widget.model.createdAt.toReadableDate()}",
+                  style: theme.bodySmall,
+                ),
+              ],
             ),
-            Text(
-              "${'translated_at'.tr()} ${widget.model.createdAt.toReadableDate()}",
-              style: theme.bodySmall,
-            ),
-          ],
-        ),
-      )),
-    );
+          ),
+        ));
   }
 
   Widget _synonymChip(String word, BuildContext context) {

@@ -10,6 +10,8 @@ final libraryRoutes = [
   ),
   GoRoute(
       path: '/library/:id',
-      builder: (context, state) =>
-          WordDetailsScreen(model: state.extra as WordEntity))
+      builder: (context, state) {
+        final extra = state.extra as WordEntity;
+        return WordDetailsScreen(model: extra);
+      }),
 ];
