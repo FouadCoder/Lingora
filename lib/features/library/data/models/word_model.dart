@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/features/library/data/models/collection_model.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/features/notes/data/models/note_model.dart';
 
@@ -17,6 +18,7 @@ class WordModel {
   final Language? translateFrom;
   final Language? translateTo;
   final NoteModel note;
+  final CollectionModel collection;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
@@ -35,6 +37,7 @@ class WordModel {
     required this.translateFrom,
     required this.translateTo,
     required this.note,
+    required this.collection,
     required this.updatedAt,
     required this.createdAt,
     this.deletedAt,
@@ -63,6 +66,13 @@ class WordModel {
               ? NoteModel.fromJson((json['notes'] as List).first)
               : NoteModel.fromJson(json['notes'] as Map<String, dynamic>))
           : NoteModel.empty(),
+      collection: json['collections'] != null
+          ? (json['collections'] is List &&
+                  (json['collections'] as List).isNotEmpty
+              ? CollectionModel.fromJson((json['collections'] as List).first)
+              : CollectionModel.fromJson(
+                  json['collections'] as Map<String, dynamic>))
+          : CollectionModel.empty(),
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null
@@ -87,6 +97,7 @@ class WordModel {
       translateFrom: translateFrom,
       translateTo: translateTo,
       note: note.toEntity(),
+      collection: collection.toEntity(),
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,

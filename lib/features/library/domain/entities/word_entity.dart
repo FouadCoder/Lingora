@@ -1,4 +1,5 @@
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/features/library/domain/entities/collection_entity.dart';
 import 'package:lingora/features/notes/domain/entities/note_entity.dart';
 
 class WordEntity {
@@ -15,6 +16,7 @@ class WordEntity {
   final Language? translateFrom;
   final Language? translateTo;
   final NoteEntity note;
+  final CollectionEntity collection;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
@@ -33,6 +35,7 @@ class WordEntity {
     required this.translateFrom,
     required this.translateTo,
     required this.note,
+    required this.collection,
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,

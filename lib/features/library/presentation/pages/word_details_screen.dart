@@ -5,6 +5,7 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/features/library/presentation/widgets/note_widget.dart';
+import 'package:lingora/features/translate/presentation/widgets/translate_outputs.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 import 'package:lingora/core/widgets/app_container.dart';
@@ -36,16 +37,20 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
         child: Column(
           children: [
             // Translated
-            //TODO FIX THIS MODEL
-            // WordTranslatedCard(model: widget.model),
+            WordTranslatedCard(
+              translated: widget.model.translated,
+            ),
 
             SizedBox(
               height: AppDimens.subElementBetween,
             ),
 
             // Word Info
-            //TODO FIX THIS MODEL
-            // WordInfoCard(model: widget.model),
+            WordInfoCard(
+              original: widget.model.original,
+              pos: widget.model.pos,
+              pronunciation: widget.model.pronunciation,
+            ),
 
             SizedBox(
               height: AppDimens.sectionBetween,

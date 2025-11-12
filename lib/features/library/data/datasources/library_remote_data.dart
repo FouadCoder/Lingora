@@ -21,6 +21,7 @@ class LibraryRemoteData {
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
     List<WordModel> words = data.map((e) => WordModel.fromJson(e)).toList();
+
     return words;
   }
 

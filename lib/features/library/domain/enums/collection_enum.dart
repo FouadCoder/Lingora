@@ -6,10 +6,10 @@ enum CollectionType { learning, favorites, saved, mastered, notifications }
 extension CollectionTypeExt on CollectionType {
   String get name {
     switch (this) {
-      case CollectionType.learning:
-        return "learning".tr();
       case CollectionType.favorites:
         return "favorites".tr();
+      case CollectionType.learning:
+        return "learning".tr();
       case CollectionType.saved:
         return "saved".tr();
       case CollectionType.mastered:
@@ -21,10 +21,10 @@ extension CollectionTypeExt on CollectionType {
 
   IconData get icon {
     switch (this) {
-      case CollectionType.learning:
-        return Icons.school;
       case CollectionType.favorites:
         return Icons.favorite;
+      case CollectionType.learning:
+        return Icons.school;
       case CollectionType.saved:
         return Icons.bookmark;
       case CollectionType.mastered:

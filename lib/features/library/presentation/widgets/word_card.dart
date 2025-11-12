@@ -7,6 +7,7 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/core/widgets/app_card.dart';
+import 'package:lingora/features/library/domain/enums/collection_enum.dart';
 
 class WordCard extends StatefulWidget {
   final WordEntity word;
@@ -31,7 +32,10 @@ class _WordCardState extends State<WordCard> {
         "textColor": colorScheme.secondary,
       },
       {
-        "text": "Test category ",
+        "text": CollectionType.values
+            .firstWhere(
+                (element) => element.name == widget.word.collection.name)
+            .name,
         "textColor": colorScheme.secondary,
       },
       {

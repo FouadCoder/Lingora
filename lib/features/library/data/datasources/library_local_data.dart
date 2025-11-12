@@ -6,18 +6,16 @@ class LibraryLocalData {
 
   // Save collections IDS
   Future saveCollections(List<CollectionModel> collections) async {
-    List<Map<String, dynamic>> collectionsJson =
-        collections.map((e) => e.toJson()).toList();
+    final collectionsJson = collections.map((e) => e.toJson()).toList();
     db.put("collections", collectionsJson);
   }
 
-  // Get collections IDS
-  Future getCollections() async {
-    final List<dynamic> rawData = db.get("collections", defaultValue: []);
-    List<Map<String, dynamic>> collectionsJson =
-        List<Map<String, dynamic>>.from(rawData);
-    List<CollectionModel> collections =
-        collectionsJson.map((e) => CollectionModel.fromJson(e)).toList();
+  // Get Collections IDS
+  Future<List<CollectionModel>> getCollections() async {
+    final rawData = db.get("collections", defaultValue: []) as List;
+    List<CollectionModel> collections = rawData
+        .map((e) => CollectionModel.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
     return collections;
   }
 

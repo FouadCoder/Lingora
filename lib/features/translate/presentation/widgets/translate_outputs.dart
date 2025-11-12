@@ -3,20 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
-import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
-import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/header.dart';
 
 // Word translated
 class WordTranslatedCard extends StatelessWidget {
-  final TranslateEntity model;
-  const WordTranslatedCard({super.key, required this.model});
+  final String translated;
+
+  const WordTranslatedCard({super.key, required this.translated});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    bool isRightSideText = isRightSide(model.translateTo!.code);
 
     return AppCard(
       child: Container(
@@ -37,16 +35,10 @@ class WordTranslatedCard extends StatelessWidget {
               height: AppDimens.sectionSpacing,
             ),
             // Translated words
-            Align(
-              alignment: isRightSideText
-                  ? AlignmentDirectional.centerStart
-                  : AlignmentDirectional.centerEnd,
-              child: Text(
-                model.translated,
-                style: theme.titleMedium?.copyWith(
-                  height: 1.4,
-                ),
-                textAlign: isRightSideText ? TextAlign.right : TextAlign.left,
+            Text(
+              translated,
+              style: theme.titleMedium?.copyWith(
+                height: 1.4,
               ),
             ),
           ],
@@ -58,8 +50,16 @@ class WordTranslatedCard extends StatelessWidget {
 
 // Word Info card
 class WordInfoCard extends StatelessWidget {
-  final TranslateEntity model;
-  const WordInfoCard({super.key, required this.model});
+  final String original;
+  final String pos;
+  final String pronunciation;
+
+  const WordInfoCard({
+    super.key,
+    required this.original,
+    required this.pos,
+    required this.pronunciation,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class WordInfoCard extends StatelessWidget {
 
             // Original word
             Text(
-              model.original,
+              original,
               style: theme.bodyMedium?.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class WordInfoCard extends StatelessWidget {
 
             // Part of Speech
             Text(
-              model.pos,
+              pos,
               style: theme.bodySmall?.copyWith(
                 color: Theme.of(context).colorScheme.outline,
               ),
@@ -123,7 +123,7 @@ class WordInfoCard extends StatelessWidget {
             ),
 
             Text(
-              model.pronunciation,
+              pronunciation,
               style: theme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),

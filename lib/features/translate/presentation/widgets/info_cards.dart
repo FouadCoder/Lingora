@@ -35,8 +35,16 @@ class InfoCards extends StatelessWidget {
     bool isRightSideText = isRightSide(model.translateTo!.code);
 
     final List<Widget> availableCards = [
-      if (hasTranslated) WordTranslatedCard(model: model),
-      if (hasWord) WordInfoCard(model: model),
+      if (hasTranslated)
+        WordTranslatedCard(
+          translated: model.translated,
+        ),
+      if (hasWord)
+        WordInfoCard(
+          original: model.original,
+          pos: model.pos,
+          pronunciation: model.pronunciation,
+        ),
       if (hasMeaning) _buildMeaningCard(theme, context, isRightSideText),
       if (hasSynonyms) _buildSynonymsCard(theme, context),
     ];
