@@ -4,6 +4,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
+import 'package:lingora/features/library/domain/enums/collection_enum.dart';
 import 'package:lingora/features/library/presentation/widgets/note_widget.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_outputs.dart';
 import 'package:lingora/helper/direction_helper.dart';
@@ -138,7 +139,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
               height: AppDimens.sectionBetween,
             ),
 
-            // Category
+            // Collections
             Header(icon: MaterialCommunityIcons.tag, title: 'collections'.tr()),
             SizedBox(
               height: AppDimens.sectionSpacing,
@@ -148,6 +149,8 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 child: WordCollectionsWidget(
               hideNotifications: true,
               wordId: widget.model.id ?? "", //! This can be null
+              collection: CollectionType.values.firstWhere(
+                  (element) => element.name == widget.model.collection.name),
             )),
 
             SizedBox(

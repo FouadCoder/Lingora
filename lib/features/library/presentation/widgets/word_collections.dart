@@ -12,8 +12,12 @@ import 'package:lingora/features/library/presentation/cubit/library_state.dart';
 class WordCollectionsWidget extends StatefulWidget {
   final bool hideNotifications;
   final String wordId;
+  final CollectionType? collection;
   const WordCollectionsWidget(
-      {super.key, this.hideNotifications = false, required this.wordId});
+      {super.key,
+      this.hideNotifications = false,
+      required this.wordId,
+      this.collection});
 
   @override
   State<WordCollectionsWidget> createState() => _WordCollectionsWidgetState();
@@ -22,6 +26,13 @@ class WordCollectionsWidget extends StatefulWidget {
 class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
   int selectedIndex = 0;
   bool isActiveNotifications = false;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = widget.collection?.index ?? 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<LibraryCubit, LibraryState>(
