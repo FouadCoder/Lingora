@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
@@ -41,14 +42,14 @@ class MyApp extends StatelessWidget {
           BlocProvider<AnalyticsCubit>(
               create: (context) =>
                   injection<AnalyticsCubit>()), // User Analytics
+          BlocProvider<HistoryCubit>(
+              create: (context) => injection<HistoryCubit>()), // History
 
           //TODO adjust the cuibits below
           BlocProvider<AuthAppCubit>(
             create: (context) => AuthAppCubit()..launch(),
             lazy: false,
           ), // Auth
-          BlocProvider<HistoryCubit>(
-              create: (context) => HistoryCubit()), // History
           BlocProvider<FavoritesCubit>(
               create: (context) => FavoritesCubit()), // Favorites
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level

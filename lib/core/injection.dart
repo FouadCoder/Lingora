@@ -6,6 +6,11 @@ import 'package:lingora/features/analytics/domain/repositories/analytics_reposit
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/history/data/datasources/history_remote_data.dart';
+import 'package:lingora/features/history/data/repositories_impl/history_repository_impl.dart';
+import 'package:lingora/features/history/domain/repositories/history_repository.dart';
+import 'package:lingora/features/history/domain/usecases/fetch_history_usecase.dart';
+import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/library/data/datasources/library_local_data.dart';
 import 'package:lingora/features/library/data/datasources/library_remote_data.dart';
 import 'package:lingora/features/library/data/repositories_impl/library_repository_impl.dart';
@@ -42,6 +47,7 @@ Future<void> setupInjection() async {
   injection.registerSingleton(LibraryLocalData());
   injection.registerSingleton(NotesRemoteData(injection()));
   injection.registerSingleton(AnalyticsRemoteData(injection()));
+  injection.registerSingleton(HistoryRemoteData(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
@@ -52,6 +58,8 @@ Future<void> setupInjection() async {
       () => NotesRepositoryImpl(injection()));
   injection.registerLazySingleton<AnalyticsRepository>(
       () => AnalyticsRepositoryImpl(injection()));
+  injection.registerLazySingleton<HistoryRepository>(
+      () => HistoryRepositoryImpl(injection()));
 
   //* Usecases
 
@@ -65,6 +73,8 @@ Future<void> setupInjection() async {
   // Analytics
   injection.registerFactory(() => GetAnalyticsUsecase(injection()));
   injection.registerFactory(() => GetDailyActivityUsercase(injection()));
+  // History
+  injection.registerFactory(() => FetchHistoryUseCase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -74,4 +84,5 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => NotesCubit(injection(), injection()));
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));
+  injection.registerFactory(() => HistoryCubit(injection(), injection()));
 }

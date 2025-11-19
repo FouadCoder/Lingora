@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/models/level.dart';
-import 'package:lingora/models/translate.dart';
 import 'package:lingora/models/favorite.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -214,106 +213,6 @@ class AuthAppCubit extends Cubit<AuthAppState> {
     } catch (e) {
       print("ERROR User ===============================");
       emit(state.copyWith(status: AuthAppStatus.unauthenticated));
-    }
-  }
-}
-
-// History
-class HistoryCubit extends Cubit<FetchHistoryState> {
-  HistoryCubit() : super(FetchHistoryState());
-
-  Map history = {};
-
-  // Group data by date
-  Map groupByDate(List data) {
-    final Map datesGroups = {};
-    final Set<String> datesIDS = {};
-    print("Data before grouping ============ ${data.length}");
-
-    for (var item in data) {
-      // Give it to translate model
-      var newItem = Translate.fromJson(item);
-
-      final createdAt = newItem.createdAt;
-      final dateKey =
-          "${createdAt.year}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}";
-
-      if (!datesIDS.contains(dateKey)) {
-        datesGroups[dateKey] = [];
-        datesIDS.add(dateKey);
-      }
-
-      // Add item to the list of that date
-      datesGroups[dateKey]!.add(newItem);
-      print(
-          "Item ADDED =================== ${newItem.createdAt} ========= ID ---- ${newItem.id}");
-    }
-
-    return datesGroups;
-  }
-
-  // Sort grouped data by date (most recent first) and sort items within each date
-  Map sortGroupedData(Map groupedData) {
-    // Convert to list of entries for sorting
-    final List<MapEntry<dynamic, dynamic>> entries =
-        groupedData.entries.toList();
-
-    // Sort by date key (most recent first)
-    entries.sort((a, b) => b.key.toString().compareTo(a.key.toString()));
-
-    // Sort items within each date group by creation time (most recent first)
-    for (var entry in entries) {
-      final List<Translate> items = List<Translate>.from(entry.value);
-      items.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      entry.value.clear();
-      entry.value.addAll(items);
-    }
-
-    // Convert back to map
-    final Map<String, List<Translate>> sortedData = {};
-    for (var entry in entries) {
-      sortedData[entry.key.toString()] = List<Translate>.from(entry.value);
-    }
-
-    return sortedData;
-  }
-
-  // Fetch history
-  Future<void> fetchHistory() async {
-    try {
-      // check if loaded
-      if (state.status == FetchHistoryStatus.success) {
-        emit(state.copyWith(
-            status: FetchHistoryStatus.success, history: history));
-        return;
-      }
-
-      emit(state.copyWith(status: FetchHistoryStatus.loading));
-      final userId = Supabase.instance.client.auth.currentUser!.id;
-      final res = await Supabase.instance.client
-          .from("translate_history")
-          .select()
-          .eq("user_id", userId)
-          .isFilter('deleted_at', null);
-
-      Map historyGroups = groupByDate(res);
-      // If empty
-      if (historyGroups.isEmpty) {
-        emit(state.copyWith(
-          status: FetchHistoryStatus.empty,
-        ));
-        return;
-      }
-
-      // Sort the grouped data
-      Map sortedHistoryGroups = sortGroupedData(historyGroups);
-      history.addAll(sortedHistoryGroups);
-      // Success
-      emit(state.copyWith(
-          status: FetchHistoryStatus.success, history: sortedHistoryGroups));
-    } catch (e) {
-      print("Error getting history ------------------ $e");
-      emit(state.copyWith(status: FetchHistoryStatus.failure));
     }
   }
 }

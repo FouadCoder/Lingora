@@ -43,27 +43,6 @@ class AuthAppState {
   }
 }
 
-// History
-enum FetchHistoryStatus { initial, loading, success, failure, empty }
-
-class FetchHistoryState {
-  final FetchHistoryStatus status;
-  final Map history;
-
-  const FetchHistoryState(
-      {this.status = FetchHistoryStatus.initial, this.history = const {}});
-
-  FetchHistoryState copyWith({
-    FetchHistoryStatus? status,
-    Map? history,
-  }) {
-    return FetchHistoryState(
-      status: status ?? this.status,
-      history: history ?? this.history,
-    );
-  }
-}
-
 // Favorites
 enum FavoritesStatus { initial, loading, success, failure, empty }
 
@@ -117,25 +96,6 @@ class LevelState {
       status: status ?? this.status,
       level: level ?? this.level,
       xp: xp ?? this.xp,
-    );
-  }
-}
-
-// Category
-enum CategoryStatus { initial, loading, success, failure }
-
-class CategoryState {
-  final CategoryStatus status;
-
-  const CategoryState({
-    this.status = CategoryStatus.initial,
-  });
-
-  CategoryState copyWith({
-    CategoryStatus? status,
-  }) {
-    return CategoryState(
-      status: status ?? this.status,
     );
   }
 }

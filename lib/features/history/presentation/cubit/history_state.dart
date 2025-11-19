@@ -1,0 +1,21 @@
+import 'package:lingora/features/history/domain/entities/history_entity.dart';
+
+enum FetchHistoryStatus { initial, loading, success, failure, empty }
+
+class FetchHistoryState {
+  final FetchHistoryStatus status;
+  final Map<String, List<HistoryEntity>> history;
+
+  const FetchHistoryState(
+      {this.status = FetchHistoryStatus.initial, this.history = const {}});
+
+  FetchHistoryState copyWith({
+    FetchHistoryStatus? status,
+    Map<String, List<HistoryEntity>>? history,
+  }) {
+    return FetchHistoryState(
+      status: status ?? this.status,
+      history: history ?? this.history,
+    );
+  }
+}
