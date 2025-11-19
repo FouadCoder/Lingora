@@ -19,10 +19,24 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     context.read<HistoryCubit>().fetchHistory();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 600) {
+        context.read<HistoryCubit>().loadMoreHistory();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,6 +66,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               return Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
+                    controller: _scrollController,
                     itemCount: history.length,
                     itemBuilder: (context, index) {
                       final entry = history.entries.elementAt(index);

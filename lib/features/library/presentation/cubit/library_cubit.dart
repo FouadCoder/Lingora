@@ -19,6 +19,7 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   void loadMoreLibrary() async {
     try {
+      print("================= Loading more library");
       // Check if already loading
       if (state.isLoadingMore || !state.hasMore) return;
 

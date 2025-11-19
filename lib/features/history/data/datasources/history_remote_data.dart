@@ -11,7 +11,9 @@ class HistoryRemoteData {
         .from("translate_history")
         .select()
         .eq("user_id", params.userId)
-        .isFilter('deleted_at', null);
+        .isFilter('deleted_at', null)
+        .order('created_at', ascending: false)
+        .range(params.offset, params.offset + 15 - 1);
 
     List<HistoryModel> historyModels =
         res.map((e) => HistoryModel.fromJson(e)).toList();
