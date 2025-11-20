@@ -51,7 +51,7 @@ class HistoryCubit extends Cubit<FetchHistoryState> {
       // Get history
       final userId = supabaseClient.auth.currentUser!.id;
       final Map<String, List<HistoryEntity>> history = await fetchHistoryUseCase
-          .call(HistoryParams(userId: userId, offset: _offset));
+          .call(HistoryParams(userId: userId, offset: 0));
 
       // Update offset
       int itemCount = history.values.fold(0, (sum, list) => sum + list.length);
