@@ -3,26 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bidi_text/bidi_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/extensions/string_extension.dart';
-import 'package:lingora/models/translate.dart';
+import 'package:lingora/features/history/domain/entities/history_entity.dart';
+import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
+import 'package:lingora/features/history/presentation/cubit/history_state.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 
-class History extends StatefulWidget {
-  const History({super.key});
+class HistoryScreen extends StatefulWidget {
+  const HistoryScreen({super.key});
 
   @override
-  State<History> createState() => _HistoryState();
+  State<HistoryScreen> createState() => _HistoryScreenState();
 }
 
-class _HistoryState extends State<History> {
+class _HistoryScreenState extends State<HistoryScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     context.read<HistoryCubit>().fetchHistory();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 600) {
+        context.read<HistoryCubit>().loadMoreHistory();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,23 +61,23 @@ class _HistoryState extends State<History> {
             }
             // Success
             else if (state.status == FetchHistoryStatus.success) {
-              Map history = state.history;
+              Map<String, List<HistoryEntity>> history = state.history;
 
               return Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
+                    controller: _scrollController,
                     itemCount: history.length,
                     itemBuilder: (context, index) {
                       final entry = history.entries.elementAt(index);
                       final dateKey = entry.key; // The date string
-                      final List<Translate> translations =
-                          List<Translate>.from(entry.value); //  List<Translate>
+                      final List<HistoryEntity> historyList = entry.value;
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Headline
                           Text(
-                            "$dateKey".toReadableDate(),
+                            dateKey.toReadableDate(),
                             style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.start,
@@ -77,7 +91,7 @@ class _HistoryState extends State<History> {
                             child: ListView.separated(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: translations.length,
+                                itemCount: historyList.length,
                                 separatorBuilder: (context, index) {
                                   return Column(
                                     children: [
@@ -104,7 +118,7 @@ class _HistoryState extends State<History> {
                                     children: [
                                       // original
                                       BidiText(
-                                        translations[index].original,
+                                        historyList.elementAt(index).original,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
@@ -116,7 +130,7 @@ class _HistoryState extends State<History> {
 
                                       // Translate
                                       BidiText(
-                                        translations[index].translated,
+                                        historyList.elementAt(index).translated,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium

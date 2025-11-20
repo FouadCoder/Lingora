@@ -10,11 +10,7 @@ class ShortcutsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List shortcuts = [
-      {
-        "icon": Icons.history,
-        "text": "history".tr(),
-        "route": "/nav/home/history"
-      },
+      {"icon": Icons.history, "text": "history".tr(), "route": "/history"},
       {
         "icon": Icons.favorite,
         "text": "favorites".tr(),
