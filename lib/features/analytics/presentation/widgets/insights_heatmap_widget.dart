@@ -47,8 +47,7 @@ class _InsightsHeatmapWidgetState extends State<InsightsHeatmapWidget> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      context.push('/nav/insights/details',
-                          extra: dailyActivity);
+                      context.push('/analysis/details', extra: dailyActivity);
                     },
                     child: Text(
                       "see_details".tr(),

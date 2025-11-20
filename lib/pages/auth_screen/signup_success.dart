@@ -41,7 +41,7 @@ class _SignupSuccessScreenState extends State<SignupSuccessScreen>
         buttonText: 'signup_success_button'.tr(),
         color: Theme.of(context).colorScheme.secondary,
         onTap: () {
-          context.go('/nav');
+          context.go('/home');
         },
         isFullScreen: true,
         titleColor: Theme.of(context).colorScheme.secondary,
