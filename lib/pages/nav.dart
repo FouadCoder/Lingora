@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/translate/presentation/pages/translate_screen.dart';
-import 'package:lingora/pages/home/home.dart';
+import 'package:lingora/features/home/presentation/pages/home_screen.dart';
 import 'package:lingora/features/library/presentation/pages/library_screen.dart';
 import 'package:lingora/features/analytics/presentation/pages/insights_screen.dart';
 import 'package:lingora/pages/setting/setting.dart';
