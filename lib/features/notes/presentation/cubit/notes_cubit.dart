@@ -11,10 +11,7 @@ class NotesCubit extends Cubit<NotesState> {
 
   void updateNote(String content, String? wordId) async {
     try {
-      print("=========Start updating note =======================");
       emit(state.copyWith(status: NotesStatus.loading));
-      print(
-          "================Updating note with content: $content and wordId: $wordId");
 
       // Check empty content
       if (content.isEmpty) {
@@ -40,7 +37,6 @@ class NotesCubit extends Cubit<NotesState> {
 
       emit(state.copyWith(status: NotesStatus.success));
     } catch (e) {
-      print("============================= Error saving notes ============$e");
       emit(state.copyWith(status: NotesStatus.failure));
     }
   }

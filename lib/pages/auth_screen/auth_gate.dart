@@ -16,14 +16,10 @@ class AuthGate extends StatelessWidget {
           final shouldBuild = curr.status == AuthAppStatus.checkingSession ||
               curr.status == AuthAppStatus.authenticated ||
               curr.status == AuthAppStatus.unauthenticated;
-
-          print("UI buildWhen =============================== $shouldBuild");
           return shouldBuild;
         },
         builder: (context, state) {
-          print("UI WORKING  ===============================");
           if (state.status == AuthAppStatus.checkingSession) {
-            print("UI LOADING  ===============================");
             return Center(
               child: CircularProgressIndicator(
                 color: Theme.of(context).colorScheme.primary,
@@ -31,10 +27,8 @@ class AuthGate extends StatelessWidget {
               ),
             );
           } else if (state.status == AuthAppStatus.authenticated) {
-            print("UI NAV  ===============================");
             return const Nav();
           } else {
-            print("UI LOGIN   ===============================");
             return const LoginScreen();
           }
         },

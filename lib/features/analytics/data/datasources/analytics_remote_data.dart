@@ -26,7 +26,6 @@ class AnalyticsRemoteData {
         .from('daily_translation_summary')
         .select()
         .eq('user_id', params.userId);
-    print("Res Summary Daily =============== $response");
     List<DailyActivityModel> dailyActivity =
         response.map((e) => DailyActivityModel.fromJson(e)).toList();
     return dailyActivity;

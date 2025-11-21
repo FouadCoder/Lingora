@@ -24,8 +24,6 @@ class GetDailyActivityUsercase {
       grouped[year]![monthName]!.add(element);
     }
 
-    print("Data ----------------------------------- $grouped");
-
     return grouped;
   }
 }

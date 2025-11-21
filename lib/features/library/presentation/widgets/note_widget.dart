@@ -93,8 +93,6 @@ class _LibraryNotesState extends State<LibraryNotes> {
                     isLoading: isLoading,
                     color: Theme.of(context).colorScheme.secondary,
                     function: () {
-                      print("Saving note =======================");
-
                       context.read<NotesCubit>().updateNote(
                           noteController.text.trim(), widget.wordId);
                     },

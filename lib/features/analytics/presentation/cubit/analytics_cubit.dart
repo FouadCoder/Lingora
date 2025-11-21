@@ -33,7 +33,6 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
         userAnalytics: analytics,
       ));
     } catch (e) {
-      print("=========== Error getting analytics: $e");
       emit(state.copyWith(
           userAnalyticsStatus: UserAnalyticsRequestStatus.failure));
     }
@@ -61,7 +60,6 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
         dailyActivity: dailyActivitySummary,
       ));
     } catch (e) {
-      print("=========== Error getting daily activity summary: $e");
       emit(state.copyWith(
           dailyActivityStatus: UserAnalyticsRequestStatus.failure));
     }

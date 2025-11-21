@@ -19,7 +19,6 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   void loadMoreLibrary() async {
     try {
-      print("================= Loading more library");
       // Check if already loading
       if (state.isLoadingMore || !state.hasMore) return;
 
@@ -71,7 +70,6 @@ class LibraryCubit extends Cubit<LibraryState> {
       emit(state.copyWith(
           status: LibraryStatus.success, libraryWords: libraryWords));
     } catch (e) {
-      print("Error loading library =================================$e");
       emit(state.copyWith(status: LibraryStatus.failure));
     }
   }
@@ -87,8 +85,6 @@ class LibraryCubit extends Cubit<LibraryState> {
           wordId: wordId, collectionName: collection.sourceName));
       emit(state.copyWith(actionStatus: LibraryActionStatus.success));
     } catch (e) {
-      print(
-          "Error updating word collection =================================$e");
       emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
     }
   }

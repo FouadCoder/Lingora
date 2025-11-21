@@ -67,7 +67,6 @@ class TranslateCubit extends Cubit<TranslateState> {
 
       emit(state.copyWith(status: TranslateStatus.success, result: translate));
     } catch (e) {
-      print("Error Translate cubit ============================= $e");
       emit(state.copyWith(status: TranslateStatus.failure));
     }
   }
