@@ -24,13 +24,11 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final ValueNotifier<bool> darkController = ValueNotifier(false);
   final ValueNotifier<bool> notificationsController = ValueNotifier(false);
-  final ValueNotifier<bool> soundController = ValueNotifier(false);
 
   @override
   void dispose() {
     darkController.dispose();
     notificationsController.dispose();
-    soundController.dispose();
     super.dispose();
   }
 
@@ -106,15 +104,6 @@ class _SettingScreenState extends State<SettingScreen> {
                         onChanged: (value) {},
                         controller: notificationsController,
                         icon: Icons.notifications),
-                    SizedBox(
-                      height: AppDimens.sectionSpacing,
-                    ),
-                    CustomSwtich(
-                        title: 'sound_effects'.tr(),
-                        description: 'sound_effects_description'.tr(),
-                        onChanged: (value) {},
-                        controller: soundController,
-                        icon: Icons.volume_up),
                   ],
                 ),
               ),
