@@ -213,18 +213,11 @@ class LanguageData {
       region: 'Europe',
     ),
     Language(
-      name: 'Spanish (European)',
+      name: 'Spanish',
       nativeName: 'Español Europeo',
       code: 'es-es',
       flag: '🇪🇸',
       region: 'Europe',
-    ),
-    Language(
-      name: 'Spanish (Latin American)',
-      nativeName: 'Español Latinoamericano',
-      code: 'es-419',
-      flag: '🇲🇽',
-      region: 'Latin America',
     ),
     Language(
       name: 'Swedish',

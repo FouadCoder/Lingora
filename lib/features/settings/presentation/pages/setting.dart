@@ -11,6 +11,7 @@ import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/features/settings/presentation/widgets/account.dart';
+import 'package:lingora/features/settings/presentation/widgets/language_switcher.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -77,6 +78,13 @@ class _SettingScreenState extends State<SettingScreen> {
                         onChanged: (value) {},
                         controller: notificationsController,
                         icon: Icons.notifications),
+
+                    SizedBox(
+                      height: AppDimens.sectionSpacing,
+                    ),
+
+                    // Language
+                    LanguageSwitcher()
                   ],
                 ),
               ),

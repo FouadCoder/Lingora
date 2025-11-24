@@ -138,5 +138,7 @@
     "word_added_to_favorites": "Word added to favorites!",
     "something_went_wrong": "Something went wrong!",
     "note_saved": "Your note has been saved!",
-    "loading_analytics": "Loading your analytics..."
+    "loading_analytics": "Loading your analytics...",
+    "language": "Language",
+    "app_language": "App language"
 }
