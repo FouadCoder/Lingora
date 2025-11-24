@@ -25,14 +25,18 @@ class CustomSwtich extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(AppDimens.paddingS),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.secondary.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(AppDimens.radiusL),
+            ),
             child: Icon(
               icon,
               color: theme.colorScheme.primary,
-              size: AppDimens.iconM,
+              size: AppDimens.iconL,
             ),
           ),
-          SizedBox(width: AppDimens.elementBetween),
+          SizedBox(width: AppDimens.subElementBetween),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
