@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/extensions/theme_data.dart';
@@ -99,8 +100,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       height: AppDimens.sectionSpacing,
                     ),
                     CustomSwtich(
-                        title: 'push_notifications'.tr(),
-                        description: 'push_notifications_description'.tr(),
+                        title: 'notifications'.tr(),
+                        description: 'general_notifications'.tr(),
                         onChanged: (value) {},
                         controller: notificationsController,
                         icon: Icons.notifications),
@@ -118,39 +119,64 @@ class _SettingScreenState extends State<SettingScreen> {
                   SizedBox(
                     height: AppDimens.titleContentBetween,
                   ),
-                  CustomButton(
-                      text: "export_data".tr(),
-                      color: Colors.transparent,
-                      border:
-                          Border.all(color: Theme.of(context).border, width: 2),
-                      function: () {},
-                      icon: Icons.book,
-                      borderRadius: AppDimens.radiusL,
-                      textColor:
-                          Theme.of(context).textTheme.bodyMedium?.color ??
-                              Colors.black),
-                  SizedBox(
-                    height: AppDimens.sectionSpacing,
-                  ),
-                  // Logout
-                  BlocBuilder<AuthAppCubit, AuthAppState>(
-                    builder: (context, state) {
-                      bool isLoading = state.status == AuthAppStatus.loading;
-                      return CustomButton(
-                          text: "logout".tr(),
-                          color: Colors.transparent,
-                          isLoading: isLoading,
-                          border: Border.all(
-                              color: Theme.of(context).border, width: 2),
-                          function: () {
-                            showSadMessageIfuserLogout(context);
-                          },
-                          icon: Icons.logout,
-                          iconColor: Theme.of(context).colorScheme.error,
-                          borderRadius: AppDimens.radiusL,
-                          textColor: Theme.of(context).colorScheme.error);
-                    },
-                  ),
+                  LayoutBuilder(builder: (context, _) {
+                    // Export button
+                    Widget exportButton = CustomButton(
+                        text: "export_data".tr(),
+                        color: Colors.transparent,
+                        border: Border.all(
+                            color: Theme.of(context).border, width: 2),
+                        function: () {},
+                        icon: Icons.book,
+                        borderRadius: AppDimens.radiusL,
+                        textColor:
+                            Theme.of(context).textTheme.bodyMedium?.color ??
+                                Colors.black);
+
+                    Widget logoutButton =
+                        BlocBuilder<AuthAppCubit, AuthAppState>(
+                      builder: (context, state) {
+                        bool isLoading = state.status == AuthAppStatus.loading;
+                        return CustomButton(
+                            text: "logout".tr(),
+                            color: Colors.transparent,
+                            isLoading: isLoading,
+                            border: Border.all(
+                                color: Theme.of(context).border, width: 2),
+                            function: () {
+                              showSadMessageIfuserLogout(context);
+                            },
+                            icon: Icons.logout,
+                            iconColor: Theme.of(context).colorScheme.error,
+                            borderRadius: AppDimens.radiusL,
+                            textColor: Theme.of(context).colorScheme.error);
+                      },
+                    );
+
+                    // Layout
+                    if (AppPlatform.isPhone(context)) {
+                      return Column(
+                        children: [
+                          exportButton,
+                          SizedBox(
+                            height: AppDimens.sectionSpacing,
+                          ),
+                          logoutButton
+                        ],
+                      );
+                    } else {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          exportButton,
+                          SizedBox(
+                            width: AppDimens.buttonTagHorizontal,
+                          ),
+                          logoutButton
+                        ],
+                      );
+                    }
+                  }),
                 ],
               ))
             ],
