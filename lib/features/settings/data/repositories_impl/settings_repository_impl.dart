@@ -5,7 +5,7 @@ import 'package:lingora/features/settings/domain/repositories/settings_repositor
 class SettingsRepositoryImpl implements SettingsRepository {
   final SettingsLocalData localData;
 
-  SettingsRepositoryImpl({required this.localData});
+  SettingsRepositoryImpl(this.localData);
 
   @override
   Future setLanguage(Language lang) async {

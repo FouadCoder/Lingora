@@ -23,6 +23,12 @@ import 'package:lingora/features/notes/data/repositories_impl/notes_repository_i
 import 'package:lingora/features/notes/domain/repositories/notes_repository.dart';
 import 'package:lingora/features/notes/domain/usecases/update_note_usecase.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
+import 'package:lingora/features/settings/data/datasources/settings_local_data.dart';
+import 'package:lingora/features/settings/data/repositories_impl/settings_repository_impl.dart';
+import 'package:lingora/features/settings/domain/repositories/settings_repository.dart';
+import 'package:lingora/features/settings/domain/usecases/get_language_usecase.dart';
+import 'package:lingora/features/settings/domain/usecases/save_language_usecase.dart';
+import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
 import 'package:lingora/features/translate/data/datasources/translate_remote_data.dart';
 import 'package:lingora/features/translate/data/repositories_impl/translate_repository_impl.dart';
 import 'package:lingora/features/translate/domain/repositories/translate_repository.dart';
@@ -48,6 +54,7 @@ Future<void> setupInjection() async {
   injection.registerSingleton(NotesRemoteData(injection()));
   injection.registerSingleton(AnalyticsRemoteData(injection()));
   injection.registerSingleton(HistoryRemoteData(injection()));
+  injection.registerSingleton(SettingsLocalData());
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
@@ -60,6 +67,8 @@ Future<void> setupInjection() async {
       () => AnalyticsRepositoryImpl(injection()));
   injection.registerLazySingleton<HistoryRepository>(
       () => HistoryRepositoryImpl(injection()));
+  injection.registerLazySingleton<SettingsRepository>(
+      () => SettingsRepositoryImpl(injection()));
 
   //* Usecases
 
@@ -75,6 +84,9 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => GetDailyActivityUsercase(injection()));
   // History
   injection.registerFactory(() => FetchHistoryUseCase(injection()));
+  // Setting
+  injection.registerFactory(() => SaveLanguageUsecase(injection()));
+  injection.registerFactory(() => GetLanguageUsecase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -85,4 +97,5 @@ Future<void> setupInjection() async {
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));
   injection.registerFactory(() => HistoryCubit(injection(), injection()));
+  injection.registerFactory(() => LanguageCubit(injection(), injection()));
 }

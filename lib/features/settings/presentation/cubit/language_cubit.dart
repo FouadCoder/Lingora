@@ -8,10 +8,10 @@ class LanguageCubit extends Cubit<LanguageState> {
   final GetLanguageUsecase getLanguageUsecase;
   final SaveLanguageUsecase saveLanguageUsecase;
 
-  LanguageCubit({
-    required this.getLanguageUsecase,
-    required this.saveLanguageUsecase,
-  }) : super(LanguageState());
+  LanguageCubit(
+    this.getLanguageUsecase,
+    this.saveLanguageUsecase,
+  ) : super(LanguageState());
 
   // Get language
   void getLanguage() async {

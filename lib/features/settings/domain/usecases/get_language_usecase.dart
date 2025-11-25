@@ -4,7 +4,7 @@ import 'package:lingora/features/settings/domain/repositories/settings_repositor
 class GetLanguageUsecase {
   final SettingsRepository repository;
 
-  GetLanguageUsecase({required this.repository});
+  GetLanguageUsecase(this.repository);
 
   Future<Language?> call() async {
     if (await repository.getLanguage() == null) {

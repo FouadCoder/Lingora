@@ -7,6 +7,7 @@ import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.da
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/config/router/routes.dart';
 import 'package:lingora/config/theme/dark_theme.dart';
@@ -44,6 +45,8 @@ class MyApp extends StatelessWidget {
                   injection<AnalyticsCubit>()), // User Analytics
           BlocProvider<HistoryCubit>(
               create: (context) => injection<HistoryCubit>()), // History
+          BlocProvider<LanguageCubit>(
+              create: (context) => injection<LanguageCubit>()), // Language
 
           //TODO adjust the cuibits below
           BlocProvider<AuthAppCubit>(
