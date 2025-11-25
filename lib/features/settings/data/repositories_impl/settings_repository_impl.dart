@@ -1,11 +1,14 @@
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/features/settings/data/datasources/settings_local_data.dart';
 import 'package:lingora/features/settings/domain/repositories/settings_repository.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme_state.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   final SettingsLocalData localData;
 
   SettingsRepositoryImpl(this.localData);
+
+  // Language
 
   @override
   Future setLanguage(Language lang) async {
@@ -15,5 +18,17 @@ class SettingsRepositoryImpl implements SettingsRepository {
   @override
   Future<Language?> getLanguage() async {
     return await localData.getLanguage();
+  }
+
+  // Theme
+
+  @override
+  Future saveTheme(ThemeState theme) async {
+    return await localData.saveTheme(theme);
+  }
+
+  @override
+  Future<ThemeState> getTheme() async {
+    return await localData.getTheme();
   }
 }

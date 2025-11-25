@@ -12,6 +12,8 @@ import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme_state.dart';
 import 'package:lingora/features/settings/presentation/widgets/account.dart';
 import 'package:lingora/features/settings/presentation/widgets/language_switcher.dart';
 
@@ -25,6 +27,12 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final ValueNotifier<bool> darkController = ValueNotifier(false);
   final ValueNotifier<bool> notificationsController = ValueNotifier(false);
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ThemeCubit>().getTheme();
+  }
 
   @override
   void dispose() {
@@ -67,12 +75,21 @@ class _SettingScreenState extends State<SettingScreen> {
                         SizedBox(
                           height: AppDimens.titleContentBetween,
                         ),
-                        CustomSwtich(
-                            title: 'dark_mode'.tr(),
-                            description: 'dark_mode_description'.tr(),
-                            onChanged: (value) {},
-                            controller: darkController,
-                            icon: Icons.nightlight_round),
+                        BlocBuilder<ThemeCubit, ThemeState>(
+                          builder: (context, state) {
+                            darkController.value = state == ThemeState.dark;
+                            return CustomSwtich(
+                                title: 'dark_mode'.tr(),
+                                description: 'dark_mode_description'.tr(),
+                                onChanged: (value) {
+                                  context.read<ThemeCubit>().setTheme(value
+                                      ? ThemeState.dark
+                                      : ThemeState.light);
+                                },
+                                controller: darkController,
+                                icon: Icons.nightlight_round);
+                          },
+                        ),
                         SizedBox(
                           height: AppDimens.sectionSpacing,
                         ),

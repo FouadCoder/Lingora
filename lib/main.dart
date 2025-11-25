@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/config/theme/light_theme.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
@@ -9,6 +10,8 @@ import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme_state.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/config/router/routes.dart';
 import 'package:lingora/config/theme/dark_theme.dart';
@@ -50,6 +53,8 @@ class MyApp extends StatelessWidget {
               create: (context) => injection<HistoryCubit>()), // History
           BlocProvider<LanguageCubit>(
               create: (context) => injection<LanguageCubit>()), // Language
+          BlocProvider<ThemeCubit>(
+              create: (context) => injection<ThemeCubit>()), // Theme
 
           //TODO adjust the cuibits below
           BlocProvider<AuthAppCubit>(
@@ -67,13 +72,17 @@ class MyApp extends StatelessWidget {
               context.setLocale(Locale(state.language!.code));
             }
           },
-          child: MaterialApp.router(
-            theme: darkTheme,
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            routerConfig: router,
+          child: BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return MaterialApp.router(
+                theme: state == ThemeState.dark ? darkTheme : lightTheme,
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
+                routerConfig: router,
+              );
+            },
           ),
         ));
   }

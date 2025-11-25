@@ -27,8 +27,11 @@ import 'package:lingora/features/settings/data/datasources/settings_local_data.d
 import 'package:lingora/features/settings/data/repositories_impl/settings_repository_impl.dart';
 import 'package:lingora/features/settings/domain/repositories/settings_repository.dart';
 import 'package:lingora/features/settings/domain/usecases/get_language_usecase.dart';
+import 'package:lingora/features/settings/domain/usecases/get_theme_usecase.dart';
 import 'package:lingora/features/settings/domain/usecases/save_language_usecase.dart';
+import 'package:lingora/features/settings/domain/usecases/set_theme_usecase.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
 import 'package:lingora/features/translate/data/datasources/translate_remote_data.dart';
 import 'package:lingora/features/translate/data/repositories_impl/translate_repository_impl.dart';
 import 'package:lingora/features/translate/domain/repositories/translate_repository.dart';
@@ -87,6 +90,8 @@ Future<void> setupInjection() async {
   // Setting
   injection.registerFactory(() => SaveLanguageUsecase(injection()));
   injection.registerFactory(() => GetLanguageUsecase(injection()));
+  injection.registerFactory(() => SetThemeUsecase(injection()));
+  injection.registerFactory(() => GetThemeUsecase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -98,4 +103,5 @@ Future<void> setupInjection() async {
       () => AnalyticsCubit(injection(), injection(), injection()));
   injection.registerFactory(() => HistoryCubit(injection(), injection()));
   injection.registerFactory(() => LanguageCubit(injection(), injection()));
+  injection.registerFactory(() => ThemeCubit(injection(), injection()));
 }
