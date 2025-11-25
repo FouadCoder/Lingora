@@ -4,11 +4,9 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
-import 'package:lingora/features/library/domain/enums/collection_enum.dart';
 import 'package:lingora/features/library/presentation/widgets/note_widget.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_outputs.dart';
 import 'package:lingora/helper/direction_helper.dart';
-import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/header.dart';
@@ -38,21 +36,21 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Translated
-                WordTranslatedCard(
-                  translated: widget.model.translated,
-                ),
-
-                SizedBox(
-                  height: AppDimens.subElementBetween,
-                ),
-
                 // Word Info
                 WordInfoCard(
                   original: widget.model.original,
                   pos: widget.model.pos,
                   pronunciation: widget.model.pronunciation,
                   wordId: widget.model.id,
+                ),
+
+                SizedBox(
+                  height: AppDimens.subElementBetween,
+                ),
+
+                // Translated
+                WordTranslatedCard(
+                  translated: widget.model.translated,
                 ),
 
                 SizedBox(
@@ -142,26 +140,6 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   height: AppDimens.sectionBetween,
                 ),
 
-                // Collections
-                Header(
-                    icon: MaterialCommunityIcons.tag,
-                    title: 'collections'.tr()),
-                SizedBox(
-                  height: AppDimens.sectionSpacing,
-                ),
-
-                Center(
-                    child: WordCollectionsWidget(
-                  wordId: widget.model.id,
-                  collection: CollectionType.values.firstWhere(
-                      (element) =>
-                          element.sourceName == widget.model.collection.name,
-                      orElse: () => CollectionType.values.first),
-                )),
-
-                SizedBox(
-                  height: AppDimens.sectionBetween,
-                ),
                 // Notes
                 LibraryNotes(
                   noteEntity: widget.model.note,

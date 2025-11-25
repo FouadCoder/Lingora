@@ -29,7 +29,7 @@ extension CollectionTypeExt on CollectionType {
   String get imagePath {
     switch (this) {
       case CollectionType.learning:
-        return "assets/icons/heart_72.png";
+        return "assets/icons/book.png";
       case CollectionType.saved:
         return "assets/icons/bookmark_10.png";
       case CollectionType.mastered:

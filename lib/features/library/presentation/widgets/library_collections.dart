@@ -19,33 +19,26 @@ class CollectionsLibrary extends StatelessWidget {
         ),
         crossAxisSpacing: AppDimens.cardBetween,
         mainAxisSpacing: AppDimens.cardBetween,
-        itemCount: 4,
+        itemCount: CollectionType.values.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {},
             child: AppCard(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Theme.of(context).colorScheme.surface,
-                      Theme.of(context).colorScheme.secondary
-                    ]),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      CollectionType.values[index].imagePath,
-                      height: 24,
-                      width: 24,
-                    ),
-                    Text(
-                      CollectionType.values[index].name,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                )),
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.asset(
+                  CollectionType.values[index].imagePath,
+                  height: 24,
+                  width: 24,
+                ),
+                Text(
+                  CollectionType.values[index].name,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            )),
           );
         });
   }
