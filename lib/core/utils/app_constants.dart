@@ -21,6 +21,7 @@ class AppDimens {
   static const double elementBetween = 6.0;
 
   // Container padding
+  static const double paddingSS = 4;
   static const double paddingS = 8;
   static const double paddingM = 16;
   static const double paddingL = 24;
