@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/features/translate/presentation/widgets/language_picker_sheet.dart';
-import 'package:lingora/core/widgets/app_card.dart';
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({super.key});
@@ -39,7 +39,6 @@ class LanguageSelector extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -58,12 +57,12 @@ class LanguageSelector extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: theme.colorScheme.onPrimary,
-                borderRadius: BorderRadius.circular(8),
+                color: theme.colorScheme.secondary.withValues(alpha: 0.07),
+                borderRadius: BorderRadius.circular(AppDimens.radiusXXL),
               ),
               child: Icon(
                 Icons.swap_horiz,
-                color: theme.colorScheme.outline,
+                color: theme.colorScheme.secondary,
                 size: 20,
               ),
             ),
@@ -99,18 +98,20 @@ class LanguageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AppCard(
-        child: Container(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(AppDimens.radiusL),
+      child: Container(
+        width: AppPlatform.isPhone(context)
+            ? MediaQuery.of(context).size.width * 0.30
+            : 150,
+        padding: const EdgeInsets.all(AppDimens.paddingS),
+        decoration: BoxDecoration(
+            color: theme.colorScheme.onSurface,
+            borderRadius: BorderRadius.circular(AppDimens.radiusXXL)),
+        child: Text(
+          languageName,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.w500,
           ),
-          child: Text(
-            languageName,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          textAlign: TextAlign.center,
         ),
       ),
     );

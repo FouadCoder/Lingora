@@ -8,6 +8,7 @@ import 'package:lingora/features/translate/presentation/cubit/translate_cubit.da
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/textfield.dart';
+import 'package:lingora/features/translate/presentation/widgets/language_selector.dart';
 
 class TranslationInput extends StatefulWidget {
   final bool isLoading;
@@ -41,75 +42,84 @@ class _TranslationInputState extends State<TranslationInput> {
     final theme = Theme.of(context);
     final state = context.watch<TranslateCubit>().state;
 
-    return Column(
-      children: [
-        // English Input Box
-        AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return AppCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Selector
+          LanguageSelector(),
+          const SizedBox(height: AppDimens.sectionSpacing),
+          // Header with label and icons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Header with label and icons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    state.sourceLanguage.name,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.outline,
-                    ),
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(1),
+                    border: Border(
+                      left: BorderSide(
+                        color: theme.colorScheme.secondary,
+                        width: 4,
+                      ),
+                    )),
+                child: Text(
+                  state.sourceLanguage.name,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.outline,
                   ),
-                  IconButton(
-                    onPressed: () {
-                      // TODO: Implement speaker functionality
-                    },
-                    icon: Icon(
-                      Icons.volume_up_outlined,
-                      color: theme.colorScheme.outline,
-                      size: AppDimens.iconM,
-                    ),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                  ),
-                ],
+                ),
               ),
-
-              // Input Text Field
-              CustomTextfield(
-                controller: _controller,
-                label: '',
-                hint: 'translation_hint'.tr(),
-                highLight: false,
-                highlightText: '',
-                backgroundColor: theme.colorScheme.onSurface,
-                height: AppPlatform.isPhone(context) ? 120 : 150,
-                onChange: (value) {
-                  context.read<TranslateCubit>().updateInput(value);
+              IconButton(
+                onPressed: () {
+                  // TODO: Implement speaker functionality
                 },
-                borderColor: theme.border,
-                borderRadius: AppDimens.radiusM,
+                icon: Icon(
+                  Icons.volume_up_outlined,
+                  color: theme.colorScheme.outline,
+                  size: AppDimens.iconM,
+                ),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
               ),
             ],
           ),
-        ),
 
-        const SizedBox(height: AppDimens.sectionSpacing),
-
-        // Translate Button
-        Align(
-          alignment: Alignment.bottomRight,
-          child: CustomButton(
-            isLoading: widget.isLoading,
-            loadingWidget: Text('translating'.tr()),
-            text: 'translate_button'.tr(),
-            color: theme.colorScheme.secondary,
-            function: () {
-              context.read<TranslateCubit>().translate();
+          // Input Text Field
+          CustomTextfield(
+            controller: _controller,
+            label: '',
+            hint: 'translation_hint'.tr(),
+            highLight: false,
+            highlightText: '',
+            backgroundColor: theme.colorScheme.onSurface,
+            height: AppPlatform.isPhone(context) ? 120 : 150,
+            onChange: (value) {
+              context.read<TranslateCubit>().updateInput(value);
             },
-            textColor:
-                widget.isLoading ? theme.colorScheme.outline : Colors.white,
+            borderColor: theme.border,
+            borderRadius: AppDimens.radiusM,
           ),
-        ),
-      ],
+
+          const SizedBox(height: AppDimens.sectionSpacing),
+
+          // Translate Button
+          Align(
+            alignment: Alignment.bottomRight,
+            child: CustomButton(
+              isLoading: widget.isLoading,
+              loadingWidget: Text('translating'.tr()),
+              text: 'translate_button'.tr(),
+              color: theme.colorScheme.secondary,
+              function: () {
+                context.read<TranslateCubit>().translate();
+              },
+              textColor:
+                  widget.isLoading ? theme.colorScheme.outline : Colors.white,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

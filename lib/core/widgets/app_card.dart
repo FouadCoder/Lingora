@@ -6,21 +6,24 @@ class AppCard extends StatelessWidget {
   final Color? backgroundColor;
   final double? height;
   final double? width;
+  final double padding;
   final Gradient? gradient;
+
   const AppCard(
       {super.key,
       required this.child,
       this.backgroundColor,
       this.height,
       this.width,
-      this.gradient});
+      this.gradient,
+      this.padding = AppDimens.paddingM});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height,
       width: width,
-      padding: EdgeInsets.all(AppDimens.paddingM),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
           color: backgroundColor ?? Theme.of(context).colorScheme.surface,
           gradient: gradient,

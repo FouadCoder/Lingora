@@ -3,12 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
-
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
 import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_input.dart';
-import 'package:lingora/features/translate/presentation/widgets/language_selector.dart';
 import 'package:lingora/features/translate/presentation/widgets/info_cards.dart';
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/core/widgets/app_container.dart';
@@ -90,11 +88,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Language Selector
-                LanguageSelector(),
-
-                SizedBox(height: AppDimens.sectionSpacing),
-
                 BlocBuilder<TranslateCubit, TranslateState>(
                   builder: (context, state) {
                     bool isLoading = state.status == TranslateStatus.loading;
