@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/extensions/theme_data.dart';
+import 'package:lingora/core/widgets/icon_card.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
@@ -70,18 +71,8 @@ class _TranslationInputState extends State<TranslationInput> {
                   ),
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  // TODO: Implement speaker functionality
-                },
-                icon: Icon(
-                  Icons.volume_up_outlined,
-                  color: theme.colorScheme.outline,
-                  size: AppDimens.iconM,
-                ),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-              ),
+              // Sound icon
+              IconCard(icon: Icons.volume_up_outlined)
             ],
           ),
 

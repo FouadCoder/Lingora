@@ -5,6 +5,7 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/header.dart';
+import 'package:lingora/core/widgets/icon_card.dart';
 
 // Word translated
 class WordTranslatedCard extends StatelessWidget {
@@ -27,9 +28,27 @@ class WordTranslatedCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Header(
-              icon: MaterialCommunityIcons.translate,
-              title: 'translated'.tr(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Header(
+                  icon: MaterialCommunityIcons.translate,
+                  title: 'translated'.tr(),
+                ),
+                Row(
+                  children: [
+                    IconCard(icon: Icons.favorite),
+                    SizedBox(
+                      width: AppDimens.buttonTagHorizontal,
+                    ),
+                    IconCard(icon: Icons.notifications),
+                    SizedBox(
+                      width: AppDimens.buttonTagHorizontal,
+                    ),
+                    IconCard(icon: Icons.volume_up_outlined),
+                  ],
+                )
+              ],
             ),
             SizedBox(
               height: AppDimens.sectionSpacing,

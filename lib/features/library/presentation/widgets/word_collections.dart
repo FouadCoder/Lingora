@@ -63,29 +63,13 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
         children: List.generate(
             widget.hideNotifications ? 4 : CollectionType.values.length,
             (index) {
-          bool isNotification =
-              CollectionType.values[index] == CollectionType.notifications;
           bool isSelected = index == selectedIndex;
-          bool isActiveNoti = isNotification && isActiveNotifications;
-          final backgroundColor = (isSelected || isActiveNoti)
+          final backgroundColor = (isSelected)
               ? Theme.of(context).colorScheme.secondary
               : Theme.of(context).colorScheme.onSurface;
 
           return GestureDetector(
-            onTap: () {
-              if (isNotification) {
-                setState(() {
-                  isActiveNotifications = !isActiveNotifications;
-                });
-              }
-              if (!isNotification) {
-                setState(() {
-                  selectedIndex = index;
-                });
-                context.read<LibraryCubit>().updateWordCollection(
-                    widget.wordId, CollectionType.values[index]);
-              }
-            },
+            onTap: () {},
             child: Container(
               margin: EdgeInsets.only(
                   right: index < CollectionType.values.length - 1
