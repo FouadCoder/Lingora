@@ -16,15 +16,13 @@ class LanguageSwitcher extends StatefulWidget {
 }
 
 class _LanguageSwitcherState extends State<LanguageSwitcher> {
-  Language? selectedLang;
-
   @override
   void initState() {
     super.initState();
     context.read<LanguageCubit>().getLanguage();
   }
 
-  void _showLanguagePickerSheet() {
+  void _showLanguagePickerSheet(Language selectedLang) {
     final theme = Theme.of(context);
     final allLanguages = LanguageData.languages;
 
@@ -59,11 +57,12 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(languages.length, (index) {
+                final lang = languages[index];
+                bool isSelected = lang.code == selectedLang.code;
                 return Padding(
                   padding: EdgeInsets.all(AppDimens.paddingM),
                   child: GestureDetector(
                     onTap: () {
-                      selectedLang = languages[index];
                       context
                           .read<LanguageCubit>()
                           .setLanguage(languages[index]);
@@ -72,12 +71,24 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.circle,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          isSelected
+                              ? Icons.check_circle
+                              : Icons.circle_outlined,
+                          color: isSelected
+                              ? Theme.of(context).colorScheme.secondary
+                              : Theme.of(context).colorScheme.onSurface,
                           size: AppDimens.iconL,
                         ),
                         SizedBox(width: AppDimens.sectionSpacing),
-                        Text(languages[index].name),
+                        Text(languages[index].name,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: isSelected
+                                  ? Theme.of(context).colorScheme.secondary
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color,
+                            )),
                       ],
                     ),
                   ),
@@ -91,7 +102,6 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    selectedLang ??= LanguageData.getLanguageByCode('en');
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -101,7 +111,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
           Container(
             padding: EdgeInsets.all(AppDimens.paddingS),
             decoration: BoxDecoration(
-              color: theme.colorScheme.secondary.withValues(alpha: 0.2),
+              color: theme.colorScheme.onSurface,
               borderRadius: BorderRadius.circular(AppDimens.radiusL),
             ),
             child: Icon(
@@ -140,13 +150,14 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
           // Langauge
           BlocBuilder<LanguageCubit, LanguageState>(
             builder: (context, state) {
+              bool isLoading = state.status == LanguageStatus.loading;
               return GestureDetector(
                 onTap: () {
-                  _showLanguagePickerSheet();
+                  _showLanguagePickerSheet(state.language!);
                 },
                 child: AppCard(
                     backgroundColor: theme.colorScheme.onSurface,
-                    child: Text("English")),
+                    child: Text(isLoading ? "" : state.language!.name)),
               );
             },
           )

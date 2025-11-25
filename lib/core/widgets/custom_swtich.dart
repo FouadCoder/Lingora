@@ -27,7 +27,7 @@ class CustomSwtich extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(AppDimens.paddingS),
             decoration: BoxDecoration(
-              color: theme.colorScheme.secondary.withValues(alpha: 0.2),
+              color: theme.colorScheme.onSurface,
               borderRadius: BorderRadius.circular(AppDimens.radiusL),
             ),
             child: Icon(
