@@ -1,9 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
 
 class LanguageSwitcher extends StatefulWidget {
   const LanguageSwitcher({super.key});
@@ -14,6 +17,12 @@ class LanguageSwitcher extends StatefulWidget {
 
 class _LanguageSwitcherState extends State<LanguageSwitcher> {
   Language? selectedLang;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<LanguageCubit>().getLanguage();
+  }
 
   void _showLanguagePickerSheet() {
     final theme = Theme.of(context);
@@ -52,16 +61,25 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
               children: List.generate(languages.length, (index) {
                 return Padding(
                   padding: EdgeInsets.all(AppDimens.paddingM),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.circle,
-                        color: Theme.of(context).colorScheme.onSurface,
-                        size: AppDimens.iconL,
-                      ),
-                      SizedBox(width: AppDimens.sectionSpacing),
-                      Text(languages[index].name),
-                    ],
+                  child: GestureDetector(
+                    onTap: () {
+                      selectedLang = languages[index];
+                      context
+                          .read<LanguageCubit>()
+                          .setLanguage(languages[index]);
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          size: AppDimens.iconL,
+                        ),
+                        SizedBox(width: AppDimens.sectionSpacing),
+                        Text(languages[index].name),
+                      ],
+                    ),
                   ),
                 );
               }),
@@ -79,7 +97,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          // Icon container (same style as CustomSwtich)
+          // Icon container
           Container(
             padding: EdgeInsets.all(AppDimens.paddingS),
             decoration: BoxDecoration(
@@ -120,13 +138,17 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
           SizedBox(width: AppDimens.elementBetween),
 
           // Langauge
-          GestureDetector(
-            onTap: () {
-              _showLanguagePickerSheet();
+          BlocBuilder<LanguageCubit, LanguageState>(
+            builder: (context, state) {
+              return GestureDetector(
+                onTap: () {
+                  _showLanguagePickerSheet();
+                },
+                child: AppCard(
+                    backgroundColor: theme.colorScheme.onSurface,
+                    child: Text("English")),
+              );
             },
-            child: AppCard(
-                backgroundColor: theme.colorScheme.onSurface,
-                child: Text("English")),
           )
         ],
       ),
