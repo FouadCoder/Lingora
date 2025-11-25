@@ -1,11 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/widgets/icon_card.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/features/library/domain/enums/collection_enum.dart';
 import 'package:lingora/features/library/presentation/pages/word_details_screen.dart';
@@ -44,10 +42,6 @@ class _WordCardState extends State<WordCard> {
             )
             .name,
         "textColor": colorScheme.secondary,
-      },
-      {
-        "text": widget.word.createdAt.toReadableDate(),
-        "textColor": theme.bodySmall?.color,
       },
     ];
 
@@ -96,38 +90,15 @@ class _WordCardState extends State<WordCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          //  Heart
-                          GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              setState(() => isFavorite = !isFavorite);
-                              if (isFavorite) {
-                                context
-                                    .read<FavoritesCubit>()
-                                    .addToFavorites(widget.word.id!);
-                              } else {
-                                context
-                                    .read<FavoritesCubit>()
-                                    .removeFromFavorites(widget.word.id!);
-                              }
-                            },
-                            child: Icon(
-                              Icons.favorite,
-                              color:
-                                  isFavorite ? Colors.red : colorScheme.outline,
-                            ),
+                          //  Heart & sound
+                          IconCard(
+                            icon: Icons.favorite,
+                            onTap: () {},
                           ),
-                          SizedBox(width: AppDimens.sectionSpacing),
-                          // 🔊 Sound
-                          GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              // play sound
-                            },
-                            child: Icon(
-                              Icons.volume_up,
-                              color: colorScheme.outline,
-                            ),
+                          SizedBox(width: AppDimens.buttonTagHorizontal),
+                          IconCard(
+                            icon: Icons.volume_up,
+                            onTap: () {},
                           ),
                         ],
                       ),
@@ -167,20 +138,23 @@ class _WordCardState extends State<WordCard> {
                 ),
                 SizedBox(height: AppDimens.sectionSpacing),
                 if (!widget.smallCard!)
-                  Wrap(
-                    spacing: AppDimens.buttonTagHorizontal,
-                    runSpacing: 0,
-                    children: List.generate(chipsData.length, (index) {
-                      return Chip(
-                        label: Text(
-                          chipsData[index]["text"],
-                          style: theme.bodySmall
-                              ?.copyWith(color: chipsData[index]["textColor"]),
-                        ),
-                        backgroundColor: colorScheme.onPrimary,
-                        side: BorderSide.none,
-                      );
-                    }),
+                  Center(
+                    child: Wrap(
+                      spacing: AppDimens.buttonTagHorizontal,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      runSpacing: 0,
+                      children: List.generate(chipsData.length, (index) {
+                        return Chip(
+                          label: Text(
+                            chipsData[index]["text"],
+                            style: theme.bodySmall?.copyWith(
+                                color: chipsData[index]["textColor"]),
+                          ),
+                          backgroundColor: colorScheme.onPrimary,
+                          side: BorderSide.none,
+                        );
+                      }),
+                    ),
                   )
               ],
             );
