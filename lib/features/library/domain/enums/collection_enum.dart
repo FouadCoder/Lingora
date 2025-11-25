@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 
 enum CollectionType { learning, saved, mastered }
 
@@ -31,9 +32,23 @@ extension CollectionTypeExt on CollectionType {
       case CollectionType.learning:
         return "assets/icons/book.png";
       case CollectionType.saved:
-        return "assets/icons/bookmark_10.png";
+        return "assets/icons/bookmark_12435234.png";
       case CollectionType.mastered:
-        return "assets/icons/trophy_10.png";
+        return "assets/icons/crown_891024.png";
+    }
+  }
+
+  TextStyle wordStyle(BuildContext context) {
+    switch (this) {
+      case CollectionType.learning:
+        return Theme.of(context).textTheme.bodyMedium!;
+      case CollectionType.saved:
+        return Theme.of(context).textTheme.bodyMedium!;
+      case CollectionType.mastered:
+        return Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: AppColors.gold, fontWeight: FontWeight.bold);
     }
   }
 
