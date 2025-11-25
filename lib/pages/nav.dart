@@ -31,7 +31,13 @@ class _NavState extends State<Nav> {
     super.initState();
     currentPage = widget.indexPage;
     controllerSideBar =
-        SidebarXController(selectedIndex: widget.indexPage, extended: true);
+        SidebarXController(selectedIndex: widget.indexPage, extended: false);
+
+    controllerSideBar.addListener(() {
+      setState(() {
+        currentPage = controllerSideBar.selectedIndex;
+      });
+    });
 
     pages = [
       HomeScreen(),
@@ -40,6 +46,12 @@ class _NavState extends State<Nav> {
       InsightsScreen(),
       SettingScreen(),
     ];
+  }
+
+  @override
+  void dispose() {
+    controllerSideBar.dispose();
+    super.dispose();
   }
 
   @override

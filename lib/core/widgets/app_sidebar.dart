@@ -78,12 +78,7 @@ class AppSidebar extends StatelessWidget {
         ),
       ),
       footerDivider: divider,
-      footerItems: [
-        SidebarXItem(
-          icon: Icons.settings_rounded,
-          label: "settings".tr(),
-        ),
-      ],
+      footerItems: [],
       items: [
         SidebarXItem(
           icon: Icons.home_rounded,
