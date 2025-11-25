@@ -8,6 +8,7 @@ import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/config/router/routes.dart';
 import 'package:lingora/config/theme/dark_theme.dart';
@@ -20,8 +21,10 @@ void main() async {
   runApp(EasyLocalization(
     supportedLocales: const [
       Locale('en'),
+      Locale('ar'),
     ],
     path: 'assets/translations',
+    fallbackLocale: Locale("en"),
     child: const MyApp(),
   ));
 }
@@ -57,13 +60,21 @@ class MyApp extends StatelessWidget {
               create: (context) => FavoritesCubit()), // Favorites
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
         ],
-        child: MaterialApp.router(
-          theme: darkTheme,
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          routerConfig: router,
+        child: BlocListener<LanguageCubit, LanguageState>(
+          listener: (context, state) {
+            if (state.status == LanguageStatus.success &&
+                state.language != null) {
+              context.setLocale(Locale(state.language!.code));
+            }
+          },
+          child: MaterialApp.router(
+            theme: darkTheme,
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            routerConfig: router,
+          ),
         ));
   }
 }

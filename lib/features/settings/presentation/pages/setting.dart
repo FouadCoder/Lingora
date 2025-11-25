@@ -10,6 +10,8 @@ import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
 import 'package:lingora/features/settings/presentation/widgets/account.dart';
 import 'package:lingora/features/settings/presentation/widgets/language_switcher.dart';
 
@@ -50,52 +52,56 @@ class _SettingScreenState extends State<SettingScreen> {
           );
         }
       },
-      child: Scaffold(
-        body: AppContainer(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Setting
-              AppCard(
-                child: Column(
-                  children: [
-                    Header(icon: Icons.settings, title: "settings".tr()),
-                    SizedBox(
-                      height: AppDimens.titleContentBetween,
-                    ),
-                    CustomSwtich(
-                        title: 'dark_mode'.tr(),
-                        description: 'dark_mode_description'.tr(),
-                        onChanged: (value) {},
-                        controller: darkController,
-                        icon: Icons.nightlight_round),
-                    SizedBox(
-                      height: AppDimens.sectionSpacing,
-                    ),
-                    CustomSwtich(
-                        title: 'notifications'.tr(),
-                        description: 'general_notifications'.tr(),
-                        onChanged: (value) {},
-                        controller: notificationsController,
-                        icon: Icons.notifications),
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: AppContainer(
+                child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Setting
+                  AppCard(
+                    child: Column(
+                      children: [
+                        Header(icon: Icons.settings, title: "settings".tr()),
+                        SizedBox(
+                          height: AppDimens.titleContentBetween,
+                        ),
+                        CustomSwtich(
+                            title: 'dark_mode'.tr(),
+                            description: 'dark_mode_description'.tr(),
+                            onChanged: (value) {},
+                            controller: darkController,
+                            icon: Icons.nightlight_round),
+                        SizedBox(
+                          height: AppDimens.sectionSpacing,
+                        ),
+                        CustomSwtich(
+                            title: 'notifications'.tr(),
+                            description: 'general_notifications'.tr(),
+                            onChanged: (value) {},
+                            controller: notificationsController,
+                            icon: Icons.notifications),
 
-                    SizedBox(
-                      height: AppDimens.sectionSpacing,
-                    ),
+                        SizedBox(
+                          height: AppDimens.sectionSpacing,
+                        ),
 
-                    // Language
-                    LanguageSwitcher()
-                  ],
-                ),
+                        // Language
+                        LanguageSwitcher()
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppDimens.sectionSpacing,
+                  ),
+                  // Aaccount
+                  AccountWidget()
+                ],
               ),
-              SizedBox(
-                height: AppDimens.sectionSpacing,
-              ),
-              // Aaccount
-              AccountWidget()
-            ],
-          ),
-        )),
+            )),
+          );
+        },
       ),
     );
   }
