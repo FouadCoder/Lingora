@@ -44,6 +44,7 @@ class InfoCards extends StatelessWidget {
           original: model.original,
           pos: model.pos,
           pronunciation: model.pronunciation,
+          wordId: model.id,
         ),
       if (hasMeaning) _buildMeaningCard(theme, context, isRightSideText),
       if (hasSynonyms) _buildSynonymsCard(theme, context),

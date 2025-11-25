@@ -6,6 +6,7 @@ import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
+import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 
 // Word translated
 class WordTranslatedCard extends StatelessWidget {
@@ -72,12 +73,14 @@ class WordInfoCard extends StatelessWidget {
   final String original;
   final String pos;
   final String pronunciation;
+  final String? wordId;
 
   const WordInfoCard({
     super.key,
     required this.original,
     required this.pos,
     required this.pronunciation,
+    required this.wordId,
   });
 
   @override
@@ -147,6 +150,13 @@ class WordInfoCard extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
+
+            // Word collections
+            SizedBox(
+              height: AppDimens.sectionSpacing,
+            ),
+
+            WordCollectionsWidget(wordId: wordId)
           ],
         ),
       ),

@@ -52,6 +52,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   original: widget.model.original,
                   pos: widget.model.pos,
                   pronunciation: widget.model.pronunciation,
+                  wordId: widget.model.id,
                 ),
 
                 SizedBox(
@@ -151,8 +152,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 Center(
                     child: WordCollectionsWidget(
-                  hideNotifications: true,
-                  wordId: widget.model.id ?? "", //! This can be null
+                  wordId: widget.model.id,
                   collection: CollectionType.values.firstWhere(
                       (element) =>
                           element.sourceName == widget.model.collection.name,

@@ -14,12 +14,12 @@ class IconCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(AppDimens.paddingS),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppDimens.radiusM),
+            borderRadius: BorderRadius.circular(AppDimens.radiusL),
             color: background ?? Theme.of(context).colorScheme.onSurface),
         child: Icon(
           icon,
           color: Theme.of(context).colorScheme.primary,
-          size: AppDimens.iconM,
+          size: AppDimens.iconL,
         ),
       ),
     );
