@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lingora/core/service/audio_service.dart';
+import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/analytics/data/datasources/analytics_remote_data.dart';
 import 'package:lingora/features/analytics/data/repositories_impl/analytics_repository_impl.dart';
 import 'package:lingora/features/analytics/domain/repositories/analytics_repository.dart';
@@ -73,6 +75,9 @@ Future<void> setupInjection() async {
   injection.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(injection()));
 
+  // Services
+  injection.registerLazySingleton(() => AudioService());
+
   //* Usecases
 
   // Translate
@@ -92,6 +97,8 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => GetLanguageUsecase(injection()));
   injection.registerFactory(() => SetThemeUsecase(injection()));
   injection.registerFactory(() => GetThemeUsecase(injection()));
+  // Audio
+  injection.registerFactory(() => PlayAudioUsecase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
