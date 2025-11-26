@@ -1,6 +1,3 @@
-const apiHuggingFace = "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";
-const model = 'Helsinki-NLP/opus-mt'; // Helsinki-NLP/opus-mt-ar-en
-const apiKeygeminiModel = "AIzaSyAEDEx5WgpvEv4tG_ESHFPTmpsxQQFFfx4";
 const String supabaseURL = "https://xhjyjqkgebzcuoizrrqv.supabase.co";
 const String supabaseAnonKey =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhoanlqcWtnZWJ6Y3VvaXpycnF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc2MzE1NDMsImV4cCI6MjA3MzIwNzU0M30.cr1ZcBrEdlQffIUgBaTZCLmyz-6b_MblIk0C0pq3el4";
