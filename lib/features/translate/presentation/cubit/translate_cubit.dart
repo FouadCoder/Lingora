@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_params.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_usecase.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
@@ -6,8 +7,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TranslateCubit extends Cubit<TranslateState> {
   final TranslateUsecase translateUsecase;
+  final PlayAudioUsecase playAudioUsecase;
   final SupabaseClient supabaseClient;
-  TranslateCubit(this.translateUsecase, this.supabaseClient)
+  TranslateCubit(
+      this.translateUsecase, this.supabaseClient, this.playAudioUsecase)
       : super(const TranslateState());
 
   // Update input text
@@ -69,5 +72,12 @@ class TranslateCubit extends Cubit<TranslateState> {
     } catch (e) {
       emit(state.copyWith(status: TranslateStatus.failure));
     }
+  }
+
+  // Play Audio
+  void playAudio(String word, String lang) async {
+    try {
+      await playAudioUsecase.call(word, lang: lang);
+    } catch (_) {}
   }
 }

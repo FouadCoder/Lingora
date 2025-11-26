@@ -102,9 +102,9 @@ Future<void> setupInjection() async {
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
-      () => TranslateCubit(injection(), injection()));
+      () => TranslateCubit(injection(), injection(), injection()));
   injection.registerFactory<LibraryCubit>(
-      () => LibraryCubit(injection(), injection(), injection()));
+      () => LibraryCubit(injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));

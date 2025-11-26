@@ -72,7 +72,14 @@ class _TranslationInputState extends State<TranslationInput> {
                 ),
               ),
               // Sound icon
-              IconCard(icon: Icons.volume_up_outlined)
+              IconCard(
+                icon: Icons.volume_up_outlined,
+                onTap: () {
+                  context
+                      .read<TranslateCubit>()
+                      .playAudio(state.inputText, state.sourceLanguage.code);
+                },
+              )
             ],
           ),
 

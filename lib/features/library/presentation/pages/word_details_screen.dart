@@ -42,6 +42,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   pos: widget.model.pos,
                   pronunciation: widget.model.pronunciation,
                   wordId: widget.model.id,
+                  lang: widget.model.translateFrom!.code,
                 ),
 
                 SizedBox(
@@ -51,6 +52,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 // Translated
                 WordTranslatedCard(
                   translated: widget.model.translated,
+                  lang: widget.model.translateTo!.code,
                 ),
 
                 SizedBox(

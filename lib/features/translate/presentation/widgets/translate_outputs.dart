@@ -1,18 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
+import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
 
 // Word translated
 class WordTranslatedCard extends StatelessWidget {
   final String translated;
+  final String lang;
 
-  const WordTranslatedCard({super.key, required this.translated});
+  const WordTranslatedCard(
+      {super.key, required this.translated, required this.lang});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,15 @@ class WordTranslatedCard extends StatelessWidget {
                     SizedBox(
                       width: AppDimens.buttonTagHorizontal,
                     ),
-                    IconCard(icon: Icons.volume_up_outlined),
+                    IconCard(
+                      icon: Icons.volume_up_outlined,
+                      onTap: () {
+                        context.read<LibraryCubit>().playAudio(
+                              translated,
+                              lang,
+                            );
+                      },
+                    ),
                   ],
                 )
               ],
@@ -74,6 +86,7 @@ class WordInfoCard extends StatelessWidget {
   final String pos;
   final String pronunciation;
   final String? wordId;
+  final String lang;
 
   const WordInfoCard({
     super.key,
@@ -81,6 +94,7 @@ class WordInfoCard extends StatelessWidget {
     required this.pos,
     required this.pronunciation,
     required this.wordId,
+    required this.lang,
   });
 
   @override
@@ -98,10 +112,24 @@ class WordInfoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with icon
-            Header(
-              icon: Icons.book_outlined,
-              title: 'word_info'.tr(),
+            // Header with play button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Header(
+                  icon: Icons.book_outlined,
+                  title: 'word_info'.tr(),
+                ),
+                IconCard(
+                  icon: Icons.volume_up_outlined,
+                  onTap: () {
+                    context.read<LibraryCubit>().playAudio(
+                          original,
+                          lang,
+                        );
+                  },
+                ),
+              ],
             ),
 
             SizedBox(

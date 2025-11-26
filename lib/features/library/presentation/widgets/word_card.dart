@@ -1,11 +1,13 @@
 import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/features/library/domain/enums/collection_enum.dart';
+import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/library/presentation/pages/word_details_screen.dart';
 
 class WordCard extends StatefulWidget {
@@ -98,7 +100,12 @@ class _WordCardState extends State<WordCard> {
                           SizedBox(width: AppDimens.buttonTagHorizontal),
                           IconCard(
                             icon: Icons.volume_up,
-                            onTap: () {},
+                            onTap: () {
+                              context.read<LibraryCubit>().playAudio(
+                                    widget.word.translated,
+                                    widget.word.translateTo!.code,
+                                  );
+                            },
                           ),
                         ],
                       ),

@@ -6,6 +6,7 @@ class PlayAudioUsecase {
   PlayAudioUsecase(this.audioService);
 
   Future<void> call(String text, {required String lang}) async {
+    if (text.trim().isEmpty || lang.isEmpty) return;
     await audioService.speak(text, lang: lang);
   }
 }

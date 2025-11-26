@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/library/domain/enums/collection_enum.dart';
 import 'package:lingora/features/library/domain/usecases/collections_params.dart';
 import 'package:lingora/features/library/domain/usecases/get_library_usecase.dart';
@@ -11,8 +12,9 @@ class LibraryCubit extends Cubit<LibraryState> {
   final SupabaseClient supabaseClient;
   final GetLibraryUsecase getLibraryUsecase;
   final UpdateWordCollectionUsecase updateWordCollectionUsecase;
+  final PlayAudioUsecase playAudioUsecase;
   LibraryCubit(this.supabaseClient, this.getLibraryUsecase,
-      this.updateWordCollectionUsecase)
+      this.updateWordCollectionUsecase, this.playAudioUsecase)
       : super(const LibraryState());
 
   int _offset = 0;
@@ -87,5 +89,12 @@ class LibraryCubit extends Cubit<LibraryState> {
     } catch (e) {
       emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
     }
+  }
+
+  // Play audio
+  void playAudio(String word, String lang) async {
+    try {
+      await playAudioUsecase.call(word, lang: lang);
+    } catch (_) {}
   }
 }
