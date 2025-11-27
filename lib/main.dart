@@ -61,8 +61,6 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthAppCubit()..launch(),
             lazy: false,
           ), // Auth
-          BlocProvider<FavoritesCubit>(
-              create: (context) => FavoritesCubit()), // Favorites
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
         ],
         child: BlocListener<LanguageCubit, LanguageState>(
