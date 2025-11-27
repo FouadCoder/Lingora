@@ -1,14 +1,14 @@
-import 'package:lingora/models/translate.dart';
+import 'package:lingora/features/translate/data/models/translate_model.dart';
 
-class Favorite {
+class FavoriteModel {
   final String id;
   final String userId;
   final String translatedWordId;
   final DateTime createdAt;
   final DateTime? deletedAt;
-  final Translate? translatedWord; // Joined data from translated_words table
+  final TranslateModel? translatedWord;
 
-  const Favorite({
+  const FavoriteModel({
     required this.id,
     required this.userId,
     required this.translatedWordId,
@@ -17,8 +17,8 @@ class Favorite {
     this.translatedWord,
   });
 
-  factory Favorite.fromJson(Map<String, dynamic> json) {
-    return Favorite(
+  factory FavoriteModel.fromJson(Map<String, dynamic> json) {
+    return FavoriteModel(
       id: json['id'] ?? '',
       userId: json['user_id'] ?? '',
       translatedWordId: json['translated_word_id'] ?? '',
@@ -27,7 +27,7 @@ class Favorite {
           ? DateTime.tryParse(json['deleted_at']!)
           : null,
       translatedWord: json['translated_words'] != null
-          ? Translate.fromJson(json['translated_words'])
+          ? TranslateModel.fromJson(json['translated_words'])
           : null,
     );
   }
@@ -42,15 +42,15 @@ class Favorite {
     };
   }
 
-  Favorite copyWith({
+  FavoriteModel copyWith({
     String? id,
     String? userId,
     String? translatedWordId,
     DateTime? createdAt,
     DateTime? deletedAt,
-    Translate? translatedWord,
+    TranslateModel? translatedWord,
   }) {
-    return Favorite(
+    return FavoriteModel(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       translatedWordId: translatedWordId ?? this.translatedWordId,
