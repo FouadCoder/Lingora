@@ -1,3 +1,4 @@
+import 'package:lingora/features/favorites/domain/entities/favorite_entity.dart';
 import 'package:lingora/features/translate/data/models/translate_model.dart';
 
 class FavoriteModel {
@@ -6,7 +7,7 @@ class FavoriteModel {
   final String translatedWordId;
   final DateTime createdAt;
   final DateTime? deletedAt;
-  final TranslateModel? translatedWord;
+  final TranslateModel translatedWord;
 
   const FavoriteModel({
     required this.id,
@@ -14,7 +15,7 @@ class FavoriteModel {
     required this.translatedWordId,
     required this.createdAt,
     this.deletedAt,
-    this.translatedWord,
+    required this.translatedWord,
   });
 
   factory FavoriteModel.fromJson(Map<String, dynamic> json) {
@@ -28,7 +29,7 @@ class FavoriteModel {
           : null,
       translatedWord: json['translated_words'] != null
           ? TranslateModel.fromJson(json['translated_words'])
-          : null,
+          : TranslateModel.empty(),
     );
   }
 
@@ -57,6 +58,17 @@ class FavoriteModel {
       createdAt: createdAt ?? this.createdAt,
       deletedAt: deletedAt ?? this.deletedAt,
       translatedWord: translatedWord ?? this.translatedWord,
+    );
+  }
+
+  FavoriteEntity toEntity() {
+    return FavoriteEntity(
+      id: id,
+      userId: userId,
+      translatedWordId: translatedWordId,
+      createdAt: createdAt,
+      deletedAt: deletedAt,
+      translatedWord: translatedWord.toEntity(),
     );
   }
 }

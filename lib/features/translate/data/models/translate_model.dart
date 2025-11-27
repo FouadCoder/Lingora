@@ -63,6 +63,27 @@ class TranslateModel {
     );
   }
 
+  // Empty
+  factory TranslateModel.empty() {
+    return TranslateModel(
+      id: '',
+      userId: '',
+      categoryId: '',
+      original: '',
+      translated: '',
+      pos: '',
+      pronunciation: '',
+      meaning: '',
+      examples: const [],
+      synonyms: const [],
+      translateFrom: LanguageData.getLanguageByCode("en"),
+      translateTo: LanguageData.getLanguageByCode("ar"),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      deletedAt: null,
+    );
+  }
+
   // To Entity
   TranslateEntity toEntity() {
     return TranslateEntity(
