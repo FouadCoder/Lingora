@@ -24,9 +24,19 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   // Get favorites
   void getFavorites() async {
     try {
+      // Check if there data exist
+      if (state.favorites.isNotEmpty) {
+        emit(state.copyWith(
+          status: FavoriteStatus.success,
+          favorites: state.favorites,
+        ));
+        return;
+      }
+
+      // Get
       emit(state.copyWith(status: FavoriteStatus.loading));
       final List<FavoriteEntity> favorites = await getFavoritesUsecase
-          .call(FavoritesParams(userId: _userId, offset: state.offset));
+          .call(FavoritesParams(userId: _userId, offset: 0));
 
       // If empty
       if (favorites.isEmpty) {
@@ -34,8 +44,10 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         return;
       }
 
-      emit(
-          state.copyWith(status: FavoriteStatus.success, favorites: favorites));
+      emit(state.copyWith(
+          status: FavoriteStatus.success,
+          favorites: favorites,
+          offset: favorites.length));
     } catch (_) {
       emit(state.copyWith(status: FavoriteStatus.error));
     }
@@ -44,17 +56,16 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   // Load more
   void loadMoreFavorites() async {
     try {
-      if (state.isLoadingMore & !state.hasMore) return;
+      if (state.isLoadingMore || !state.hasMore) return;
+
       emit(state.copyWith(isLoadingMore: true));
       final List<FavoriteEntity> favorites = await getFavoritesUsecase
           .call(FavoritesParams(userId: _userId, offset: state.offset));
 
-      bool hasMore = favorites.length == 15;
-
       emit(state.copyWith(
           isLoadingMore: false,
           favorites: [...state.favorites, ...favorites],
-          hasMore: hasMore,
+          hasMore: favorites.length == 15,
           offset: state.offset + favorites.length));
     } catch (_) {
       emit(state.copyWith(isLoadingMore: false));

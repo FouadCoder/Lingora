@@ -65,7 +65,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 return MasonryGridView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 8,
                   gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: getCrossAxisCount(),
@@ -84,14 +83,18 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   controller: _scrollController,
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
-                  itemCount: state.favorites.length,
+                  itemCount:
+                      state.favorites.length + (state.isLoadingMore ? 6 : 0),
                   gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: getCrossAxisCount(),
                   ),
                   crossAxisSpacing: AppDimens.cardBetween,
                   mainAxisSpacing: AppDimens.cardBetween,
                   itemBuilder: (context, index) {
-                    return WordCard(word: state.favorites[index].word);
+                    if (index < state.favorites.length) {
+                      return WordCard(word: state.favorites[index].word);
+                    }
+                    return LibraryLoadingCard();
                   },
                 );
               }
