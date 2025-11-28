@@ -20,10 +20,18 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     context.read<FavoritesCubit>().getFavorites();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 600) {
+        context.read<FavoritesCubit>().loadMoreFavorites();
+      }
+    });
   }
 
   int getCrossAxisCount() {
@@ -73,6 +81,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               // Success
               else if (state.status == FavoriteStatus.success) {
                 return MasonryGridView.builder(
+                  controller: _scrollController,
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   itemCount: state.favorites.length,

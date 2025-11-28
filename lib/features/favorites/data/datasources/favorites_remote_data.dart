@@ -17,7 +17,8 @@ class FavoritesRemoteData {
           ''')
         .eq('user_id', params.userId)
         .isFilter('deleted_at', null)
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .range(params.offset, params.offset + 15 - 1);
 
     List<FavoriteModel> favorites =
         data.map((e) => FavoriteModel.fromJson(e)).toList();
