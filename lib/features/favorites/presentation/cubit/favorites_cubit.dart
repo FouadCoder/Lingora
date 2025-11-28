@@ -25,6 +25,12 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       final List<FavoriteEntity> favorites =
           await getFavoritesUsecase.call(FavoritesParams(userId: _userId));
 
+      // If empty
+      if (favorites.isEmpty) {
+        emit(state.copyWith(status: FavoriteStatus.empty));
+        return;
+      }
+
       emit(
           state.copyWith(status: FavoriteStatus.success, favorites: favorites));
     } catch (_) {

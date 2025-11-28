@@ -103,4 +103,27 @@ class WordModel {
       deletedAt: deletedAt,
     );
   }
+
+  // To Empty
+  factory WordModel.empty() {
+    return WordModel(
+      id: '',
+      userId: '',
+      categoryId: '',
+      original: '',
+      translated: '',
+      pos: '',
+      pronunciation: '',
+      meaning: '',
+      examples: const [],
+      synonyms: const [],
+      translateFrom: LanguageData.getLanguageByCode("en"),
+      translateTo: LanguageData.getLanguageByCode("ar"),
+      note: NoteModel.empty(),
+      collection: CollectionModel.empty(),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      deletedAt: null,
+    );
+  }
 }

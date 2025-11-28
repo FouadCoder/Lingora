@@ -1,4 +1,4 @@
-import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
+import 'package:lingora/features/library/domain/entities/word_entity.dart';
 
 class FavoriteEntity {
   final String id;
@@ -6,7 +6,7 @@ class FavoriteEntity {
   final String translatedWordId;
   final DateTime createdAt;
   final DateTime? deletedAt;
-  final TranslateEntity translatedWord;
+  final WordEntity word;
 
   const FavoriteEntity({
     required this.id,
@@ -14,6 +14,6 @@ class FavoriteEntity {
     required this.translatedWordId,
     required this.createdAt,
     this.deletedAt,
-    required this.translatedWord,
+    required this.word,
   });
 }

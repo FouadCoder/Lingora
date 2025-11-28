@@ -1,5 +1,5 @@
 import 'package:lingora/features/favorites/domain/entities/favorite_entity.dart';
-import 'package:lingora/features/translate/data/models/translate_model.dart';
+import 'package:lingora/features/library/data/models/word_model.dart';
 
 class FavoriteModel {
   final String id;
@@ -7,7 +7,7 @@ class FavoriteModel {
   final String translatedWordId;
   final DateTime createdAt;
   final DateTime? deletedAt;
-  final TranslateModel translatedWord;
+  final WordModel word;
 
   const FavoriteModel({
     required this.id,
@@ -15,7 +15,7 @@ class FavoriteModel {
     required this.translatedWordId,
     required this.createdAt,
     this.deletedAt,
-    required this.translatedWord,
+    required this.word,
   });
 
   factory FavoriteModel.fromJson(Map<String, dynamic> json) {
@@ -27,9 +27,9 @@ class FavoriteModel {
       deletedAt: json['deleted_at'] != null
           ? DateTime.tryParse(json['deleted_at']!)
           : null,
-      translatedWord: json['translated_words'] != null
-          ? TranslateModel.fromJson(json['translated_words'])
-          : TranslateModel.empty(),
+      word: json['translated_words'] != null
+          ? WordModel.fromJson(json['translated_words'])
+          : WordModel.empty(),
     );
   }
 
@@ -49,7 +49,7 @@ class FavoriteModel {
     String? translatedWordId,
     DateTime? createdAt,
     DateTime? deletedAt,
-    TranslateModel? translatedWord,
+    WordModel? word,
   }) {
     return FavoriteModel(
       id: id ?? this.id,
@@ -57,7 +57,7 @@ class FavoriteModel {
       translatedWordId: translatedWordId ?? this.translatedWordId,
       createdAt: createdAt ?? this.createdAt,
       deletedAt: deletedAt ?? this.deletedAt,
-      translatedWord: translatedWord ?? this.translatedWord,
+      word: word ?? this.word,
     );
   }
 
@@ -68,7 +68,7 @@ class FavoriteModel {
       translatedWordId: translatedWordId,
       createdAt: createdAt,
       deletedAt: deletedAt,
-      translatedWord: translatedWord.toEntity(),
+      word: word.toEntity(),
     );
   }
 }

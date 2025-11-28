@@ -4,11 +4,12 @@ enum FavoriteStatus {
   initial,
   loading,
   success,
+  empty,
   error,
 }
 
 enum FavoriteActionStatus {
-  initial,
+  idle,
   loading,
   added,
   removed,
@@ -22,7 +23,7 @@ class FavoritesState {
 
   FavoritesState({
     this.status = FavoriteStatus.initial,
-    this.actionStatus = FavoriteActionStatus.initial,
+    this.actionStatus = FavoriteActionStatus.idle,
     this.favorites = const [],
   });
 
