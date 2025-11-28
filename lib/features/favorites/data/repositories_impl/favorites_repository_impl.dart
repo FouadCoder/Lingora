@@ -1,10 +1,10 @@
 import 'package:lingora/features/favorites/data/datasources/favorites_remote_data.dart';
 import 'package:lingora/features/favorites/data/models/favorite_model.dart';
 import 'package:lingora/features/favorites/domain/entities/favorite_entity.dart';
-import 'package:lingora/features/favorites/domain/repositories/favorites_repositories.dart';
+import 'package:lingora/features/favorites/domain/repositories/favorites_repository.dart';
 import 'package:lingora/features/favorites/domain/usecases/favorites_params.dart';
 
-class FavoritesRepositoryImpl implements FavoritesRepositories {
+class FavoritesRepositoryImpl implements FavoritesRepository {
   final FavoritesRemoteData favoritesRemoteData;
 
   FavoritesRepositoryImpl(this.favoritesRemoteData);

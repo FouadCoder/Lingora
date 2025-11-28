@@ -8,6 +8,13 @@ import 'package:lingora/features/analytics/domain/repositories/analytics_reposit
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/favorites/data/datasources/favorites_remote_data.dart';
+import 'package:lingora/features/favorites/data/repositories_impl/favorites_repository_impl.dart';
+import 'package:lingora/features/favorites/domain/repositories/favorites_repository.dart';
+import 'package:lingora/features/favorites/domain/usecases/add_to_favorites_usecase.dart';
+import 'package:lingora/features/favorites/domain/usecases/get_favorites_usecase.dart';
+import 'package:lingora/features/favorites/domain/usecases/remove_from_favorites_usecase.dart';
+import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:lingora/features/history/data/datasources/history_remote_data.dart';
 import 'package:lingora/features/history/data/repositories_impl/history_repository_impl.dart';
 import 'package:lingora/features/history/domain/repositories/history_repository.dart';
@@ -60,6 +67,7 @@ Future<void> setupInjection() async {
   injection.registerSingleton(AnalyticsRemoteData(injection()));
   injection.registerSingleton(HistoryRemoteData(injection()));
   injection.registerSingleton(SettingsLocalData());
+  injection.registerSingleton(FavoritesRemoteData(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
@@ -74,6 +82,8 @@ Future<void> setupInjection() async {
       () => HistoryRepositoryImpl(injection()));
   injection.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(injection()));
+  injection.registerLazySingleton<FavoritesRepository>(
+      () => FavoritesRepositoryImpl(injection()));
 
   // Services
   injection.registerLazySingleton(() => AudioService());
@@ -99,6 +109,10 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => GetThemeUsecase(injection()));
   // Audio
   injection.registerFactory(() => PlayAudioUsecase(injection()));
+  // Favorites
+  injection.registerFactory(() => AddToFavoritesUsecase(injection()));
+  injection.registerFactory(() => RemoveFromFavoritesUsecase(injection()));
+  injection.registerFactory(() => GetFavoritesUsecase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -111,4 +125,6 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => HistoryCubit(injection(), injection()));
   injection.registerFactory(() => LanguageCubit(injection(), injection()));
   injection.registerFactory(() => ThemeCubit(injection(), injection()));
+  injection.registerFactory(
+      () => FavoritesCubit(injection(), injection(), injection(), injection()));
 }
