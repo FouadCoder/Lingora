@@ -1,3 +1,4 @@
+import 'package:lingora/features/favorites/data/models/favorite_model.dart';
 import 'package:lingora/features/favorites/domain/usecases/favorites_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -7,8 +8,8 @@ class FavoritesRemoteData {
   FavoritesRemoteData(this.supabaseClient);
 
   // Get favorites
-  Future getFavorites(FavoritesParams params) async {
-    await supabaseClient
+  Future<List<FavoriteModel>> getFavorites(FavoritesParams params) async {
+    final data = await supabaseClient
         .from('favorites')
         .select('''
             *,
@@ -17,6 +18,11 @@ class FavoritesRemoteData {
         .eq('user_id', params.userId)
         .isFilter('deleted_at', null)
         .order('created_at', ascending: false);
+
+    List<FavoriteModel> favorites =
+        data.map((e) => FavoriteModel.fromJson(e)).toList();
+
+    return favorites;
   }
 
   // Add to favorites
