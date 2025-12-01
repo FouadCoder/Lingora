@@ -4,8 +4,14 @@ import 'package:lingora/core/utils/app_constants.dart';
 class IconCard extends StatelessWidget {
   final IconData icon;
   final Color? background;
+  final Color? iconColor;
   final VoidCallback? onTap;
-  const IconCard({super.key, required this.icon, this.background, this.onTap});
+  const IconCard(
+      {super.key,
+      required this.icon,
+      this.background,
+      this.onTap,
+      this.iconColor});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class IconCard extends StatelessWidget {
             color: background ?? Theme.of(context).colorScheme.onSurface),
         child: Icon(
           icon,
-          color: Theme.of(context).colorScheme.primary,
+          color: iconColor ?? Theme.of(context).colorScheme.primary,
           size: AppDimens.iconL,
         ),
       ),

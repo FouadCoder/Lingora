@@ -16,4 +16,22 @@ class FavoriteEntity {
     this.deletedAt,
     required this.word,
   });
+
+  FavoriteEntity copyWith({
+    String? id,
+    String? userId,
+    String? translatedWordId,
+    DateTime? createdAt,
+    DateTime? deletedAt,
+    WordEntity? word,
+  }) {
+    return FavoriteEntity(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      translatedWordId: translatedWordId ?? this.translatedWordId,
+      createdAt: createdAt ?? this.createdAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      word: word ?? this.word,
+    );
+  }
 }

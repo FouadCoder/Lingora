@@ -22,6 +22,7 @@ class WordModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
+  final bool isFavorite;
 
   const WordModel({
     this.id,
@@ -41,6 +42,7 @@ class WordModel {
     required this.updatedAt,
     required this.createdAt,
     this.deletedAt,
+    this.isFavorite = false,
   });
 
   factory WordModel.fromJson(Map<String, dynamic> json) {
@@ -73,6 +75,10 @@ class WordModel {
               : CollectionModel.fromJson(
                   json['collections'] as Map<String, dynamic>))
           : CollectionModel.empty(),
+      isFavorite:
+          json['favorites'] != null && (json['favorites'] as List).isNotEmpty
+              ? true
+              : false,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null
@@ -98,6 +104,7 @@ class WordModel {
       translateTo: translateTo,
       note: note.toEntity(),
       collection: collection.toEntity(),
+      isFavorite: isFavorite,
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,
@@ -121,6 +128,7 @@ class WordModel {
       translateTo: LanguageData.getLanguageByCode("ar"),
       note: NoteModel.empty(),
       collection: CollectionModel.empty(),
+      isFavorite: false,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       deletedAt: null,

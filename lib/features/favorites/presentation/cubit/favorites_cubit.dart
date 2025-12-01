@@ -44,11 +44,17 @@ class FavoritesCubit extends Cubit<FavoritesState> {
         return;
       }
 
+      for (var item in favorites) {
+        print(
+            "Favorites ================================== ${item.word.isFavorite}");
+      }
+
       emit(state.copyWith(
           status: FavoriteStatus.success,
           favorites: favorites,
           offset: favorites.length));
-    } catch (_) {
+    } catch (e) {
+      print("Error ======================= favorites $e");
       emit(state.copyWith(status: FavoriteStatus.error));
     }
   }
@@ -75,11 +81,22 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   // Add to favorites
   void addToFavorites(String wordId) async {
     try {
+      print("Add to favorites ========================= start");
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
       await addToFavoritesUsecase
           .call(FavoritesParams(userId: _userId, wordId: wordId));
-      emit(state.copyWith(actionStatus: FavoriteActionStatus.added));
-    } catch (_) {
+
+      emit(state.copyWith(
+        actionStatus: FavoriteActionStatus.added,
+        favorites: state.favorites.map((f) {
+          if (f.word.id == wordId) {
+            return f.copyWith(word: f.word.copyWith(isFavorite: true));
+          }
+          return f;
+        }).toList(),
+      ));
+    } catch (e) {
+      print("Error add to favorites =============== $e");
       emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
     }
   }
