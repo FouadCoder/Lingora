@@ -22,9 +22,6 @@ class LibraryRemoteData {
 
     List<WordModel> words = data.map((e) => WordModel.fromJson(e)).toList();
 
-    for (var item in data) {
-      print("Item =================== $item");
-    }
     return words;
   }
 

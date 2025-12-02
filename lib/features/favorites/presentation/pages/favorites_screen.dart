@@ -92,8 +92,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   mainAxisSpacing: AppDimens.cardBetween,
                   itemBuilder: (context, index) {
                     if (index < state.favorites.length) {
-                      print(
-                          "Is Fav ====================== ${state.favorites[index].word.isFavorite}");
                       return WordCard(word: state.favorites[index].word);
                     }
                     return LibraryLoadingCard();
