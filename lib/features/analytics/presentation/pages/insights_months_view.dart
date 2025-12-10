@@ -29,8 +29,7 @@ class InsightsDetailsScreen extends StatelessWidget {
           children: [
             MasonryGridView.builder(
               shrinkWrap: true,
-              physics:
-                  const NeverScrollableScrollPhysics(), // so it fits inside scroll
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: 12,
               gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: getCrossAxisCount(),
@@ -54,12 +53,16 @@ class InsightsDetailsScreen extends StatelessWidget {
                 final contributions = monthEntries
                     .map((e) => ContributionEntry(e.date, e.totalTranslations))
                     .toList();
+
+                double screenWidth = MediaQuery.of(context).size.width;
+                double cellSize =
+                    AppPlatform.isPhone(context) ? screenWidth / 15 : 40;
                 return HeatmapCard(
                   minDate: minDate,
                   maxDate: maxDate,
                   totalTranslations: 0,
                   activeDays: 0,
-                  cellSize: 50,
+                  cellSize: cellSize,
                   entries: contributions,
                 );
               },
