@@ -8,24 +8,33 @@ class UserAnalyticsState {
   final UserAnalyticsRequestStatus userAnalyticsStatus;
   final UserAnalyticsEntity? userAnalytics;
   final Map<int, Map<String, List<DailyActivityEntity>>>? dailyActivity;
-  const UserAnalyticsState({
-    this.dailyActivityStatus = UserAnalyticsRequestStatus.initial,
-    this.userAnalyticsStatus = UserAnalyticsRequestStatus.initial,
-    this.userAnalytics,
-    this.dailyActivity,
-  });
+  final DateTime? lastDailyActivityDateFetch;
+  final DateTime? lastUserAnalyticsDateFetch;
+  const UserAnalyticsState(
+      {this.dailyActivityStatus = UserAnalyticsRequestStatus.initial,
+      this.userAnalyticsStatus = UserAnalyticsRequestStatus.initial,
+      this.userAnalytics,
+      this.dailyActivity,
+      this.lastDailyActivityDateFetch,
+      this.lastUserAnalyticsDateFetch});
 
   UserAnalyticsState copyWith({
     UserAnalyticsRequestStatus? dailyActivityStatus,
     UserAnalyticsRequestStatus? userAnalyticsStatus,
     UserAnalyticsEntity? userAnalytics,
     Map<int, Map<String, List<DailyActivityEntity>>>? dailyActivity,
+    DateTime? lastDailyActivityDateFetch,
+    DateTime? lastUserAnalyticsDateFetch,
   }) {
     return UserAnalyticsState(
       dailyActivityStatus: dailyActivityStatus ?? this.dailyActivityStatus,
       userAnalyticsStatus: userAnalyticsStatus ?? this.userAnalyticsStatus,
       userAnalytics: userAnalytics ?? this.userAnalytics,
       dailyActivity: dailyActivity ?? this.dailyActivity,
+      lastDailyActivityDateFetch:
+          lastDailyActivityDateFetch ?? this.lastDailyActivityDateFetch,
+      lastUserAnalyticsDateFetch:
+          lastUserAnalyticsDateFetch ?? this.lastUserAnalyticsDateFetch,
     );
   }
 }
