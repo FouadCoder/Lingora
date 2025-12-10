@@ -64,7 +64,8 @@ Future<void> setupInjection() async {
   injection.registerSingleton(LibraryRemoteData(injection()));
   injection.registerSingleton(LibraryLocalData());
   injection.registerSingleton(NotesRemoteData(injection()));
-  injection.registerSingleton(AnalyticsRemoteData(injection()));
+  injection.registerLazySingleton<AnalyticsRemoteData>(
+      () => AnalyticsRemoteDataImpl(injection()));
   injection.registerSingleton(HistoryRemoteData(injection()));
   injection.registerSingleton(SettingsLocalData());
   injection.registerSingleton(FavoritesRemoteData(injection()));
