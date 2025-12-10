@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
+import 'package:lingora/features/favorites/presentation/cubit/favorites_state.dart';
+import 'package:lingora/features/library/presentation/widgets/word_card.dart';
+import 'package:lingora/features/library/presentation/widgets/word_card_loading.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -18,10 +20,18 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     context.read<FavoritesCubit>().getFavorites();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 600) {
+        context.read<FavoritesCubit>().loadMoreFavorites();
+      }
+    });
   }
 
   int getCrossAxisCount() {
@@ -35,7 +45,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Widget build(BuildContext context) {
     return BlocListener<FavoritesCubit, FavoritesState>(
       listenWhen: (previous, current) =>
-          current.actionStatus != FavoritesActionStatus.idle,
+          current.actionStatus != FavoriteActionStatus.idle,
       listener: (context, state) {
         // Erorr
         showSnackBar(
@@ -50,50 +60,58 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         body: AppContainer(
           child: BlocBuilder<FavoritesCubit, FavoritesState>(
             builder: (context, state) {
-              // Loading state
-              if (state.status == FavoritesStatus.loading) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.80,
-                  child: CustomState(
-                    animation: "assets/animation/loading_star.json",
-                    title: "",
-                    message: "loading_favorites".tr(),
-                  ),
-                );
-              }
-
-              // Success state
-              else if (state.status == FavoritesStatus.success) {
+              // Loading
+              if (state.status == FavoriteStatus.loading) {
                 return MasonryGridView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
-                  itemCount: state.favorites.length,
+                  itemCount: 8,
                   gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: getCrossAxisCount(),
                   ),
                   crossAxisSpacing: AppDimens.cardBetween,
                   mainAxisSpacing: AppDimens.cardBetween,
                   itemBuilder: (context, index) {
-                    return Container(); // TODO FIX THIS LATER
-                    // return WordCard(
-                    //     word: state.favorites[index].translatedWord!);
+                    return LibraryLoadingCard();
+                  },
+                );
+              }
+
+              // Success
+              else if (state.status == FavoriteStatus.success) {
+                return MasonryGridView.builder(
+                  controller: _scrollController,
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount:
+                      state.favorites.length + (state.isLoadingMore ? 6 : 0),
+                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: getCrossAxisCount(),
+                  ),
+                  crossAxisSpacing: AppDimens.cardBetween,
+                  mainAxisSpacing: AppDimens.cardBetween,
+                  itemBuilder: (context, index) {
+                    if (index < state.favorites.length) {
+                      return WordCard(word: state.favorites[index].word);
+                    }
+                    return LibraryLoadingCard();
                   },
                 );
               }
 
               // Empty
-              else if (state.status == FavoritesStatus.empty) {
+              else if (state.status == FavoriteStatus.empty) {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 0.80,
                   child: CustomState(
-                      animation: "assets/animation/empty_box_character.json",
+                      animation: "assets/animation/cat_sleep_orange.json",
                       title: 'empty_favorites_title'.tr(),
                       message: 'empty_favorites_message'.tr()),
                 );
               }
 
               // Error
-              else if (state.status == FavoritesStatus.failure) {
+              else if (state.status == FavoriteStatus.error) {
                 return CustomState(
                   textColor: Colors.white,
                   color: Theme.of(context).colorScheme.secondary,

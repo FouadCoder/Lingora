@@ -15,8 +15,11 @@ class WordTranslatedCard extends StatelessWidget {
   final String translated;
   final String lang;
 
-  const WordTranslatedCard(
-      {super.key, required this.translated, required this.lang});
+  const WordTranslatedCard({
+    super.key,
+    required this.translated,
+    required this.lang,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,10 @@ class WordTranslatedCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    IconCard(icon: Icons.favorite),
+                    // HeartIconWidget(
+                    //   isFavorite: isFavorite,
+                    //   wordId: wordId,
+                    // ),
                     SizedBox(
                       width: AppDimens.buttonTagHorizontal,
                     ),

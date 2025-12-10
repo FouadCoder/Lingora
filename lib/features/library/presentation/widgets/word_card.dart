@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
+import 'package:lingora/features/favorites/presentation/widgets/heart_icon_widget.dart';
 import 'package:lingora/features/library/domain/entities/word_entity.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
@@ -25,7 +26,14 @@ class WordCard extends StatefulWidget {
 }
 
 class _WordCardState extends State<WordCard> {
-  bool isFavorite = false;
+  late bool isFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorite = widget.word.isFavorite;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
@@ -92,12 +100,14 @@ class _WordCardState extends State<WordCard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          //  Heart & sound
-                          IconCard(
-                            icon: Icons.favorite,
-                            onTap: () {},
+                          //  Heart
+                          HeartIconWidget(
+                            isFavorite: widget.word.isFavorite,
+                            wordId: widget.word.id,
                           ),
+
                           SizedBox(width: AppDimens.buttonTagHorizontal),
+                          // Sound
                           IconCard(
                             icon: Icons.volume_up,
                             onTap: () {

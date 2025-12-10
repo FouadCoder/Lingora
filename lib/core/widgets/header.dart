@@ -14,7 +14,10 @@ class Header extends StatelessWidget {
           padding: EdgeInsets.all(4),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.07)),
+              color: Theme.of(context)
+                  .colorScheme
+                  .secondary
+                  .withValues(alpha: 0.07)),
           child: Icon(
             icon,
             color: Theme.of(context).colorScheme.secondary,

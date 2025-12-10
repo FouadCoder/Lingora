@@ -15,12 +15,13 @@ class LibraryRemoteData {
   Future<List<WordModel>> getLibrary(LibraryParams params) async {
     final List<Map<String, dynamic>> data = await supabaseClient
         .from('translated_words')
-        .select('* , notes(*) , collections(*)')
+        .select('* , notes(*) , collections(*) , favorites(*)')
         .eq('user_id', _userId)
-        .isFilter('deleted_at', null)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
+
     List<WordModel> words = data.map((e) => WordModel.fromJson(e)).toList();
+
     return words;
   }
 

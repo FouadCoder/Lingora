@@ -135,10 +135,11 @@
     "analytics_error_title": "Well, this is awkward…",
     "analytics_error_messages": "We couldn’t load your analysis right now. Don’t worry — your progress is safe!",
     "word_added_to_collection": "Word added to collection!",
-    "word_added_to_favorites": "Word added to favorites!",
     "something_went_wrong": "Something went wrong!",
     "note_saved": "Your note has been saved!",
     "loading_analytics": "Loading your analytics...",
     "language": "Language",
-    "app_language": "App language"
+    "app_language": "App language",
+    "word_added_to_favorites": "Word added to your favorites!"
+
 }

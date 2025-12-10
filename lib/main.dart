@@ -5,6 +5,7 @@ import 'package:lingora/config/theme/light_theme.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
@@ -55,14 +56,14 @@ class MyApp extends StatelessWidget {
               create: (context) => injection<LanguageCubit>()), // Language
           BlocProvider<ThemeCubit>(
               create: (context) => injection<ThemeCubit>()), // Theme
+          BlocProvider<FavoritesCubit>(
+              create: (context) => injection<FavoritesCubit>()), // Favorites
 
           //TODO adjust the cuibits below
           BlocProvider<AuthAppCubit>(
             create: (context) => AuthAppCubit()..launch(),
             lazy: false,
           ), // Auth
-          BlocProvider<FavoritesCubit>(
-              create: (context) => FavoritesCubit()), // Favorites
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
         ],
         child: BlocListener<LanguageCubit, LanguageState>(
