@@ -16,6 +16,16 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
   // Get analysis
   Future<void> getAnalysis() async {
     try {
+      // If data exist on memory
+      if (state.lastUserAnalyticsDateFetch != null) {
+        emit(state.copyWith(
+          userAnalyticsStatus: UserAnalyticsRequestStatus.success,
+          userAnalytics: state.userAnalytics,
+        ));
+        return;
+      }
+
+      // Loading
       emit(state.copyWith(
           userAnalyticsStatus: UserAnalyticsRequestStatus.loading));
 
@@ -29,9 +39,9 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
       final analytics = await getAnalyticsUsecase.call();
 
       emit(state.copyWith(
-        userAnalyticsStatus: UserAnalyticsRequestStatus.success,
-        userAnalytics: analytics,
-      ));
+          userAnalyticsStatus: UserAnalyticsRequestStatus.success,
+          userAnalytics: analytics,
+          lastUserAnalyticsDateFetch: DateTime.now()));
     } catch (e) {
       emit(state.copyWith(
           userAnalyticsStatus: UserAnalyticsRequestStatus.failure));
@@ -41,6 +51,14 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
   // Get daily activity summary
   Future<void> getDailyActivitySummary() async {
     try {
+      // If data exist on memory
+      if (state.lastDailyActivityDateFetch != null) {
+        emit(state.copyWith(
+          dailyActivityStatus: UserAnalyticsRequestStatus.success,
+          dailyActivity: state.dailyActivity,
+        ));
+        return;
+      }
       emit(state.copyWith(
           dailyActivityStatus: UserAnalyticsRequestStatus.loading));
 
@@ -58,6 +76,7 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
       emit(state.copyWith(
         dailyActivityStatus: UserAnalyticsRequestStatus.success,
         dailyActivity: dailyActivitySummary,
+        lastDailyActivityDateFetch: DateTime.now(),
       ));
     } catch (e) {
       emit(state.copyWith(
