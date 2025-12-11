@@ -4,35 +4,38 @@ import 'package:lingora/features/analytics/domain/entities/user_analytics_entity
 enum UserAnalyticsRequestStatus { initial, loading, success, failure }
 
 class UserAnalyticsState {
-  final UserAnalyticsRequestStatus dailyActivityStatus;
+  final UserAnalyticsRequestStatus monthlyActivityStatus;
   final UserAnalyticsRequestStatus userAnalyticsStatus;
   final UserAnalyticsEntity? userAnalytics;
-  final Map<int, List<MonthActivityEntity>>? dailyActivity;
-  final DateTime? lastDailyActivityDateFetch;
+  final Map<int, List<MonthActivityEntity>>? monthlyActivity;
+  final DateTime? lastMonthlyActivityDateFetch;
   final DateTime? lastUserAnalyticsDateFetch;
-  const UserAnalyticsState(
-      {this.dailyActivityStatus = UserAnalyticsRequestStatus.initial,
-      this.userAnalyticsStatus = UserAnalyticsRequestStatus.initial,
-      this.userAnalytics,
-      this.dailyActivity,
-      this.lastDailyActivityDateFetch,
-      this.lastUserAnalyticsDateFetch});
+
+  const UserAnalyticsState({
+    this.monthlyActivityStatus = UserAnalyticsRequestStatus.initial,
+    this.userAnalyticsStatus = UserAnalyticsRequestStatus.initial,
+    this.userAnalytics,
+    this.monthlyActivity,
+    this.lastMonthlyActivityDateFetch,
+    this.lastUserAnalyticsDateFetch,
+  });
 
   UserAnalyticsState copyWith({
-    UserAnalyticsRequestStatus? dailyActivityStatus,
+    UserAnalyticsRequestStatus? monthlyActivityStatus,
     UserAnalyticsRequestStatus? userAnalyticsStatus,
     UserAnalyticsEntity? userAnalytics,
-    Map<int, List<MonthActivityEntity>>? dailyActivity,
-    DateTime? lastDailyActivityDateFetch,
+    Map<int, List<MonthActivityEntity>>? monthlyActivity,
+    DateTime? lastMonthlyActivityDateFetch,
     DateTime? lastUserAnalyticsDateFetch,
   }) {
     return UserAnalyticsState(
-      dailyActivityStatus: dailyActivityStatus ?? this.dailyActivityStatus,
+      monthlyActivityStatus:
+          monthlyActivityStatus ?? this.monthlyActivityStatus,
       userAnalyticsStatus: userAnalyticsStatus ?? this.userAnalyticsStatus,
       userAnalytics: userAnalytics ?? this.userAnalytics,
-      dailyActivity: dailyActivity ?? this.dailyActivity,
-      lastDailyActivityDateFetch:
-          lastDailyActivityDateFetch ?? this.lastDailyActivityDateFetch,
+      monthlyActivity: monthlyActivity ?? this.monthlyActivity,
+      lastMonthlyActivityDateFetch:
+          lastMonthlyActivityDateFetch ?? this.lastMonthlyActivityDateFetch,
       lastUserAnalyticsDateFetch:
           lastUserAnalyticsDateFetch ?? this.lastUserAnalyticsDateFetch,
     );
