@@ -1,8 +1,8 @@
-import 'package:lingora/features/notes/domain/usecases/notes_params.dart';
 import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/notes_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class WordsRemoteData {
