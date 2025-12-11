@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/features/analytics/domain/entities/daily_activity_entity.dart';
 import 'package:lingora/features/analytics/domain/entities/month_activity_entity.dart';
 import 'package:lingora/features/analytics/domain/repositories/analytics_repository.dart';
@@ -11,37 +10,45 @@ class GetDailyActivityUsercase {
 
   Future<Map<int, List<MonthActivityEntity>>> call(
       AnalyticsParams params) async {
-    final data = await analyticsRepository.getDailyActivitySummary(params);
+    final rawData = await analyticsRepository.getDailyActivitySummary(params);
 
-    // year → month → list of DailyActivityEntity
-    final Map<int, Map<String, List<DailyActivityEntity>>> grouped = {};
-
-    for (var element in data) {
-      final year = element.date.year;
-      final monthName =
-          DateFormat.MMMM().format(element.date); // January, February...
-
+    // Group by year → month
+    final Map<int, Map<int, List<DailyActivityEntity>>> grouped = {};
+    for (var item in rawData) {
+      final year = item.date.year;
+      final month = item.date.month;
       grouped[year] ??= {};
-      grouped[year]![monthName] ??= [];
-      grouped[year]![monthName]!.add(element);
+      grouped[year]![month] ??= [];
+      grouped[year]![month]!.add(item);
     }
 
-    // Now convert to MonthActivityEntity structure
+    // Ensure all 12 months exist
     final Map<int, List<MonthActivityEntity>> result = {};
-
     grouped.forEach((year, monthsMap) {
-      result[year] = monthsMap.entries.map((entry) {
-        final month = entry.key;
-        final dailyActivities = entry.value;
-
+      result[year] = List.generate(12, (i) {
+        final monthNum = i + 1;
+        final dailyActivities = monthsMap[monthNum] ?? [];
         return MonthActivityEntity(
-          month: month,
+          month: DateTime(year, monthNum),
           activeDays: dailyActivities.length,
           totalTranslations:
               dailyActivities.fold(0, (sum, e) => sum + e.totalTranslations),
           dailyActivities: dailyActivities,
         );
-      }).toList();
+      });
+    });
+
+    // Print all data for testing
+    result.forEach((year, months) {
+      print(" ================ Year: $year");
+      for (var month in months) {
+        print(
+            " ================ Month: ${month.month.month} - Active Days: ${month.activeDays} - Total Translations: ${month.totalTranslations}");
+        for (var daily in month.dailyActivities) {
+          print(
+              " ================ Daily: ${daily.date.toIso8601String()} - Translations: ${daily.totalTranslations}");
+        }
+      }
     });
 
     return result;
