@@ -4,10 +4,17 @@ import 'package:lingora/features/words/domain/usecases/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class LibraryRemoteData {
+abstract class WordsRemoteData {
+  Future<List<WordModel>> getLibrary(LibraryParams params);
+  Future<List<WordModel>> getLibraryCollectionWords(LibraryParams params);
+  Future<List<CollectionModel>> getCollections();
+  Future<void> updateWordCollection(CollectionsParams params);
+}
+
+class WordsRemoteDataImpl implements WordsRemoteData {
   final SupabaseClient supabaseClient;
 
-  LibraryRemoteData(this.supabaseClient);
+  WordsRemoteDataImpl(this.supabaseClient);
 
   String get _userId => supabaseClient.auth.currentUser!.id;
 

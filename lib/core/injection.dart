@@ -21,7 +21,7 @@ import 'package:lingora/features/history/domain/repositories/history_repository.
 import 'package:lingora/features/history/domain/usecases/fetch_history_usecase.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/words/data/datasources/library_local_data.dart';
-import 'package:lingora/features/words/data/datasources/library_remote_data.dart';
+import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/data/repositories_impl/library_repository_impl.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/get_library_usecase.dart';
@@ -61,7 +61,8 @@ Future<void> setupInjection() async {
 
   // Database
   injection.registerSingleton(TranslateRemoteData(injection()));
-  injection.registerSingleton(LibraryRemoteData(injection()));
+  injection.registerLazySingleton<WordsRemoteData>(
+      () => WordsRemoteDataImpl(injection()));
   injection.registerSingleton(LibraryLocalData());
   injection.registerSingleton(NotesRemoteData(injection()));
   injection.registerLazySingleton<AnalyticsRemoteData>(

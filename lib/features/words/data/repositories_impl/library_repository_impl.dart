@@ -2,19 +2,19 @@ import 'package:lingora/features/words/data/datasources/library_local_data.dart'
 import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
-import 'package:lingora/features/words/data/datasources/library_remote_data.dart';
+import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
 
 class LibraryRepositoryImpl implements LibraryRepository {
-  final LibraryRemoteData libraryRemoteData;
+  final WordsRemoteData wordsRemoteData;
   final LibraryLocalData libraryLocalData;
-  LibraryRepositoryImpl(this.libraryRemoteData, this.libraryLocalData);
+  LibraryRepositoryImpl(this.wordsRemoteData, this.libraryLocalData);
 
   @override
   Future<List<WordEntity>> getLibrary(LibraryParams params) async {
-    List<WordModel> libraryWords = await libraryRemoteData.getLibrary(params);
+    List<WordModel> libraryWords = await wordsRemoteData.getLibrary(params);
     List<WordEntity> libraryWordsEntity =
         libraryWords.map((e) => e.toEntity()).toList();
     return libraryWordsEntity;
@@ -31,7 +31,7 @@ class LibraryRepositoryImpl implements LibraryRepository {
 
     // Get from server if last updated time was more than 7 days
     if (isRequestFromServer) {
-      collectionsModel = await libraryRemoteData.getCollections();
+      collectionsModel = await wordsRemoteData.getCollections();
     } else {
       collectionsModel = await libraryLocalData.getCollections();
     }
@@ -55,7 +55,7 @@ class LibraryRepositoryImpl implements LibraryRepository {
       throw Exception("Collection not found");
     }
     // Update word collection
-    await libraryRemoteData.updateWordCollection(CollectionsParams(
+    await wordsRemoteData.updateWordCollection(CollectionsParams(
         collectionId: collectionId,
         wordId: params.wordId,
         collectionName: params.collectionName));
