@@ -26,9 +26,9 @@ import 'package:lingora/features/words/data/repositories_impl/library_repository
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/get_library_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/update_word_collection_usecase.dart';
-import 'package:lingora/features/words/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/notes/domain/usecases/update_note_usecase.dart';
-import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/notes/notes_cubit.dart';
 import 'package:lingora/features/settings/data/datasources/settings_local_data.dart';
 import 'package:lingora/features/settings/data/repositories_impl/settings_repository_impl.dart';
 import 'package:lingora/features/settings/domain/repositories/settings_repository.dart';

@@ -8,7 +8,7 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
-import 'package:lingora/features/words/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/pages/word_details_screen.dart';
 
 class WordCard extends StatefulWidget {

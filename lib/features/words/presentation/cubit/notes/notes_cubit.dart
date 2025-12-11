@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/features/notes/domain/usecases/notes_params.dart';
 import 'package:lingora/features/notes/domain/usecases/update_note_usecase.dart';
-import 'package:lingora/features/notes/presentation/cubit/notes_state.dart';
+import 'package:lingora/features/words/presentation/cubit/notes/notes_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NotesCubit extends Cubit<NotesState> {

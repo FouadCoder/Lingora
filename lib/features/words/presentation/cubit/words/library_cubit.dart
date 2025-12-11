@@ -5,7 +5,7 @@ import 'package:lingora/features/words/domain/usecases/params/collections_params
 import 'package:lingora/features/words/domain/usecases/get_library_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
 import 'package:lingora/features/words/domain/usecases/update_word_collection_usecase.dart';
-import 'package:lingora/features/words/presentation/cubit/library_state.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LibraryCubit extends Cubit<LibraryState> {

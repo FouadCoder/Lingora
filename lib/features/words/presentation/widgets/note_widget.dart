@@ -8,8 +8,8 @@ import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/core/widgets/textfield.dart';
 import 'package:lingora/features/notes/domain/entities/note_entity.dart';
-import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
-import 'package:lingora/features/notes/presentation/cubit/notes_state.dart';
+import 'package:lingora/features/words/presentation/cubit/notes/notes_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/notes/notes_state.dart';
 
 class LibraryNotes extends StatefulWidget {
   final NoteEntity noteEntity;

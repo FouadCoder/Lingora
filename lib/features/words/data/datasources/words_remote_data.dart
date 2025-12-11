@@ -10,6 +10,7 @@ abstract class WordsRemoteData {
   Future<List<WordModel>> getLibraryCollectionWords(LibraryParams params);
   Future<List<CollectionModel>> getCollections();
   Future<void> updateWordCollection(CollectionsParams params);
+  Future<void> updateNote(NotesParams params);
 }
 
 class WordsRemoteDataImpl implements WordsRemoteData {
@@ -73,6 +74,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   }
 
   // Update note
+  @override
   Future updateNote(NotesParams params) async {
     await supabaseClient.from('notes').upsert(
       {
