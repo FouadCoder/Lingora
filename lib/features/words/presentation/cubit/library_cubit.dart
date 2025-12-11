@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
-import 'package:lingora/features/words/domain/usecases/collections_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/get_library_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
 import 'package:lingora/features/words/domain/usecases/update_word_collection_usecase.dart';

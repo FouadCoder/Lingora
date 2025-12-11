@@ -4,7 +4,7 @@ import 'package:lingora/features/words/data/models/word_model.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
-import 'package:lingora/features/words/domain/usecases/collections_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
 
 class LibraryRepositoryImpl implements LibraryRepository {

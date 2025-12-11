@@ -1,6 +1,7 @@
+import 'package:lingora/features/notes/domain/usecases/notes_params.dart';
 import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
-import 'package:lingora/features/words/domain/usecases/collections_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,6 +20,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   String get _userId => supabaseClient.auth.currentUser!.id;
 
   // Get library words
+  @override
   Future<List<WordModel>> getLibrary(LibraryParams params) async {
     final List<Map<String, dynamic>> data = await supabaseClient
         .from('translated_words')
@@ -33,6 +35,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   }
 
   // Get library collection words
+  @override
   Future<List<WordModel>> getLibraryCollectionWords(
       LibraryParams params) async {
     final List<Map<String, dynamic>> data = await supabaseClient
@@ -48,6 +51,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   }
 
   // Get collections IDS
+  @override
   Future<List<CollectionModel>> getCollections() async {
     final List<Map<String, dynamic>> data = await supabaseClient
         .from('collections')
@@ -61,9 +65,22 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   }
 
   // Update word collection
+  @override
   Future<void> updateWordCollection(CollectionsParams params) async {
     await supabaseClient.from('translated_words').update({
       'collection_id': params.collectionId,
     }).eq('id', params.wordId);
+  }
+
+  // Update note
+  Future updateNote(NotesParams params) async {
+    await supabaseClient.from('notes').upsert(
+      {
+        'user_id': params.userId,
+        'word_id': params.wordId,
+        'content': params.content,
+      },
+      onConflict: "word_id",
+    );
   }
 }

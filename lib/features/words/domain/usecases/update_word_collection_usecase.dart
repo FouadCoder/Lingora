@@ -1,5 +1,5 @@
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
-import 'package:lingora/features/words/domain/usecases/collections_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 
 class UpdateWordCollectionUsecase {
   final LibraryRepository libraryRepository;
