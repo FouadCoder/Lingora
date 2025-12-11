@@ -8,6 +8,7 @@ import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_state.dart';
 import 'package:lingora/features/analytics/presentation/widgets/heatmap_card.dart';
+import 'package:lingora/features/analytics/domain/entities/month_activity_entity.dart';
 
 class InsightsHeatmapWidget extends StatefulWidget {
   const InsightsHeatmapWidget({super.key});
@@ -22,94 +23,117 @@ class _InsightsHeatmapWidgetState extends State<InsightsHeatmapWidget> {
     return BlocBuilder<AnalyticsCubit, UserAnalyticsState>(
       builder: (context, state) {
         // Loading
-        if (state.dailyActivityStatus == UserAnalyticsRequestStatus.loading) {
+        if (state.monthlyActivityStatus == UserAnalyticsRequestStatus.loading) {
           return CustomState(
-              animation: 'assets/animation/loading_star.json',
-              title: '',
-              message: 'loading_analytics'.tr());
-        }
-
-        // Success
-        if (state.dailyActivityStatus == UserAnalyticsRequestStatus.success) {
-          final dailyActivity = state.dailyActivity;
-          return Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${"activity_in".tr()} 2025",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.start,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      context.push('/analysis/details', extra: dailyActivity);
-                    },
-                    child: Text(
-                      "see_details".tr(),
-                      style: Theme.of(context).textTheme.bodySmall,
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: AppDimens.sectionSpacing,
-              ),
-              // Analytics
-              SizedBox(
-                height: 270,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 12,
-                  itemBuilder: (context, index) {
-                    final now = DateTime.now();
-                    final year = now.year;
-                    final month = index + 1;
-                    final minDate = DateTime(year, month, 1);
-                    final maxDate = DateTime(year, month + 1, 0);
-
-                    // Get month name, e.g., "Nov"
-                    final monthName = DateFormat.MMM().format(minDate);
-
-                    // Get entries for this year & month
-                    final monthEntries = dailyActivity?[year]?[monthName] ?? [];
-
-                    // Convert to ContributionEntry
-                    final contributions = monthEntries
-                        .map((e) =>
-                            ContributionEntry(e.date, e.totalTranslations))
-                        .toList();
-
-                    // Heatmap Card
-                    return Padding(
-                      padding: EdgeInsets.only(right: AppDimens.cardBetween),
-                      child: HeatmapCard(
-                          minDate: minDate,
-                          maxDate: maxDate,
-                          totalTranslations: 0,
-                          activeDays: 0,
-                          cellSize: 20,
-                          cellRadius: 2,
-                          hideDetails: true,
-                          entries: contributions),
-                    );
-                  },
-                ),
-              ),
-            ],
+            animation: 'assets/animation/loading_star.json',
+            title: '',
+            message: 'loading_analytics'.tr(),
           );
         }
 
         // Error
-        if (state.dailyActivityStatus == UserAnalyticsRequestStatus.failure) {
+        if (state.monthlyActivityStatus == UserAnalyticsRequestStatus.failure) {
           return Container();
         }
-        return Container();
+
+        final monthlyActivity = state.monthlyActivity;
+        if (monthlyActivity == null || monthlyActivity.isEmpty) {
+          return Center(child: Text('No analytics available'.tr()));
+        }
+
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: monthlyActivity.keys.length,
+          itemBuilder: (context, yearIndex) {
+            final year = monthlyActivity.keys.elementAt(yearIndex);
+            final months = monthlyActivity[year]!;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${"activity_in".tr()} $year",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        context.push('/analysis/details',
+                            extra: monthlyActivity);
+                      },
+                      child: Text(
+                        "see_details".tr(),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppDimens.sectionSpacing),
+                SizedBox(
+                  height: 270,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 12, // always 12 months
+                    itemBuilder: (context, monthIndex) {
+                      final monthNumber = monthIndex + 1;
+
+                      // Find MonthActivityEntity for this month
+                      final monthData = months.firstWhere(
+                        (m) => m.month.month == monthNumber,
+                        orElse: () => MonthActivityEntity(
+                          month: DateTime(year, monthNumber),
+                          activeDays: 0,
+                          totalTranslations: 0,
+                          dailyActivities: [],
+                        ),
+                      );
+
+                      // Convert daily activities to ContributionEntry
+                      final entries = monthData.dailyActivities
+                          .map((d) =>
+                              ContributionEntry(d.date, d.totalTranslations))
+                          .toList();
+
+                      // min/max dates for this month
+                      final minDate = DateTime(year, monthNumber, 1);
+                      final maxDate = DateTime(
+                        year,
+                        monthNumber + 1,
+                        1,
+                      ).subtract(Duration(days: 1));
+
+                      final totalTranslations =
+                          entries.fold(0, (sum, e) => sum + e.count);
+                      final activeDays = entries.length;
+
+                      return Padding(
+                        padding:
+                            const EdgeInsets.only(right: AppDimens.cardBetween),
+                        child: HeatmapCard(
+                          minDate: minDate,
+                          maxDate: maxDate,
+                          totalTranslations: totalTranslations,
+                          activeDays: activeDays,
+                          cellSize: 20,
+                          cellRadius: 2,
+                          hideDetails: true,
+                          entries: entries,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: AppDimens.sectionSpacing * 2),
+              ],
+            );
+          },
+        );
       },
     );
   }

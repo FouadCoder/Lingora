@@ -33,7 +33,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
             AnalyticeWidget(),
 
             SizedBox(
-              height: AppDimens.sectionBetween,
+              height: AppDimens.sectionSpacing,
             ),
 
             // Heatmap

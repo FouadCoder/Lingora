@@ -1,16 +1,15 @@
 import 'package:contribution_heatmap/contribution_heatmap.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_container.dart';
-import 'package:lingora/features/analytics/domain/entities/daily_activity_entity.dart';
+import 'package:lingora/features/analytics/domain/entities/month_activity_entity.dart';
 import 'package:lingora/features/analytics/presentation/widgets/heatmap_card.dart';
 
 class InsightsDetailsScreen extends StatelessWidget {
-  final Map<int, Map<String, List<DailyActivityEntity>>>? entries;
-  const InsightsDetailsScreen({super.key, required this.entries});
+  final Map<int, List<MonthActivityEntity>>? monthlyActivity;
+  const InsightsDetailsScreen({super.key, required this.monthlyActivity});
 
   @override
   Widget build(BuildContext context) {
@@ -21,55 +20,61 @@ class InsightsDetailsScreen extends StatelessWidget {
       return 1;
     }
 
+    // pick the latest year
+    final latestYear = monthlyActivity!.keys.last;
+    final List<MonthActivityEntity> months = monthlyActivity![latestYear]!;
+
     return Scaffold(
       appBar: AppBar(),
       body: AppContainer(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            MasonryGridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 12,
-              gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: getCrossAxisCount(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              MasonryGridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 12, // always 12 months
+                gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: getCrossAxisCount(),
+                ),
+                crossAxisSpacing: AppDimens.cardBetween,
+                mainAxisSpacing: AppDimens.sectionSpacing,
+                itemBuilder: (context, index) {
+                  final monthEntity = months[index];
+                  final monthNumber = index + 1;
+
+                  // min & max dates for heatmap
+                  final minDate = DateTime(latestYear, monthNumber, 1);
+                  final maxDate = DateTime(latestYear, monthNumber + 1, 1)
+                      .subtract(const Duration(days: 1));
+
+                  // Convert daily entries to ContributionEntry
+                  final List<ContributionEntry> entries =
+                      monthEntity.dailyActivities
+                          .map((daily) => ContributionEntry(
+                                daily.date,
+                                daily.totalTranslations,
+                              ))
+                          .toList();
+
+                  double screenWidth = MediaQuery.of(context).size.width;
+                  double cellSize =
+                      AppPlatform.isPhone(context) ? screenWidth / 15 : 40;
+
+                  return HeatmapCard(
+                    minDate: minDate,
+                    maxDate: maxDate,
+                    totalTranslations: monthEntity.totalTranslations,
+                    activeDays: monthEntity.activeDays,
+                    cellSize: cellSize,
+                    entries: entries,
+                  );
+                },
               ),
-              crossAxisSpacing: AppDimens.cardBetween,
-              mainAxisSpacing: AppDimens.sectionSpacing,
-              itemBuilder: (context, index) {
-                final now = DateTime.now();
-                final year = now.year;
-                final month = index + 1;
-                final minDate = DateTime(year, month, 1);
-                final maxDate = DateTime(year, month + 1, 0);
-
-                // Get month name, e.g., "Nov"
-                final monthName = DateFormat.MMM().format(minDate);
-
-                // Get entries for this year & month
-                final monthEntries = entries?[year]?[monthName] ?? [];
-
-                // Convert to ContributionEntry
-                final contributions = monthEntries
-                    .map((e) => ContributionEntry(e.date, e.totalTranslations))
-                    .toList();
-
-                double screenWidth = MediaQuery.of(context).size.width;
-                double cellSize =
-                    AppPlatform.isPhone(context) ? screenWidth / 15 : 40;
-                return HeatmapCard(
-                  minDate: minDate,
-                  maxDate: maxDate,
-                  totalTranslations: 0,
-                  activeDays: 0,
-                  cellSize: cellSize,
-                  entries: contributions,
-                );
-              },
-            ),
-          ],
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:lingora/features/analytics/domain/entities/daily_activity_entity.dart';
 
 class MonthActivityEntity {
-  final String month;
+  final DateTime month;
   final int activeDays;
   final int totalTranslations;
   final List<DailyActivityEntity> dailyActivities;
