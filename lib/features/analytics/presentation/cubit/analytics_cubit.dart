@@ -16,6 +16,16 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
   // Get analysis
   Future<void> getAnalysis() async {
     try {
+      // If data exist on memory
+      if (state.lastUserAnalyticsDateFetch != null) {
+        emit(state.copyWith(
+          userAnalyticsStatus: UserAnalyticsRequestStatus.success,
+          userAnalytics: state.userAnalytics,
+        ));
+        return;
+      }
+
+      // Loading
       emit(state.copyWith(
           userAnalyticsStatus: UserAnalyticsRequestStatus.loading));
 
@@ -29,9 +39,9 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
       final analytics = await getAnalyticsUsecase.call();
 
       emit(state.copyWith(
-        userAnalyticsStatus: UserAnalyticsRequestStatus.success,
-        userAnalytics: analytics,
-      ));
+          userAnalyticsStatus: UserAnalyticsRequestStatus.success,
+          userAnalytics: analytics,
+          lastUserAnalyticsDateFetch: DateTime.now()));
     } catch (e) {
       emit(state.copyWith(
           userAnalyticsStatus: UserAnalyticsRequestStatus.failure));
@@ -41,13 +51,21 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
   // Get daily activity summary
   Future<void> getDailyActivitySummary() async {
     try {
+      // If data exist on memory
+      if (state.lastMonthlyActivityDateFetch != null) {
+        emit(state.copyWith(
+          monthlyActivityStatus: UserAnalyticsRequestStatus.success,
+          monthlyActivity: state.monthlyActivity,
+        ));
+        return;
+      }
       emit(state.copyWith(
-          dailyActivityStatus: UserAnalyticsRequestStatus.loading));
+          monthlyActivityStatus: UserAnalyticsRequestStatus.loading));
 
       final userId = supabaseClient.auth.currentUser?.id;
       if (userId == null) {
         emit(state.copyWith(
-            dailyActivityStatus: UserAnalyticsRequestStatus.failure));
+            monthlyActivityStatus: UserAnalyticsRequestStatus.failure));
         return;
       }
 
@@ -56,12 +74,13 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
           .call(AnalyticsParams(userId: userId));
 
       emit(state.copyWith(
-        dailyActivityStatus: UserAnalyticsRequestStatus.success,
-        dailyActivity: dailyActivitySummary,
+        monthlyActivityStatus: UserAnalyticsRequestStatus.success,
+        monthlyActivity: dailyActivitySummary,
+        lastMonthlyActivityDateFetch: DateTime.now(),
       ));
     } catch (e) {
       emit(state.copyWith(
-          dailyActivityStatus: UserAnalyticsRequestStatus.failure));
+          monthlyActivityStatus: UserAnalyticsRequestStatus.failure));
     }
   }
 }

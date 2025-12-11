@@ -3,11 +3,20 @@ import 'package:lingora/features/analytics/data/models/user_analytics_model.dart
 import 'package:lingora/features/analytics/domain/usecases/analytics_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AnalyticsRemoteData {
+// Interface
+abstract class AnalyticsRemoteData {
+  Future<UserAnalyticsModel> getAnalytics();
+  Future<List<DailyActivityModel>> getDailyActivitySummary(
+      AnalyticsParams parms);
+}
+
+// Impl
+class AnalyticsRemoteDataImpl implements AnalyticsRemoteData {
   final SupabaseClient supabaseClient;
 
-  AnalyticsRemoteData(this.supabaseClient);
+  AnalyticsRemoteDataImpl(this.supabaseClient);
 
+  @override
   Future<UserAnalyticsModel> getAnalytics() async {
     final userId = supabaseClient.auth.currentUser!.id;
     final response = await supabaseClient
@@ -20,6 +29,7 @@ class AnalyticsRemoteData {
     return UserAnalyticsModel.fromJson(response);
   }
 
+  @override
   Future<List<DailyActivityModel>> getDailyActivitySummary(
       AnalyticsParams params) async {
     final response = await supabaseClient
