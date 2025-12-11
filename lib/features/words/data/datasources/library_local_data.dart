@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:lingora/features/library/data/models/collection_model.dart';
+import 'package:lingora/features/words/data/models/collection_model.dart';
 
 class LibraryLocalData {
   final db = Hive.box("db");

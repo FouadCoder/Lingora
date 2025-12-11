@@ -9,8 +9,8 @@ import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:lingora/features/favorites/presentation/cubit/favorites_state.dart';
-import 'package:lingora/features/library/presentation/widgets/word_card.dart';
-import 'package:lingora/features/library/presentation/widgets/word_card_loading.dart';
+import 'package:lingora/features/words/presentation/widgets/word_card.dart';
+import 'package:lingora/features/words/presentation/widgets/word_card_loading.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});

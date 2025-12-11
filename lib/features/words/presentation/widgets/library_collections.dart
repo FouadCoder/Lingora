@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
-import 'package:lingora/features/library/domain/enums/collection_enum.dart';
+import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 
 class CollectionsLibrary extends StatelessWidget {
   const CollectionsLibrary({super.key});

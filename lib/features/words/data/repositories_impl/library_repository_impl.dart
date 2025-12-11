@@ -1,11 +1,11 @@
-import 'package:lingora/features/library/data/datasources/library_local_data.dart';
-import 'package:lingora/features/library/data/models/collection_model.dart';
-import 'package:lingora/features/library/data/models/word_model.dart';
-import 'package:lingora/features/library/domain/entities/word_entity.dart';
-import 'package:lingora/features/library/data/datasources/library_remote_data.dart';
-import 'package:lingora/features/library/domain/repositories/library_repository.dart';
-import 'package:lingora/features/library/domain/usecases/collections_params.dart';
-import 'package:lingora/features/library/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/data/datasources/library_local_data.dart';
+import 'package:lingora/features/words/data/models/collection_model.dart';
+import 'package:lingora/features/words/data/models/word_model.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
+import 'package:lingora/features/words/data/datasources/library_remote_data.dart';
+import 'package:lingora/features/words/domain/repositories/library_repository.dart';
+import 'package:lingora/features/words/domain/usecases/collections_params.dart';
+import 'package:lingora/features/words/domain/usecases/library_params.dart';
 
 class LibraryRepositoryImpl implements LibraryRepository {
   final LibraryRemoteData libraryRemoteData;

@@ -1,4 +1,4 @@
-import 'package:lingora/features/library/domain/entities/collection_entity.dart';
+import 'package:lingora/features/words/domain/entities/collection_entity.dart';
 
 class CollectionModel {
   final String? id;

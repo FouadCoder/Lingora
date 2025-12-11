@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
-import 'package:lingora/features/library/domain/enums/collection_enum.dart';
-import 'package:lingora/features/library/domain/usecases/collections_params.dart';
-import 'package:lingora/features/library/domain/usecases/get_library_usecase.dart';
-import 'package:lingora/features/library/domain/usecases/library_params.dart';
-import 'package:lingora/features/library/domain/usecases/update_word_collection_usecase.dart';
-import 'package:lingora/features/library/presentation/cubit/library_state.dart';
+import 'package:lingora/features/words/domain/enums/collection_enum.dart';
+import 'package:lingora/features/words/domain/usecases/collections_params.dart';
+import 'package:lingora/features/words/domain/usecases/get_library_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/update_word_collection_usecase.dart';
+import 'package:lingora/features/words/presentation/cubit/library_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LibraryCubit extends Cubit<LibraryState> {

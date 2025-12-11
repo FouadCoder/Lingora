@@ -7,8 +7,8 @@ import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
-import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
-import 'package:lingora/features/library/presentation/widgets/word_collections.dart';
+import 'package:lingora/features/words/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/words/presentation/widgets/word_collections.dart';
 
 // Word translated
 class WordTranslatedCard extends StatelessWidget {

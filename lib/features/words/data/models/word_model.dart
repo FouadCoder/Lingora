@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/features/library/data/models/collection_model.dart';
-import 'package:lingora/features/library/domain/entities/word_entity.dart';
+import 'package:lingora/features/words/data/models/collection_model.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/notes/data/models/note_model.dart';
 
 class WordModel {

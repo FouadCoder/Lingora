@@ -1,7 +1,7 @@
-import 'package:lingora/features/library/data/models/collection_model.dart';
-import 'package:lingora/features/library/data/models/word_model.dart';
-import 'package:lingora/features/library/domain/usecases/collections_params.dart';
-import 'package:lingora/features/library/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/data/models/collection_model.dart';
+import 'package:lingora/features/words/data/models/word_model.dart';
+import 'package:lingora/features/words/domain/usecases/collections_params.dart';
+import 'package:lingora/features/words/domain/usecases/library_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LibraryRemoteData {

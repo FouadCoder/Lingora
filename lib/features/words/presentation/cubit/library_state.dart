@@ -1,4 +1,4 @@
-import 'package:lingora/features/library/domain/entities/word_entity.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
 enum LibraryStatus { initial, loading, success, failure, empty }
 

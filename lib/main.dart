@@ -7,7 +7,7 @@ import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
-import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/library_cubit.dart';
 import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_state.dart';

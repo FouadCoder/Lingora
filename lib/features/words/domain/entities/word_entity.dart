@@ -1,5 +1,5 @@
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/features/library/domain/entities/collection_entity.dart';
+import 'package:lingora/features/words/domain/entities/collection_entity.dart';
 import 'package:lingora/features/notes/domain/entities/note_entity.dart';
 
 class WordEntity {

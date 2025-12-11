@@ -1,5 +1,5 @@
 import 'package:lingora/features/favorites/domain/entities/favorite_entity.dart';
-import 'package:lingora/features/library/data/models/word_model.dart';
+import 'package:lingora/features/words/data/models/word_model.dart';
 
 class FavoriteModel {
   final String id;
