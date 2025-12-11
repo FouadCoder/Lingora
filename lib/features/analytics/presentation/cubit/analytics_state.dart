@@ -1,4 +1,4 @@
-import 'package:lingora/features/analytics/domain/entities/daily_activity_entity.dart';
+import 'package:lingora/features/analytics/domain/entities/month_activity_entity.dart';
 import 'package:lingora/features/analytics/domain/entities/user_analytics_entity.dart';
 
 enum UserAnalyticsRequestStatus { initial, loading, success, failure }
@@ -7,7 +7,7 @@ class UserAnalyticsState {
   final UserAnalyticsRequestStatus dailyActivityStatus;
   final UserAnalyticsRequestStatus userAnalyticsStatus;
   final UserAnalyticsEntity? userAnalytics;
-  final Map<int, Map<String, List<DailyActivityEntity>>>? dailyActivity;
+  final Map<int, List<MonthActivityEntity>>? dailyActivity;
   final DateTime? lastDailyActivityDateFetch;
   final DateTime? lastUserAnalyticsDateFetch;
   const UserAnalyticsState(
@@ -22,7 +22,7 @@ class UserAnalyticsState {
     UserAnalyticsRequestStatus? dailyActivityStatus,
     UserAnalyticsRequestStatus? userAnalyticsStatus,
     UserAnalyticsEntity? userAnalytics,
-    Map<int, Map<String, List<DailyActivityEntity>>>? dailyActivity,
+    Map<int, List<MonthActivityEntity>>? dailyActivity,
     DateTime? lastDailyActivityDateFetch,
     DateTime? lastUserAnalyticsDateFetch,
   }) {
