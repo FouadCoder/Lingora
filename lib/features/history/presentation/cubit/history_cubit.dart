@@ -46,6 +46,13 @@ class HistoryCubit extends Cubit<FetchHistoryState> {
   // Fetch history
   Future<void> fetchHistory() async {
     try {
+      // If already loaded
+      if (state.history.isNotEmpty) {
+        emit(state.copyWith(
+            status: FetchHistoryStatus.success, history: state.history));
+        return;
+      }
+
       emit(state.copyWith(status: FetchHistoryStatus.loading));
 
       // Get history
