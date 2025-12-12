@@ -1,4 +1,5 @@
 import 'package:lingora/features/words/data/models/collection_model.dart';
+import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
@@ -10,7 +11,7 @@ abstract class WordsRemoteData {
   Future<List<WordModel>> getLibraryCollectionWords(LibraryParams params);
   Future<List<CollectionModel>> getCollections();
   Future<void> updateWordCollection(CollectionsParams params);
-  Future<void> updateNote(NotesParams params);
+  Future<NoteModel> updateNote(NotesParams params);
 }
 
 class WordsRemoteDataImpl implements WordsRemoteData {
@@ -75,14 +76,19 @@ class WordsRemoteDataImpl implements WordsRemoteData {
 
   // Update note
   @override
-  Future updateNote(NotesParams params) async {
-    await supabaseClient.from('notes').upsert(
-      {
-        'user_id': params.userId,
-        'word_id': params.wordId,
-        'content': params.content,
-      },
-      onConflict: "word_id",
-    );
+  Future<NoteModel> updateNote(NotesParams params) async {
+    final note = await supabaseClient
+        .from('notes')
+        .upsert(
+          {
+            'user_id': params.userId,
+            'word_id': params.wordId,
+            'content': params.content,
+          },
+          onConflict: "word_id",
+        )
+        .select()
+        .single();
+    return NoteModel.fromJson(note);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:lingora/features/words/domain/entities/note_entity.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
@@ -6,5 +7,5 @@ import 'package:lingora/features/words/domain/usecases/params/notes_params.dart'
 abstract class LibraryRepository {
   Future<List<WordEntity>> getLibrary(LibraryParams params);
   Future<void> updateWordCollection(CollectionsParams params);
-  Future<void> updateNote(NotesParams params);
+  Future<NoteEntity> updateNote(NotesParams params);
 }

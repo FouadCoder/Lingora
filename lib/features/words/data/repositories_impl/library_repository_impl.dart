@@ -1,6 +1,8 @@
 import 'package:lingora/features/words/data/datasources/library_local_data.dart';
 import 'package:lingora/features/words/data/models/collection_model.dart';
+import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
+import 'package:lingora/features/words/domain/entities/note_entity.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
@@ -63,7 +65,8 @@ class LibraryRepositoryImpl implements LibraryRepository {
   }
 
   @override
-  Future<void> updateNote(NotesParams params) async {
-    await wordsRemoteData.updateNote(params);
+  Future<NoteEntity> updateNote(NotesParams params) async {
+    NoteModel noteModel = await wordsRemoteData.updateNote(params);
+    return noteModel.toEntity();
   }
 }

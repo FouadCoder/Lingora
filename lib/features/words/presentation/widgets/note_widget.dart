@@ -8,14 +8,14 @@ import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/core/widgets/textfield.dart';
 import 'package:lingora/features/words/domain/entities/note_entity.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/presentation/cubit/notes/notes_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/notes/notes_state.dart';
 
 class LibraryNotes extends StatefulWidget {
   final NoteEntity noteEntity;
-  final String? wordId;
-  const LibraryNotes(
-      {super.key, required this.noteEntity, required this.wordId});
+  final WordEntity? word;
+  const LibraryNotes({super.key, required this.noteEntity, required this.word});
 
   @override
   State<LibraryNotes> createState() => _LibraryNotesState();
@@ -93,8 +93,9 @@ class _LibraryNotesState extends State<LibraryNotes> {
                     isLoading: isLoading,
                     color: Theme.of(context).colorScheme.secondary,
                     function: () {
-                      context.read<NotesCubit>().updateNote(
-                          noteController.text.trim(), widget.wordId);
+                      context
+                          .read<NotesCubit>()
+                          .updateNote(noteController.text.trim(), widget.word!);
                     },
                     textColor: Colors.white,
                     width: AppButtonSizes.smallWidth(context),

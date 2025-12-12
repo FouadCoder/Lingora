@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/usecases/notes_usecase/update_note_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/params/notes_params.dart';
 import 'package:lingora/features/words/presentation/cubit/notes/notes_state.dart';
@@ -9,7 +10,7 @@ class NotesCubit extends Cubit<NotesState> {
   final UpdateNoteUsecase updateNoteUsecase;
   NotesCubit(this.supabaseClient, this.updateNoteUsecase) : super(NotesState());
 
-  void updateNote(String content, String? wordId) async {
+  void updateNote(String content, WordEntity wordEntity) async {
     try {
       emit(state.copyWith(status: NotesStatus.loading));
 
@@ -18,24 +19,20 @@ class NotesCubit extends Cubit<NotesState> {
         return;
       }
 
-      // Check userId
+      // Check userId && wordId
       final userId = supabaseClient.auth.currentUser?.id;
-      if (userId == null) {
-        emit(state.copyWith(status: NotesStatus.failure));
-        return;
-      }
-      // Check WordId
-      if (wordId == null || wordId.isEmpty) {
+      if (userId == null || wordEntity.id == null || wordEntity.id!.isEmpty) {
         emit(state.copyWith(status: NotesStatus.failure));
         return;
       }
 
       // Update note
       final params =
-          NotesParams(userId: userId, wordId: wordId, content: content);
-      await updateNoteUsecase.call(params);
+          NotesParams(userId: userId, wordId: wordEntity.id!, content: content);
+      final newNote = await updateNoteUsecase.call(params);
+      wordEntity.copyWith(note: newNote);
 
-      emit(state.copyWith(status: NotesStatus.success));
+      emit(state.copyWith(status: NotesStatus.success, word: wordEntity));
     } catch (e) {
       emit(state.copyWith(status: NotesStatus.failure));
     }

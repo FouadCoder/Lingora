@@ -145,7 +145,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 // Notes
                 LibraryNotes(
                   noteEntity: widget.model.note,
-                  wordId: widget.model.id,
+                  word: widget.model,
                 ),
 
                 // Reminders
