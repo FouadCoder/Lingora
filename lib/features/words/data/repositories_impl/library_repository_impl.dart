@@ -6,6 +6,7 @@ import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/notes_params.dart';
 
 class LibraryRepositoryImpl implements LibraryRepository {
   final WordsRemoteData wordsRemoteData;
@@ -59,5 +60,10 @@ class LibraryRepositoryImpl implements LibraryRepository {
         collectionId: collectionId,
         wordId: params.wordId,
         collectionName: params.collectionName));
+  }
+
+  @override
+  Future<void> updateNote(NotesParams params) async {
+    await wordsRemoteData.updateNote(params);
   }
 }

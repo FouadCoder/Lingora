@@ -1,4 +1,4 @@
-import 'package:lingora/features/notes/domain/entities/note_entity.dart';
+import 'package:lingora/features/words/domain/entities/note_entity.dart';
 
 class NoteModel {
   final String? id;
