@@ -7,8 +7,8 @@ import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
-import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
-import 'package:lingora/features/favorites/presentation/cubit/favorites_state.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_state.dart';
 import 'package:lingora/features/words/presentation/widgets/word_card.dart';
 import 'package:lingora/features/words/presentation/widgets/word_card_loading.dart';
 

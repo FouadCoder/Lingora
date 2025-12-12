@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
-import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
-import 'package:lingora/features/favorites/presentation/cubit/favorites_state.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_state.dart';
 
 class HeartIconWidget extends StatefulWidget {
   final bool isFavorite;

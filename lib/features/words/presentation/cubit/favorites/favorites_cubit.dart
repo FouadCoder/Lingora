@@ -4,7 +4,7 @@ import 'package:lingora/features/favorites/domain/usecases/add_to_favorites_usec
 import 'package:lingora/features/favorites/domain/usecases/favorites_params.dart';
 import 'package:lingora/features/favorites/domain/usecases/get_favorites_usecase.dart';
 import 'package:lingora/features/favorites/domain/usecases/remove_from_favorites_usecase.dart';
-import 'package:lingora/features/favorites/presentation/cubit/favorites_state.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FavoritesCubit extends Cubit<FavoritesState> {

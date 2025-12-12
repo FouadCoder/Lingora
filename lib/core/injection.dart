@@ -14,7 +14,7 @@ import 'package:lingora/features/favorites/domain/repositories/favorites_reposit
 import 'package:lingora/features/favorites/domain/usecases/add_to_favorites_usecase.dart';
 import 'package:lingora/features/favorites/domain/usecases/get_favorites_usecase.dart';
 import 'package:lingora/features/favorites/domain/usecases/remove_from_favorites_usecase.dart';
-import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/history/data/datasources/history_remote_data.dart';
 import 'package:lingora/features/history/data/repositories_impl/history_repository_impl.dart';
 import 'package:lingora/features/history/domain/repositories/history_repository.dart';
