@@ -3,13 +3,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
-import 'package:lingora/features/favorites/presentation/widgets/heart_icon_widget.dart';
+import 'package:lingora/features/words/presentation/widgets/heart_icon_widget.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
-import 'package:lingora/features/words/presentation/pages/word_details_screen.dart';
+import 'package:lingora/features/words/presentation/pages/library/word_details_screen.dart';
 
 class WordCard extends StatefulWidget {
   final WordEntity word;
