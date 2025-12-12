@@ -11,6 +11,7 @@ import 'package:lingora/features/words/domain/entities/note_entity.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/presentation/cubit/notes/notes_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/notes/notes_state.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 
 class LibraryNotes extends StatefulWidget {
   final NoteEntity noteEntity;
@@ -55,6 +56,8 @@ class _LibraryNotesState extends State<LibraryNotes> {
           setState(() {
             initialNote = noteController.text;
           });
+          // Refresh word
+          context.read<LibraryCubit>().refreshWord(state.word!);
         }
         // Error
         else if (state.status == NotesStatus.failure) {

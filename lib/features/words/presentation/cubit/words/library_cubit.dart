@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/get_library_usecase.dart';
@@ -95,6 +96,17 @@ class LibraryCubit extends Cubit<LibraryState> {
   void playAudio(String word, String lang) async {
     try {
       await playAudioUsecase.call(word, lang: lang);
+    } catch (_) {}
+  }
+
+  // Replace or update word on memory
+  void refreshWord(WordEntity word) async {
+    try {
+      final currentWords = state.libraryWords;
+      final updatedWords = currentWords.map((w) {
+        return w.id == word.id ? word : w;
+      }).toList();
+      emit(state.copyWith(libraryWords: updatedWords));
     } catch (_) {}
   }
 }

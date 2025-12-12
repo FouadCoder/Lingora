@@ -30,9 +30,8 @@ class NotesCubit extends Cubit<NotesState> {
       final params =
           NotesParams(userId: userId, wordId: wordEntity.id!, content: content);
       final newNote = await updateNoteUsecase.call(params);
-      wordEntity.copyWith(note: newNote);
-
-      emit(state.copyWith(status: NotesStatus.success, word: wordEntity));
+      final updatedWord = wordEntity.copyWith(note: newNote);
+      emit(state.copyWith(status: NotesStatus.success, word: updatedWord));
     } catch (e) {
       emit(state.copyWith(status: NotesStatus.failure));
     }
