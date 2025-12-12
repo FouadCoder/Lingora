@@ -44,6 +44,12 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   void getLibrary() async {
     try {
+      // If loaded already
+      if (state.libraryWords.isNotEmpty) {
+        emit(state.copyWith(
+            status: LibraryStatus.success, libraryWords: state.libraryWords));
+        return;
+      }
       emit(state.copyWith(status: LibraryStatus.loading));
 
       // If user is not logged in
