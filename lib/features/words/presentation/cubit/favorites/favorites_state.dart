@@ -1,4 +1,4 @@
-import 'package:lingora/features/favorites/domain/entities/favorite_entity.dart';
+import 'package:lingora/features/words/domain/entities/favorite_entity.dart';
 
 enum FavoriteStatus {
   initial,

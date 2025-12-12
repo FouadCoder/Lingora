@@ -1,8 +1,10 @@
 import 'package:lingora/features/words/data/models/collection_model.dart';
+import 'package:lingora/features/words/data/models/favorite_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/favorites_params.dart';
 import 'package:lingora/features/words/domain/usecases/params/notes_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -12,6 +14,9 @@ abstract class WordsRemoteData {
   Future<List<CollectionModel>> getCollections();
   Future<void> updateWordCollection(CollectionsParams params);
   Future<NoteModel> updateNote(NotesParams params);
+  Future<List<FavoriteModel>> getFavorites(FavoritesParams params);
+  Future addToFavorites(FavoritesParams params);
+  Future removeFromFavorites(FavoritesParams params);
 }
 
 class WordsRemoteDataImpl implements WordsRemoteData {
@@ -90,5 +95,49 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .select()
         .single();
     return NoteModel.fromJson(note);
+  }
+
+  // Get favorites
+  @override
+  Future<List<FavoriteModel>> getFavorites(FavoritesParams params) async {
+    final data = await supabaseClient
+        .from('favorites')
+        .select('''
+            *,
+            translated_words:translated_word_id(*)
+          ''')
+        .eq('user_id', params.userId)
+        .isFilter('deleted_at', null)
+        .order('created_at', ascending: false)
+        .range(params.offset, params.offset + 15 - 1);
+
+    List<FavoriteModel> favorites =
+        data.map((e) => FavoriteModel.fromJson(e)).toList();
+
+    return favorites;
+  }
+
+  // Add to favorites
+  @override
+  Future addToFavorites(FavoritesParams params) async {
+    await supabaseClient.from('favorites').upsert({
+      'user_id': params.userId,
+      'translated_word_id': params.wordId,
+      'deleted_at': null,
+    }).select('''
+            *,
+            translated_words:translated_word_id(*)
+          ''').single();
+  }
+
+  // Remove from favorites
+  @override
+  Future removeFromFavorites(FavoritesParams params) async {
+    await Supabase.instance.client
+        .from('favorites')
+        .update({'deleted_at': DateTime.now().toIso8601String()})
+        .eq('user_id', params.userId)
+        .eq('translated_word_id', params.wordId!)
+        .isFilter('deleted_at', null);
   }
 }

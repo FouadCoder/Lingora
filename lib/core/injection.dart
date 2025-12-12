@@ -8,12 +8,9 @@ import 'package:lingora/features/analytics/domain/repositories/analytics_reposit
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
-import 'package:lingora/features/favorites/data/datasources/favorites_remote_data.dart';
-import 'package:lingora/features/favorites/data/repositories_impl/favorites_repository_impl.dart';
-import 'package:lingora/features/favorites/domain/repositories/favorites_repository.dart';
-import 'package:lingora/features/favorites/domain/usecases/add_to_favorites_usecase.dart';
-import 'package:lingora/features/favorites/domain/usecases/get_favorites_usecase.dart';
-import 'package:lingora/features/favorites/domain/usecases/remove_from_favorites_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/favorites_usecase/add_to_favorites_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/favorites_usecase/get_favorites_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/favorites_usecase/remove_from_favorites_usecase.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/history/data/datasources/history_remote_data.dart';
 import 'package:lingora/features/history/data/repositories_impl/history_repository_impl.dart';
@@ -65,7 +62,6 @@ Future<void> setupInjection() async {
       () => AnalyticsRemoteDataImpl(injection()));
   injection.registerSingleton(HistoryRemoteData(injection()));
   injection.registerSingleton(SettingsLocalData());
-  injection.registerSingleton(FavoritesRemoteData(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
@@ -78,8 +74,6 @@ Future<void> setupInjection() async {
       () => HistoryRepositoryImpl(injection()));
   injection.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(injection()));
-  injection.registerLazySingleton<FavoritesRepository>(
-      () => FavoritesRepositoryImpl(injection()));
 
   // Services
   injection.registerLazySingleton(() => AudioService());

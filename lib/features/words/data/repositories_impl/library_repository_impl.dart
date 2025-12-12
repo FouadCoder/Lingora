@@ -1,13 +1,16 @@
+import 'package:lingora/features/words/data/models/favorite_model.dart';
 import 'package:lingora/features/words/data/datasources/library_local_data.dart';
 import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
+import 'package:lingora/features/words/domain/entities/favorite_entity.dart';
 import 'package:lingora/features/words/domain/entities/note_entity.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/favorites_params.dart';
 import 'package:lingora/features/words/domain/usecases/params/notes_params.dart';
 
 class LibraryRepositoryImpl implements LibraryRepository {
@@ -68,5 +71,22 @@ class LibraryRepositoryImpl implements LibraryRepository {
   Future<NoteEntity> updateNote(NotesParams params) async {
     NoteModel noteModel = await wordsRemoteData.updateNote(params);
     return noteModel.toEntity();
+  }
+
+  @override
+  Future<void> addToFavorites(FavoritesParams params) async {
+    return await wordsRemoteData.addToFavorites(params);
+  }
+
+  @override
+  Future<List<FavoriteEntity>> getFavorites(FavoritesParams params) async {
+    List<FavoriteModel> data = await wordsRemoteData.getFavorites(params);
+    List<FavoriteEntity> favorites = data.map((e) => e.toEntity()).toList();
+    return favorites;
+  }
+
+  @override
+  Future<void> removeFromFavorites(FavoritesParams params) async {
+    return await wordsRemoteData.removeFromFavorites(params);
   }
 }
