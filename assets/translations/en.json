@@ -140,6 +140,7 @@
     "loading_analytics": "Loading your analytics...",
     "language": "Language",
     "app_language": "App language",
-    "word_added_to_favorites": "Word added to your favorites!"
+    "word_added_to_favorites": "Word added to your favorites!",
+    "word_removed_from_favorites": "Word removed from your favorites!"
 
 }

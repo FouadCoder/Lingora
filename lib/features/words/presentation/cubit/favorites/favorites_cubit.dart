@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/features/words/domain/entities/favorite_entity.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/add_to_favorites_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/params/favorites_params.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/get_favorites_usecase.dart';
@@ -79,22 +80,28 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   // Add to favorites
-  void addToFavorites(String wordId) async {
+  void addToFavorites(WordEntity word) async {
     try {
       print("Add to favorites ========================= start");
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
-      await addToFavoritesUsecase
-          .call(FavoritesParams(userId: _userId, wordId: wordId));
 
+      print(
+          "word Favroites ================== ${word.id} ========== ${word.isFavorite}");
+
+      // Check if wordId is Null
+      if (word.id == null) {
+        print("WORD ID IS NULL , ADD TO FAVROITES ========================= ");
+        emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
+        return;
+      }
+      await addToFavoritesUsecase
+          .call(FavoritesParams(userId: _userId, wordId: word.id));
+
+      // Update the word
+      final updatedWord = word.copyWith(isFavorite: true);
+      print("Done ADD the word to favroites ===================");
       emit(state.copyWith(
-        actionStatus: FavoriteActionStatus.added,
-        favorites: state.favorites.map((f) {
-          if (f.word.id == wordId) {
-            return f.copyWith(word: f.word.copyWith(isFavorite: true));
-          }
-          return f;
-        }).toList(),
-      ));
+          actionStatus: FavoriteActionStatus.added, word: updatedWord));
     } catch (e) {
       print("Error add to favorites =============== $e");
       emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
@@ -102,13 +109,28 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   // Remove from favorites
-  void removeFromFavorites(String wordId) async {
+  void removeFromFavorites(WordEntity word) async {
     try {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
+      print("Start removing the word from favroites ===================");
+
+      // Check if wordId is Null
+      if (word.id == null) {
+        print(
+            "removing the word from favroites =================== id is null ");
+        emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
+        return;
+      }
       await removeFromFavoritesUsecase
-          .call(FavoritesParams(userId: _userId, wordId: wordId));
-      emit(state.copyWith(actionStatus: FavoriteActionStatus.removed));
-    } catch (_) {
+          .call(FavoritesParams(userId: _userId, wordId: word.id));
+
+      print("Done removing the word from favroites ===================");
+      // Update the word
+      final updatedWord = word.copyWith(isFavorite: false);
+      emit(state.copyWith(
+          actionStatus: FavoriteActionStatus.removed, word: updatedWord));
+    } catch (e) {
+      print("Error removing the word from favroites ===================$e");
       emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
     }
   }

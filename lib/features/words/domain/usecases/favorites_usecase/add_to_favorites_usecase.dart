@@ -9,6 +9,6 @@ class AddToFavoritesUsecase {
   get favoritesRepository => null;
 
   Future<void> call(FavoritesParams params) {
-    return favoritesRepository.addToFavorites(params);
+    return libraryRepository.addToFavorites(params);
   }
 }

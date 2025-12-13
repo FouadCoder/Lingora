@@ -120,14 +120,11 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   // Add to favorites
   @override
   Future addToFavorites(FavoritesParams params) async {
-    await supabaseClient.from('favorites').upsert({
+    await supabaseClient.from('favorites').insert({
       'user_id': params.userId,
       'translated_word_id': params.wordId,
       'deleted_at': null,
-    }).select('''
-            *,
-            translated_words:translated_word_id(*)
-          ''').single();
+    });
   }
 
   // Remove from favorites
