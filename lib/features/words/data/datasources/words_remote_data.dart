@@ -33,6 +33,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .from('translated_words')
         .select('* , notes(*) , collections(*) , favorites(*)')
         .eq('user_id', _userId)
+        .isFilter('deleted_at', null)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
 
@@ -107,7 +108,6 @@ class WordsRemoteDataImpl implements WordsRemoteData {
             translated_words:translated_word_id(*)
           ''')
         .eq('user_id', params.userId)
-        .isFilter('deleted_at', null)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
 
@@ -123,18 +123,16 @@ class WordsRemoteDataImpl implements WordsRemoteData {
     await supabaseClient.from('favorites').insert({
       'user_id': params.userId,
       'translated_word_id': params.wordId,
-      'deleted_at': null,
     });
   }
 
   // Remove from favorites
   @override
   Future removeFromFavorites(FavoritesParams params) async {
-    await Supabase.instance.client
+    await supabaseClient
         .from('favorites')
-        .update({'deleted_at': DateTime.now().toIso8601String()})
+        .delete()
         .eq('user_id', params.userId)
-        .eq('translated_word_id', params.wordId!)
-        .isFilter('deleted_at', null);
+        .eq('translated_word_id', params.wordId!);
   }
 }
