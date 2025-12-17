@@ -47,7 +47,7 @@ class _WordCardState extends State<WordCard> {
       {
         "text": CollectionType.values
             .firstWhere(
-              (element) => element.sourceName == widget.word.collection.name,
+              (element) => element.name == widget.word.collection.name,
               orElse: () => CollectionType.values.first,
             )
             .name,

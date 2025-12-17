@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 
 class CollectionsLibrary extends StatelessWidget {
   const CollectionsLibrary({super.key});
@@ -47,14 +49,19 @@ class CollectionsLibrary extends StatelessWidget {
   Widget _buildItem(BuildContext context, int index) {
     final type = CollectionType.values[index];
 
-    return AppCard(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Image.asset(type.imagePath, height: 24, width: 24),
-          SizedBox(width: AppDimens.elementBetween),
-          Text(type.name, style: type.wordStyle(context)),
-        ],
+    return GestureDetector(
+      onTap: () {
+        context.read<LibraryCubit>().getWordsByCollection(type.name);
+      },
+      child: AppCard(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Image.asset(type.imagePath, height: 24, width: 24),
+            SizedBox(width: AppDimens.elementBetween),
+            Text(type.name, style: type.wordStyle(context)),
+          ],
+        ),
       ),
     );
   }

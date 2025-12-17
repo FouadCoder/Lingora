@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lingora/config/theme/app_colors.dart';
 
-enum CollectionType { learning, saved, mastered }
+enum CollectionType { learning, saved, masters }
 
 extension CollectionTypeExt on CollectionType {
   String get name {
@@ -11,7 +11,7 @@ extension CollectionTypeExt on CollectionType {
         return "learning".tr();
       case CollectionType.saved:
         return "saved".tr();
-      case CollectionType.mastered:
+      case CollectionType.masters:
         return "mastered".tr();
     }
   }
@@ -22,7 +22,7 @@ extension CollectionTypeExt on CollectionType {
         return Icons.school;
       case CollectionType.saved:
         return Icons.bookmark;
-      case CollectionType.mastered:
+      case CollectionType.masters:
         return Icons.emoji_events;
     }
   }
@@ -33,7 +33,7 @@ extension CollectionTypeExt on CollectionType {
         return "assets/icons/book.png";
       case CollectionType.saved:
         return "assets/icons/bookmark_12435234.png";
-      case CollectionType.mastered:
+      case CollectionType.masters:
         return "assets/icons/crown_891024.png";
     }
   }
@@ -44,22 +44,11 @@ extension CollectionTypeExt on CollectionType {
         return Theme.of(context).textTheme.bodyMedium!;
       case CollectionType.saved:
         return Theme.of(context).textTheme.bodyMedium!;
-      case CollectionType.mastered:
+      case CollectionType.masters:
         return Theme.of(context)
             .textTheme
             .bodyMedium!
             .copyWith(color: AppColors.gold, fontWeight: FontWeight.bold);
-    }
-  }
-
-  String get sourceName {
-    switch (this) {
-      case CollectionType.learning:
-        return "Learning";
-      case CollectionType.saved:
-        return "Saved";
-      case CollectionType.mastered:
-        return "Mastered";
     }
   }
 }

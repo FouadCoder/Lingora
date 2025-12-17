@@ -83,8 +83,14 @@ class LibraryCubit extends Cubit<LibraryState> {
     }
   }
 
-  void getWordsByCollection(String collectionId) async {
-    try {} catch (e) {}
+  void getWordsByCollection(String sourceName) async {
+    try {
+      emit(state.copyWith(status: LibraryStatus.loading));
+
+      emit(state.copyWith(status: LibraryStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: LibraryStatus.failure));
+    }
   }
 
   // Update word collection
@@ -94,8 +100,9 @@ class LibraryCubit extends Cubit<LibraryState> {
       if (state.actionStatus == LibraryActionStatus.loading) return;
       emit(state.copyWith(actionStatus: LibraryActionStatus.loading));
       // Update
-      await updateWordCollectionUsecase.call(CollectionsParams(
-          wordId: wordId, collectionName: collection.sourceName));
+      // await updateWordCollectionUsecase.call(CollectionsParams(
+      //     wordId: wordId, collectionName: collection.sourceName));
+      //TODO FIX THIS
       emit(state.copyWith(actionStatus: LibraryActionStatus.success));
     } catch (e) {
       emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
