@@ -8,6 +8,7 @@ class LibraryState {
   final LibraryStatus status;
   final LibraryActionStatus actionStatus;
   final List<WordEntity> libraryWords;
+  final List<WordEntity> collectionsWords;
   final bool isLoadingMore;
   final bool hasMore;
 
@@ -15,6 +16,7 @@ class LibraryState {
       {this.status = LibraryStatus.initial,
       this.actionStatus = LibraryActionStatus.initial,
       this.libraryWords = const [],
+      this.collectionsWords = const [],
       this.isLoadingMore = false,
       this.hasMore = true});
 
@@ -22,6 +24,7 @@ class LibraryState {
     LibraryStatus? status,
     LibraryActionStatus? actionStatus,
     List<WordEntity>? libraryWords,
+    List<WordEntity>? collectionsWords,
     bool? isLoadingMore,
     bool? hasMore,
   }) {
@@ -29,6 +32,7 @@ class LibraryState {
       status: status ?? this.status,
       actionStatus: actionStatus ?? this.actionStatus,
       libraryWords: libraryWords ?? this.libraryWords,
+      collectionsWords: collectionsWords ?? this.collectionsWords,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       hasMore: hasMore ?? this.hasMore,
     );

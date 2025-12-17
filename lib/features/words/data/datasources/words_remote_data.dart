@@ -3,13 +3,14 @@ import 'package:lingora/features/words/data/models/favorite_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
-import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/library_params.dart';
 import 'package:lingora/features/words/domain/usecases/params/favorites_params.dart';
 import 'package:lingora/features/words/domain/usecases/params/notes_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class WordsRemoteData {
   Future<List<WordModel>> getLibrary(LibraryParams params);
+  Future<List<WordModel>> getWordsByCollection(LibraryParams params);
   Future<List<WordModel>> getLibraryCollectionWords(LibraryParams params);
   Future<List<CollectionModel>> getCollections();
   Future<void> updateWordCollection(CollectionsParams params);
@@ -33,6 +34,23 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .from('translated_words')
         .select('* , notes(*) , collections(*) , favorites(*)')
         .eq('user_id', _userId)
+        .isFilter('deleted_at', null)
+        .order('created_at', ascending: false)
+        .range(params.offset, params.offset + 15 - 1);
+
+    List<WordModel> words = data.map((e) => WordModel.fromJson(e)).toList();
+
+    return words;
+  }
+
+  // Get word for specific collections
+  @override
+  Future<List<WordModel>> getWordsByCollection(LibraryParams params) async {
+    final List<Map<String, dynamic>> data = await supabaseClient
+        .from('translated_words')
+        .select('* , notes(*) , collections(*) , favorites(*)')
+        .eq('user_id', _userId)
+        .eq('collections.id', params.collectionId!)
         .isFilter('deleted_at', null)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);

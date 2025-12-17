@@ -1,12 +1,13 @@
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
-import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/library_params.dart';
 
-class GetLibraryUsecase {
+class GetWordsByCollectionUsecase {
   final LibraryRepository libraryRepository;
-  GetLibraryUsecase(this.libraryRepository);
+
+  GetWordsByCollectionUsecase({required this.libraryRepository});
 
   Future<List<WordEntity>> call(LibraryParams params) async {
-    return await libraryRepository.getLibrary(params);
+    return await libraryRepository.getWordsByCollection(params);
   }
 }

@@ -9,7 +9,7 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
-import 'package:lingora/features/words/domain/usecases/library_params.dart';
+import 'package:lingora/features/words/domain/usecases/params/library_params.dart';
 import 'package:lingora/features/words/domain/usecases/params/favorites_params.dart';
 import 'package:lingora/features/words/domain/usecases/params/notes_params.dart';
 
@@ -21,6 +21,15 @@ class LibraryRepositoryImpl implements LibraryRepository {
   @override
   Future<List<WordEntity>> getLibrary(LibraryParams params) async {
     List<WordModel> libraryWords = await wordsRemoteData.getLibrary(params);
+    List<WordEntity> libraryWordsEntity =
+        libraryWords.map((e) => e.toEntity()).toList();
+    return libraryWordsEntity;
+  }
+
+  @override
+  Future<List<WordEntity>> getWordsByCollection(LibraryParams params) async {
+    List<WordModel> libraryWords =
+        await wordsRemoteData.getWordsByCollection(params);
     List<WordEntity> libraryWordsEntity =
         libraryWords.map((e) => e.toEntity()).toList();
     return libraryWordsEntity;
