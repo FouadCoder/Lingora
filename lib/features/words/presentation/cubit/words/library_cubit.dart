@@ -3,6 +3,7 @@ import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_library_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/library_usecase/get_words_by_collection_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/params/library_params.dart';
 import 'package:lingora/features/words/domain/usecases/update_word_collection_usecase.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
@@ -12,12 +13,18 @@ class LibraryCubit extends Cubit<LibraryState> {
   final SupabaseClient supabaseClient;
   final GetLibraryUsecase getLibraryUsecase;
   final UpdateWordCollectionUsecase updateWordCollectionUsecase;
+  final GetWordsByCollectionUsecase getWordsByCollectionUsecase;
   final PlayAudioUsecase playAudioUsecase;
-  LibraryCubit(this.supabaseClient, this.getLibraryUsecase,
-      this.updateWordCollectionUsecase, this.playAudioUsecase)
+  LibraryCubit(
+      this.supabaseClient,
+      this.getLibraryUsecase,
+      this.updateWordCollectionUsecase,
+      this.getWordsByCollectionUsecase,
+      this.playAudioUsecase)
       : super(const LibraryState());
 
   int _offset = 0;
+  final int _collectionsOffset = 0;
 
   void loadMoreLibrary() async {
     try {
@@ -82,12 +89,17 @@ class LibraryCubit extends Cubit<LibraryState> {
     }
   }
 
-  void getWordsByCollection(String sourceName) async {
+  void getWordsByCollection(String collectionType) async {
     try {
       emit(state.copyWith(status: LibraryStatus.loading));
+      final words = await getWordsByCollectionUsecase.call(LibraryParams(
+          offset: _collectionsOffset, collectionType: collectionType));
 
-      emit(state.copyWith(status: LibraryStatus.success));
+      print("Success getting words collections ========================== ");
+      emit(state.copyWith(
+          status: LibraryStatus.success, collectionsWords: words));
     } catch (e) {
+      print("Error getting words collections ==========================   $e");
       emit(state.copyWith(status: LibraryStatus.failure));
     }
   }

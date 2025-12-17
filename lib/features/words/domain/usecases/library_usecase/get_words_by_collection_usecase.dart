@@ -5,7 +5,7 @@ import 'package:lingora/features/words/domain/usecases/params/library_params.dar
 class GetWordsByCollectionUsecase {
   final LibraryRepository libraryRepository;
 
-  GetWordsByCollectionUsecase({required this.libraryRepository});
+  GetWordsByCollectionUsecase(this.libraryRepository);
 
   Future<List<WordEntity>> call(LibraryParams params) async {
     return await libraryRepository.getWordsByCollection(params);

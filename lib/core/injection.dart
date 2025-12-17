@@ -11,6 +11,7 @@ import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.da
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/add_to_favorites_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/get_favorites_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/remove_from_favorites_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/library_usecase/get_words_by_collection_usecase.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/history/data/datasources/history_remote_data.dart';
 import 'package:lingora/features/history/data/repositories_impl/history_repository_impl.dart';
@@ -79,6 +80,7 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => TranslateUsecase(injection()));
   // Library
   injection.registerFactory(() => GetLibraryUsecase(injection()));
+  injection.registerFactory(() => GetWordsByCollectionUsecase(injection()));
   injection.registerFactory(() => UpdateWordCollectionUsecase(injection()));
   // Analytics
   injection.registerFactory(() => GetAnalyticsUsecase(injection()));
@@ -102,8 +104,8 @@ Future<void> setupInjection() async {
   // Cubit
   injection.registerFactory<TranslateCubit>(
       () => TranslateCubit(injection(), injection(), injection()));
-  injection.registerFactory<LibraryCubit>(
-      () => LibraryCubit(injection(), injection(), injection(), injection()));
+  injection.registerFactory<LibraryCubit>(() => LibraryCubit(
+      injection(), injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));
