@@ -1,4 +1,3 @@
-import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/favorite_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
@@ -11,8 +10,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class WordsRemoteData {
   Future<List<WordModel>> getLibrary(LibraryParams params);
   Future<List<WordModel>> getWordsByCollection(LibraryParams params);
-  Future<List<WordModel>> getLibraryCollectionWords(LibraryParams params);
-  Future<List<CollectionModel>> getCollections();
   Future<void> updateWordCollection(CollectionsParams params);
   Future<NoteModel> updateNote(NotesParams params);
   Future<List<FavoriteModel>> getFavorites(FavoritesParams params);
@@ -50,7 +47,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .from('translated_words')
         .select('* , notes(*) , collections(*) , favorites(*)')
         .eq('user_id', _userId)
-        .eq('collections.id', params.collectionId!)
+        .eq('collections.collection_type', params.collectionType!)
         .isFilter('deleted_at', null)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
@@ -58,36 +55,6 @@ class WordsRemoteDataImpl implements WordsRemoteData {
     List<WordModel> words = data.map((e) => WordModel.fromJson(e)).toList();
 
     return words;
-  }
-
-  // Get library collection words
-  @override
-  Future<List<WordModel>> getLibraryCollectionWords(
-      LibraryParams params) async {
-    final List<Map<String, dynamic>> data = await supabaseClient
-        .from('translated_words')
-        .select('* , notes(*) , collections(*)')
-        .eq('user_id', _userId)
-        .eq("collection_id", params.collectionId!)
-        .isFilter('deleted_at', null)
-        .order('created_at', ascending: false)
-        .range(params.offset, params.offset + 15 - 1);
-    List<WordModel> words = data.map((e) => WordModel.fromJson(e)).toList();
-    return words;
-  }
-
-  // Get collections IDS
-  @override
-  Future<List<CollectionModel>> getCollections() async {
-    final List<Map<String, dynamic>> data = await supabaseClient
-        .from('collections')
-        .select('id , name')
-        .eq("user_id", _userId)
-        .isFilter('deleted_at', null);
-
-    List<CollectionModel> collections =
-        data.map((e) => CollectionModel.fromJson(e)).toList();
-    return collections;
   }
 
   // Update word collection

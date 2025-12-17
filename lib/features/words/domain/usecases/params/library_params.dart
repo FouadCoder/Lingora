@@ -1,8 +1,8 @@
 class LibraryParams {
   final int offset;
-  final String? collectionId;
+  final String? collectionType;
   LibraryParams({
     required this.offset,
-    this.collectionId,
+    this.collectionType,
   });
 }
