@@ -65,7 +65,7 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
         child: SingleChildScrollView(
           child: BlocBuilder<LibraryCubit, LibraryState>(
               builder: (context, state) {
-            if (state.status == LibraryStatus.loading) {
+            if (state.collectionStatus == LibraryStatus.loading) {
               // Loading
               return MasonryGridView.builder(
                 shrinkWrap: true,
@@ -83,7 +83,7 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
             }
 
             // Success
-            else if (state.status == LibraryStatus.success) {
+            else if (state.collectionStatus == LibraryStatus.success) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -114,7 +114,7 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
             }
 
             // Empty
-            else if (state.status == LibraryStatus.empty) {
+            else if (state.collectionStatus == LibraryStatus.empty) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: CustomState(
@@ -128,7 +128,7 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
             }
 
             // Error
-            else if (state.status == LibraryStatus.failure) {
+            else if (state.collectionStatus == LibraryStatus.failure) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: CustomState(

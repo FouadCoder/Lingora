@@ -6,6 +6,7 @@ enum LibraryActionStatus { initial, loading, success, failure }
 
 class LibraryState {
   final LibraryStatus status;
+  final LibraryStatus collectionStatus;
   final LibraryActionStatus actionStatus;
   final List<WordEntity> libraryWords;
   final List<WordEntity> collectionsWords;
@@ -15,6 +16,7 @@ class LibraryState {
 
   const LibraryState({
     this.status = LibraryStatus.initial,
+    this.collectionStatus = LibraryStatus.initial,
     this.actionStatus = LibraryActionStatus.initial,
     this.libraryWords = const [],
     this.collectionsWords = const [],
@@ -25,6 +27,7 @@ class LibraryState {
 
   LibraryState copyWith({
     LibraryStatus? status,
+    LibraryStatus? collectionStatus,
     LibraryActionStatus? actionStatus,
     List<WordEntity>? libraryWords,
     List<WordEntity>? collectionsWords,
@@ -34,6 +37,7 @@ class LibraryState {
   }) {
     return LibraryState(
       status: status ?? this.status,
+      collectionStatus: collectionStatus ?? this.collectionStatus,
       actionStatus: actionStatus ?? this.actionStatus,
       libraryWords: libraryWords ?? this.libraryWords,
       collectionsWords: collectionsWords ?? this.collectionsWords,

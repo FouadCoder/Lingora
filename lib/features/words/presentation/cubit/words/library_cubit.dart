@@ -96,7 +96,7 @@ class LibraryCubit extends Cubit<LibraryState> {
       print("The type from params -=================- $collectionType");
 
       emit(state.copyWith(
-        status: LibraryStatus.loading,
+        collectionStatus: LibraryStatus.loading,
         collectionsWords: const [], // Clear previous collection words
         hasMoreCollections: true, // Reset hasMore flag
       ));
@@ -119,20 +119,21 @@ class LibraryCubit extends Cubit<LibraryState> {
 
       // Empty
       if (words.isEmpty) {
-        emit(state.copyWith(status: LibraryStatus.empty, hasMore: false));
+        emit(state.copyWith(
+            collectionStatus: LibraryStatus.empty, hasMore: false));
         return;
       }
 
       // Success
       emit(state.copyWith(
-        status: LibraryStatus.success,
+        collectionStatus: LibraryStatus.success,
         collectionsWords: words,
         hasMoreCollections: hasMore,
       ));
     } catch (e) {
       print("Error getting words collections: $e");
       emit(state.copyWith(
-        status: LibraryStatus.failure,
+        collectionStatus: LibraryStatus.failure,
         hasMoreCollections: false,
       ));
     }
