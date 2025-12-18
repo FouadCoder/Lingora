@@ -8,6 +8,7 @@ import 'package:lingora/features/analytics/domain/repositories/analytics_reposit
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/add_to_favorites_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/get_favorites_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/remove_from_favorites_usecase.dart';
@@ -58,6 +59,8 @@ Future<void> setupInjection() async {
       () => AnalyticsRemoteDataImpl(injection()));
   injection.registerSingleton(HistoryRemoteData(injection()));
   injection.registerSingleton(SettingsLocalData());
+  injection.registerLazySingleton<WordsRemoteData>(
+      () => WordsRemoteDataImpl(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
