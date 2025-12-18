@@ -92,7 +92,7 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.libraryWords.length +
+                    itemCount: state.collectionsWords.length +
                         (state.isLoadingMore ? 6 : 0),
                     gridDelegate:
                         SliverSimpleGridDelegateWithFixedCrossAxisCount(
@@ -101,9 +101,9 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
                     crossAxisSpacing: AppDimens.cardBetween,
                     mainAxisSpacing: AppDimens.cardBetween,
                     itemBuilder: (context, index) {
-                      if (index < state.libraryWords.length) {
+                      if (index < state.collectionsWords.length) {
                         return WordCard(
-                          word: state.libraryWords[index],
+                          word: state.collectionsWords[index],
                         );
                       }
                       return LibraryLoadingCard();
@@ -120,8 +120,8 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
                 child: CustomState(
                   color: Theme.of(context).colorScheme.secondary,
                   animation: "assets/animation/empty_box_character.json",
-                  title: 'empty_library_title'.tr(),
-                  message: 'empty_library_message'.tr(),
+                  title: 'empty_collection_title'.tr(),
+                  message: 'empty_collection_message'.tr(),
                   titleColor: Theme.of(context).colorScheme.secondary,
                 ),
               );

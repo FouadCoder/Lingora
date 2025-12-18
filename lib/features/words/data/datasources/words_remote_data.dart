@@ -45,7 +45,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   Future<List<WordModel>> getWordsByCollection(LibraryParams params) async {
     final List<Map<String, dynamic>> data = await supabaseClient
         .from('translated_words')
-        .select('* , notes(*) , collections(*) , favorites(*)')
+        .select('* , notes(*) , collections!inner(*) , favorites(*)')
         .eq('user_id', _userId)
         .eq('collections.collection_type', params.collectionType!)
         .isFilter('deleted_at', null)

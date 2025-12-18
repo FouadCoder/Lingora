@@ -93,22 +93,37 @@ class LibraryCubit extends Cubit<LibraryState> {
     try {
       // Reset offset when getting a new collection
       _collectionsOffset = 0;
+      print("The type from params -=================- $collectionType");
 
       emit(state.copyWith(
         status: LibraryStatus.loading,
         collectionsWords: const [], // Clear previous collection words
         hasMoreCollections: true, // Reset hasMore flag
       ));
+      print("Get words collection start ===============");
 
       final words = await getWordsByCollectionUsecase.call(LibraryParams(
         offset: _collectionsOffset,
         collectionType: collectionType,
       ));
+      print("Done words collection start ===============  ${words.length}");
 
       // Update offset and check if there are more items
       _collectionsOffset = words.length;
       bool hasMore = words.length == 15; // Assuming 15 is the page size
 
+      for (var item in words) {
+        print(
+            "============== Word =${item.translated} ===== Type === ${item.collection.collectionType}");
+      }
+
+      // Empty
+      if (words.isEmpty) {
+        emit(state.copyWith(status: LibraryStatus.empty, hasMore: false));
+        return;
+      }
+
+      // Success
       emit(state.copyWith(
         status: LibraryStatus.success,
         collectionsWords: words,

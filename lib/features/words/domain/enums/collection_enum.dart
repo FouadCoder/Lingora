@@ -5,6 +5,19 @@ import 'package:lingora/config/theme/app_colors.dart';
 enum CollectionType { learning, saved, masters }
 
 extension CollectionTypeExt on CollectionType {
+  static CollectionType fromString(String value) {
+    switch (value) {
+      case 'learning':
+        return CollectionType.learning;
+      case 'saved':
+        return CollectionType.saved;
+      case 'masters':
+        return CollectionType.masters;
+      default:
+        return CollectionType.learning;
+    }
+  }
+
   String get displayName {
     switch (this) {
       case CollectionType.learning:
