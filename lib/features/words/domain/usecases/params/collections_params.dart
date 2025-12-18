@@ -1,8 +1,6 @@
 class CollectionsParams {
-  final String collectionName;
   final String wordId;
-  final String? collectionId;
+  final String collectionType;
 
-  CollectionsParams(
-      {required this.collectionName, required this.wordId, this.collectionId});
+  CollectionsParams({required this.wordId, required this.collectionType});
 }

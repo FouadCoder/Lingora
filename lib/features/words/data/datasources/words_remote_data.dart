@@ -1,3 +1,4 @@
+import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/favorite_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
@@ -10,7 +11,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class WordsRemoteData {
   Future<List<WordModel>> getLibrary(LibraryParams params);
   Future<List<WordModel>> getWordsByCollection(LibraryParams params);
-  Future<void> updateWordCollection(CollectionsParams params);
+  Future<CollectionModel> updateWordCollection(CollectionsParams params);
   Future<NoteModel> updateNote(NotesParams params);
   Future<List<FavoriteModel>> getFavorites(FavoritesParams params);
   Future addToFavorites(FavoritesParams params);
@@ -59,10 +60,27 @@ class WordsRemoteDataImpl implements WordsRemoteData {
 
   // Update word collection
   @override
-  Future<void> updateWordCollection(CollectionsParams params) async {
-    await supabaseClient.from('translated_words').update({
-      'collection_id': params.collectionId,
-    }).eq('id', params.wordId);
+  Future<CollectionModel> updateWordCollection(CollectionsParams params) async {
+    // Get the collection_id for this user and type
+    final collection = await supabaseClient
+        .from('collections')
+        .select('id')
+        .eq('user_id', _userId)
+        .eq('collection_type', params.collectionType)
+        .single();
+
+    print("collection ============== $collection === UserId=== $_userId");
+    // Update the word with the collection_id
+    final data = await supabaseClient
+        .from('translated_words')
+        .update({
+          'collection_id': collection['id'],
+          'updated_at': DateTime.now().toIso8601String(),
+        })
+        .eq('id', params.wordId)
+        .select('collections(*)')
+        .single();
+    return CollectionModel.fromJson(data['collections']);
   }
 
   // Update note

@@ -4,27 +4,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
 
 class WordCollectionsWidget extends StatefulWidget {
-  final String? wordId;
+  final WordEntity word;
   final CollectionType? collection;
-  const WordCollectionsWidget(
-      {super.key, required this.wordId, this.collection});
+  const WordCollectionsWidget({super.key, required this.word, this.collection});
 
   @override
   State<WordCollectionsWidget> createState() => _WordCollectionsWidgetState();
 }
 
 class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
-  int? selectedIndex;
+  CollectionType? collectionType;
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = widget.collection?.index;
+    collectionType = widget.collection;
   }
 
   @override
@@ -42,6 +42,10 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
         }
         // Error
         else if (state.actionStatus == LibraryActionStatus.failure) {
+          // Back the value again
+          setState(() {
+            collectionType = widget.collection;
+          });
           showSnackBar(
             context,
             message: 'something_went_wrong'.tr(),
@@ -53,7 +57,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: List.generate(CollectionType.values.length, (index) {
-          bool isSelected = index == selectedIndex;
+          bool isSelected = collectionType == CollectionType.values[index];
           final backgroundColor = (isSelected)
               ? Theme.of(context).colorScheme.secondary
               : Theme.of(context).colorScheme.onSurface;
@@ -61,10 +65,12 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                selectedIndex = index;
+                collectionType = CollectionType.values[index];
               });
-              context.read<LibraryCubit>().updateWordCollection(
-                  widget.wordId!, CollectionType.values[index]);
+              if (collectionType != widget.collection) {
+                context.read<LibraryCubit>().updateWordCollection(
+                    widget.word, CollectionType.values[index]);
+              }
             },
             child: Container(
               margin: EdgeInsets.only(

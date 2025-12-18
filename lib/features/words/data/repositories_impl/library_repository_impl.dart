@@ -1,6 +1,8 @@
+import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/favorite_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/data/models/word_model.dart';
+import 'package:lingora/features/words/domain/entities/collection_entity.dart';
 import 'package:lingora/features/words/domain/entities/favorite_entity.dart';
 import 'package:lingora/features/words/domain/entities/note_entity.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -33,13 +35,15 @@ class LibraryRepositoryImpl implements LibraryRepository {
   }
 
   @override
-  Future<void> updateWordCollection(CollectionsParams params) async {
-    // Update word collection
-    // await wordsRemoteData.updateWordCollection(CollectionsParams(
-    //     collectionId: collectionId,
-    //     wordId: params.wordId,
-    //     collectionName: params.collectionName));
-    //TODO FIX THIS
+  Future<CollectionEntity> updateWordCollection(
+      CollectionsParams params) async {
+    CollectionModel collectionModel =
+        await wordsRemoteData.updateWordCollection(CollectionsParams(
+      collectionType: params.collectionType,
+      wordId: params.wordId,
+    ));
+
+    return collectionModel.toEntity();
   }
 
   @override

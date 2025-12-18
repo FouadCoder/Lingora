@@ -1,3 +1,4 @@
+import 'package:lingora/features/words/domain/entities/collection_entity.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 
@@ -6,7 +7,7 @@ class UpdateWordCollectionUsecase {
 
   UpdateWordCollectionUsecase(this.libraryRepository);
 
-  Future<void> call(CollectionsParams params) async {
-    await libraryRepository.updateWordCollection(params);
+  Future<CollectionEntity> call(CollectionsParams params) async {
+    return await libraryRepository.updateWordCollection(params);
   }
 }

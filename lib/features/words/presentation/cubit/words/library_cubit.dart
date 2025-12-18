@@ -4,6 +4,7 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_library_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_words_by_collection_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/params/collections_params.dart';
 import 'package:lingora/features/words/domain/usecases/params/library_params.dart';
 import 'package:lingora/features/words/domain/usecases/update_word_collection_usecase.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
@@ -168,23 +169,26 @@ class LibraryCubit extends Cubit<LibraryState> {
     }
   }
 
-  // Update word collection
-  void updateWordCollection(String wordId, CollectionType collection) async {
+  void updateWordCollection(WordEntity word, CollectionType collection) async {
     try {
       // If loading already
       if (state.actionStatus == LibraryActionStatus.loading) return;
       emit(state.copyWith(actionStatus: LibraryActionStatus.loading));
       // Update
-      // await updateWordCollectionUsecase.call(CollectionsParams(
-      //     wordId: wordId, collectionName: collection.sourceName));
-      //TODO FIX THIS
+      final newCollection = await updateWordCollectionUsecase.call(
+          CollectionsParams(wordId: word.id!, collectionType: collection.name));
+      // Replace word from memoery
+      print("New collection ============== ${newCollection.collectionType}");
+      final updatedWord = word.copyWith(collection: newCollection);
+      refreshWord(updatedWord);
+      print("Updated word: ${updatedWord.collection.collectionType}");
       emit(state.copyWith(actionStatus: LibraryActionStatus.success));
     } catch (e) {
+      print(" =========== Error updating word collection: $e");
       emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
     }
   }
 
-  // Play audio
   void playAudio(String word, String lang) async {
     try {
       await playAudioUsecase.call(word, lang: lang);

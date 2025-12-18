@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
+import 'package:lingora/features/words/data/models/collection_model.dart';
 
 class TranslateModel {
   final String? id;
@@ -15,6 +16,7 @@ class TranslateModel {
   final List<String> synonyms;
   final Language? translateFrom;
   final Language? translateTo;
+  final CollectionModel collectionModel;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
@@ -32,6 +34,7 @@ class TranslateModel {
     this.synonyms = const [],
     required this.translateFrom,
     required this.translateTo,
+    required this.collectionModel,
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
@@ -55,6 +58,9 @@ class TranslateModel {
       translateTo: json["translate_to"] != null
           ? LanguageData.getLanguageByCode(json["translate_to"])
           : LanguageData.getLanguageByCode("ar"),
+      collectionModel: json["collection"] != null
+          ? CollectionModel.fromJson(json["collection"])
+          : CollectionModel.empty(),
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null
@@ -78,6 +84,7 @@ class TranslateModel {
       synonyms: const [],
       translateFrom: LanguageData.getLanguageByCode("en"),
       translateTo: LanguageData.getLanguageByCode("ar"),
+      collectionModel: CollectionModel.empty(),
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       deletedAt: null,
@@ -99,6 +106,7 @@ class TranslateModel {
       synonyms: synonyms,
       translateFrom: translateFrom,
       translateTo: translateTo,
+      collection: collectionModel.toEntity(),
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,

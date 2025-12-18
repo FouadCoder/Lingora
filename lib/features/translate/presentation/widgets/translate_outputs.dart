@@ -7,6 +7,8 @@ import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
+import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/widgets/word_collections.dart';
 
@@ -91,17 +93,18 @@ class WordInfoCard extends StatelessWidget {
   final String original;
   final String pos;
   final String pronunciation;
-  final String? wordId;
+  final WordEntity word;
   final String lang;
+  final CollectionType collectionType;
 
-  const WordInfoCard({
-    super.key,
-    required this.original,
-    required this.pos,
-    required this.pronunciation,
-    required this.wordId,
-    required this.lang,
-  });
+  const WordInfoCard(
+      {super.key,
+      required this.original,
+      required this.pos,
+      required this.pronunciation,
+      required this.word,
+      required this.lang,
+      required this.collectionType});
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +193,10 @@ class WordInfoCard extends StatelessWidget {
               height: AppDimens.sectionSpacing,
             ),
 
-            WordCollectionsWidget(wordId: wordId)
+            WordCollectionsWidget(
+              word: word,
+              collection: collectionType,
+            )
           ],
         ),
       ),

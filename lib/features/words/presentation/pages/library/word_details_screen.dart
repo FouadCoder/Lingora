@@ -41,8 +41,9 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   original: widget.model.original,
                   pos: widget.model.pos,
                   pronunciation: widget.model.pronunciation,
-                  wordId: widget.model.id,
+                  word: widget.model,
                   lang: widget.model.translateFrom!.code,
+                  collectionType: widget.model.collection.collectionType,
                 ),
 
                 SizedBox(
