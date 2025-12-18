@@ -45,12 +45,7 @@ class _WordCardState extends State<WordCard> {
         "textColor": colorScheme.secondary,
       },
       {
-        "text": CollectionType.values
-            .firstWhere(
-              (element) => element.name == widget.word.collection.name,
-              orElse: () => CollectionType.values.first,
-            )
-            .name,
+        "text": widget.word.collection.collectionType.displayName,
         "textColor": colorScheme.secondary,
       },
     ];

@@ -181,8 +181,14 @@ class LibraryCubit extends Cubit<LibraryState> {
       print("New collection ============== ${newCollection.collectionType}");
       final updatedWord = word.copyWith(collection: newCollection);
       refreshWord(updatedWord);
+      // Remove the word
+      final updatedCollectionsWords =
+          state.collectionsWords.where((w) => w.id != word.id).toList();
+
       print("Updated word: ${updatedWord.collection.collectionType}");
-      emit(state.copyWith(actionStatus: LibraryActionStatus.success));
+      emit(state.copyWith(
+          actionStatus: LibraryActionStatus.success,
+          collectionsWords: updatedCollectionsWords));
     } catch (e) {
       print(" =========== Error updating word collection: $e");
       emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
