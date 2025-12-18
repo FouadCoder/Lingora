@@ -24,7 +24,7 @@ class LibraryCubit extends Cubit<LibraryState> {
       : super(const LibraryState());
 
   int _offset = 0;
-  final int _collectionsOffset = 0;
+  int _collectionsOffset = 0;
 
   void loadMoreLibrary() async {
     try {
@@ -91,16 +91,64 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   void getWordsByCollection(String collectionType) async {
     try {
-      emit(state.copyWith(status: LibraryStatus.loading));
-      final words = await getWordsByCollectionUsecase.call(LibraryParams(
-          offset: _collectionsOffset, collectionType: collectionType));
+      // Reset offset when getting a new collection
+      _collectionsOffset = 0;
 
-      print("Success getting words collections ========================== ");
       emit(state.copyWith(
-          status: LibraryStatus.success, collectionsWords: words));
+        status: LibraryStatus.loading,
+        collectionsWords: const [], // Clear previous collection words
+        hasMoreCollections: true, // Reset hasMore flag
+      ));
+
+      final words = await getWordsByCollectionUsecase.call(LibraryParams(
+        offset: _collectionsOffset,
+        collectionType: collectionType,
+      ));
+
+      // Update offset and check if there are more items
+      _collectionsOffset = words.length;
+      bool hasMore = words.length == 15; // Assuming 15 is the page size
+
+      emit(state.copyWith(
+        status: LibraryStatus.success,
+        collectionsWords: words,
+        hasMoreCollections: hasMore,
+      ));
     } catch (e) {
-      print("Error getting words collections ==========================   $e");
-      emit(state.copyWith(status: LibraryStatus.failure));
+      print("Error getting words collections: $e");
+      emit(state.copyWith(
+        status: LibraryStatus.failure,
+        hasMoreCollections: false,
+      ));
+    }
+  }
+
+  void loadMoreCollections(String collectionType) async {
+    try {
+      // Check if already loading or no more collections to load
+      if (state.isLoadingMore || !state.hasMoreCollections) return;
+
+      emit(state.copyWith(isLoadingMore: true));
+
+      // Get more collection words
+      final moreWords = await getWordsByCollectionUsecase.call(LibraryParams(
+        offset: _collectionsOffset,
+        collectionType: collectionType,
+      ));
+
+      // Update offset
+      _collectionsOffset += moreWords.length;
+      bool hasMore = moreWords.length == 15;
+
+      // Update state with new words
+      emit(state.copyWith(
+        isLoadingMore: false,
+        collectionsWords: [...state.collectionsWords, ...moreWords],
+        hasMoreCollections: hasMore,
+      ));
+    } catch (e) {
+      print("Error loading more collections: $e");
+      emit(state.copyWith(isLoadingMore: false));
     }
   }
 

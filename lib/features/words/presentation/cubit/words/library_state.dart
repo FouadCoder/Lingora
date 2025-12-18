@@ -11,14 +11,17 @@ class LibraryState {
   final List<WordEntity> collectionsWords;
   final bool isLoadingMore;
   final bool hasMore;
+  final bool hasMoreCollections;
 
-  const LibraryState(
-      {this.status = LibraryStatus.initial,
-      this.actionStatus = LibraryActionStatus.initial,
-      this.libraryWords = const [],
-      this.collectionsWords = const [],
-      this.isLoadingMore = false,
-      this.hasMore = true});
+  const LibraryState({
+    this.status = LibraryStatus.initial,
+    this.actionStatus = LibraryActionStatus.initial,
+    this.libraryWords = const [],
+    this.collectionsWords = const [],
+    this.isLoadingMore = false,
+    this.hasMore = true,
+    this.hasMoreCollections = true,
+  });
 
   LibraryState copyWith({
     LibraryStatus? status,
@@ -27,6 +30,7 @@ class LibraryState {
     List<WordEntity>? collectionsWords,
     bool? isLoadingMore,
     bool? hasMore,
+    bool? hasMoreCollections,
   }) {
     return LibraryState(
       status: status ?? this.status,
@@ -35,6 +39,7 @@ class LibraryState {
       collectionsWords: collectionsWords ?? this.collectionsWords,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       hasMore: hasMore ?? this.hasMore,
+      hasMoreCollections: hasMoreCollections ?? this.hasMoreCollections,
     );
   }
 }

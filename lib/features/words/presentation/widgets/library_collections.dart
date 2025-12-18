@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
@@ -47,14 +48,19 @@ class CollectionsLibrary extends StatelessWidget {
   Widget _buildItem(BuildContext context, int index) {
     final type = CollectionType.values[index];
 
-    return AppCard(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Image.asset(type.imagePath, height: 24, width: 24),
-          SizedBox(width: AppDimens.elementBetween),
-          Text(type.name, style: type.wordStyle(context)),
-        ],
+    return GestureDetector(
+      onTap: () {
+        context.push('/collections/${type.name}');
+      },
+      child: AppCard(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Image.asset(type.imagePath, height: 24, width: 24),
+            SizedBox(width: AppDimens.elementBetween),
+            Text(type.name, style: type.wordStyle(context)),
+          ],
+        ),
       ),
     );
   }

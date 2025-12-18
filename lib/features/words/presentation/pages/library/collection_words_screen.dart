@@ -21,12 +21,28 @@ class CollectionWordsScreen extends StatefulWidget {
 }
 
 class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
     context
         .read<LibraryCubit>()
         .getWordsByCollection(widget.collectionType.name);
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 600) {
+        context
+            .read<LibraryCubit>()
+            .loadMoreCollections(widget.collectionType.name);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
