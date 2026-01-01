@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 import 'package:lingora/features/words/data/models/collection_model.dart';
+import 'package:lingora/features/words/data/models/note_model.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
-class TranslateModel {
+class WordModel {
   final String? id;
   final String? userId;
   final String? categoryId;
@@ -16,12 +17,14 @@ class TranslateModel {
   final List<String> synonyms;
   final Language? translateFrom;
   final Language? translateTo;
-  final CollectionModel collectionModel;
+  final NoteModel note;
+  final CollectionModel collection;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
+  final bool isFavorite;
 
-  const TranslateModel({
+  const WordModel({
     this.id,
     this.userId,
     this.categoryId,
@@ -34,14 +37,16 @@ class TranslateModel {
     this.synonyms = const [],
     required this.translateFrom,
     required this.translateTo,
-    required this.collectionModel,
-    required this.createdAt,
+    required this.note,
+    required this.collection,
     required this.updatedAt,
+    required this.createdAt,
     this.deletedAt,
+    this.isFavorite = false,
   });
 
-  factory TranslateModel.fromJson(Map<String, dynamic> json) {
-    return TranslateModel(
+  factory WordModel.fromJson(Map<String, dynamic> json) {
+    return WordModel(
       id: json['id'],
       userId: json['user_id'],
       categoryId: json['category_id'],
@@ -58,9 +63,22 @@ class TranslateModel {
       translateTo: json["translate_to"] != null
           ? LanguageData.getLanguageByCode(json["translate_to"])
           : LanguageData.getLanguageByCode("ar"),
-      collectionModel: json["collection"] != null
-          ? CollectionModel.fromJson(json["collection"])
+      note: json['notes'] != null
+          ? (json['notes'] is List && (json['notes'] as List).isNotEmpty
+              ? NoteModel.fromJson((json['notes'] as List).first)
+              : NoteModel.fromJson(json['notes'] as Map<String, dynamic>))
+          : NoteModel.empty(),
+      collection: json['collections'] != null
+          ? (json['collections'] is List &&
+                  (json['collections'] as List).isNotEmpty
+              ? CollectionModel.fromJson((json['collections'] as List).first)
+              : CollectionModel.fromJson(
+                  json['collections'] as Map<String, dynamic>))
           : CollectionModel.empty(),
+      isFavorite:
+          json['favorites'] != null && (json['favorites'] as List).isNotEmpty
+              ? true
+              : false,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null
@@ -69,31 +87,9 @@ class TranslateModel {
     );
   }
 
-  // Empty
-  factory TranslateModel.empty() {
-    return TranslateModel(
-      id: '',
-      userId: '',
-      categoryId: '',
-      original: '',
-      translated: '',
-      pos: '',
-      pronunciation: '',
-      meaning: '',
-      examples: const [],
-      synonyms: const [],
-      translateFrom: LanguageData.getLanguageByCode("en"),
-      translateTo: LanguageData.getLanguageByCode("ar"),
-      collectionModel: CollectionModel.empty(),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      deletedAt: null,
-    );
-  }
-
   // To Entity
-  TranslateEntity toEntity() {
-    return TranslateEntity(
+  WordEntity toEntity() {
+    return WordEntity(
       id: id,
       userId: userId,
       categoryId: categoryId,
@@ -106,10 +102,36 @@ class TranslateModel {
       synonyms: synonyms,
       translateFrom: translateFrom,
       translateTo: translateTo,
-      collection: collectionModel.toEntity(),
+      note: note.toEntity(),
+      collection: collection.toEntity(),
+      isFavorite: isFavorite,
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,
+    );
+  }
+
+  // To Empty
+  factory WordModel.empty() {
+    return WordModel(
+      id: '',
+      userId: '',
+      categoryId: '',
+      original: '',
+      translated: '',
+      pos: '',
+      pronunciation: '',
+      meaning: '',
+      examples: const [],
+      synonyms: const [],
+      translateFrom: LanguageData.getLanguageByCode("en"),
+      translateTo: LanguageData.getLanguageByCode("ar"),
+      note: NoteModel.empty(),
+      collection: CollectionModel.empty(),
+      isFavorite: false,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      deletedAt: null,
     );
   }
 }

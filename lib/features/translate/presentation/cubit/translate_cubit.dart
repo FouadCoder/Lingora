@@ -68,8 +68,12 @@ class TranslateCubit extends Cubit<TranslateState> {
       // Translate
       final translate = await translateUsecase.call(params);
 
+      // Print everything
+      print(
+          "translate ================== ${translate.id} , ${translate.translated} ,, ${translate.original}");
       emit(state.copyWith(status: TranslateStatus.success, result: translate));
     } catch (e) {
+      print("Error on translate ================== $e");
       emit(state.copyWith(status: TranslateStatus.failure));
     }
   }

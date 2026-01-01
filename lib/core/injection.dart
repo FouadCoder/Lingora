@@ -8,30 +8,24 @@ import 'package:lingora/features/analytics/domain/repositories/analytics_reposit
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
-import 'package:lingora/features/favorites/data/datasources/favorites_remote_data.dart';
-import 'package:lingora/features/favorites/data/repositories_impl/favorites_repository_impl.dart';
-import 'package:lingora/features/favorites/domain/repositories/favorites_repository.dart';
-import 'package:lingora/features/favorites/domain/usecases/add_to_favorites_usecase.dart';
-import 'package:lingora/features/favorites/domain/usecases/get_favorites_usecase.dart';
-import 'package:lingora/features/favorites/domain/usecases/remove_from_favorites_usecase.dart';
-import 'package:lingora/features/favorites/presentation/cubit/favorites_cubit.dart';
+import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
+import 'package:lingora/features/words/domain/usecases/favorites_usecase/add_to_favorites_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/favorites_usecase/get_favorites_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/favorites_usecase/remove_from_favorites_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/library_usecase/get_words_by_collection_usecase.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/history/data/datasources/history_remote_data.dart';
 import 'package:lingora/features/history/data/repositories_impl/history_repository_impl.dart';
 import 'package:lingora/features/history/domain/repositories/history_repository.dart';
 import 'package:lingora/features/history/domain/usecases/fetch_history_usecase.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
-import 'package:lingora/features/library/data/datasources/library_local_data.dart';
-import 'package:lingora/features/library/data/datasources/library_remote_data.dart';
-import 'package:lingora/features/library/data/repositories_impl/library_repository_impl.dart';
-import 'package:lingora/features/library/domain/repositories/library_repository.dart';
-import 'package:lingora/features/library/domain/usecases/get_library_usecase.dart';
-import 'package:lingora/features/library/domain/usecases/update_word_collection_usecase.dart';
-import 'package:lingora/features/library/presentation/cubit/library_cubit.dart';
-import 'package:lingora/features/notes/data/datasources/notes_remote_data.dart';
-import 'package:lingora/features/notes/data/repositories_impl/notes_repository_impl.dart';
-import 'package:lingora/features/notes/domain/repositories/notes_repository.dart';
-import 'package:lingora/features/notes/domain/usecases/update_note_usecase.dart';
-import 'package:lingora/features/notes/presentation/cubit/notes_cubit.dart';
+import 'package:lingora/features/words/data/repositories_impl/library_repository_impl.dart';
+import 'package:lingora/features/words/domain/repositories/library_repository.dart';
+import 'package:lingora/features/words/domain/usecases/library_usecase/get_library_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/notes_usecase/update_note_usecase.dart';
+import 'package:lingora/features/words/domain/usecases/update_word_collection_usecase.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/notes/notes_cubit.dart';
 import 'package:lingora/features/settings/data/datasources/settings_local_data.dart';
 import 'package:lingora/features/settings/data/repositories_impl/settings_repository_impl.dart';
 import 'package:lingora/features/settings/domain/repositories/settings_repository.dart';
@@ -61,30 +55,24 @@ Future<void> setupInjection() async {
 
   // Database
   injection.registerSingleton(TranslateRemoteData(injection()));
-  injection.registerSingleton(LibraryRemoteData(injection()));
-  injection.registerSingleton(LibraryLocalData());
-  injection.registerSingleton(NotesRemoteData(injection()));
   injection.registerLazySingleton<AnalyticsRemoteData>(
       () => AnalyticsRemoteDataImpl(injection()));
   injection.registerSingleton(HistoryRemoteData(injection()));
   injection.registerSingleton(SettingsLocalData());
-  injection.registerSingleton(FavoritesRemoteData(injection()));
+  injection.registerLazySingleton<WordsRemoteData>(
+      () => WordsRemoteDataImpl(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
       () => TranslateRepositoryImpl(injection()));
   injection.registerLazySingleton<LibraryRepository>(
-      () => LibraryRepositoryImpl(injection(), injection()));
-  injection.registerLazySingleton<NotesRepository>(
-      () => NotesRepositoryImpl(injection()));
+      () => LibraryRepositoryImpl(injection()));
   injection.registerLazySingleton<AnalyticsRepository>(
       () => AnalyticsRepositoryImpl(injection()));
   injection.registerLazySingleton<HistoryRepository>(
       () => HistoryRepositoryImpl(injection()));
   injection.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(injection()));
-  injection.registerLazySingleton<FavoritesRepository>(
-      () => FavoritesRepositoryImpl(injection()));
 
   // Services
   injection.registerLazySingleton(() => AudioService());
@@ -95,9 +83,8 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => TranslateUsecase(injection()));
   // Library
   injection.registerFactory(() => GetLibraryUsecase(injection()));
+  injection.registerFactory(() => GetWordsByCollectionUsecase(injection()));
   injection.registerFactory(() => UpdateWordCollectionUsecase(injection()));
-  // Notes
-  injection.registerFactory(() => UpdateNoteUsecase(injection()));
   // Analytics
   injection.registerFactory(() => GetAnalyticsUsecase(injection()));
   injection.registerFactory(() => GetDailyActivityUsercase(injection()));
@@ -108,6 +95,8 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => GetLanguageUsecase(injection()));
   injection.registerFactory(() => SetThemeUsecase(injection()));
   injection.registerFactory(() => GetThemeUsecase(injection()));
+  // Notes
+  injection.registerFactory(() => UpdateNoteUsecase(injection()));
   // Audio
   injection.registerFactory(() => PlayAudioUsecase(injection()));
   // Favorites
@@ -118,8 +107,8 @@ Future<void> setupInjection() async {
   // Cubit
   injection.registerFactory<TranslateCubit>(
       () => TranslateCubit(injection(), injection(), injection()));
-  injection.registerFactory<LibraryCubit>(
-      () => LibraryCubit(injection(), injection(), injection(), injection()));
+  injection.registerFactory<LibraryCubit>(() => LibraryCubit(
+      injection(), injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));
