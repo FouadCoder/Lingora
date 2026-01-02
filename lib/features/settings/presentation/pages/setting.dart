@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
@@ -71,7 +72,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   AppCard(
                     child: Column(
                       children: [
-                        Header(icon: Icons.settings, title: "settings".tr()),
+                        Header(
+                            icon: HeroIcons.cog6Tooth, title: "settings".tr()),
                         SizedBox(
                           height: AppDimens.titleContentBetween,
                         ),
@@ -87,7 +89,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                       : ThemeState.light);
                                 },
                                 controller: darkController,
-                                icon: Icons.nightlight_round);
+                                icon: HeroIcons.moon);
                           },
                         ),
                         SizedBox(
@@ -98,7 +100,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             description: 'general_notifications'.tr(),
                             onChanged: (value) {},
                             controller: notificationsController,
-                            icon: Icons.notifications),
+                            icon: HeroIcons.bell),
 
                         SizedBox(
                           height: AppDimens.sectionSpacing,

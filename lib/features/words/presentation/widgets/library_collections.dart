@@ -58,7 +58,7 @@ class CollectionsLibrary extends StatelessWidget {
           children: [
             Image.asset(type.imagePath, height: 24, width: 24),
             SizedBox(width: AppDimens.elementBetween),
-            Text(type.name, style: type.wordStyle(context)),
+            Text(type.displayName, style: type.wordStyle(context)),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
@@ -79,9 +80,9 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
                       : 0),
               child: AppCard(
                   backgroundColor: backgroundColor,
-                  child: Icon(
+                  child: HeroIcon(
                     CollectionType.values[index].icon,
-                    size: 20,
+                    size: AppDimens.iconM,
                   )),
             ),
           );

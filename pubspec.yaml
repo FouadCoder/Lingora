@@ -43,6 +43,8 @@ dependencies:
   animations: ^2.1.0
   flutter_tts: ^4.2.3
   heroicons: ^0.11.0
+  animated_bottom_navigation_bar: ^1.4.0
+  flutter_tabler_icons: ^1.43.0
   # speech_to_text: ^7.0.0
   # audioplayers: ^6.4.0
   # awesome_notifications: ^0.10.0

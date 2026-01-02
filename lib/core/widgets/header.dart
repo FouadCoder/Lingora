@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/widgets/icon_card.dart';
 
 class Header extends StatelessWidget {
-  final IconData icon;
+  final HeroIcons icon;
   final String title;
   const Header({super.key, required this.icon, required this.title});
 
@@ -10,20 +12,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          padding: EdgeInsets.all(4),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Theme.of(context)
-                  .colorScheme
-                  .secondary
-                  .withValues(alpha: 0.07)),
-          child: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 20,
-          ),
-        ),
+        IconCard(icon: icon),
         SizedBox(width: AppDimens.buttonTagHorizontal),
         Text(
           title,

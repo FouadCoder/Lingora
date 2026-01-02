@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/extensions/theme_data.dart';
@@ -73,7 +74,7 @@ class _TranslationInputState extends State<TranslationInput> {
               ),
               // Sound icon
               IconCard(
-                icon: Icons.volume_up_outlined,
+                icon: HeroIcons.speakerWave,
                 onTap: () {
                   context
                       .read<TranslateCubit>()

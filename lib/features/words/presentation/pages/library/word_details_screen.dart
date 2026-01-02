@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -62,7 +62,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Meaning
                 Header(
-                  icon: Icons.lightbulb_outline,
+                  icon: HeroIcons.lightBulb,
                   title: 'meaning'.tr(),
                 ),
 
@@ -90,7 +90,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Synonyms
                 Header(
-                  icon: MaterialCommunityIcons.cards,
+                  icon: HeroIcons.rectangleStack,
                   title: 'synonyms'.tr(),
                 ),
                 SizedBox(
@@ -111,7 +111,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 // Examples
 
                 Header(
-                  icon: Icons.format_quote,
+                  icon: HeroIcons.chatBubbleLeftRight,
                   title: 'examples'.tr(),
                 ),
                 SizedBox(
@@ -165,8 +165,8 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                     },
                     controller: ValueNotifier(activeNotifications),
                     icon: activeNotifications
-                        ? Icons.notifications
-                        : Icons.notifications_off),
+                        ? HeroIcons.bell
+                        : HeroIcons.bellSlash),
 
                 // Translated at
                 SizedBox(

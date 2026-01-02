@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/widgets/icon_card.dart';
 
 class CustomSwtich extends StatelessWidget {
   final String title;
   final String description;
-  final IconData icon;
+  final HeroIcons icon;
   final ValueNotifier<bool> controller;
   final void Function(bool) onChanged;
   const CustomSwtich({
@@ -25,17 +27,12 @@ class CustomSwtich extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(AppDimens.paddingS),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.onSurface,
-              borderRadius: BorderRadius.circular(AppDimens.radiusL),
-            ),
-            child: Icon(
-              icon,
-              color: theme.colorScheme.primary,
-              size: AppDimens.iconL,
-            ),
-          ),
+              padding: EdgeInsets.all(AppDimens.paddingS),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.onSurface,
+                borderRadius: BorderRadius.circular(AppDimens.radiusL),
+              ),
+              child: IconCard(icon: icon)),
           SizedBox(width: AppDimens.subElementBetween),
           Expanded(
             child: Column(

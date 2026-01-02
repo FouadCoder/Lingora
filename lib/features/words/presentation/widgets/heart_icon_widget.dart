@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -63,7 +64,7 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
         }
       },
       child: IconCard(
-        icon: Icons.favorite,
+        icon: HeroIcons.heart,
         iconColor: isOptimisticFavorite
             ? Colors.red
             : Theme.of(context).colorScheme.primary,

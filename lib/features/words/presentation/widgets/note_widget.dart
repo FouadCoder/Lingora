@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
@@ -71,7 +72,7 @@ class _LibraryNotesState extends State<LibraryNotes> {
       },
       child: Column(
         children: [
-          Header(icon: MaterialCommunityIcons.pen, title: 'notes'.tr()),
+          Header(icon: HeroIcons.pencil, title: 'notes'.tr()),
           CustomTextfield(
               controller: noteController,
               label: '',

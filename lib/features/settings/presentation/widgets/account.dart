@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/extensions/theme_data.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
@@ -49,7 +50,7 @@ class _AccountWidgetState extends State<AccountWidget> {
     return AppCard(
         child: Column(
       children: [
-        Header(icon: Icons.person, title: "account".tr()),
+        Header(icon: HeroIcons.user, title: "account".tr()),
         SizedBox(
           height: AppDimens.titleContentBetween,
         ),
