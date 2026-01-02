@@ -19,7 +19,12 @@ ThemeData darkTheme = ThemeData(
     onSecondary: AppColors.text,
     onSurface: AppColors.darkOnSurface,
     outline: AppColors.textMuted,
-    shadow: Colors.white24,
+    shadow: Colors.white,
+  ),
+
+  // Icons
+  iconTheme: IconThemeData(
+    color: Colors.white,
   ),
 
   // Buttons

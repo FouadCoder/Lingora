@@ -8,6 +8,7 @@ class AppCard extends StatelessWidget {
   final double? width;
   final double padding;
   final Gradient? gradient;
+  final List<BoxShadow>? shadow;
 
   const AppCard(
       {super.key,
@@ -16,6 +17,7 @@ class AppCard extends StatelessWidget {
       this.height,
       this.width,
       this.gradient,
+      this.shadow,
       this.padding = AppDimens.paddingM});
 
   @override
@@ -27,7 +29,8 @@ class AppCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: backgroundColor ?? Theme.of(context).colorScheme.surface,
           gradient: gradient,
-          borderRadius: BorderRadius.circular(AppDimens.radiusL)),
+          borderRadius: BorderRadius.circular(AppDimens.radiusL),
+          boxShadow: shadow),
       child: child,
     );
   }

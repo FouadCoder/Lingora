@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 
 class ShortcutWidget extends StatelessWidget {
-  final IconData icon;
+  final HeroIcons icon;
   final String text;
   final VoidCallback? onTap;
   const ShortcutWidget(
@@ -15,22 +16,26 @@ class ShortcutWidget extends StatelessWidget {
       onTap: onTap,
       child: AppCard(
         height: 85,
+        shadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.05),
+            offset: Offset(0, -1),
+            blurRadius: 4,
+          ),
+        ],
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Icon
-            Icon(icon, size: 22, color: Theme.of(context).colorScheme.primary),
-            SizedBox(height: AppDimens.elementBetween),
-            // Text
-            Text(
-              text,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
+            HeroIcon(
+              icon,
+              size: AppDimens.iconXL,
+              color: Theme.of(context).iconTheme.color,
             ),
+
+            SizedBox(height: AppDimens.elementBetween),
           ],
         ),
       ),

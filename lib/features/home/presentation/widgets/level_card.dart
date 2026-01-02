@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
@@ -64,6 +64,20 @@ class LevelCard extends StatelessWidget {
 
     return AppCard(
       backgroundColor: Theme.of(context).colorScheme.primary,
+      shadow: [
+        // BoxShadow(
+        //   color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
+        //   blurRadius: 15,
+        //   spreadRadius: 0,
+        //   offset: Offset(0, 4),
+        // ),
+        // BoxShadow(
+        //   color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+        //   blurRadius: 20,
+        //   spreadRadius: -10,
+        //   offset: Offset(0, 6),
+        // ),
+      ],
       child: Column(
         children: [
           Row(
@@ -75,7 +89,7 @@ class LevelCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(FontAwesome.trophy),
+                    HeroIcon(HeroIcons.checkBadge),
                     SizedBox(
                       height: AppDimens.sectionSpacing,
                     ),
@@ -103,7 +117,7 @@ class LevelCard extends StatelessWidget {
                   width: 150,
                   decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(AppDimens.radiusL)),
+                      borderRadius: BorderRadius.circular(10)),
                   child: Lottie.asset("assets/animation/trophy_2.json",
                       repeat: false))
             ],

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/widgets/shortcut_widget.dart';
 
 class ShortcutsHome extends StatelessWidget {
@@ -9,9 +10,13 @@ class ShortcutsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List shortcuts = [
-      {"icon": Icons.history, "text": "history".tr(), "route": "/history"},
-      {"icon": Icons.favorite, "text": "favorites".tr(), "route": "/favorites"},
-      {"icon": Icons.notifications, "text": "notifications".tr(), "route": ""},
+      {"icon": HeroIcons.clock, "text": "history".tr(), "route": "/history"},
+      {
+        "icon": HeroIcons.heart,
+        "text": "favorites".tr(),
+        "route": "/favorites"
+      },
+      {"icon": HeroIcons.bell, "text": "notifications".tr(), "route": ""},
     ];
     return Row(
       children: List.generate(shortcuts.length, (index) {
