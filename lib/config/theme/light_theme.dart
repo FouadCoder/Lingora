@@ -16,7 +16,7 @@ ThemeData lightTheme = ThemeData(
     secondary: AppColors.brandOrange,
     surface: AppColors.lightBg,
     onSecondary: AppColors.text,
-    onSurface: AppColors.bg,
+    onSurface: AppColors.lightBg,
     outline: AppColors.textMuted,
     shadow: Colors.black12,
   ),
