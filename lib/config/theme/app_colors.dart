@@ -27,4 +27,5 @@ class AppColors {
   static const Color lightText = Color(0xFF0D0D0D);
   static const Color lightTextMuted = Color(0xFF4D4D4D);
   static const Color gold = Color(0xFFFFD700);
+  static const Color successGreen = Color(0xFF2ECC71);
 }

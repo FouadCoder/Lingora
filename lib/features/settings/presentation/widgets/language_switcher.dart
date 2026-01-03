@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
@@ -77,7 +78,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                               ? Icons.check_circle
                               : Icons.circle_outlined,
                           color: isSelected
-                              ? Theme.of(context).colorScheme.secondary
+                              ? AppColors.successGreen
                               : Theme.of(context).colorScheme.onSurface,
                           size: AppDimens.iconL,
                         ),
@@ -85,7 +86,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                         Text(languages[index].name,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: isSelected
-                                  ? Theme.of(context).colorScheme.secondary
+                                  ? AppColors.successGreen
                                   : Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -109,14 +110,8 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          // Icon container
-          Container(
-              padding: EdgeInsets.all(AppDimens.paddingS),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.onSurface,
-                borderRadius: BorderRadius.circular(AppDimens.radiusL),
-              ),
-              child: IconCard(icon: HeroIcons.globeAlt)),
+          // Icon
+          IconCard(icon: HeroIcons.globeAlt),
 
           SizedBox(width: AppDimens.subElementBetween),
 

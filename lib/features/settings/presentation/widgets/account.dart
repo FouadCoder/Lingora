@@ -24,24 +24,30 @@ class _AccountWidgetState extends State<AccountWidget> {
         context: context,
         builder: (context) {
           return CustomeAlertdialog(
-              headline: 'isThisGoodbye'.tr(),
-              title: 'leaveMessage'.tr(),
-              animation: "assets/animation/cry.json",
-              isAnimation: true,
-              leftButtonText: 'logout'.tr(),
-              rightButtonText: 'stay'.tr(),
-              leftbuttonColor: Theme.of(context).colorScheme.onSurface,
-              rightButtonColor: Theme.of(context).colorScheme.primary,
-              functionleftButton: () {
-                context.read<AuthAppCubit>().logout();
-                Navigator.pop(context);
-              },
-              functionRightButton: () {
-                Navigator.of(context).pop();
-              },
-              leftButtonTextColor:
-                  Theme.of(context).textTheme.bodyMedium?.color,
-              rightButtonTextColor: Colors.white);
+            headline: 'isThisGoodbye'.tr(),
+            title: 'leaveMessage'.tr(),
+            animation: "assets/animation/cry.json",
+            isAnimation: true,
+            leftButtonText: 'logout'.tr(),
+            rightButtonText: 'stay'.tr(),
+            leftbuttonColor: Theme.of(context).colorScheme.onSurface,
+            rightButtonColor: Theme.of(context).colorScheme.primary,
+            functionleftButton: () {
+              context.read<AuthAppCubit>().logout();
+              Navigator.pop(context);
+            },
+            functionRightButton: () {
+              Navigator.of(context).pop();
+            },
+            leftButtonTextColor: Theme.of(context).textTheme.bodyMedium?.color,
+            rightButtonTextColor: Colors.white,
+            leftBorder: Border.all(
+                width: 1,
+                color: Theme.of(context)
+                    .colorScheme
+                    .outline
+                    .withValues(alpha: 0.1)),
+          );
         });
   }
 
@@ -58,13 +64,12 @@ class _AccountWidgetState extends State<AccountWidget> {
           // Export button
           Widget exportButton = CustomButton(
               text: "export_data".tr(),
-              color:
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+              color: Theme.of(context).colorScheme.surface,
               border: Border.all(
                   color: Theme.of(context)
                       .colorScheme
                       .outline
-                      .withValues(alpha: 0.1),
+                      .withValues(alpha: 0.5),
                   width: 2),
               function: () {},
               icon: Icons.book,
