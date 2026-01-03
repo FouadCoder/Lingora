@@ -36,7 +36,7 @@ class AnalyticsCard extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!
-                .copyWith(color: Theme.of(context).colorScheme.secondary),
+                .copyWith(color: Theme.of(context).colorScheme.primary),
             overflow: TextOverflow.ellipsis,
           ),
         // If loading
