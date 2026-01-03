@@ -31,7 +31,7 @@ class _AccountWidgetState extends State<AccountWidget> {
               leftButtonText: 'logout'.tr(),
               rightButtonText: 'stay'.tr(),
               leftbuttonColor: Theme.of(context).colorScheme.onSurface,
-              rightButtonColor: Theme.of(context).colorScheme.secondary,
+              rightButtonColor: Theme.of(context).colorScheme.primary,
               functionleftButton: () {
                 context.read<AuthAppCubit>().logout();
                 Navigator.pop(context);
@@ -39,7 +39,8 @@ class _AccountWidgetState extends State<AccountWidget> {
               functionRightButton: () {
                 Navigator.of(context).pop();
               },
-              leftButtonTextColor: Theme.of(context).colorScheme.primary,
+              leftButtonTextColor:
+                  Theme.of(context).textTheme.bodyMedium?.color,
               rightButtonTextColor: Colors.white);
         });
   }

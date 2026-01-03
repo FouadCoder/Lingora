@@ -10,6 +10,7 @@ import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/textfield.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,17 +69,13 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               // App Logo
               SizedBox(
-                height: AppPlatform.isPhone(context)
-                    ? MediaQuery.of(context).size.height * 0.20
-                    : 300,
-                width: AppPlatform.isPhone(context)
-                    ? MediaQuery.of(context).size.width
-                    : 300,
-                child: Image.asset(
-                  'assets/logo/lingora_logo.png',
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
+                  height: AppPlatform.isPhone(context)
+                      ? MediaQuery.of(context).size.height * 0.20
+                      : 300,
+                  width: AppPlatform.isPhone(context)
+                      ? MediaQuery.of(context).size.width
+                      : 300,
+                  child: Lottie.asset("assets/animation/space_man.json")),
 
               SizedBox(
                 height: AppDimens.sectionBetween,
@@ -133,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return CustomButton(
                         isLoading: isLoading,
                         text: 'login_button'.tr(),
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.primary,
                         function: () {
                           context.read<AuthAppCubit>().login(
                               emailController.text, passwordController.text);
@@ -145,12 +142,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 Widget googleButton = // Google
                     CustomButton(
                         text: 'login_with_google'.tr(),
-                        color: Colors.transparent,
+                        color: Theme.of(context).colorScheme.surface,
                         border: Border.all(
-                            width: 2,
-                            color: Theme.of(context).colorScheme.outline),
+                            width: 1,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .outline
+                                .withValues(alpha: 0.1)),
                         function: () {},
-                        textColor: Colors.white);
+                        textColor:
+                            Theme.of(context).textTheme.bodyMedium?.color);
 
                 if (AppPlatform.isPhone(context)) {
                   return Column(
@@ -198,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'signup_button'.tr(),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.secondary),
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ],
