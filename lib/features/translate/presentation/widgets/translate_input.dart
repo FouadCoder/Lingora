@@ -61,7 +61,7 @@ class _TranslationInputState extends State<TranslationInput> {
                     borderRadius: BorderRadius.circular(1),
                     border: Border(
                       left: BorderSide(
-                        color: theme.colorScheme.secondary,
+                        color: theme.colorScheme.primary,
                         width: 4,
                       ),
                     )),
@@ -109,7 +109,7 @@ class _TranslationInputState extends State<TranslationInput> {
               isLoading: widget.isLoading,
               loadingWidget: Text('translating'.tr()),
               text: 'translate_button'.tr(),
-              color: theme.colorScheme.secondary,
+              color: theme.colorScheme.primary,
               function: () {
                 context.read<TranslateCubit>().translate();
               },

@@ -23,7 +23,7 @@ class ShortcutWidget extends StatelessWidget {
             blurRadius: 4,
           ),
         ],
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
