@@ -170,7 +170,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 height: MediaQuery.of(context).size.height * 0.80,
                 child: CustomState(
                   textColor: Colors.white,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                   animation: "assets/animation/error_boat_orange.json",
                   title: 'error_words_title'.tr(),
                   message: 'error_words_message'.tr(),

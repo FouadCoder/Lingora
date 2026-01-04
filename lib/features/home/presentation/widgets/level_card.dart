@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/widgets/app_card.dart';
@@ -39,7 +40,7 @@ class _UserProgressCardState extends State<UserProgressCard> {
       }
 
       // Error
-      return LevelCard(xp: "unavailable".tr(), requiredXp: "0");
+      return LevelCard(xp: "error".tr(), requiredXp: "0");
     });
   }
 }
@@ -64,20 +65,10 @@ class LevelCard extends StatelessWidget {
 
     return AppCard(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      shadow: [
-        // BoxShadow(
-        //   color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
-        //   blurRadius: 15,
-        //   spreadRadius: 0,
-        //   offset: Offset(0, 4),
-        // ),
-        // BoxShadow(
-        //   color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
-        //   blurRadius: 20,
-        //   spreadRadius: -10,
-        //   offset: Offset(0, 6),
-        // ),
-      ],
+      border: Border.all(
+        color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.1),
+        width: 1,
+      ),
       child: Column(
         children: [
           Row(
@@ -113,8 +104,16 @@ class LevelCard extends StatelessWidget {
 
               // trophy animation
               Container(
-                  height: 150,
-                  width: 150,
+                  constraints: BoxConstraints(
+                    maxHeight: 150,
+                    maxWidth: 150,
+                  ),
+                  height: AppPlatform.isPhone(context)
+                      ? MediaQuery.of(context).size.width * 0.30
+                      : 150,
+                  width: AppPlatform.isPhone(context)
+                      ? MediaQuery.of(context).size.width * 0.30
+                      : 150,
                   decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: BorderRadius.circular(10)),

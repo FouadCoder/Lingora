@@ -114,7 +114,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               else if (state.status == FavoriteStatus.error) {
                 return CustomState(
                   textColor: Colors.white,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                   animation: "assets/animation/error_boat_orange.json",
                   title: 'error_favorites_title'.tr(),
                   message: 'error_favorites_message'.tr(),

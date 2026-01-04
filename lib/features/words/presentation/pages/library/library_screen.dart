@@ -160,7 +160,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       height: MediaQuery.of(context).size.height,
                       child: CustomState(
                         textColor: Colors.white,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.primary,
                         animation: "assets/animation/error_boat_orange.json",
                         title: 'error_words_title'.tr(),
                         message: 'error_words_message'.tr(),

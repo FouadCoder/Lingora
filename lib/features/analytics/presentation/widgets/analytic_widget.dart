@@ -115,7 +115,7 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
                 UserAnalyticsRequestStatus.failure) {
               return CustomState(
                 textColor: Colors.white,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
                 animation: "assets/animation/error_cat.json",
                 title: 'analytics_error_title'.tr(),
                 message: 'analytics_error_messages'.tr(),

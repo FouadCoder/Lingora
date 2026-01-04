@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
@@ -50,7 +51,7 @@ class _LibraryNotesState extends State<LibraryNotes> {
             context,
             message: 'note_saved'.tr(),
             icon: Icons.verified_rounded,
-            iconColor: Theme.of(context).colorScheme.secondary,
+            iconColor: AppColors.successGreen,
           );
           // Update initialNote
           setState(() {
