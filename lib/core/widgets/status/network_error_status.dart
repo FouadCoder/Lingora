@@ -5,7 +5,9 @@ import 'package:lingora/core/widgets/flushbar.dart';
 
 class NetworkErrorView extends StatelessWidget {
   final VoidCallback onTap;
-  const NetworkErrorView({super.key, required this.onTap});
+  final bool isFullScreen;
+  const NetworkErrorView(
+      {super.key, required this.onTap, this.isFullScreen = true});
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +17,14 @@ class NetworkErrorView extends StatelessWidget {
       message: "network_error_message".tr(),
       buttonText: "retry_connection".tr(),
       onTap: onTap,
-      isFullScreen: false,
+      isFullScreen: isFullScreen,
     );
   }
 }
 
-class NetworkErrorMessage extends StatelessWidget {
-  const NetworkErrorMessage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showSnackBar(context,
-          message: 'network_error_quick'.tr(),
-          icon: Icons.wifi,
-          iconColor: Colors.red);
-    });
-
-    return const SizedBox.shrink();
-  }
+void showErrorNetworkSnackBar(BuildContext context) {
+  return showSnackBar(context,
+      message: "network_error_quick".tr(),
+      icon: Icons.wifi,
+      iconColor: Colors.red);
 }
