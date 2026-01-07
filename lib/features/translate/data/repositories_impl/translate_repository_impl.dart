@@ -1,3 +1,5 @@
+import 'package:lingora/core/exceptions/network_exception.dart';
+import 'package:lingora/core/service/network_service.dart';
 import 'package:lingora/features/translate/data/datasources/translate_remote_data.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 import 'package:lingora/features/translate/domain/repositories/translate_repository.dart';
@@ -9,6 +11,12 @@ class TranslateRepositoryImpl implements TranslateRepository {
   TranslateRepositoryImpl(this.translateRemoteData);
   @override
   Future<TranslateEntity> translate(TranslateParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
+    // Call
     final model = await translateRemoteData.translate(params);
     return model.toEntity();
   }

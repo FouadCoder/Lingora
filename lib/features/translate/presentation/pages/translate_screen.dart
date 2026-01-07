@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
+import 'package:lingora/core/widgets/status/network_error_status.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_state.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_input.dart';
@@ -77,6 +78,10 @@ class _TranslateScreenState extends State<TranslateScreen> {
               icon: HeroIcons.checkCircle,
               iconColor: AppColors.successGreen,
             );
+            break;
+
+          case TranslateStatus.networkError:
+            showErrorNetworkSnackBar(context);
             break;
 
           case TranslateStatus.loading:

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_params.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_usecase.dart';
@@ -49,17 +50,8 @@ class TranslateCubit extends Cubit<TranslateState> {
         return;
       }
 
-      // if userId is null
-      emit(state.copyWith(status: TranslateStatus.loading));
-      final userId = supabaseClient.auth.currentUser?.id;
-      if (userId == null) {
-        emit(state.copyWith(status: TranslateStatus.failure));
-        return;
-      }
-
       // Create params
       final params = TranslateParams(
-        userId: userId,
         input: state.inputText,
         from: state.sourceLanguage.code,
         to: state.targetLanguage.code,
@@ -67,13 +59,11 @@ class TranslateCubit extends Cubit<TranslateState> {
 
       // Translate
       final translate = await translateUsecase.call(params);
-
-      // Print everything
-      print(
-          "translate ================== ${translate.id} , ${translate.translated} ,, ${translate.original}");
       emit(state.copyWith(status: TranslateStatus.success, result: translate));
+    } on NetworkException {
+      emit(state.copyWith(status: TranslateStatus.networkError));
     } catch (e) {
-      print("Error on translate ================== $e");
+      print("Error on translate ========== $e");
       emit(state.copyWith(status: TranslateStatus.failure));
     }
   }
