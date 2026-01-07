@@ -20,25 +20,28 @@ class CustomeAlertdialog extends StatelessWidget {
   final VoidCallback functionRightButton;
   final Gradient? leftGradient;
   final Gradient? rightGradient;
+  final Border? leftBorder;
+  final Border? rightBorder;
 
-  const CustomeAlertdialog({
-    super.key,
-    this.image,
-    required this.headline,
-    required this.title,
-    required this.animation,
-    required this.isAnimation,
-    this.leftButtonText,
-    required this.rightButtonText,
-    this.leftbuttonColor,
-    required this.rightButtonColor,
-    this.functionleftButton,
-    required this.functionRightButton,
-    this.leftButtonTextColor,
-    required this.rightButtonTextColor,
-    this.leftGradient,
-    this.rightGradient,
-  });
+  const CustomeAlertdialog(
+      {super.key,
+      this.image,
+      required this.headline,
+      required this.title,
+      required this.animation,
+      required this.isAnimation,
+      this.leftButtonText,
+      required this.rightButtonText,
+      this.leftbuttonColor,
+      required this.rightButtonColor,
+      this.functionleftButton,
+      required this.functionRightButton,
+      this.leftButtonTextColor,
+      required this.rightButtonTextColor,
+      this.leftGradient,
+      this.rightGradient,
+      this.leftBorder,
+      this.rightBorder});
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +101,7 @@ class CustomeAlertdialog extends StatelessWidget {
                         function: functionleftButton!,
                         textColor: leftButtonTextColor,
                         gradient: leftGradient,
+                        border: leftBorder,
                         width: double.infinity),
                   ),
                 if (leftButtonText != null)
@@ -111,6 +115,7 @@ class CustomeAlertdialog extends StatelessWidget {
                       function: functionRightButton,
                       textColor: rightButtonTextColor,
                       gradient: rightGradient,
+                      border: rightBorder,
                       width: double.infinity),
                 ),
               ],

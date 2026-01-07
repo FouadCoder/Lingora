@@ -1,17 +1,18 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 
 void showSnackBar(
   BuildContext context, {
   String? title,
   String? message,
-  IconData? icon,
+  HeroIcons? icon,
   Color? iconColor,
 }) {
   Flushbar(
     title: (title?.isEmpty ?? true) ? null : title,
     message: message, // if it's null, Flushbar just won’t show it
-    icon: icon != null ? Icon(icon, color: iconColor) : null,
+    icon: icon != null ? HeroIcon(icon, color: iconColor) : null,
     margin: const EdgeInsets.all(10),
     padding: const EdgeInsets.all(16),
     duration: const Duration(seconds: 4),

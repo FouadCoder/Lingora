@@ -104,6 +104,7 @@
     "loading_History": "Loading your history",
     "errorHistoryMessage": "We couldn't load your translation history. Please try again",
     "learning_feed": "Learning Feed",
+    "retry_connection": "Reconnect",
     "collections": "Collections",
     "learning": "Learning",
     "saved": "Saved",
@@ -143,6 +144,8 @@
     "word_added_to_favorites": "Word added to your favorites!",
     "word_removed_from_favorites": "Word removed from your favorites!",
     "empty_collection_title": "No words in this collection yet",
-    "empty_collection_message": "Start adding words to this collection and they'll appear here"
-
+    "empty_collection_message": "Start adding words to this collection and they'll appear here",
+    "network_error_title": "Connection Lost",
+    "network_error_message": "Unable to connect to the internet. Please check your network connection and try again",
+    "network_error_quick": "No internet connection"
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
@@ -54,7 +56,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
             showSnackBar(
               context,
               message: 'translation_input_empty'.tr(),
-              icon: Icons.info_outline,
+              icon: HeroIcons.informationCircle,
               iconColor: theme.colorScheme.primary,
             );
             break;
@@ -63,7 +65,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
             showSnackBar(
               context,
               message: 'translation_failed'.tr(),
-              icon: Icons.error_outline,
+              icon: HeroIcons.exclamationTriangle,
               iconColor: theme.colorScheme.error,
             );
             break;
@@ -72,8 +74,8 @@ class _TranslateScreenState extends State<TranslateScreen> {
             showSnackBar(
               context,
               message: 'translation_success_points'.tr(),
-              icon: Icons.verified_rounded,
-              iconColor: theme.colorScheme.secondary,
+              icon: HeroIcons.checkCircle,
+              iconColor: AppColors.successGreen,
             );
             break;
 

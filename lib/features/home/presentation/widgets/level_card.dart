@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/widgets/app_card.dart';
@@ -39,7 +40,7 @@ class _UserProgressCardState extends State<UserProgressCard> {
       }
 
       // Error
-      return LevelCard(xp: "unavailable".tr(), requiredXp: "0");
+      return LevelCard(xp: "error".tr(), requiredXp: "0");
     });
   }
 }
@@ -63,8 +64,11 @@ class LevelCard extends StatelessWidget {
     }
 
     return AppCard(
-      backgroundColor:
-          Theme.of(context).colorScheme.secondary.withValues(alpha: 0.3),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      border: Border.all(
+        color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.1),
+        width: 1,
+      ),
       child: Column(
         children: [
           Row(
@@ -76,14 +80,13 @@ class LevelCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(FontAwesome.trophy),
+                    HeroIcon(HeroIcons.checkBadge),
                     SizedBox(
                       height: AppDimens.sectionSpacing,
                     ),
                     Text(
                       "your_points".tr(),
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.outline),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(
                       height: AppDimens.subElementBetween,
@@ -100,9 +103,20 @@ class LevelCard extends StatelessWidget {
               ),
 
               // trophy animation
-              SizedBox(
-                  height: 150,
-                  width: 150,
+              Container(
+                  constraints: BoxConstraints(
+                    maxHeight: 150,
+                    maxWidth: 150,
+                  ),
+                  height: AppPlatform.isPhone(context)
+                      ? MediaQuery.of(context).size.width * 0.30
+                      : 150,
+                  width: AppPlatform.isPhone(context)
+                      ? MediaQuery.of(context).size.width * 0.30
+                      : 150,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(10)),
                   child: Lottie.asset("assets/animation/trophy_2.json",
                       repeat: false))
             ],
@@ -116,10 +130,7 @@ class LevelCard extends StatelessWidget {
             children: [
               Text(
                 "progress_to_next_level".tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: Theme.of(context).colorScheme.outline),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
                 width: AppDimens.subElementBetween,
@@ -139,16 +150,23 @@ class LevelCard extends StatelessWidget {
           SizedBox(
             height: AppDimens.subElementBetween,
           ),
-          LinearPercentIndicator(
-            lineHeight: 8,
-            percent: getProgress(xp, requiredXp),
-            barRadius: const Radius.circular(10),
-            padding: EdgeInsets.zero,
-            progressColor: Theme.of(context).colorScheme.secondary,
-            animation: true,
-            animationDuration: 800,
-            curve: Curves.easeInOut,
-            backgroundColor: Theme.of(context).colorScheme.onSurface,
+          Container(
+            height: 20,
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppDimens.radiusL),
+                color: Theme.of(context).scaffoldBackgroundColor),
+            child: LinearPercentIndicator(
+              lineHeight: 8,
+              percent: getProgress(xp, requiredXp),
+              barRadius: Radius.circular(AppDimens.radiusL),
+              padding: EdgeInsets.zero,
+              progressColor: Theme.of(context).colorScheme.primary,
+              animation: true,
+              animationDuration: 800,
+              curve: Curves.easeInOut,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            ),
           )
         ],
       ),

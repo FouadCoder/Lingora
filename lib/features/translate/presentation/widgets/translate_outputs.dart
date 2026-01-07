@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
@@ -42,7 +42,7 @@ class WordTranslatedCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Header(
-                  icon: MaterialCommunityIcons.translate,
+                  icon: HeroIcons.language,
                   title: 'translated'.tr(),
                 ),
                 Row(
@@ -54,12 +54,12 @@ class WordTranslatedCard extends StatelessWidget {
                     SizedBox(
                       width: AppDimens.buttonTagHorizontal,
                     ),
-                    IconCard(icon: Icons.notifications),
+                    IconCard(icon: HeroIcons.heart),
                     SizedBox(
                       width: AppDimens.buttonTagHorizontal,
                     ),
                     IconCard(
-                      icon: Icons.volume_up_outlined,
+                      icon: HeroIcons.speakerWave,
                       onTap: () {
                         context.read<LibraryCubit>().playAudio(
                               translated,
@@ -126,11 +126,11 @@ class WordInfoCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Header(
-                  icon: Icons.book_outlined,
+                  icon: HeroIcons.bookOpen,
                   title: 'word_info'.tr(),
                 ),
                 IconCard(
-                  icon: Icons.volume_up_outlined,
+                  icon: HeroIcons.speakerWave,
                   onTap: () {
                     context.read<LibraryCubit>().playAudio(
                           original,

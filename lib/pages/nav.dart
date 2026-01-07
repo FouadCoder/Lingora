@@ -1,20 +1,20 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:lingora/core/utils/platfrom.dart';
-import 'package:lingora/features/translate/presentation/pages/translate_screen.dart';
 import 'package:lingora/features/home/presentation/pages/home_screen.dart';
+import 'package:lingora/features/translate/presentation/pages/translate_screen.dart';
 import 'package:lingora/features/words/presentation/pages/library/library_screen.dart';
 import 'package:lingora/features/analytics/presentation/pages/insights_screen.dart';
 import 'package:lingora/features/settings/presentation/pages/setting.dart';
 import 'package:lingora/core/widgets/app_sidebar.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class Nav extends StatefulWidget {
   final int indexPage;
   const Nav({
     super.key,
-    this.indexPage = 0,
+    this.indexPage = 10, // Fake number
   });
 
   @override
@@ -24,6 +24,7 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   late int currentPage;
   late List pages;
+  bool isCenterScreen = true;
   late SidebarXController controllerSideBar;
 
   @override
@@ -41,7 +42,6 @@ class _NavState extends State<Nav> {
 
     pages = [
       HomeScreen(),
-      TranslateScreen(),
       LibraryScreen(),
       InsightsScreen(),
       SettingScreen(),
@@ -69,42 +69,45 @@ class _NavState extends State<Nav> {
                 ),
               ],
             )
-          : pages[currentPage],
+          : isCenterScreen
+              ? TranslateScreen()
+              : pages[currentPage],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => setState(() {
+          isCenterScreen = true;
+          currentPage = 10; // Fake number
+        }),
+        elevation: 6,
+        shape: const CircleBorder(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: Icon(
+          Icons.translate_rounded,
+          color: Theme.of(context).iconTheme.color,
+          size: 28,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AppPlatform.isDesktop(context)
           ? null
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              child: SalomonBottomBar(
-                currentIndex: currentPage,
-                onTap: (i) => setState(() => currentPage = i),
-                items: [
-                  SalomonBottomBarItem(
-                    icon: const Icon(Icons.home_rounded),
-                    title: Text("home".tr()),
-                    selectedColor: Theme.of(context).colorScheme.secondary,
-                  ),
-                  SalomonBottomBarItem(
-                    icon: const Icon(Icons.translate_rounded),
-                    title: Text("translate".tr()),
-                    selectedColor: Theme.of(context).colorScheme.secondary,
-                  ),
-                  SalomonBottomBarItem(
-                    icon: const Icon(Icons.book_rounded),
-                    title: Text("library".tr()),
-                    selectedColor: Theme.of(context).colorScheme.secondary,
-                  ),
-                  SalomonBottomBarItem(
-                    icon: const Icon(Icons.insert_chart_outlined),
-                    title: Text("insights".tr()),
-                    selectedColor: Theme.of(context).colorScheme.secondary,
-                  ),
-                  SalomonBottomBarItem(
-                    icon: const Icon(Icons.settings),
-                    title: Text("settings".tr()),
-                    selectedColor: Theme.of(context).colorScheme.secondary,
-                  ),
-                ],
-              ),
+          : AnimatedBottomNavigationBar(
+              icons: [
+                TablerIcons.home,
+                TablerIcons.book,
+                TablerIcons.chart_bar,
+                TablerIcons.settings,
+              ],
+              activeIndex: currentPage,
+              onTap: (i) => setState(() {
+                isCenterScreen = false;
+                currentPage = i;
+              }),
+              notchMargin: 18,
+              gapLocation: GapLocation.center,
+              notchSmoothness: NotchSmoothness.defaultEdge,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              activeColor: Theme.of(context).colorScheme.primary,
+              inactiveColor: Theme.of(context).iconTheme.color,
+              iconSize: 28,
             ),
     );
   }

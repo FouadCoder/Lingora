@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/config/theme/app_colors.dart';
 
 enum CollectionType { learning, saved, masters }
@@ -29,14 +30,14 @@ extension CollectionTypeExt on CollectionType {
     }
   }
 
-  IconData get icon {
+  HeroIcons get icon {
     switch (this) {
       case CollectionType.learning:
-        return Icons.school;
+        return HeroIcons.academicCap;
       case CollectionType.saved:
-        return Icons.bookmark;
+        return HeroIcons.bookmark;
       case CollectionType.masters:
-        return Icons.emoji_events;
+        return HeroIcons.sparkles;
     }
   }
 

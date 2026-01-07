@@ -53,7 +53,7 @@ class HeatmapCard extends StatelessWidget {
                     Text(
                       totalTranslations.toString(),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary),
+                          color: Theme.of(context).colorScheme.primary),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
@@ -78,7 +78,7 @@ class HeatmapCard extends StatelessWidget {
                     Text(
                       activeDays.toString(),
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary),
+                          color: Theme.of(context).colorScheme.primary),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
@@ -103,7 +103,7 @@ class InfoCards extends StatelessWidget {
           children: [
             // Header with icon
             Header(
-              icon: Icons.lightbulb_outline,
+              icon: HeroIcons.lightBulb,
               title: 'meaning'.tr(),
             ),
             SizedBox(
@@ -140,7 +140,7 @@ class InfoCards extends StatelessWidget {
           children: [
             // Header with icon
             Header(
-              icon: Icons.format_quote,
+              icon: HeroIcons.chatBubbleLeftRight,
               title: 'examples'.tr(),
             ),
             SizedBox(
@@ -183,7 +183,7 @@ class InfoCards extends StatelessWidget {
           children: [
             // Header with icon
             Header(
-              icon: MaterialCommunityIcons.cards,
+              icon: HeroIcons.rectangleStack,
               title: 'synonyms'.tr(),
             ),
             SizedBox(

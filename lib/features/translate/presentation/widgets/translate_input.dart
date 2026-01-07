@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/extensions/theme_data.dart';
@@ -60,7 +61,7 @@ class _TranslationInputState extends State<TranslationInput> {
                     borderRadius: BorderRadius.circular(1),
                     border: Border(
                       left: BorderSide(
-                        color: theme.colorScheme.secondary,
+                        color: theme.colorScheme.primary,
                         width: 4,
                       ),
                     )),
@@ -73,7 +74,7 @@ class _TranslationInputState extends State<TranslationInput> {
               ),
               // Sound icon
               IconCard(
-                icon: Icons.volume_up_outlined,
+                icon: HeroIcons.speakerWave,
                 onTap: () {
                   context
                       .read<TranslateCubit>()
@@ -108,7 +109,7 @@ class _TranslationInputState extends State<TranslationInput> {
               isLoading: widget.isLoading,
               loadingWidget: Text('translating'.tr()),
               text: 'translate_button'.tr(),
-              color: theme.colorScheme.secondary,
+              color: theme.colorScheme.primary,
               function: () {
                 context.read<TranslateCubit>().translate();
               },

@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
@@ -36,8 +38,8 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
           showSnackBar(
             context,
             message: 'word_added_to_collection'.tr(),
-            icon: Icons.verified_rounded,
-            iconColor: Theme.of(context).colorScheme.secondary,
+            icon: HeroIcons.checkCircle,
+            iconColor: AppColors.successGreen,
           );
         }
         // Error
@@ -49,7 +51,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
           showSnackBar(
             context,
             message: 'something_went_wrong'.tr(),
-            icon: Icons.error_outline,
+            icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }
@@ -59,7 +61,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
         children: List.generate(CollectionType.values.length, (index) {
           bool isSelected = collectionType == CollectionType.values[index];
           final backgroundColor = (isSelected)
-              ? Theme.of(context).colorScheme.secondary
+              ? Theme.of(context).colorScheme.primary
               : Theme.of(context).colorScheme.onSurface;
 
           return GestureDetector(
@@ -79,9 +81,9 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
                       : 0),
               child: AppCard(
                   backgroundColor: backgroundColor,
-                  child: Icon(
+                  child: HeroIcon(
                     CollectionType.values[index].icon,
-                    size: 20,
+                    size: AppDimens.iconM,
                   )),
             ),
           );

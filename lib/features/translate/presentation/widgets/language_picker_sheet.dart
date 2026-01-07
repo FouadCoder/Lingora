@@ -88,7 +88,7 @@ class LanguagePickerSheet extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w500,
                           color: isActive
-                              ? Theme.of(context).colorScheme.secondary
+                              ? Theme.of(context).colorScheme.primary
                               : Theme.of(context).textTheme.bodyMedium!.color),
                     ),
                     subtitle: language.nativeName != language.name
@@ -99,18 +99,18 @@ class LanguagePickerSheet extends StatelessWidget {
                                 .bodyMedium
                                 ?.copyWith(
                                   color: isActive
-                                      ? Theme.of(context).colorScheme.secondary
+                                      ? Theme.of(context).colorScheme.primary
                                       : Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withValues(alpha: 0.7),
+                                          .textTheme
+                                          .bodySmall
+                                          ?.color,
                                 ),
                           )
                         : null,
                     trailing: isActive
                         ? Icon(
                             Icons.check_circle,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(context).colorScheme.primary,
                             size: AppDimens.iconL,
                           )
                         : null,

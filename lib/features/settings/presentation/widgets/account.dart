@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lingora/core/extensions/theme_data.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
@@ -24,23 +24,30 @@ class _AccountWidgetState extends State<AccountWidget> {
         context: context,
         builder: (context) {
           return CustomeAlertdialog(
-              headline: 'isThisGoodbye'.tr(),
-              title: 'leaveMessage'.tr(),
-              animation: "assets/animation/cry.json",
-              isAnimation: true,
-              leftButtonText: 'logout'.tr(),
-              rightButtonText: 'stay'.tr(),
-              leftbuttonColor: Theme.of(context).colorScheme.onSurface,
-              rightButtonColor: Theme.of(context).colorScheme.secondary,
-              functionleftButton: () {
-                context.read<AuthAppCubit>().logout();
-                Navigator.pop(context);
-              },
-              functionRightButton: () {
-                Navigator.of(context).pop();
-              },
-              leftButtonTextColor: Theme.of(context).colorScheme.primary,
-              rightButtonTextColor: Colors.white);
+            headline: 'isThisGoodbye'.tr(),
+            title: 'leaveMessage'.tr(),
+            animation: "assets/animation/cry.json",
+            isAnimation: true,
+            leftButtonText: 'logout'.tr(),
+            rightButtonText: 'stay'.tr(),
+            leftbuttonColor: Theme.of(context).colorScheme.onSurface,
+            rightButtonColor: Theme.of(context).colorScheme.primary,
+            functionleftButton: () {
+              context.read<AuthAppCubit>().logout();
+              Navigator.pop(context);
+            },
+            functionRightButton: () {
+              Navigator.of(context).pop();
+            },
+            leftButtonTextColor: Theme.of(context).textTheme.bodyMedium?.color,
+            rightButtonTextColor: Colors.white,
+            leftBorder: Border.all(
+                width: 1,
+                color: Theme.of(context)
+                    .colorScheme
+                    .outline
+                    .withValues(alpha: 0.1)),
+          );
         });
   }
 
@@ -49,7 +56,7 @@ class _AccountWidgetState extends State<AccountWidget> {
     return AppCard(
         child: Column(
       children: [
-        Header(icon: Icons.person, title: "account".tr()),
+        Header(icon: HeroIcons.user, title: "account".tr()),
         SizedBox(
           height: AppDimens.titleContentBetween,
         ),
@@ -57,8 +64,13 @@ class _AccountWidgetState extends State<AccountWidget> {
           // Export button
           Widget exportButton = CustomButton(
               text: "export_data".tr(),
-              color: Colors.transparent,
-              border: Border.all(color: Theme.of(context).border, width: 2),
+              color: Theme.of(context).colorScheme.surface,
+              border: Border.all(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .outline
+                      .withValues(alpha: 0.5),
+                  width: 2),
               function: () {},
               icon: Icons.book,
               borderRadius: AppDimens.radiusL,
@@ -70,16 +82,21 @@ class _AccountWidgetState extends State<AccountWidget> {
               bool isLoading = state.status == AuthAppStatus.loading;
               return CustomButton(
                   text: "logout".tr(),
-                  color: Colors.transparent,
+                  color: Colors.red.withValues(alpha: 0.5),
                   isLoading: isLoading,
-                  border: Border.all(color: Theme.of(context).border, width: 2),
+                  border: Border.all(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withValues(alpha: 0.1),
+                      width: 2),
                   function: () {
                     showSadMessageIfuserLogout(context);
                   },
                   icon: Icons.logout,
-                  iconColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
                   borderRadius: AppDimens.radiusL,
-                  textColor: Theme.of(context).colorScheme.error);
+                  textColor: Colors.white);
             },
           );
 

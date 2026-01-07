@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 
 class IconCard extends StatelessWidget {
-  final IconData icon;
+  final HeroIcons icon;
   final Color? background;
   final Color? iconColor;
   final VoidCallback? onTap;
@@ -22,9 +23,9 @@ class IconCard extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppDimens.radiusL),
             color: background ?? Theme.of(context).colorScheme.onSurface),
-        child: Icon(
+        child: HeroIcon(
           icon,
-          color: iconColor ?? Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).iconTheme.color,
           size: AppDimens.iconL,
         ),
       ),

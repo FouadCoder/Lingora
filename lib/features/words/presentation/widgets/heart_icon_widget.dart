@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -46,7 +47,7 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
             message: state.actionStatus == FavoriteActionStatus.added
                 ? 'word_added_to_favorites'.tr()
                 : 'word_removed_from_favorites'.tr(),
-            icon: Icons.favorite,
+            icon: HeroIcons.heart,
             iconColor: Colors.red,
           );
         } else if (state.actionStatus == FavoriteActionStatus.error) {
@@ -57,13 +58,13 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
           showSnackBar(
             context,
             message: 'something_went_wrong'.tr(),
-            icon: Icons.error_outline,
+            icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }
       },
       child: IconCard(
-        icon: Icons.favorite,
+        icon: HeroIcons.heart,
         iconColor: isOptimisticFavorite
             ? Colors.red
             : Theme.of(context).colorScheme.primary,

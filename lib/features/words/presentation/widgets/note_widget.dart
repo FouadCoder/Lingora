@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
@@ -49,8 +50,8 @@ class _LibraryNotesState extends State<LibraryNotes> {
           showSnackBar(
             context,
             message: 'note_saved'.tr(),
-            icon: Icons.verified_rounded,
-            iconColor: Theme.of(context).colorScheme.secondary,
+            icon: HeroIcons.checkCircle,
+            iconColor: AppColors.successGreen,
           );
           // Update initialNote
           setState(() {
@@ -64,14 +65,14 @@ class _LibraryNotesState extends State<LibraryNotes> {
           showSnackBar(
             context,
             message: 'something_went_wrong'.tr(),
-            icon: Icons.error_outline,
+            icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }
       },
       child: Column(
         children: [
-          Header(icon: MaterialCommunityIcons.pen, title: 'notes'.tr()),
+          Header(icon: HeroIcons.pencil, title: 'notes'.tr()),
           CustomTextfield(
               controller: noteController,
               label: '',

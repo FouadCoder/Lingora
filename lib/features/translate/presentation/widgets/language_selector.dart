@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
@@ -57,13 +58,13 @@ class LanguageSelector extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: theme.colorScheme.secondary.withValues(alpha: 0.07),
+                color: theme.colorScheme.onSurface,
                 borderRadius: BorderRadius.circular(AppDimens.radiusXXL),
               ),
-              child: Icon(
-                Icons.swap_horiz,
-                color: theme.colorScheme.secondary,
-                size: 20,
+              child: HeroIcon(
+                HeroIcons.arrowPath,
+                color: theme.iconTheme.color,
+                size: AppDimens.iconM,
               ),
             ),
           ),

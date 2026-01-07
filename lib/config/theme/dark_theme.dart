@@ -4,29 +4,34 @@ import 'package:lingora/config/theme/app_colors.dart';
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: AppColors.bgDark,
+  scaffoldBackgroundColor: AppColors.darkBackground,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.bgDark,
+    backgroundColor: AppColors.darkBackground,
     foregroundColor: AppColors.text,
     elevation: 0,
     surfaceTintColor: Colors.transparent,
   ),
   colorScheme: const ColorScheme.dark(
-    primary: AppColors.text,
-    secondary: AppColors.brandOrange,
-    surface: AppColors.bg,
-    onPrimary: AppColors.bgLight,
+    primary: AppColors.brandOrange,
+    secondary: AppColors.brandSecondary,
+    surface: AppColors.darkSurface,
+    onPrimary: AppColors.darkOnSurface,
     onSecondary: AppColors.text,
-    onSurface: AppColors.bgLight,
+    onSurface: AppColors.darkOnSurface,
     outline: AppColors.textMuted,
-    shadow: Colors.white24,
+    shadow: Colors.white,
+  ),
+
+  // Icons
+  iconTheme: IconThemeData(
+    color: Colors.white,
   ),
 
   // Buttons
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: AppColors.text,
-      foregroundColor: AppColors.bgDark,
+      foregroundColor: AppColors.darkBackground,
       minimumSize: const Size.fromHeight(56),
       textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

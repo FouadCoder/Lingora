@@ -36,7 +36,7 @@ class ActivityHeatmap extends StatelessWidget {
         cellSize: cellSize,
         cellRadius: cellRadius,
         colorScale: (value) {
-          final base = Theme.of(context).colorScheme.secondary;
+          final base = Theme.of(context).colorScheme.primary;
           switch (value) {
             case 0:
               return Theme.of(context).colorScheme.onSurface; // no activity

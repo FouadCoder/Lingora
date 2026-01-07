@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/widgets/icon_card.dart';
 
 class CustomSwtich extends StatelessWidget {
   final String title;
   final String description;
-  final IconData icon;
+  final HeroIcons icon;
   final ValueNotifier<bool> controller;
   final void Function(bool) onChanged;
   const CustomSwtich({
@@ -24,18 +27,7 @@ class CustomSwtich extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.all(AppDimens.paddingS),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.onSurface,
-              borderRadius: BorderRadius.circular(AppDimens.radiusL),
-            ),
-            child: Icon(
-              icon,
-              color: theme.colorScheme.primary,
-              size: AppDimens.iconL,
-            ),
-          ),
+          IconCard(icon: icon),
           SizedBox(width: AppDimens.subElementBetween),
           Expanded(
             child: Column(
@@ -67,7 +59,7 @@ class CustomSwtich extends StatelessWidget {
                   controller.value = val;
                   onChanged(val);
                 },
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeThumbColor: AppColors.successGreen,
                 inactiveThumbColor: theme.colorScheme.surface,
                 inactiveTrackColor: theme.colorScheme.outline,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
