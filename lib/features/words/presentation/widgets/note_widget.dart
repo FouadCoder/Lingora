@@ -50,7 +50,7 @@ class _LibraryNotesState extends State<LibraryNotes> {
           showSnackBar(
             context,
             message: 'note_saved'.tr(),
-            icon: Icons.verified_rounded,
+            icon: HeroIcons.checkCircle,
             iconColor: AppColors.successGreen,
           );
           // Update initialNote
@@ -65,7 +65,7 @@ class _LibraryNotesState extends State<LibraryNotes> {
           showSnackBar(
             context,
             message: 'something_went_wrong'.tr(),
-            icon: Icons.error_outline,
+            icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }

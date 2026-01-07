@@ -38,7 +38,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
           showSnackBar(
             context,
             message: 'word_added_to_collection'.tr(),
-            icon: Icons.verified_rounded,
+            icon: HeroIcons.checkCircle,
             iconColor: AppColors.successGreen,
           );
         }
@@ -51,7 +51,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
           showSnackBar(
             context,
             message: 'something_went_wrong'.tr(),
-            icon: Icons.error_outline,
+            icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }

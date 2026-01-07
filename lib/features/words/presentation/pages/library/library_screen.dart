@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
@@ -57,7 +58,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             showSnackBar(
               context,
               message: 'snack_word_error'.tr(),
-              icon: Icons.error_outline,
+              icon: HeroIcons.exclamationTriangle,
               iconColor: Theme.of(context).colorScheme.error,
             );
           }

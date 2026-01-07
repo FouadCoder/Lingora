@@ -47,7 +47,7 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
             message: state.actionStatus == FavoriteActionStatus.added
                 ? 'word_added_to_favorites'.tr()
                 : 'word_removed_from_favorites'.tr(),
-            icon: Icons.favorite,
+            icon: HeroIcons.heart,
             iconColor: Colors.red,
           );
         } else if (state.actionStatus == FavoriteActionStatus.error) {
@@ -58,7 +58,7 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
           showSnackBar(
             context,
             message: 'something_went_wrong'.tr(),
-            icon: Icons.error_outline,
+            icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }

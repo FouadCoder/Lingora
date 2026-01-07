@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 
@@ -25,6 +26,6 @@ class NetworkErrorView extends StatelessWidget {
 void showErrorNetworkSnackBar(BuildContext context) {
   return showSnackBar(context,
       message: "network_error_quick".tr(),
-      icon: Icons.wifi,
+      icon: HeroIcons.wifi,
       iconColor: Colors.red);
 }

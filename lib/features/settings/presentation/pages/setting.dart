@@ -56,7 +56,7 @@ class _SettingScreenState extends State<SettingScreen> {
           showSnackBar(
             context,
             message: 'error_words_title'.tr(),
-            icon: Icons.error_outline,
+            icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }
