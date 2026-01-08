@@ -1,6 +1,13 @@
 import 'package:lingora/features/history/domain/entities/history_entity.dart';
 
-enum FetchHistoryStatus { initial, loading, success, failure, empty }
+enum FetchHistoryStatus {
+  initial,
+  loading,
+  success,
+  failure,
+  empty,
+  networkError
+}
 
 class FetchHistoryState {
   final FetchHistoryStatus status;
