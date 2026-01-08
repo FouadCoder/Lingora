@@ -13,11 +13,12 @@ class NetworkErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomState(
-      animation: "assets/animation/network_error.json",
+      animation: "assets/animation/cat_error_network.json",
       title: "network_error_title".tr(),
       message: "network_error_message".tr(),
       buttonText: "retry_connection".tr(),
       onTap: onTap,
+      color: Theme.of(context).colorScheme.primary,
       isFullScreen: isFullScreen,
     );
   }
