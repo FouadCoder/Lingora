@@ -1,8 +1,8 @@
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
-enum LibraryStatus { initial, loading, success, failure, empty }
+enum LibraryStatus { initial, loading, success, failure, empty, networkError }
 
-enum LibraryActionStatus { initial, loading, success, failure }
+enum LibraryActionStatus { initial, loading, success, failure, networkError }
 
 class LibraryState {
   final LibraryStatus status;

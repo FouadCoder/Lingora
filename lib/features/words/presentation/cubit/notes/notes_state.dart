@@ -1,6 +1,6 @@
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
-enum NotesStatus { initial, loading, success, failure, empty }
+enum NotesStatus { initial, loading, success, failure, empty, networkError }
 
 class NotesState {
   final NotesStatus status;

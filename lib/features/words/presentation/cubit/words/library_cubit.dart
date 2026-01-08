@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
@@ -46,6 +47,9 @@ class LibraryCubit extends Cubit<LibraryState> {
           isLoadingMore: false,
           libraryWords: [...state.libraryWords, ...libraryWords],
           hasMore: hasMore));
+    } on NetworkException {
+      emit(state.copyWith(
+          isLoadingMore: false, status: LibraryStatus.networkError));
     } catch (_) {}
   }
 
@@ -85,6 +89,8 @@ class LibraryCubit extends Cubit<LibraryState> {
 
       emit(state.copyWith(
           status: LibraryStatus.success, libraryWords: libraryWords));
+    } on NetworkException {
+      emit(state.copyWith(status: LibraryStatus.networkError));
     } catch (e) {
       emit(state.copyWith(status: LibraryStatus.failure));
     }
@@ -94,29 +100,21 @@ class LibraryCubit extends Cubit<LibraryState> {
     try {
       // Reset offset when getting a new collection
       _collectionsOffset = 0;
-      print("The type from params -=================- $collectionType");
 
       emit(state.copyWith(
         collectionStatus: LibraryStatus.loading,
         collectionsWords: const [], // Clear previous collection words
         hasMoreCollections: true, // Reset hasMore flag
       ));
-      print("Get words collection start ===============");
 
       final words = await getWordsByCollectionUsecase.call(LibraryParams(
         offset: _collectionsOffset,
         collectionType: collectionType,
       ));
-      print("Done words collection start ===============  ${words.length}");
 
       // Update offset and check if there are more items
       _collectionsOffset = words.length;
-      bool hasMore = words.length == 15; // Assuming 15 is the page size
-
-      for (var item in words) {
-        print(
-            "============== Word =${item.translated} ===== Type === ${item.collection.collectionType}");
-      }
+      bool hasMore = words.length == 15; // Assuming 15 is page size
 
       // Empty
       if (words.isEmpty) {
@@ -131,8 +129,12 @@ class LibraryCubit extends Cubit<LibraryState> {
         collectionsWords: words,
         hasMoreCollections: hasMore,
       ));
+    } on NetworkException {
+      emit(state.copyWith(
+        collectionStatus: LibraryStatus.networkError,
+        hasMoreCollections: false,
+      ));
     } catch (e) {
-      print("Error getting words collections: $e");
       emit(state.copyWith(
         collectionStatus: LibraryStatus.failure,
         hasMoreCollections: false,
@@ -163,8 +165,10 @@ class LibraryCubit extends Cubit<LibraryState> {
         collectionsWords: [...state.collectionsWords, ...moreWords],
         hasMoreCollections: hasMore,
       ));
+    } on NetworkException {
+      emit(state.copyWith(
+          isLoadingMore: false, status: LibraryStatus.networkError));
     } catch (e) {
-      print("Error loading more collections: $e");
       emit(state.copyWith(isLoadingMore: false));
     }
   }
@@ -178,19 +182,17 @@ class LibraryCubit extends Cubit<LibraryState> {
       final newCollection = await updateWordCollectionUsecase.call(
           CollectionsParams(wordId: word.id!, collectionType: collection.name));
       // Replace word from memoery
-      print("New collection ============== ${newCollection.collectionType}");
       final updatedWord = word.copyWith(collection: newCollection);
       refreshWord(updatedWord);
       // Remove the word
       final updatedCollectionsWords =
           state.collectionsWords.where((w) => w.id != word.id).toList();
-
-      print("Updated word: ${updatedWord.collection.collectionType}");
       emit(state.copyWith(
           actionStatus: LibraryActionStatus.success,
           collectionsWords: updatedCollectionsWords));
+    } on NetworkException {
+      emit(state.copyWith(actionStatus: LibraryActionStatus.networkError));
     } catch (e) {
-      print(" =========== Error updating word collection: $e");
       emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
     }
   }

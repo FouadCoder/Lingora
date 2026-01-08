@@ -8,6 +8,7 @@ import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/core/widgets/status/network_error_status.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_state.dart';
 import 'package:lingora/features/words/presentation/widgets/word_card.dart';
@@ -44,96 +45,115 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<FavoritesCubit, FavoritesState>(
+    return BlocConsumer<FavoritesCubit, FavoritesState>(
       listenWhen: (previous, current) =>
           current.actionStatus != FavoriteActionStatus.idle,
       listener: (context, state) {
-        // Erorr
-        showSnackBar(
-          context,
-          message: 'error_words_title'.tr(),
-          icon: HeroIcons.exclamationTriangle,
-          iconColor: Theme.of(context).colorScheme.error,
-        );
+        // Action Status
+        if (state.actionStatus == FavoriteActionStatus.networkError) {
+          showErrorNetworkSnackBar(context);
+        } else if (state.actionStatus == FavoriteActionStatus.error) {
+          showSnackBar(
+            context,
+            message: 'error_words_title'.tr(),
+            icon: HeroIcons.exclamationTriangle,
+            iconColor: Theme.of(context).colorScheme.error,
+          );
+        }
       },
-      child: Scaffold(
-        appBar: AppBar(),
-        body: AppContainer(
-          child: BlocBuilder<FavoritesCubit, FavoritesState>(
-            builder: (context, state) {
-              // Loading
-              if (state.status == FavoriteStatus.loading) {
-                return MasonryGridView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: 8,
-                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: getCrossAxisCount(),
-                  ),
-                  crossAxisSpacing: AppDimens.cardBetween,
-                  mainAxisSpacing: AppDimens.cardBetween,
-                  itemBuilder: (context, index) {
-                    return LibraryLoadingCard();
-                  },
-                );
-              }
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(),
+          body: AppContainer(
+            child: BlocBuilder<FavoritesCubit, FavoritesState>(
+              builder: (context, state) {
+                // Loading
+                if (state.status == FavoriteStatus.loading) {
+                  return MasonryGridView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: 8,
+                    gridDelegate:
+                        SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: getCrossAxisCount(),
+                    ),
+                    crossAxisSpacing: AppDimens.cardBetween,
+                    mainAxisSpacing: AppDimens.cardBetween,
+                    itemBuilder: (context, index) {
+                      return LibraryLoadingCard();
+                    },
+                  );
+                }
 
-              // Success
-              else if (state.status == FavoriteStatus.success) {
-                return MasonryGridView.builder(
-                  controller: _scrollController,
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount:
-                      state.favorites.length + (state.isLoadingMore ? 6 : 0),
-                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: getCrossAxisCount(),
-                  ),
-                  crossAxisSpacing: AppDimens.cardBetween,
-                  mainAxisSpacing: AppDimens.cardBetween,
-                  itemBuilder: (context, index) {
-                    if (index < state.favorites.length) {
-                      return WordCard(word: state.favorites[index].word);
-                    }
-                    return LibraryLoadingCard();
-                  },
-                );
-              }
+                // Success
+                if (state.status == FavoriteStatus.success) {
+                  return MasonryGridView.builder(
+                    controller: _scrollController,
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount:
+                        state.favorites.length + (state.isLoadingMore ? 6 : 0),
+                    gridDelegate:
+                        SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: getCrossAxisCount(),
+                    ),
+                    crossAxisSpacing: AppDimens.cardBetween,
+                    mainAxisSpacing: AppDimens.cardBetween,
+                    itemBuilder: (context, index) {
+                      if (index < state.favorites.length) {
+                        return WordCard(
+                          word: state.favorites[index].word,
+                        );
+                      }
+                      return LibraryLoadingCard();
+                    },
+                  );
+                }
 
-              // Empty
-              else if (state.status == FavoriteStatus.empty) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.80,
-                  child: CustomState(
+                // Empty
+                if (state.status == FavoriteStatus.empty) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.80,
+                    child: CustomState(
                       animation: "assets/animation/cat_sleep_orange.json",
                       title: 'empty_favorites_title'.tr(),
-                      message: 'empty_favorites_message'.tr()),
-                );
-              }
+                      message: 'empty_favorites_message'.tr(),
+                    ),
+                  );
+                }
 
-              // Error
-              else if (state.status == FavoriteStatus.error) {
-                return CustomState(
-                  textColor: Colors.white,
-                  color: Theme.of(context).colorScheme.primary,
-                  animation: "assets/animation/error_boat_orange.json",
-                  title: 'error_favorites_title'.tr(),
-                  message: 'error_favorites_message'.tr(),
-                  buttonText: 'try_again'.tr(),
-                  onTap: () {
-                    if (mounted) {
+                // Network Error
+                if (state.status == FavoriteStatus.networkError) {
+                  return NetworkErrorView(
+                    onTap: () {
                       context.read<FavoritesCubit>().getFavorites();
-                    }
-                  },
-                );
-              }
+                    },
+                  );
+                }
 
-              // Default return
-              return Container();
-            },
+                // Error
+                if (state.status == FavoriteStatus.error) {
+                  return CustomState(
+                    textColor: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
+                    animation: "assets/animation/error_boat_orange.json",
+                    title: 'error_favorites_title'.tr(),
+                    message: 'error_favorites_message'.tr(),
+                    buttonText: 'try_again'.tr(),
+                    onTap: () {
+                      if (mounted) {
+                        context.read<FavoritesCubit>().getFavorites();
+                      }
+                    },
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
