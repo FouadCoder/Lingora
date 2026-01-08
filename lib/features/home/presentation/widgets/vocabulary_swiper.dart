@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
 import 'package:lingora/features/words/presentation/widgets/word_card.dart';
@@ -43,6 +44,12 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
 
   @override
   Widget build(BuildContext context) {
+    Widget emptyWordsWidget = CustomState(
+      animation: 'assets/animation/cat_sleeping.json',
+      title: 'nothing_here'.tr(),
+      message: 'nothing_here_message'.tr(),
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,22 +82,33 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: min(MediaQuery.of(context).size.height * 0.35, 350),
-                  child: CardSwiper(
-                    controller: cardSwiperController,
-                    padding: EdgeInsets.zero,
-                    duration: const Duration(milliseconds: 400),
-                    cardBuilder:
-                        (context, index, percentThresholdX, percentThresholdY) {
-                      return WordCard(
-                        word: state.libraryWords[index],
-                      );
-                    },
-                    cardsCount: state.libraryWords.length,
-                  ),
-                )
+                state.libraryWords.isEmpty || state.libraryWords.length < 3
+                    ? emptyWordsWidget
+                    : SizedBox(
+                        height:
+                            min(MediaQuery.of(context).size.height * 0.35, 350),
+                        child: CardSwiper(
+                          controller: cardSwiperController,
+                          padding: EdgeInsets.zero,
+                          duration: const Duration(milliseconds: 400),
+                          cardBuilder: (context, index, percentThresholdX,
+                              percentThresholdY) {
+                            return WordCard(
+                              word: state.libraryWords[index],
+                            );
+                          },
+                          cardsCount: state.libraryWords.length,
+                        ),
+                      )
               ],
+            );
+          } else if (state.status == LibraryStatus.networkError) {
+            return CustomState(
+              animation: 'assets/animation/cat_sleeping.json',
+              title: 'you_are_offline'.tr(),
+              message: 'you_are_offline_message'.tr(),
+              buttonText: 'retry_connection'.tr(),
+              color: Theme.of(context).colorScheme.surface,
             );
           }
 

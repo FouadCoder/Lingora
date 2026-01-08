@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lingora/features/analytics/domain/usecases/analytics_params.dart';
+import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_state.dart';
@@ -42,6 +42,9 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
           userAnalyticsStatus: UserAnalyticsRequestStatus.success,
           userAnalytics: analytics,
           lastUserAnalyticsDateFetch: DateTime.now()));
+    } on NetworkException {
+      emit(state.copyWith(
+          userAnalyticsStatus: UserAnalyticsRequestStatus.networkError));
     } catch (e) {
       emit(state.copyWith(
           userAnalyticsStatus: UserAnalyticsRequestStatus.failure));
@@ -70,8 +73,7 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
       }
 
       // Get daily activity summary
-      final dailyActivitySummary = await getDailyActivitySummaryUsecase
-          .call(AnalyticsParams(userId: userId));
+      final dailyActivitySummary = await getDailyActivitySummaryUsecase.call();
 
       emit(state.copyWith(
         monthlyActivityStatus: UserAnalyticsRequestStatus.success,

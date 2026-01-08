@@ -1,7 +1,13 @@
 import 'package:lingora/features/analytics/domain/entities/month_activity_entity.dart';
 import 'package:lingora/features/analytics/domain/entities/user_analytics_entity.dart';
 
-enum UserAnalyticsRequestStatus { initial, loading, success, failure }
+enum UserAnalyticsRequestStatus {
+  initial,
+  loading,
+  success,
+  failure,
+  networkError
+}
 
 class UserAnalyticsState {
   final UserAnalyticsRequestStatus monthlyActivityStatus;

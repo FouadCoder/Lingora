@@ -69,7 +69,6 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .eq('collection_type', params.collectionType)
         .single();
 
-    print("collection ============== $collection === UserId=== $_userId");
     // Update the word with the collection_id
     final data = await supabaseClient
         .from('translated_words')
@@ -90,7 +89,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .from('notes')
         .upsert(
           {
-            'user_id': params.userId,
+            'user_id': _userId,
             'word_id': params.wordId,
             'content': params.content,
           },
@@ -110,7 +109,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
             *,
             translated_words:translated_word_id(*)
           ''')
-        .eq('user_id', params.userId)
+        .eq('user_id', _userId)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
 
@@ -124,7 +123,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   @override
   Future addToFavorites(FavoritesParams params) async {
     await supabaseClient.from('favorites').insert({
-      'user_id': params.userId,
+      'user_id': _userId,
       'translated_word_id': params.wordId,
     });
   }
@@ -135,7 +134,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
     await supabaseClient
         .from('favorites')
         .delete()
-        .eq('user_id', params.userId)
+        .eq('user_id', _userId)
         .eq('translated_word_id', params.wordId!);
   }
 }

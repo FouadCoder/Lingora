@@ -10,7 +10,7 @@ class TranslateRemoteData {
   // Save translate
   Future<TranslateModel> translate(TranslateParams params) async {
     final res = await supabaseClient.functions.invoke('translate', body: {
-      "user_id": params.userId,
+      "user_id": supabaseClient.auth.currentUser?.id,
       "input": params.input,
       "translate_from": params.from,
       "translate_to": params.to,

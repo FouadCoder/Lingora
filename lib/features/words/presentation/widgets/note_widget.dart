@@ -7,6 +7,7 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/header.dart';
+import 'package:lingora/core/widgets/status/network_error_status.dart';
 import 'package:lingora/core/widgets/textfield.dart';
 import 'package:lingora/features/words/domain/entities/note_entity.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -69,6 +70,10 @@ class _LibraryNotesState extends State<LibraryNotes> {
             iconColor: Theme.of(context).colorScheme.error,
           );
         }
+        // Network Error
+        else if (state.status == NotesStatus.networkError) {
+          showErrorNetworkSnackBar(context);
+        }
       },
       child: Column(
         children: [
@@ -95,7 +100,7 @@ class _LibraryNotesState extends State<LibraryNotes> {
                   child: CustomButton(
                     text: 'save'.tr(),
                     isLoading: isLoading,
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.primary,
                     function: () {
                       context
                           .read<NotesCubit>()

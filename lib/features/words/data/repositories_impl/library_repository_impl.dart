@@ -1,3 +1,5 @@
+import 'package:lingora/core/exceptions/network_exception.dart';
+import 'package:lingora/core/service/network_service.dart';
 import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/favorite_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
@@ -19,6 +21,11 @@ class LibraryRepositoryImpl implements LibraryRepository {
 
   @override
   Future<List<WordEntity>> getLibrary(LibraryParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
     List<WordModel> libraryWords = await wordsRemoteData.getLibrary(params);
     List<WordEntity> libraryWordsEntity =
         libraryWords.map((e) => e.toEntity()).toList();
@@ -27,6 +34,11 @@ class LibraryRepositoryImpl implements LibraryRepository {
 
   @override
   Future<List<WordEntity>> getWordsByCollection(LibraryParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
     List<WordModel> libraryWords =
         await wordsRemoteData.getWordsByCollection(params);
     List<WordEntity> libraryWordsEntity =
@@ -37,6 +49,11 @@ class LibraryRepositoryImpl implements LibraryRepository {
   @override
   Future<CollectionEntity> updateWordCollection(
       CollectionsParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
     CollectionModel collectionModel =
         await wordsRemoteData.updateWordCollection(CollectionsParams(
       collectionType: params.collectionType,
@@ -48,17 +65,32 @@ class LibraryRepositoryImpl implements LibraryRepository {
 
   @override
   Future<NoteEntity> updateNote(NotesParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
     NoteModel noteModel = await wordsRemoteData.updateNote(params);
     return noteModel.toEntity();
   }
 
   @override
   Future<void> addToFavorites(FavoritesParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
     return await wordsRemoteData.addToFavorites(params);
   }
 
   @override
   Future<List<FavoriteEntity>> getFavorites(FavoritesParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
     List<FavoriteModel> data = await wordsRemoteData.getFavorites(params);
     List<FavoriteEntity> favorites = data.map((e) => e.toEntity()).toList();
     return favorites;
@@ -66,6 +98,11 @@ class LibraryRepositoryImpl implements LibraryRepository {
 
   @override
   Future<void> removeFromFavorites(FavoritesParams params) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
     return await wordsRemoteData.removeFromFavorites(params);
   }
 }

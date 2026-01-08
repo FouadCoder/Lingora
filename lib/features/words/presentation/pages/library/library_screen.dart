@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
+import 'package:lingora/core/widgets/status/network_error_status.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
 import 'package:lingora/features/words/presentation/widgets/library_collections.dart';
@@ -52,7 +53,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     }
 
     return Scaffold(
-      body: BlocListener<LibraryCubit, LibraryState>(
+      body: BlocConsumer<LibraryCubit, LibraryState>(
         listener: (context, state) {
           if (state.status == LibraryStatus.failure) {
             showSnackBar(
@@ -62,122 +63,154 @@ class _LibraryScreenState extends State<LibraryScreen> {
               iconColor: Theme.of(context).colorScheme.error,
             );
           }
+          // Network Error
+          if (state.status == LibraryStatus.networkError) {
+            showErrorNetworkSnackBar(context);
+          }
+          // Error
+          if (state.actionStatus == LibraryActionStatus.failure) {
+            showSnackBar(
+              context,
+              message: 'snack_word_error'.tr(),
+              icon: HeroIcons.exclamationTriangle,
+              iconColor: Theme.of(context).colorScheme.error,
+            );
+          }
+          // Network errors in actions
+          if (state.actionStatus == LibraryActionStatus.networkError) {
+            showErrorNetworkSnackBar(context);
+          }
         },
-        child: AppContainer(
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: [
-                BlocBuilder<LibraryCubit, LibraryState>(
-                    builder: (context, state) {
-                  if (state.status == LibraryStatus.loading) {
-                    // Loading
-                    return MasonryGridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 8,
-                      gridDelegate:
-                          SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: getCrossAxisCount(),
-                      ),
-                      crossAxisSpacing: AppDimens.cardBetween,
-                      mainAxisSpacing: AppDimens.cardBetween,
-                      itemBuilder: (context, index) {
-                        return LibraryLoadingCard();
-                      },
-                    );
-                  }
+        builder: (context, state) {
+          return AppContainer(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
+                  BlocBuilder<LibraryCubit, LibraryState>(
+                      builder: (context, state) {
+                    if (state.status == LibraryStatus.loading) {
+                      // Loading
+                      return MasonryGridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 8,
+                        gridDelegate:
+                            SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: getCrossAxisCount(),
+                        ),
+                        crossAxisSpacing: AppDimens.cardBetween,
+                        mainAxisSpacing: AppDimens.cardBetween,
+                        itemBuilder: (context, index) {
+                          return LibraryLoadingCard();
+                        },
+                      );
+                    }
 
-                  // Success
-                  else if (state.status == LibraryStatus.success) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Collections
-                        Text(
-                          "collections".tr(),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        SizedBox(
-                          height: AppDimens.titleContentBetween,
-                        ),
-                        CollectionsLibrary(),
-
-                        SizedBox(
-                          height: AppDimens.sectionBetween,
-                        ),
-                        // Words
-                        Text(
-                          "learning_feed".tr(),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        SizedBox(
-                          height: AppDimens.titleContentBetween,
-                        ),
-
-                        // Words
-                        MasonryGridView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: state.libraryWords.length +
-                              (state.isLoadingMore ? 6 : 0),
-                          gridDelegate:
-                              SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: getCrossAxisCount(),
+                    // Success
+                    else if (state.status == LibraryStatus.success) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Collections
+                          Text(
+                            "collections".tr(),
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          crossAxisSpacing: AppDimens.cardBetween,
-                          mainAxisSpacing: AppDimens.cardBetween,
-                          itemBuilder: (context, index) {
-                            if (index < state.libraryWords.length) {
-                              return WordCard(
-                                word: state.libraryWords[index],
-                              );
-                            }
-                            return LibraryLoadingCard();
+                          SizedBox(
+                            height: AppDimens.titleContentBetween,
+                          ),
+                          CollectionsLibrary(),
+
+                          SizedBox(
+                            height: AppDimens.sectionBetween,
+                          ),
+                          // Words
+                          Text(
+                            "learning_feed".tr(),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          SizedBox(
+                            height: AppDimens.titleContentBetween,
+                          ),
+
+                          // Words
+                          MasonryGridView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: state.libraryWords.length +
+                                (state.isLoadingMore ? 6 : 0),
+                            gridDelegate:
+                                SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: getCrossAxisCount(),
+                            ),
+                            crossAxisSpacing: AppDimens.cardBetween,
+                            mainAxisSpacing: AppDimens.cardBetween,
+                            itemBuilder: (context, index) {
+                              if (index < state.libraryWords.length) {
+                                return WordCard(
+                                  word: state.libraryWords[index],
+                                );
+                              }
+                              return LibraryLoadingCard();
+                            },
+                          ),
+                        ],
+                      );
+                    }
+
+                    // Empty
+                    else if (state.status == LibraryStatus.empty) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: CustomState(
+                          color: Theme.of(context).colorScheme.secondary,
+                          animation:
+                              "assets/animation/empty_box_character.json",
+                          title: 'empty_library_title'.tr(),
+                          message: 'empty_library_message'.tr(),
+                          titleColor: Theme.of(context).colorScheme.secondary,
+                        ),
+                      );
+                    }
+
+                    // Network Error
+                    else if (state.status == LibraryStatus.networkError) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: NetworkErrorView(
+                          onTap: () {
+                            context.read<LibraryCubit>().getLibrary();
                           },
                         ),
-                      ],
-                    );
-                  }
+                      );
+                    }
 
-                  // Empty
-                  else if (state.status == LibraryStatus.empty) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: CustomState(
-                        color: Theme.of(context).colorScheme.secondary,
-                        animation: "assets/animation/empty_box_character.json",
-                        title: 'empty_library_title'.tr(),
-                        message: 'empty_library_message'.tr(),
-                        titleColor: Theme.of(context).colorScheme.secondary,
-                      ),
-                    );
-                  }
-
-                  // Error
-                  else if (state.status == LibraryStatus.failure) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: CustomState(
-                        textColor: Colors.white,
-                        color: Theme.of(context).colorScheme.primary,
-                        animation: "assets/animation/error_boat_orange.json",
-                        title: 'error_words_title'.tr(),
-                        message: 'error_words_message'.tr(),
-                        buttonText: 'try_again'.tr(),
-                        onTap: () {
-                          context.read<LibraryCubit>().getLibrary();
-                        },
-                      ),
-                    );
-                  }
-                  return Container();
-                })
-              ],
+                    // Error
+                    else if (state.status == LibraryStatus.failure) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: CustomState(
+                          textColor: Colors.white,
+                          color: Theme.of(context).colorScheme.primary,
+                          animation: "assets/animation/error_boat_orange.json",
+                          title: 'error_words_title'.tr(),
+                          message: 'error_words_message'.tr(),
+                          buttonText: 'try_again'.tr(),
+                          onTap: () {
+                            context.read<LibraryCubit>().getLibrary();
+                          },
+                        ),
+                      );
+                    }
+                    return Container();
+                  })
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

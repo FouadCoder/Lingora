@@ -10,6 +10,7 @@ import 'package:lingora/features/history/presentation/cubit/history_state.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
+import 'package:lingora/core/widgets/status/network_error_status.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -46,8 +47,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
       body: AppContainer(
           child: Column(
         children: [
-          BlocBuilder<HistoryCubit, FetchHistoryState>(
-              builder: (context, state) {
+          BlocConsumer<HistoryCubit, FetchHistoryState>(
+              listener: (context, state) {
+            // Network Error
+            if (state.status == FetchHistoryStatus.networkError) {
+              showErrorNetworkSnackBar(context);
+            }
+          }, builder: (context, state) {
             // Loading
             if (state.status == FetchHistoryStatus.loading) {
               return SizedBox(
@@ -161,6 +167,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     animation: "assets/animation/empty_box_character.json",
                     title: 'emptyHistoryTitle'.tr(),
                     message: 'emptyHistoryMessage'.tr()),
+              );
+            }
+
+            // Network Error
+            else if (state.status == FetchHistoryStatus.networkError) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.80,
+                child: NetworkErrorView(
+                  onTap: () {
+                    context.read<HistoryCubit>().fetchHistory();
+                  },
+                ),
               );
             }
 

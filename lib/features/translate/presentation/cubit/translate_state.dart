@@ -1,7 +1,7 @@
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 
-enum TranslateStatus { initial, loading, success, failure, empty }
+enum TranslateStatus { initial, loading, success, failure, empty, networkError }
 
 class TranslateState {
   final TranslateStatus status;

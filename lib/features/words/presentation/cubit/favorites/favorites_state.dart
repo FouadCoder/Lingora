@@ -7,6 +7,7 @@ enum FavoriteStatus {
   success,
   empty,
   error,
+  networkError,
 }
 
 enum FavoriteActionStatus {
@@ -15,6 +16,7 @@ enum FavoriteActionStatus {
   added,
   removed,
   error,
+  networkError,
 }
 
 class FavoritesState {

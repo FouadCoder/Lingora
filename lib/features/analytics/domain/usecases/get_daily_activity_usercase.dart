@@ -1,16 +1,14 @@
 import 'package:lingora/features/analytics/domain/entities/daily_activity_entity.dart';
 import 'package:lingora/features/analytics/domain/entities/month_activity_entity.dart';
 import 'package:lingora/features/analytics/domain/repositories/analytics_repository.dart';
-import 'package:lingora/features/analytics/domain/usecases/analytics_params.dart';
 
 class GetDailyActivityUsercase {
   final AnalyticsRepository analyticsRepository;
 
   GetDailyActivityUsercase(this.analyticsRepository);
 
-  Future<Map<int, List<MonthActivityEntity>>> call(
-      AnalyticsParams params) async {
-    final rawData = await analyticsRepository.getDailyActivitySummary(params);
+  Future<Map<int, List<MonthActivityEntity>>> call() async {
+    final rawData = await analyticsRepository.getDailyActivitySummary();
 
     // Group by year → month
     final Map<int, Map<int, List<DailyActivityEntity>>> grouped = {};
@@ -36,19 +34,6 @@ class GetDailyActivityUsercase {
           dailyActivities: dailyActivities,
         );
       });
-    });
-
-    // Print all data for testing
-    result.forEach((year, months) {
-      print(" ================ Year: $year");
-      for (var month in months) {
-        print(
-            " ================ Month: ${month.month.month} - Active Days: ${month.activeDays} - Total Translations: ${month.totalTranslations}");
-        for (var daily in month.dailyActivities) {
-          print(
-              " ================ Daily: ${daily.date.toIso8601String()} - Translations: ${daily.totalTranslations}");
-        }
-      }
     });
 
     return result;

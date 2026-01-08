@@ -147,5 +147,9 @@
     "empty_collection_message": "Start adding words to this collection and they'll appear here",
     "network_error_title": "Connection Lost",
     "network_error_message": "Unable to connect to the internet. Please check your network connection and try again",
-    "network_error_quick": "No internet connection"
+    "network_error_quick": "No internet connection",
+    "nothing_here": "Nothing here yet",
+    "nothing_here_message": "This space will fill up as you translate words. Keep going to see your progress!",
+    "you_are_offline": "You’re offline",
+    "you_are_offline_message": "It seems you’re offline. Once you’re connected, everything will be available here"
 }

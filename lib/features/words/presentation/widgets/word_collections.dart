@@ -6,6 +6,7 @@ import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/core/widgets/status/network_error_status.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
@@ -54,6 +55,12 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
             icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
+        } else if (state.actionStatus == LibraryActionStatus.networkError) {
+          // Back the value again
+          setState(() {
+            collectionType = widget.collection;
+          });
+          showErrorNetworkSnackBar(context);
         }
       },
       child: Row(

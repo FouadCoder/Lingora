@@ -1,5 +1,6 @@
 // History
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/features/history/domain/entities/history_entity.dart';
 import 'package:lingora/features/history/domain/usecases/fetch_history_usecase.dart';
 import 'package:lingora/features/history/domain/usecases/history_params.dart';
@@ -38,8 +39,12 @@ class HistoryCubit extends Cubit<FetchHistoryState> {
           history: {...state.history, ...history},
           hasMore: hasMore,
           isLoadingMore: false));
+    } on NetworkException {
+      emit(state.copyWith(
+          isLoadingMore: false, status: FetchHistoryStatus.networkError));
     } catch (e) {
-      emit(state.copyWith(status: FetchHistoryStatus.failure));
+      emit(state.copyWith(
+          isLoadingMore: false, status: FetchHistoryStatus.failure));
     }
   }
 
@@ -70,6 +75,8 @@ class HistoryCubit extends Cubit<FetchHistoryState> {
           status: FetchHistoryStatus.success,
           history: history,
           hasMore: hasMore));
+    } on NetworkException {
+      emit(state.copyWith(status: FetchHistoryStatus.networkError));
     } catch (e) {
       emit(state.copyWith(status: FetchHistoryStatus.failure));
     }
