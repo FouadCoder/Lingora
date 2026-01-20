@@ -54,19 +54,41 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
             width: double.infinity,
             radius: theme.shimmerRadiusBodyMedium,
           ),
-          shimmerBox(
-            context,
-            height: theme.shimmerHeightBodyMedium,
-            width: double.infinity,
-            radius: theme.shimmerRadiusBodyMedium,
+          SizedBox(height: AppDimens.sectionSpacing),
+          Divider(
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.2),
+            height: 0.1,
           ),
           SizedBox(height: AppDimens.sectionSpacing),
-          shimmerBox(
-            context,
-            height: theme.shimmerHeightBodySmall,
-            width: 80,
-            radius: theme.shimmerRadiusBodySmall,
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  shimmerBox(
+                    context,
+                    height: theme.shimmerHeightBodySmall,
+                    width: 80,
+                    radius: theme.shimmerRadiusBodySmall,
+                  ),
+                  SizedBox(width: AppDimens.buttonTagHorizontal),
+                  shimmerBox(
+                    context,
+                    height: theme.shimmerHeightBodySmall,
+                    width: 80,
+                    radius: theme.shimmerRadiusBodySmall,
+                  ),
+                ],
+              ),
+              shimmerBox(
+                context,
+                height: theme.shimmerHeightBodySmall,
+                width: 80,
+                radius: theme.shimmerRadiusBodySmall,
+              ),
+            ],
+          )
         ],
       ),
     );
