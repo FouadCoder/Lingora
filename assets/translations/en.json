@@ -151,5 +151,6 @@
     "nothing_here": "Nothing here yet",
     "nothing_here_message": "This space will fill up as you translate words. Keep going to see your progress!",
     "you_are_offline": "You’re offline",
-    "you_are_offline_message": "It seems you’re offline. Once you’re connected, everything will be available here"
+    "you_are_offline_message": "It seems you’re offline. Once you’re connected, everything will be available here",
+    "feature_not_ready": "This feature isn’t ready yet"
 }

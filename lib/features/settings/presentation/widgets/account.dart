@@ -7,6 +7,7 @@ import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/custom_alert.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
+import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
@@ -71,7 +72,12 @@ class _AccountWidgetState extends State<AccountWidget> {
                       .outline
                       .withValues(alpha: 0.5),
                   width: 2),
-              function: () {},
+              function: () {
+                showSnackBar(context,
+                    message: "feature_not_ready".tr(),
+                    icon: HeroIcons.wrenchScrewdriver,
+                    iconColor: Theme.of(context).colorScheme.primary);
+              },
               icon: Icons.book,
               borderRadius: AppDimens.radiusL,
               textColor: Theme.of(context).textTheme.bodyMedium?.color ??
