@@ -81,26 +81,16 @@ class _SettingScreenState extends State<SettingScreen> {
                           builder: (context, state) {
                             darkController.value = state == ThemeState.dark;
                             return CustomSwtich(
-                                title: 'dark_mode'.tr(),
-                                description: 'dark_mode_description'.tr(),
-                                onChanged: (value) {
-                                  context.read<ThemeCubit>().setTheme(value
-                                      ? ThemeState.dark
-                                      : ThemeState.light);
-                                },
-                                controller: darkController,
-                                icon: HeroIcons.moon);
+                              title: 'dark_mode'.tr(),
+                              description: 'dark_mode_description'.tr(),
+                              onChanged: (value) {
+                                context.read<ThemeCubit>().setTheme(
+                                    value ? ThemeState.dark : ThemeState.light);
+                              },
+                              controller: darkController,
+                            );
                           },
                         ),
-                        SizedBox(
-                          height: AppDimens.sectionSpacing,
-                        ),
-                        CustomSwtich(
-                            title: 'notifications'.tr(),
-                            description: 'general_notifications'.tr(),
-                            onChanged: (value) {},
-                            controller: notificationsController,
-                            icon: HeroIcons.bell),
 
                         SizedBox(
                           height: AppDimens.sectionSpacing,

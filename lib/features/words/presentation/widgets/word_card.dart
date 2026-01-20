@@ -161,6 +161,7 @@ class _WordCardState extends State<WordCard> {
                           ),
                           backgroundColor: colorScheme.onSurface,
                           side: BorderSide(
+                              width: 0.5,
                               color:
                                   colorScheme.outline.withValues(alpha: 0.1)),
                         );

@@ -39,46 +39,54 @@ class LanguageSelector extends StatelessWidget {
       );
     }
 
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Source Language
-          LanguageButton(
-            languageName: state.sourceLanguage.name,
-            onTap: () => showLanguagePicker(true),
-            theme: theme,
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Source Language
+        LanguageButton(
+          languageName: state.sourceLanguage.name,
+          onTap: () => showLanguagePicker(true),
+          theme: theme,
+        ),
 
-          SizedBox(width: AppDimens.buttonTagHorizontal),
+        SizedBox(width: AppDimens.buttonTagHorizontal),
 
-          // Swap Button
-          GestureDetector(
-            onTap: () => context.read<TranslateCubit>().swapLanguages(),
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
+        // Swap Button
+        GestureDetector(
+          onTap: () => context.read<TranslateCubit>().swapLanguages(),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
                 color: theme.colorScheme.onSurface,
                 borderRadius: BorderRadius.circular(AppDimens.radiusXXL),
-              ),
-              child: HeroIcon(
-                HeroIcons.arrowPath,
-                color: theme.iconTheme.color,
-                size: AppDimens.iconM,
-              ),
+                border: Border(
+                    top: BorderSide(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .outline
+                            .withValues(alpha: 0.1)),
+                    bottom: BorderSide(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .outline
+                            .withValues(alpha: 0.1)))),
+            child: HeroIcon(
+              HeroIcons.arrowPath,
+              color: theme.iconTheme.color,
+              size: AppDimens.iconM,
             ),
           ),
+        ),
 
-          SizedBox(width: AppDimens.buttonTagHorizontal),
+        SizedBox(width: AppDimens.buttonTagHorizontal),
 
-          // Target Language
-          LanguageButton(
-            languageName: state.targetLanguage.name,
-            onTap: () => showLanguagePicker(false),
-            theme: theme,
-          ),
-        ],
-      ),
+        // Target Language
+        LanguageButton(
+          languageName: state.targetLanguage.name,
+          onTap: () => showLanguagePicker(false),
+          theme: theme,
+        ),
+      ],
     );
   }
 }

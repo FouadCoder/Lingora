@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/theme_data.dart';
+import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/shimmer_box.dart';
 
 class LibraryLoadingCard extends StatefulWidget {
@@ -14,13 +15,7 @@ class _LibraryLoadingCardState extends State<LibraryLoadingCard> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: EdgeInsets.all(AppDimens.paddingM),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-      ),
+    return AppCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

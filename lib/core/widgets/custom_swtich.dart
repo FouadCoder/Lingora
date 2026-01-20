@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
 
 class CustomSwtich extends StatelessWidget {
   final String title;
   final String description;
-  final HeroIcons icon;
+  final HeroIcons? icon;
   final ValueNotifier<bool> controller;
   final void Function(bool) onChanged;
   const CustomSwtich({
@@ -16,7 +15,7 @@ class CustomSwtich extends StatelessWidget {
     required this.description,
     required this.onChanged,
     required this.controller,
-    required this.icon,
+    this.icon,
   });
 
   @override
@@ -27,8 +26,10 @@ class CustomSwtich extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
         children: [
-          IconCard(icon: icon),
-          SizedBox(width: AppDimens.subElementBetween),
+          if (icon != null) ...[
+            IconCard(icon: icon!),
+            SizedBox(width: AppDimens.subElementBetween),
+          ],
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +60,7 @@ class CustomSwtich extends StatelessWidget {
                   controller.value = val;
                   onChanged(val);
                 },
-                activeThumbColor: AppColors.successGreen,
+                activeThumbColor: theme.colorScheme.primary,
                 inactiveThumbColor: theme.colorScheme.surface,
                 inactiveTrackColor: theme.colorScheme.outline,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
