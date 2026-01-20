@@ -5,6 +5,10 @@ extension DateTimeExtension on DateTime {
     return DateFormat('MMM d, yyyy').format(this);
   }
 
+  String toDayAndShortMonth() {
+    return DateFormat('d MMM').format(this); // e.g. "15 Sep"
+  }
+
   String toMonthName() {
     return DateFormat('MMMM').format(this); // e.g. "September"
   }

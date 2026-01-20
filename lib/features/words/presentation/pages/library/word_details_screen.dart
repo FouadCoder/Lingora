@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/presentation/widgets/note_widget.dart';
@@ -118,22 +119,28 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 ),
 
                 // Example sentences
-                AppCard(
-                  child: Wrap(
-                    spacing: AppDimens.buttonTagHorizontal,
-                    runSpacing: AppDimens.buttonTagHorizontal,
-                    alignment: isRightSide(widget.model.translateFrom!.code)
-                        ? WrapAlignment.end
-                        : WrapAlignment.start,
-                    children:
-                        widget.model.examples.asMap().entries.map((entry) {
-                      final index = entry.key + 1;
-                      final example = entry.value;
-                      return Text(
-                        '$index. $example',
-                        style: theme.bodyMedium,
-                      );
-                    }).toList(),
+                Align(
+                  alignment: isRightSide(widget.model.translateFrom!.code)
+                      ? AlignmentDirectional.centerEnd
+                      : AlignmentDirectional.centerStart,
+                  child: AppCard(
+                    width: AppPlatform.isPhone(context)
+                        ? MediaQuery.of(context).size.width
+                        : 500,
+                    child: Wrap(
+                      spacing: AppDimens.buttonTagHorizontal,
+                      runSpacing: AppDimens.buttonTagHorizontal,
+                      alignment: WrapAlignment.start,
+                      children:
+                          widget.model.examples.asMap().entries.map((entry) {
+                        final index = entry.key + 1;
+                        final example = entry.value;
+                        return Text(
+                          '$index. $example',
+                          style: theme.bodyMedium,
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
 

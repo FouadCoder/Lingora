@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
 import 'package:lingora/features/words/presentation/widgets/heart_icon_widget.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -11,6 +11,7 @@ import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/pages/library/word_details_screen.dart';
+import 'package:lingora/helper/direction_helper.dart';
 
 class WordCard extends StatefulWidget {
   final WordEntity word;
@@ -41,14 +42,8 @@ class _WordCardState extends State<WordCard> {
     final colorScheme = Theme.of(context).colorScheme;
 
     List chipsData = [
-      {
-        "text": widget.word.pos,
-        "textColor": colorScheme.secondary,
-      },
-      {
-        "text": widget.word.collection.collectionType.displayName,
-        "textColor": colorScheme.secondary,
-      },
+      widget.word.pos,
+      widget.word.collection.collectionType.displayName,
     ];
 
     return AppCard(
@@ -74,20 +69,27 @@ class _WordCardState extends State<WordCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Original
                         Text(
                           widget.word.original,
                           style: theme.titleMedium,
                           maxLines: widget.smallCard! ? 1 : 2,
+                          textAlign:
+                              isRightSide(widget.word.translateFrom!.code)
+                                  ? TextAlign.right
+                                  : TextAlign.left,
                         ),
                         SizedBox(width: AppDimens.subElementBetween),
+                        // Translated
                         Text(
                           widget.word.translated,
                           style: theme.titleMedium?.copyWith(
-                            color: colorScheme.secondary,
+                            color: colorScheme.primary,
                           ),
+                          textAlign: isRightSide(widget.word.translateTo!.code)
+                              ? TextAlign.right
+                              : TextAlign.left,
                           maxLines: widget.smallCard! ? 1 : 2,
                         ),
                       ],
@@ -123,56 +125,55 @@ class _WordCardState extends State<WordCard> {
                 ),
 
                 SizedBox(height: AppDimens.sectionSpacing),
-                // definition
-
+                // Example
                 Text(
-                  "meaning".tr(),
-                  style: theme.bodyMedium?.copyWith(color: colorScheme.outline),
-                ),
-                SizedBox(height: AppDimens.elementBetween),
-                Text(
-                  widget.word.meaning,
+                  '“ ${widget.word.examples[0]} ”',
                   style: theme.bodyMedium,
                   maxLines: 2,
+                  textAlign: isRightSide(widget.word.translateTo!.code)
+                      ? TextAlign.right
+                      : TextAlign.left,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: AppDimens.sectionSpacing),
 
-                // Example
-
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  child: Text(
-                    widget.word.examples[0],
-                    style: theme.bodySmall,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
                 SizedBox(height: AppDimens.sectionSpacing),
                 if (!widget.smallCard!)
-                  Center(
-                    child: Wrap(
+                  Divider(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.2),
+                    height: 0.1,
+                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Wrap(
                       spacing: AppDimens.buttonTagHorizontal,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       runSpacing: 0,
                       children: List.generate(chipsData.length, (index) {
                         return Chip(
                           label: Text(
-                            chipsData[index]["text"],
-                            style: theme.bodySmall?.copyWith(
-                                color: chipsData[index]["textColor"]),
+                            chipsData[index],
+                            style: theme.bodySmall
+                                ?.copyWith(color: colorScheme.primary),
                           ),
-                          backgroundColor: colorScheme.onPrimary,
-                          side: BorderSide.none,
+                          backgroundColor: colorScheme.onSurface,
+                          side: BorderSide(
+                              color:
+                                  colorScheme.outline.withValues(alpha: 0.1)),
                         );
                       }),
                     ),
-                  )
+
+                    // Translated at
+                    Text(
+                      " ${widget.word.createdAt.toDayAndShortMonth()}",
+                      style: theme.bodySmall,
+                    ),
+                  ],
+                )
               ],
             );
           }),
