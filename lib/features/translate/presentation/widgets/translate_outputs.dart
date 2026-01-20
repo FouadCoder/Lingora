@@ -11,6 +11,7 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/widgets/word_collections.dart';
+import 'package:lingora/helper/direction_helper.dart';
 
 // Word translated
 class WordTranslatedCard extends StatelessWidget {
@@ -47,10 +48,6 @@ class WordTranslatedCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    // HeartIconWidget(
-                    //   isFavorite: isFavorite,
-                    //   wordId: wordId,
-                    // ),
                     SizedBox(
                       width: AppDimens.buttonTagHorizontal,
                     ),
@@ -77,6 +74,7 @@ class WordTranslatedCard extends StatelessWidget {
             // Translated words
             Text(
               translated,
+              textAlign: isRightSide(lang) ? TextAlign.right : TextAlign.left,
               style: theme.titleMedium?.copyWith(
                 height: 1.4,
               ),
@@ -148,6 +146,7 @@ class WordInfoCard extends StatelessWidget {
             // Original word
             Text(
               original,
+              textAlign: isRightSide(lang) ? TextAlign.right : TextAlign.left,
               style: theme.bodyMedium?.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
