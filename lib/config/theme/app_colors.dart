@@ -10,7 +10,7 @@ class AppColors {
   static const Color darkOnSurface = Color(0xFF2F3033);
 
   static const Color text = Color(0xFFfafafa);
-  static const Color textMuted = Color(0xFF727373);
+  static const Color textMuted = Color(0xFF8A8B8D);
   static const Color darkOutline = Color(0x1A727373);
   // Text on darkOnSurface
   static const Color textOnDarkOnSurface = Color(0xFFE0E0E0);

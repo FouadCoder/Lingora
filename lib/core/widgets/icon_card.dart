@@ -22,6 +22,17 @@ class IconCard extends StatelessWidget {
         padding: EdgeInsets.all(AppDimens.paddingS),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppDimens.radiusL),
+            border: Border(
+                top: BorderSide(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .outline
+                        .withValues(alpha: 0.1)),
+                bottom: BorderSide(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .outline
+                        .withValues(alpha: 0.1))),
             color: background ?? Theme.of(context).colorScheme.onSurface),
         child: HeroIcon(
           icon,

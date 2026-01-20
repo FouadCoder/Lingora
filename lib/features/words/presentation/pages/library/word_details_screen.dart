@@ -187,12 +187,19 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: colorScheme.onPrimary,
-        borderRadius: BorderRadius.circular(20),
-      ),
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+              color: Theme.of(context)
+                  .colorScheme
+                  .outline
+                  .withValues(alpha: 0.1))),
       child: Text(
         word,
-        style: Theme.of(context).textTheme.bodySmall,
+        style: Theme.of(context)
+            .textTheme
+            .bodySmall
+            ?.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color),
       ),
     );
   }
