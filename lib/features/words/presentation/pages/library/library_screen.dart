@@ -76,10 +76,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
               iconColor: Theme.of(context).colorScheme.error,
             );
           }
-          // Network errors in actions
-          if (state.actionStatus == LibraryActionStatus.networkError) {
-            showErrorNetworkSnackBar(context);
-          }
         },
         builder: (context, state) {
           return AppContainer(
