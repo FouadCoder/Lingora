@@ -69,11 +69,14 @@ class _WordCardState extends State<WordCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Original
                         Text(
                           widget.word.original,
-                          style: theme.titleMedium,
+                          style: theme.titleMedium?.copyWith(
+                            color: colorScheme.primary,
+                          ),
                           maxLines: widget.smallCard! ? 1 : 2,
                           textAlign:
                               isRightSide(widget.word.translateFrom!.code)
@@ -84,9 +87,7 @@ class _WordCardState extends State<WordCard> {
                         // Translated
                         Text(
                           widget.word.translated,
-                          style: theme.titleMedium?.copyWith(
-                            color: colorScheme.primary,
-                          ),
+                          style: theme.titleMedium,
                           textAlign: isRightSide(widget.word.translateTo!.code)
                               ? TextAlign.right
                               : TextAlign.left,
@@ -114,8 +115,8 @@ class _WordCardState extends State<WordCard> {
                             icon: HeroIcons.speakerWave,
                             onTap: () {
                               context.read<LibraryCubit>().playAudio(
-                                    widget.word.translated,
-                                    widget.word.translateTo!.code,
+                                    widget.word.original,
+                                    widget.word.translateFrom!.code,
                                   );
                             },
                           ),

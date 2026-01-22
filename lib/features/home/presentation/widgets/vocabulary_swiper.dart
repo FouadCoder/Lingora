@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
@@ -86,11 +85,7 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
                 state.libraryWords.isEmpty || state.libraryWords.length < 3
                     ? emptyWordsWidget
                     : SizedBox(
-                        height: min(
-                            AppPlatform.isPhone(context)
-                                ? MediaQuery.of(context).size.height * 0.23
-                                : 250,
-                            300),
+                        height: 250,
                         child: CardSwiper(
                           controller: cardSwiperController,
                           padding: EdgeInsets.zero,

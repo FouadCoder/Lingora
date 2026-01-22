@@ -135,9 +135,26 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                           widget.model.examples.asMap().entries.map((entry) {
                         final index = entry.key + 1;
                         final example = entry.value;
-                        return Text(
-                          '$index. $example',
-                          style: theme.bodyMedium,
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              example,
+                              style: theme.bodyMedium,
+                            ),
+                            if (index != widget.model.examples.length)
+                              SizedBox(
+                                height: AppDimens.buttonTagHorizontal,
+                              ),
+                            if (index != widget.model.examples.length)
+                              Divider(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withValues(alpha: 0.2),
+                                height: 0.1,
+                              ),
+                          ],
                         );
                       }).toList(),
                     ),
