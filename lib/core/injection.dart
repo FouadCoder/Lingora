@@ -8,6 +8,11 @@ import 'package:lingora/features/analytics/domain/repositories/analytics_reposit
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/notification/data/datasources/notification_remote_data.dart';
+import 'package:lingora/features/notification/data/repositories_impl/notification_repository_impl.dart';
+import 'package:lingora/features/notification/domain/repositories/notification_repository.dart';
+import 'package:lingora/features/notification/domain/usecases/get_notification_usecase.dart';
+import 'package:lingora/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/add_to_favorites_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/get_favorites_usecase.dart';
@@ -61,6 +66,8 @@ Future<void> setupInjection() async {
   injection.registerSingleton(SettingsLocalData());
   injection.registerLazySingleton<WordsRemoteData>(
       () => WordsRemoteDataImpl(injection()));
+  injection.registerLazySingleton<NotificationRemoteDataSource>(
+      () => NotificationRemoteDataSourceImpl(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
@@ -73,6 +80,8 @@ Future<void> setupInjection() async {
       () => HistoryRepositoryImpl(injection()));
   injection.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(injection()));
+  injection.registerLazySingleton<NotificationRepository>(
+      () => NotificationRepositoriesImpl(injection()));
 
   // Services
   injection.registerLazySingleton(() => AudioService());
@@ -103,6 +112,8 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => AddToFavoritesUsecase(injection()));
   injection.registerFactory(() => RemoveFromFavoritesUsecase(injection()));
   injection.registerFactory(() => GetFavoritesUsecase(injection()));
+  // Notification
+  injection.registerFactory(() => GetNotificationsUseCase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -117,4 +128,5 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => ThemeCubit(injection(), injection()));
   injection.registerFactory(
       () => FavoritesCubit(injection(), injection(), injection(), injection()));
+  injection.registerFactory(() => NotificationCubit(injection()));
 }
