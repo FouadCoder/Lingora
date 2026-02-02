@@ -165,11 +165,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      googleButton,
+                      Expanded(child: googleButton),
                       SizedBox(
                         width: AppDimens.buttonTagHorizontal,
                       ),
-                      signUpButton
+                      Expanded(child: signUpButton)
                     ],
                   );
                 }

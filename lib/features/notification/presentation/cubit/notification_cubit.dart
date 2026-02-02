@@ -62,7 +62,9 @@ class NotificationCubit extends Cubit<NotificationState> {
         return;
       }
 
-      emit(state.copyWith(isLoadingMore: true));
+      emit(state.copyWith(
+          isLoadingMore: true,
+          actionNotificationStatus: NotificationStatus.initial));
       final notifications = await _getNotificationsUseCase(
         NotificationParams(offset: _offset),
       );

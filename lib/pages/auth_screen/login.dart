@@ -168,11 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      googleButton,
+                      Expanded(child: googleButton),
                       SizedBox(
                         width: AppDimens.buttonTagHorizontal,
                       ),
-                      loginButton,
+                      Expanded(child: loginButton),
                     ],
                   );
                 }
