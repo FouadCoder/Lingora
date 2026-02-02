@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/core/utils/app_constants.dart';
@@ -17,23 +18,24 @@ import 'package:lingora/features/notification/presentation/widgets/notification_
 import 'package:lingora/features/notification/presentation/widgets/notification_loading_card.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+class RemindersScreen extends StatefulWidget {
+  const RemindersScreen({super.key});
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
+  State<RemindersScreen> createState() => _RemindersScreenState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _RemindersScreenState extends State<RemindersScreen> {
   final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
-    context.read<NotificationCubit>().getNotifications();
+    //TODO
+    // context.read<NotificationCubit>().getReminders();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 600) {
-        context.read<NotificationCubit>().loadMoreNotifications();
+        // context.read<NotificationCubit>().loadMoreReminders();
       }
     });
   }
@@ -49,7 +51,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             if (state.status == NotificationStatus.error) {
               showSnackBar(
                 context,
-                message: 'notifications_error_title'.tr(),
+                message: 'reminders_error_title'.tr(),
                 icon: HeroIcons.exclamationTriangle,
                 iconColor: Theme.of(context).colorScheme.error,
               );
@@ -145,8 +147,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     child: CustomState(
                       color: Theme.of(context).colorScheme.secondary,
                       animation: "assets/animation/sleep_cat_alarm.json",
-                      title: 'no_notifications_title'.tr(),
-                      message: 'no_notifications_message'.tr(),
+                      title: 'no_reminders_title'.tr(),
+                      message: 'no_reminders_message'.tr(),
+                      buttonText: 'learn_new_words'.tr(),
+                      onTap: () => context.push('/'),
                       titleColor: Theme.of(context).colorScheme.secondary,
                     ),
                   );
@@ -157,7 +161,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     height: MediaQuery.of(context).size.height,
                     child: NetworkErrorView(
                       onTap: () {
-                        context.read<NotificationCubit>().getNotifications();
+                        // context.read<NotificationCubit>().getNotifications();
                       },
                     ),
                   );
@@ -170,11 +174,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       textColor: Colors.white,
                       color: Theme.of(context).colorScheme.primary,
                       animation: "assets/animation/error_boat_orange.json",
-                      title: 'notifications_error_title'.tr(),
-                      message: 'notifications_error_message'.tr(),
-                      buttonText: 'retry'.tr(),
+                      title: 'reminders_error_title'.tr(),
+                      message: 'reminders_error_message'.tr(),
+                      buttonText: 'try_again'.tr(),
                       onTap: () {
-                        context.read<NotificationCubit>().getNotifications();
+                        // context.read<NotificationCubit>().getNotifications();
                       },
                     ),
                   );
