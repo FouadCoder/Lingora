@@ -43,6 +43,8 @@ dependencies:
   animated_bottom_navigation_bar: ^1.4.0
   flutter_tabler_icons: ^1.43.0
   liquid_pull_to_refresh: ^3.0.1
+  flutter_dotenv: ^6.0.0
+  onesignal_flutter: ^5.4.0
 
 dev_dependencies:
   flutter_test:

@@ -36,7 +36,7 @@ class IconCard extends StatelessWidget {
             color: background ?? Theme.of(context).colorScheme.onSurface),
         child: HeroIcon(
           icon,
-          color: Theme.of(context).iconTheme.color,
+          color: iconColor ?? Theme.of(context).iconTheme.color,
           size: AppDimens.iconL,
         ),
       ),

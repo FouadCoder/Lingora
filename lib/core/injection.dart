@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lingora/core/service/audio_service.dart';
@@ -45,14 +46,21 @@ import 'package:lingora/features/translate/data/repositories_impl/translate_repo
 import 'package:lingora/features/translate/domain/repositories/translate_repository.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_usecase.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
-import 'package:lingora/keys.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final injection = GetIt.instance;
 
 Future<void> setupInjection() async {
   // Core
-  await Supabase.initialize(url: supabaseURL, anonKey: supabaseAnonKey);
+  await dotenv.load(fileName: ".env");
+  await Supabase.initialize(
+      url: dotenv.get('SUPABASE_URL'), anonKey: dotenv.get('SUPABASE_ANONKEY'));
+
+  // Notifications
+  OneSignal.initialize(dotenv.get('ONESIGNAL_APP_ID'));
+  OneSignal.Notifications.requestPermission(true);
+
   injection.registerSingleton<SupabaseClient>(Supabase.instance.client);
   await Hive.initFlutter(); //  Hive database
   await Hive.openBox("db"); //  Hive database
