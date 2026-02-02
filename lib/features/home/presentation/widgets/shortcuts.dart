@@ -16,7 +16,11 @@ class ShortcutsHome extends StatelessWidget {
         "text": "favorites".tr(),
         "route": "/favorites"
       },
-      {"icon": HeroIcons.bell, "text": "notifications".tr(), "route": ""},
+      {
+        "icon": HeroIcons.bell,
+        "text": "notifications".tr(),
+        "route": "/notifications"
+      },
     ];
     return Row(
       children: List.generate(shortcuts.length, (index) {

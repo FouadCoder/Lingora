@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
               create: (context) =>
                   injection<NotificationCubit>()), // Notification
 
-          //TODO adjust the cuibits below
+          //TODO adjust the cubits below
           BlocProvider<AuthAppCubit>(
             create: (context) => AuthAppCubit()..launch(),
             lazy: false,
