@@ -1,3 +1,5 @@
+import 'package:lingora/features/notification/domain/entities/notification_entity.dart';
+
 enum NotificationStatus {
   initial,
   loading,
@@ -15,7 +17,7 @@ class NotificationState {
   final String iconKeyword;
   final String title;
   final String message;
-  // final List<NotificationEntity> notifications;
+  final List<NotificationEntity> notifications;
   final bool isLoadingMore;
   final bool hasMore;
 
@@ -25,7 +27,7 @@ class NotificationState {
     this.iconKeyword = 'bell',
     this.title = '',
     this.message = '',
-    // this.notifications = const [],
+    this.notifications = const [],
     this.isLoadingMore = false,
     this.hasMore = true,
   });
@@ -36,7 +38,7 @@ class NotificationState {
     String? iconKeyword,
     String? title,
     String? message,
-    // List<NotificationEntity>? notifications,
+    List<NotificationEntity>? notifications,
     bool? isLoadingMore,
     bool? hasMore,
   }) {
@@ -47,7 +49,7 @@ class NotificationState {
       iconKeyword: iconKeyword ?? this.iconKeyword,
       title: title ?? this.title,
       message: message ?? this.message,
-      // notifications: notifications ?? this.notifications,
+      notifications: notifications ?? this.notifications,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       hasMore: hasMore ?? this.hasMore,
     );
