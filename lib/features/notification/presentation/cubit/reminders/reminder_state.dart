@@ -1,3 +1,5 @@
+import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
+
 enum ReminderStatus {
   initial,
   loading,
@@ -12,7 +14,7 @@ enum ReminderStatus {
 class ReminderState {
   final ReminderStatus status;
   final ReminderStatus actionStatus;
-  final List reminders;
+  final List<ReminderEntity> reminders;
   final bool isLoadingMore;
   final bool hasMore;
 
@@ -27,7 +29,7 @@ class ReminderState {
   ReminderState copyWith({
     ReminderStatus? status,
     ReminderStatus? actionStatus,
-    List? reminders,
+    List<ReminderEntity>? reminders,
     bool? isLoadingMore,
     bool? hasMore,
   }) {

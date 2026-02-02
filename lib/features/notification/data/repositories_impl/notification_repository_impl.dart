@@ -2,6 +2,7 @@ import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/core/service/network_service.dart';
 import 'package:lingora/features/notification/data/datasources/notification_remote_data.dart';
 import 'package:lingora/features/notification/domain/entities/notification_entity.dart';
+import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/notification/domain/repositories/notification_repository.dart';
 import 'package:lingora/features/notification/domain/usecases/params/notification_params.dart';
 
@@ -22,5 +23,41 @@ class NotificationRepositoriesImpl implements NotificationRepository {
     // Call
     final models = await _remoteDataSource.getNotifications(params);
     return models.map((model) => model.toEntity()).toList();
+  }
+
+  @override
+  Future<List<ReminderEntity>> getReminders(
+    NotificationParams params,
+  ) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
+    // Call
+    final models = await _remoteDataSource.getReminders(params);
+    return models.map((model) => model.toEntity()).toList();
+  }
+
+  @override
+  Future<void> activeReminder(String reminderId) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
+    // Call
+    await _remoteDataSource.activeReminder(reminderId);
+  }
+
+  @override
+  Future<void> unactiveReminder(String reminderId) async {
+    // Check Internet
+    if (!await NetworkService().isConnect()) {
+      throw NetworkException();
+    }
+
+    // Call
+    await _remoteDataSource.unactiveReminder(reminderId);
   }
 }
