@@ -152,5 +152,12 @@
     "nothing_here_message": "This space will fill up as you translate words. Keep going to see your progress!",
     "you_are_offline": "You’re offline",
     "you_are_offline_message": "It seems you’re offline. Once you’re connected, everything will be available here",
-    "feature_not_ready": "This feature isn’t ready yet"
+    "feature_not_ready": "This feature isn’t ready yet",
+
+    "notifications_error_title": "Something went wrong",
+    "notifications_error_message": "We’re having trouble loading your notifications right now. Try again in a bit",
+    "notification_refresh_limit": "You're refreshing too fast. Give it a moment and try again",
+    "no_notifications_title": "Nap time — no alerts yet",
+    "no_notifications_message": "No new notifications yet. We'll let you know when something comes in",
+    "retry": "Retry"
 }
