@@ -5,7 +5,7 @@ import 'package:lingora/config/theme/light_theme.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
-import 'package:lingora/features/notification/presentation/cubit/notification_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/notifications/notification_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
