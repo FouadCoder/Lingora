@@ -166,7 +166,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               "assets/animation/empty_box_character.json",
                           title: 'empty_library_title'.tr(),
                           message: 'empty_library_message'.tr(),
-                          titleColor: Theme.of(context).colorScheme.secondary,
+                          titleColor: Theme.of(context).colorScheme.primary,
                         ),
                       );
                     }

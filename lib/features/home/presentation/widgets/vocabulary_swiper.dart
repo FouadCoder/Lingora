@@ -103,10 +103,17 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
             );
           } else if (state.status == LibraryStatus.networkError) {
             return CustomState(
-              animation: 'assets/animation/cat_sleeping.json',
+              animation: 'assets/animation/cat_sleep_orange.json',
               title: 'you_are_offline'.tr(),
               message: 'you_are_offline_message'.tr(),
               buttonText: 'retry_connection'.tr(),
+              color: Theme.of(context).colorScheme.surface,
+            );
+          } else if (state.status == LibraryStatus.empty) {
+            return CustomState(
+              animation: 'assets/animation/cat_sleep_orange.json',
+              title: 'empty_library_title'.tr(),
+              message: 'empty_library_message'.tr(),
               color: Theme.of(context).colorScheme.surface,
             );
           }

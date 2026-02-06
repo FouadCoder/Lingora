@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
@@ -10,17 +9,10 @@ class ShortcutsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List shortcuts = [
-      {"icon": HeroIcons.clock, "text": "history".tr(), "route": "/history"},
-      {
-        "icon": HeroIcons.heart,
-        "text": "favorites".tr(),
-        "route": "/favorites"
-      },
-      {
-        "icon": HeroIcons.bell,
-        "text": "notifications".tr(),
-        "route": "/notifications"
-      },
+      {"icon": HeroIcons.clock, "route": "/history"},
+      {"icon": HeroIcons.heart, "route": "/favorites"},
+      {"icon": HeroIcons.sparkles, "route": "/reminders"},
+      {"icon": HeroIcons.bell, "route": "/notifications"},
     ];
     return Row(
       children: List.generate(shortcuts.length, (index) {
@@ -29,7 +21,6 @@ class ShortcutsHome extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 4),
             child: ShortcutWidget(
               icon: shortcuts[index]["icon"],
-              text: shortcuts[index]["text"],
               onTap: () {
                 context.push(shortcuts[index]["route"]);
               },

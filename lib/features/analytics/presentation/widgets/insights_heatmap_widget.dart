@@ -38,7 +38,7 @@ class _InsightsHeatmapWidgetState extends State<InsightsHeatmapWidget> {
 
         final monthlyActivity = state.monthlyActivity;
         if (monthlyActivity == null || monthlyActivity.isEmpty) {
-          return Center(child: Text('No analytics available'.tr()));
+          return Container();
         }
 
         return ListView.builder(
