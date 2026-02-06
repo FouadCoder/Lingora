@@ -5,6 +5,7 @@ import 'package:lingora/features/notification/domain/entities/notification_entit
 import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/notification/domain/repositories/notification_repository.dart';
 import 'package:lingora/features/notification/domain/usecases/params/notification_params.dart';
+import 'package:lingora/features/notification/domain/usecases/params/reminder_params.dart';
 
 class NotificationRepositoriesImpl implements NotificationRepository {
   final NotificationRemoteDataSource _remoteDataSource;
@@ -40,24 +41,24 @@ class NotificationRepositoriesImpl implements NotificationRepository {
   }
 
   @override
-  Future<void> activeReminder(String reminderId) async {
+  Future<void> activeReminder(ReminderParams params) async {
     // Check Internet
     if (!await NetworkService().isConnect()) {
       throw NetworkException();
     }
 
     // Call
-    await _remoteDataSource.activeReminder(reminderId);
+    await _remoteDataSource.activeReminder(params);
   }
 
   @override
-  Future<void> unactiveReminder(String reminderId) async {
+  Future<void> unactiveReminder(ReminderParams params) async {
     // Check Internet
     if (!await NetworkService().isConnect()) {
       throw NetworkException();
     }
 
     // Call
-    await _remoteDataSource.unactiveReminder(reminderId);
+    await _remoteDataSource.unactiveReminder(params);
   }
 }

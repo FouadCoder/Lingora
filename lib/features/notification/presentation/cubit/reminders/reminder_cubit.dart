@@ -76,7 +76,7 @@ class ReminderCubit extends Cubit<ReminderState> {
 
   Future<void> activeReminder(String reminderId) async {
     try {
-      await _activeReminderUseCase(reminderId);
+      // await _activeReminderUseCase(reminderId);
 
       // Update the reminder in the local state
       final updatedReminders = state.reminders.map((reminder) {
@@ -94,7 +94,7 @@ class ReminderCubit extends Cubit<ReminderState> {
 
   Future<void> unactiveReminder(String reminderId) async {
     try {
-      await _unactiveReminderUseCase(reminderId);
+      // await _unactiveReminderUseCase(reminderId);
 
       // Update the reminder in the local state
       final updatedReminders = state.reminders.map((reminder) {
