@@ -168,9 +168,10 @@
     "reminders_error_title": "Having trouble loading reminders",
     "reminders_error_message": "We couldn't load your reminders right now. Please try again later",
     "no_reminders_title": "No Active Reminders",
-    "no_reminders_message": "Active reminders help your brain retain words faster through regular review.",
+    "no_reminders_message": "Active reminders help your brain retain words faster through regular review",
     "how_reminders_work": "How reminders work",
     "how_reminders_work_message": "Active words will appear in your daily or weekly review notifications. Toggle off words you've mastered to focus on new vocabulary",
     "learn_new_words": "Learn New Words",
+    "go_to_library": "View Your Library",
     "create_first_reminder": "Create your first reminder by translating and saving a word"
 }

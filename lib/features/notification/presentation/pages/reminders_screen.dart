@@ -12,6 +12,7 @@ import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/status/network_error_status.dart';
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
+import 'package:lingora/features/notification/presentation/widgets/reminder_loading_card.dart';
 import 'package:lingora/features/notification/presentation/widgets/reminder_widget.dart';
 import 'package:lingora/features/notification/presentation/widgets/notification_loading_card.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -82,7 +83,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                     crossAxisSpacing: AppDimens.cardBetween,
                     mainAxisSpacing: AppDimens.cardBetween,
                     itemBuilder: (context, index) {
-                      return NotificationLoadingCard();
+                      return ReminderLoadingCard();
                     },
                   );
                 }
@@ -145,13 +146,13 @@ class _RemindersScreenState extends State<RemindersScreen> {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: CustomState(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                       animation: "assets/animation/sleep_cat_alarm.json",
                       title: 'no_reminders_title'.tr(),
                       message: 'no_reminders_message'.tr(),
-                      buttonText: 'learn_new_words'.tr(),
-                      onTap: () => context.push('/'),
-                      titleColor: Theme.of(context).colorScheme.secondary,
+                      buttonText: 'go_to_library'.tr(),
+                      onTap: () => context.push('/library'),
+                      titleColor: Theme.of(context).colorScheme.primary,
                     ),
                   );
                 }
