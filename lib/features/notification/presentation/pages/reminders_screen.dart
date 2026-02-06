@@ -122,15 +122,9 @@ class _RemindersScreenState extends State<RemindersScreen> {
                                 original: reminder.remindAt.toString(),
                                 isActive: reminder.isActive,
                                 onChanged: (bool isActive) {
-                                  if (isActive) {
-                                    context
-                                        .read<ReminderCubit>()
-                                        .activeReminder(reminder.id);
-                                  } else {
-                                    context
-                                        .read<ReminderCubit>()
-                                        .unactiveReminder(reminder.id);
-                                  }
+                                  context
+                                      .read<ReminderCubit>()
+                                      .unactiveReminder(reminder.id);
                                 },
                               );
                             }

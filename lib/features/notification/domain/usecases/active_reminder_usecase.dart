@@ -1,16 +1,17 @@
 import 'dart:math';
 
 import 'package:lingora/features/notification/domain/repositories/notification_repository.dart';
-import 'package:lingora/features/notification/domain/usecases/params/reminder_params.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
 class ActiveReminderUseCase {
   final NotificationRepository repository;
 
   ActiveReminderUseCase(this.repository);
 
-  void call(ReminderParams params) {
+  Future call(WordEntity word) async {
     DateTime remindAt = getReminderTime();
     print("Random Time for reminder at =========== $remindAt");
+    await Future.delayed(Duration(seconds: 1));
     return; //TODO update later
     // return repository.activeReminder(params);
   }

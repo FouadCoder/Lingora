@@ -5,6 +5,7 @@ import 'package:lingora/features/notification/domain/usecases/get_reminders_usec
 import 'package:lingora/features/notification/domain/usecases/unactive_reminder_usecase.dart';
 import 'package:lingora/features/notification/domain/usecases/params/notification_params.dart';
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
 class ReminderCubit extends Cubit<ReminderState> {
   final GetRemindersUseCase _getRemindersUseCase;
@@ -42,7 +43,7 @@ class ReminderCubit extends Cubit<ReminderState> {
           hasMore: reminders.length >= 15,
         ));
       }
-    } catch (e) {
+    } catch (_) {
       emit(state.copyWith(status: ReminderStatus.error));
     }
   }
@@ -71,21 +72,14 @@ class ReminderCubit extends Cubit<ReminderState> {
     }
   }
 
-  Future<void> activeReminder(String reminderId) async {
+  Future activeReminder(WordEntity word) async {
     try {
-      // await _activeReminderUseCase(reminderId);
+      emit(state.copyWith(actionStatus: ReminderStatus.loading));
+      await _activeReminderUseCase(word);
 
-      // Update the reminder in the local state
-      final updatedReminders = state.reminders.map((reminder) {
-        if (reminder.id == reminderId) {
-          return reminder.copyWith(isActive: true);
-        }
-        return reminder;
-      }).toList();
-
-      emit(state.copyWith(reminders: updatedReminders));
+      emit(state.copyWith(actionStatus: ReminderStatus.success));
     } catch (e) {
-      emit(state.copyWith(status: ReminderStatus.error));
+      emit(state.copyWith(actionStatus: ReminderStatus.error));
     }
   }
 

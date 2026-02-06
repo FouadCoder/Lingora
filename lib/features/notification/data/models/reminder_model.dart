@@ -1,4 +1,5 @@
 import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
+import 'package:lingora/features/words/data/models/word_model.dart';
 
 class ReminderModel {
   final String id;
@@ -9,6 +10,7 @@ class ReminderModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
+  final WordModel word;
 
   ReminderModel({
     required this.id,
@@ -18,6 +20,7 @@ class ReminderModel {
     required this.isActive,
     required this.createdAt,
     required this.updatedAt,
+    required this.word,
     this.deletedAt,
   });
 
@@ -33,6 +36,7 @@ class ReminderModel {
       deletedAt: json['deleted_at'] != null
           ? DateTime.parse(json['deleted_at'])
           : null,
+      word: WordModel.fromJson(json['translated_words']),
     );
   }
 
@@ -58,6 +62,7 @@ class ReminderModel {
       isActive: isActive,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      word: word.toEntity(),
       deletedAt: deletedAt,
     );
   }

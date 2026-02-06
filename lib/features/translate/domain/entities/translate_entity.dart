@@ -1,10 +1,9 @@
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/features/words/domain/entities/collection_entity.dart';
 
 class TranslateEntity {
-  final String? id;
-  final String? userId;
-  final String? categoryId;
+  final String id;
+  final String userId;
+  final String? collectionId;
   final String original;
   final String translated;
   final String pos;
@@ -14,15 +13,14 @@ class TranslateEntity {
   final List<String> synonyms;
   final Language? translateFrom;
   final Language? translateTo;
-  final CollectionEntity collection;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
 
   const TranslateEntity({
-    this.id,
-    this.userId,
-    this.categoryId,
+    required this.id,
+    required this.userId,
+    this.collectionId,
     required this.original,
     required this.translated,
     required this.pos,
@@ -32,7 +30,6 @@ class TranslateEntity {
     this.synonyms = const [],
     required this.translateFrom,
     required this.translateTo,
-    required this.collection,
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
