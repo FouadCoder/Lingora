@@ -6,6 +6,7 @@ import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/notification/presentation/cubit/notifications/notification_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
@@ -62,6 +63,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<NotificationCubit>(
               create: (context) =>
                   injection<NotificationCubit>()), // Notification
+          BlocProvider<ReminderCubit>(
+              create: (context) => injection<ReminderCubit>()), // Reminder
 
           //TODO adjust the cubits below
           BlocProvider<AuthAppCubit>(

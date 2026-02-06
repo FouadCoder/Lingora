@@ -12,8 +12,12 @@ import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.da
 import 'package:lingora/features/notification/data/datasources/notification_remote_data.dart';
 import 'package:lingora/features/notification/data/repositories_impl/notification_repository_impl.dart';
 import 'package:lingora/features/notification/domain/repositories/notification_repository.dart';
+import 'package:lingora/features/notification/domain/usecases/active_reminder_usecase.dart';
 import 'package:lingora/features/notification/domain/usecases/get_notification_usecase.dart';
+import 'package:lingora/features/notification/domain/usecases/get_reminders_usecase.dart';
+import 'package:lingora/features/notification/domain/usecases/unactive_reminder_usecase.dart';
 import 'package:lingora/features/notification/presentation/cubit/notifications/notification_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
 import 'package:lingora/features/words/data/datasources/words_remote_data.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/add_to_favorites_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/favorites_usecase/get_favorites_usecase.dart';
@@ -122,6 +126,10 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => GetFavoritesUsecase(injection()));
   // Notification
   injection.registerFactory(() => GetNotificationsUseCase(injection()));
+  // Reminders
+  injection.registerFactory(() => GetRemindersUseCase(injection()));
+  injection.registerFactory(() => ActiveReminderUseCase(injection()));
+  injection.registerFactory(() => UnactiveReminderUseCase(injection()));
 
   // Cubit
   injection.registerFactory<TranslateCubit>(
@@ -137,4 +145,6 @@ Future<void> setupInjection() async {
   injection.registerFactory(
       () => FavoritesCubit(injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotificationCubit(injection()));
+  injection.registerFactory(
+      () => ReminderCubit(injection(), injection(), injection()));
 }

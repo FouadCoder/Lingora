@@ -14,14 +14,11 @@ class ReminderCubit extends Cubit<ReminderState> {
   int _offset = 0;
   DateTime? lastRefresh;
 
-  ReminderCubit({
-    required GetRemindersUseCase getRemindersUseCase,
-    required ActiveReminderUseCase activeReminderUseCase,
-    required UnactiveReminderUseCase unactiveReminderUseCase,
-  })  : _getRemindersUseCase = getRemindersUseCase,
-        _activeReminderUseCase = activeReminderUseCase,
-        _unactiveReminderUseCase = unactiveReminderUseCase,
-        super(ReminderState());
+  ReminderCubit(
+    this._getRemindersUseCase,
+    this._activeReminderUseCase,
+    this._unactiveReminderUseCase,
+  ) : super(ReminderState());
 
   Future<void> getReminders() async {
     _offset = 0;
