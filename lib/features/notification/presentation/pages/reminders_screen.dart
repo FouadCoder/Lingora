@@ -4,17 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/status/network_error_status.dart';
-import 'package:lingora/features/notification/presentation/cubit/notifications/notification_cubit.dart';
-import 'package:lingora/features/notification/presentation/cubit/notifications/notification_state.dart';
-import 'package:lingora/features/notification/presentation/widgets/notification_card.dart';
-import 'package:lingora/features/notification/presentation/widgets/notification_icons.dart';
+import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
+import 'package:lingora/features/notification/presentation/widgets/reminder_widget.dart';
 import 'package:lingora/features/notification/presentation/widgets/notification_loading_card.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
@@ -30,12 +28,11 @@ class _RemindersScreenState extends State<RemindersScreen> {
   @override
   void initState() {
     super.initState();
-    //TODO
-    // context.read<NotificationCubit>().getReminders();
+    context.read<ReminderCubit>().getReminders();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 600) {
-        // context.read<NotificationCubit>().loadMoreReminders();
+        context.read<ReminderCubit>().loadMoreReminders();
       }
     });
   }
@@ -45,10 +42,10 @@ class _RemindersScreenState extends State<RemindersScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: AppContainer(
-        child: BlocConsumer<NotificationCubit, NotificationState>(
+        child: BlocConsumer<ReminderCubit, ReminderState>(
           listener: (context, state) {
             // Error
-            if (state.status == NotificationStatus.error) {
+            if (state.status == ReminderStatus.error) {
               showSnackBar(
                 context,
                 message: 'reminders_error_title'.tr(),
@@ -57,12 +54,11 @@ class _RemindersScreenState extends State<RemindersScreen> {
               );
             }
             // Network Error
-            else if (state.status == NotificationStatus.networkError) {
+            else if (state.status == ReminderStatus.networkError) {
               showErrorNetworkSnackBar(context);
             }
             // Refresh Limit Exceeded
-            else if (state.actionNotificationStatus ==
-                NotificationStatus.limitExceeded) {
+            else if (state.actionStatus == ReminderStatus.limitExceeded) {
               showSnackBar(
                 context,
                 message: 'refresh_limit_reached'.tr(),
@@ -72,10 +68,10 @@ class _RemindersScreenState extends State<RemindersScreen> {
             }
           },
           builder: (context, state) {
-            return BlocBuilder<NotificationCubit, NotificationState>(
+            return BlocBuilder<ReminderCubit, ReminderState>(
               builder: (context, state) {
                 // Loading
-                if (state.status == NotificationStatus.loading) {
+                if (state.status == ReminderStatus.loading) {
                   return MasonryGridView.builder(
                     padding: EdgeInsets.zero,
                     itemCount: 10,
@@ -91,13 +87,12 @@ class _RemindersScreenState extends State<RemindersScreen> {
                   );
                 }
                 // Success
-                else if (state.status == NotificationStatus.success) {
+                else if (state.status == ReminderStatus.success) {
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(AppDimens.radiusL),
                     child: LiquidPullToRefresh(
-                      onRefresh: () => context
-                          .read<NotificationCubit>()
-                          .refreshNotifications(),
+                      onRefresh: () =>
+                          context.read<ReminderCubit>().getReminders(),
                       backgroundColor: Colors.black,
                       color: Theme.of(context).colorScheme.primary,
                       showChildOpacityTransition: false,
@@ -109,8 +104,8 @@ class _RemindersScreenState extends State<RemindersScreen> {
                           controller: _scrollController,
                           padding: EdgeInsets.zero,
                           itemCount: state.isLoadingMore
-                              ? state.notifications.length + 6
-                              : state.notifications.length,
+                              ? state.reminders.length + 6
+                              : state.reminders.length,
                           gridDelegate:
                               SliverSimpleGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount:
@@ -119,18 +114,23 @@ class _RemindersScreenState extends State<RemindersScreen> {
                           crossAxisSpacing: AppDimens.cardBetween,
                           mainAxisSpacing: AppDimens.cardBetween,
                           itemBuilder: (context, index) {
-                            if (index < state.notifications.length) {
-                              final notification = state.notifications[index];
-                              return NotificationCard(
-                                title: notification.title,
-                                message: notification.message,
-                                date: notification.createdAt.toSmartTimeAgo(),
-                                icon: NotificationIconConfig.getByKeyword(
-                                  notification.iconKeyword!,
-                                ).icon,
-                                iconColor: NotificationIconConfig.getByKeyword(
-                                  notification.iconKeyword!,
-                                ).color,
+                            if (index < state.reminders.length) {
+                              final reminder = state.reminders[index];
+                              return ReminderWidget(
+                                translate: reminder.wordId,
+                                original: reminder.remindAt.toString(),
+                                isActive: reminder.isActive,
+                                onChanged: (bool isActive) {
+                                  if (isActive) {
+                                    context
+                                        .read<ReminderCubit>()
+                                        .activeReminder(reminder.id);
+                                  } else {
+                                    context
+                                        .read<ReminderCubit>()
+                                        .unactiveReminder(reminder.id);
+                                  }
+                                },
                               );
                             }
                             return NotificationLoadingCard();
@@ -141,7 +141,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                   );
                 }
                 // Empty
-                else if (state.status == NotificationStatus.empty) {
+                else if (state.status == ReminderStatus.empty) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: CustomState(
@@ -156,12 +156,12 @@ class _RemindersScreenState extends State<RemindersScreen> {
                   );
                 }
                 // Network Error
-                else if (state.status == NotificationStatus.networkError) {
+                else if (state.status == ReminderStatus.networkError) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: NetworkErrorView(
                       onTap: () {
-                        // context.read<NotificationCubit>().getNotifications();
+                        context.read<ReminderCubit>().getReminders();
                       },
                     ),
                   );
@@ -178,7 +178,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                       message: 'reminders_error_message'.tr(),
                       buttonText: 'try_again'.tr(),
                       onTap: () {
-                        // context.read<NotificationCubit>().getNotifications();
+                        context.read<ReminderCubit>().getReminders();
                       },
                     ),
                   );
