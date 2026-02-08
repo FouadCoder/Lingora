@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/cubit/state_app.dart';
-import 'package:lingora/pages/auth_screen/login.dart';
-import 'package:lingora/pages/nav.dart';
+import 'package:lingora/features/auth/presentation/pages/auth_screen/login.dart';
+import 'package:lingora/nav.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});

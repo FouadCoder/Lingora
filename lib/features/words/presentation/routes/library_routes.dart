@@ -4,7 +4,7 @@ import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/pages/favorites/favorites_screen.dart';
 import 'package:lingora/features/words/presentation/pages/library/collection_words_screen.dart';
 import 'package:lingora/features/words/presentation/pages/library/word_details_screen.dart';
-import 'package:lingora/pages/nav.dart';
+import 'package:lingora/nav.dart';
 
 final libraryRoutes = [
   GoRoute(
