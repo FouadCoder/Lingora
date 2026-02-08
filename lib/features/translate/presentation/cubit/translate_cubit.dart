@@ -16,9 +16,7 @@ class TranslateCubit extends Cubit<TranslateState> {
 
   // Update input text
   void updateInput(String text) {
-    emit(state.copyWith(
-      inputText: text,
-    ));
+    emit(state.copyWith(inputText: text, status: TranslateStatus.initial));
   }
 
   // Update selected languages
@@ -49,6 +47,8 @@ class TranslateCubit extends Cubit<TranslateState> {
         emit(state.copyWith(status: TranslateStatus.empty));
         return;
       }
+
+      emit(state.copyWith(status: TranslateStatus.loading));
 
       // Create params
       final params = TranslateParams(

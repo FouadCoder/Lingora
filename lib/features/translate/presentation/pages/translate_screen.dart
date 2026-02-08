@@ -48,7 +48,6 @@ class _TranslateScreenState extends State<TranslateScreen> {
     final isTablet = AppPlatform.isTablet(context);
 
     return BlocListener<TranslateCubit, TranslateState>(
-      listenWhen: (prev, curr) => prev.status != curr.status,
       listener: (context, state) {
         final theme = Theme.of(context);
 
@@ -99,6 +98,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                     bool isLoading = state.status == TranslateStatus.loading;
                     bool isSuccess = state.status == TranslateStatus.success &&
                         state.result != null;
+
                     return Column(
                       children: [
                         // Translation Input
