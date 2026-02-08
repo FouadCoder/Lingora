@@ -18,8 +18,7 @@ class NotificationService {
 
   Future shouldRequestNotificationPermission() async {
     try {
-      int appOpenCount = 0;
-      appOpenCount = await _box.get("app_open_count", defaultValue: 0);
+      int appOpenCount = await _box.get("app_open_count", defaultValue: 0);
 
       // If more than 3 times ask for permission
       if (appOpenCount > 3) {
