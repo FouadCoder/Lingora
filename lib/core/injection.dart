@@ -2,6 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lingora/core/service/audio_service.dart';
+import 'package:lingora/core/service/notification_service.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/analytics/data/datasources/analytics_remote_data.dart';
 import 'package:lingora/features/analytics/data/repositories_impl/analytics_repository_impl.dart';
@@ -58,17 +59,19 @@ final injection = GetIt.instance;
 Future<void> setupInjection() async {
   // Core
   await dotenv.load(fileName: ".env");
+
+  // Supabase
   await Supabase.initialize(
       url: dotenv.get('SUPABASE_URL'), anonKey: dotenv.get('SUPABASE_ANONKEY'));
+  injection.registerSingleton<SupabaseClient>(Supabase.instance.client);
+
+  // Hive
+  await Hive.initFlutter(); //  Hive database
+  final box = await Hive.openBox("db"); //  Hive database
+  injection.registerSingleton<Box>(box);
 
   // Notifications
   OneSignal.initialize(dotenv.get('ONESIGNAL_APP_ID'));
-  OneSignal.Notifications.requestPermission(true);
-
-  injection.registerSingleton<SupabaseClient>(Supabase.instance.client);
-  await Hive.initFlutter(); //  Hive database
-  await Hive.openBox("db"); //  Hive database
-  injection.registerSingleton(Hive);
 
   // Database
   injection.registerSingleton(TranslateRemoteData(injection()));
@@ -95,8 +98,10 @@ Future<void> setupInjection() async {
   injection.registerLazySingleton<NotificationRepository>(
       () => NotificationRepositoriesImpl(injection()));
 
-  // Services
+  //* Services
   injection.registerLazySingleton(() => AudioService());
+  injection.registerLazySingleton(
+      () => NotificationService(injection(), injection()));
 
   //* Usecases
 
