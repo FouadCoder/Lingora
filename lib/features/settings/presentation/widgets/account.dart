@@ -9,8 +9,8 @@ import 'package:lingora/core/widgets/custom_alert.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/header.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/cubit/state_app.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_state.dart';
 
 class AccountWidget extends StatefulWidget {
   const AccountWidget({super.key});
@@ -34,7 +34,7 @@ class _AccountWidgetState extends State<AccountWidget> {
             leftbuttonColor: Theme.of(context).colorScheme.onSurface,
             rightButtonColor: Theme.of(context).colorScheme.primary,
             functionleftButton: () {
-              context.read<AuthAppCubit>().logout();
+              context.read<AuthCubit>().logout();
               Navigator.pop(context);
             },
             functionRightButton: () {
@@ -83,7 +83,7 @@ class _AccountWidgetState extends State<AccountWidget> {
               textColor: Theme.of(context).textTheme.bodyMedium?.color ??
                   Colors.black);
 
-          Widget logoutButton = BlocBuilder<AuthAppCubit, AuthAppState>(
+          Widget logoutButton = BlocBuilder<AuthCubit, AuthState>(
             builder: (context, state) {
               bool isLoading = state.status == AuthAppStatus.loading;
               return CustomButton(

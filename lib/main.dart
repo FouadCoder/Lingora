@@ -5,6 +5,7 @@ import 'package:lingora/config/theme/light_theme.dart';
 import 'package:lingora/core/injection.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:lingora/features/notification/presentation/cubit/notifications/notification_cubit.dart';
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
@@ -65,12 +66,12 @@ class MyApp extends StatelessWidget {
                   injection<NotificationCubit>()), // Notification
           BlocProvider<ReminderCubit>(
               create: (context) => injection<ReminderCubit>()), // Reminder
-
-          //TODO adjust the cubits below
-          BlocProvider<AuthAppCubit>(
-            create: (context) => AuthAppCubit()..launch(),
+          BlocProvider<AuthCubit>(
+            create: (context) => injection<AuthCubit>()..launch(),
             lazy: false,
           ), // Auth
+
+          //TODO adjust the cubits below
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
         ],
         child: BlocListener<LanguageCubit, LanguageState>(

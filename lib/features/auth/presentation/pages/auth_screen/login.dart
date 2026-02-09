@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_button.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/textfield.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_state.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthAppCubit, AuthAppState>(
+    return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         // Success
         if (state.status == AuthAppStatus.success && context.mounted) {
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               LayoutBuilder(builder: (context, _) {
                 // Login
-                Widget loginButton = BlocBuilder<AuthAppCubit, AuthAppState>(
+                Widget loginButton = BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, state) {
                     bool isLoading = state.status == AuthAppStatus.loading;
                     return CustomButton(
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: 'login_button'.tr(),
                         color: Theme.of(context).colorScheme.primary,
                         function: () {
-                          context.read<AuthAppCubit>().login(
+                          context.read<AuthCubit>().login(
                               emailController.text, passwordController.text);
                         },
                         textColor: Colors.white);

@@ -10,6 +10,8 @@ import 'package:lingora/features/analytics/domain/repositories/analytics_reposit
 import 'package:lingora/features/analytics/domain/usecases/get_analytics_usecase.dart';
 import 'package:lingora/features/analytics/domain/usecases/get_daily_activity_usercase.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/auth/data/datasources/auth_remote_data.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:lingora/features/notification/data/datasources/notification_remote_data.dart';
 import 'package:lingora/features/notification/data/repositories_impl/notification_repository_impl.dart';
 import 'package:lingora/features/notification/domain/repositories/notification_repository.dart';
@@ -30,6 +32,13 @@ import 'package:lingora/features/history/data/repositories_impl/history_reposito
 import 'package:lingora/features/history/domain/repositories/history_repository.dart';
 import 'package:lingora/features/history/domain/usecases/fetch_history_usecase.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
+import 'package:lingora/features/auth/data/repositories_impl/auth_repository_impl.dart';
+import 'package:lingora/features/auth/domain/usecases/login_usecase.dart';
+import 'package:lingora/features/auth/domain/usecases/signup_usecase.dart';
+import 'package:lingora/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:lingora/features/auth/domain/usecases/check_session_usecase.dart';
+import 'package:lingora/features/auth/domain/usecases/create_profile_usecase.dart';
+import 'package:lingora/features/auth/domain/repositories/auth_repository.dart';
 import 'package:lingora/features/words/data/repositories_impl/library_repository_impl.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_library_usecase.dart';
@@ -49,7 +58,6 @@ import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
 import 'package:lingora/features/translate/data/datasources/translate_remote_data.dart';
 import 'package:lingora/features/translate/data/repositories_impl/translate_repository_impl.dart';
 import 'package:lingora/features/translate/domain/repositories/translate_repository.dart';
-import 'package:lingora/features/translate/domain/usecases/translate_usecase.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -83,10 +91,14 @@ Future<void> setupInjection() async {
       () => WordsRemoteDataImpl(injection()));
   injection.registerLazySingleton<NotificationRemoteDataSource>(
       () => NotificationRemoteDataSourceImpl(injection()));
+  injection.registerLazySingleton<AuthRemoteData>(
+      () => AuthRemoteDataImpl(injection()));
 
   // Repositories
   injection.registerLazySingleton<TranslateRepository>(
       () => TranslateRepositoryImpl(injection()));
+  injection.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(injection()));
   injection.registerLazySingleton<LibraryRepository>(
       () => LibraryRepositoryImpl(injection()));
   injection.registerLazySingleton<AnalyticsRepository>(
@@ -97,6 +109,8 @@ Future<void> setupInjection() async {
       () => SettingsRepositoryImpl(injection()));
   injection.registerLazySingleton<NotificationRepository>(
       () => NotificationRepositoriesImpl(injection()));
+  injection.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(injection()));
 
   //* Services
   injection.registerLazySingleton(() => AudioService());
@@ -105,8 +119,12 @@ Future<void> setupInjection() async {
 
   //* Usecases
 
-  // Translate
-  injection.registerFactory(() => TranslateUsecase(injection()));
+  // Auth
+  injection.registerFactory(() => LoginUseCase(injection()));
+  injection.registerFactory(() => SignUpUseCase(injection()));
+  injection.registerFactory(() => LogoutUseCase(injection()));
+  injection.registerFactory(() => CheckSessionUseCase(injection()));
+  injection.registerFactory(() => CreateProfileUseCase(injection()));
   // Library
   injection.registerFactory(() => GetLibraryUsecase(injection()));
   injection.registerFactory(() => GetWordsByCollectionUsecase(injection()));
@@ -142,6 +160,13 @@ Future<void> setupInjection() async {
   injection.registerFactory<LibraryCubit>(() => LibraryCubit(
       injection(), injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
+  injection.registerFactory<AuthCubit>(() => AuthCubit(
+        injection(),
+        injection(),
+        injection(),
+        injection(),
+        injection(),
+      ));
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));
   injection.registerFactory(() => HistoryCubit(injection(), injection()));

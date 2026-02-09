@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/cubit/cubit_app.dart';
-import 'package:lingora/cubit/state_app.dart';
 import 'package:lingora/core/widgets/header.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_state.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
 import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
@@ -44,7 +44,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthAppCubit, AuthAppState>(
+    return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         // success
         if (state.status == AuthAppStatus.success && context.mounted) {
