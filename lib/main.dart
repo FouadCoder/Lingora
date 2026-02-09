@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/config/theme/light_theme.dart';
 import 'package:lingora/core/injection.dart';
+import 'package:lingora/core/service/launch_service.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
@@ -24,6 +25,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setupInjection();
+
+  final launchService = injection<LaunchService>();
+  await launchService.launch();
 
   runApp(EasyLocalization(
     supportedLocales: const [
@@ -67,8 +71,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<ReminderCubit>(
               create: (context) => injection<ReminderCubit>()), // Reminder
           BlocProvider<AuthCubit>(
-            create: (context) => injection<AuthCubit>()..launch(),
-            lazy: false,
+            create: (context) => injection<AuthCubit>(),
           ), // Auth
 
           //TODO adjust the cubits below

@@ -8,6 +8,7 @@ enum AuthAppStatus {
   checkingSession,
   authenticated,
   unauthenticated,
+  newUser
 }
 
 enum AuthErrorType {

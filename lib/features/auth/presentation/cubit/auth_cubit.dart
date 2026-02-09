@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/service/launch_service.dart';
 import 'package:lingora/features/auth/domain/usecases/login_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/logout_usecase.dart';
@@ -12,13 +13,11 @@ class AuthCubit extends Cubit<AuthState> {
   final SignUpUseCase _signUpUseCase;
   final LogoutUseCase _logoutUseCase;
   final CheckSessionUseCase _checkSessionUseCase;
+  final LaunchService _launchService;
 
-  AuthCubit(
-    this._loginUseCase,
-    this._signUpUseCase,
-    this._logoutUseCase,
-    this._checkSessionUseCase,
-  ) : super(AuthState());
+  AuthCubit(this._loginUseCase, this._signUpUseCase, this._logoutUseCase,
+      this._checkSessionUseCase, this._launchService)
+      : super(AuthState());
 
   // Login
   Future<void> login(String email, String password) async {
@@ -68,14 +67,12 @@ class AuthCubit extends Cubit<AuthState> {
         emit(state.copyWith(
             status: AuthAppStatus.error, errorType: AuthErrorType.noInternet));
       } else {
-        print("Error ============================= $e");
         emit(state.copyWith(status: AuthAppStatus.error));
       }
     }
   }
 
   // Sign up
-
   Future<void> signUp(
       String email, String password, String confirmPassword) async {
     try {
@@ -152,8 +149,8 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  // Launch
-  Future<void> launch() async {
+  // check session
+  Future<void> checkSession() async {
     try {
       emit(state.copyWith(status: AuthAppStatus.checkingSession));
 
@@ -163,8 +160,19 @@ class AuthCubit extends Cubit<AuthState> {
         emit(state.copyWith(
           status: AuthAppStatus.authenticated,
         ));
-      } else {
-        emit(state.copyWith(status: AuthAppStatus.unauthenticated));
+      }
+
+      // authenticated
+      else {
+        final openCount = await _launchService.getAppOpenCount();
+        bool isFirstOpen = openCount == 1;
+        if (isFirstOpen) {
+          emit(state.copyWith(status: AuthAppStatus.newUser));
+        }
+
+        if (!isFirstOpen) {
+          emit(state.copyWith(status: AuthAppStatus.unauthenticated));
+        }
       }
     } catch (e) {
       emit(state.copyWith(status: AuthAppStatus.unauthenticated));

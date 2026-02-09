@@ -158,7 +158,8 @@ Future<void> setupInjection() async {
   injection.registerFactory<LibraryCubit>(() => LibraryCubit(
       injection(), injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
-  injection.registerFactory<AuthCubit>(() => AuthCubit(
+  injection.registerLazySingleton<AuthCubit>(() => AuthCubit(
+        injection(),
         injection(),
         injection(),
         injection(),
