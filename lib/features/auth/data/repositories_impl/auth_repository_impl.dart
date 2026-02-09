@@ -44,9 +44,4 @@ class AuthRepositoryImpl implements AuthRepository {
     final authModel = await remoteData.checkSession();
     return authModel?.toEntity();
   }
-
-  @override
-  Future<void> createProfile() async {
-    await remoteData.createProfile();
-  }
 }

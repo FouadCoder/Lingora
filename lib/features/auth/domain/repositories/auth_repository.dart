@@ -5,5 +5,4 @@ abstract class AuthRepository {
   Future<void> signUp(String email, String password);
   Future<void> logout();
   Future<AuthEntity?> checkSession();
-  Future<void> createProfile();
 }

@@ -37,7 +37,6 @@ import 'package:lingora/features/auth/domain/usecases/login_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/check_session_usecase.dart';
-import 'package:lingora/features/auth/domain/usecases/create_profile_usecase.dart';
 import 'package:lingora/features/auth/domain/repositories/auth_repository.dart';
 import 'package:lingora/features/words/data/repositories_impl/library_repository_impl.dart';
 import 'package:lingora/features/words/domain/repositories/library_repository.dart';
@@ -124,7 +123,6 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => SignUpUseCase(injection()));
   injection.registerFactory(() => LogoutUseCase(injection()));
   injection.registerFactory(() => CheckSessionUseCase(injection()));
-  injection.registerFactory(() => CreateProfileUseCase(injection()));
   // Library
   injection.registerFactory(() => GetLibraryUsecase(injection()));
   injection.registerFactory(() => GetWordsByCollectionUsecase(injection()));
@@ -161,7 +159,6 @@ Future<void> setupInjection() async {
       injection(), injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
   injection.registerFactory<AuthCubit>(() => AuthCubit(
-        injection(),
         injection(),
         injection(),
         injection(),

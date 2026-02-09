@@ -6,7 +6,6 @@ abstract class AuthRemoteData {
   Future<void> signUp(String email, String password);
   Future<void> logout();
   Future<AuthModel?> checkSession();
-  Future<void> createProfile();
 }
 
 class AuthRemoteDataImpl implements AuthRemoteData {
@@ -47,18 +46,5 @@ class AuthRemoteDataImpl implements AuthRemoteData {
       });
     }
     return null;
-  }
-
-  @override
-  Future<void> createProfile() async {
-    final userId = supabaseClient.auth.currentUser?.id;
-    if (userId == null) {
-      throw Exception('User not authenticated');
-    }
-
-    await supabaseClient.from('profiles').upsert(
-      {'id': userId},
-      onConflict: 'id',
-    );
   }
 }

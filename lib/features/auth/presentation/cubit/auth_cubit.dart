@@ -5,7 +5,6 @@ import 'package:lingora/features/auth/domain/usecases/login_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/check_session_usecase.dart';
-import 'package:lingora/features/auth/domain/usecases/create_profile_usecase.dart';
 import 'package:lingora/features/auth/presentation/cubit/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -13,14 +12,12 @@ class AuthCubit extends Cubit<AuthState> {
   final SignUpUseCase _signUpUseCase;
   final LogoutUseCase _logoutUseCase;
   final CheckSessionUseCase _checkSessionUseCase;
-  final CreateProfileUseCase _createProfileUseCase;
 
   AuthCubit(
     this._loginUseCase,
     this._signUpUseCase,
     this._logoutUseCase,
     this._checkSessionUseCase,
-    this._createProfileUseCase,
   ) : super(AuthState());
 
   // Login
@@ -52,9 +49,6 @@ class AuthCubit extends Cubit<AuthState> {
       }
 
       await _loginUseCase(email.trim(), password.trim());
-
-      // Create profile & Analytics & Check if exist
-      await _createProfileUseCase();
 
       emit(state.copyWith(status: AuthAppStatus.success));
     }
@@ -121,8 +115,6 @@ class AuthCubit extends Cubit<AuthState> {
       // Sign up
       await _signUpUseCase(email.trim(), password.trim());
 
-      // Create profile
-      await _createProfileUseCase();
       emit(state.copyWith(status: AuthAppStatus.success));
     }
     //* Time out
