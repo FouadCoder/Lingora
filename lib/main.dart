@@ -71,7 +71,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<ReminderCubit>(
               create: (context) => injection<ReminderCubit>()), // Reminder
           BlocProvider<AuthCubit>(
-            create: (context) => injection<AuthCubit>(),
+            create: (context) => injection<AuthCubit>()..checkSession(),
+            lazy: false,
           ), // Auth
 
           //TODO adjust the cubits below

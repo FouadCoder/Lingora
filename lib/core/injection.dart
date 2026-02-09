@@ -2,6 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lingora/core/service/audio_service.dart';
+import 'package:lingora/core/service/launch_service.dart';
 import 'package:lingora/core/service/notification_service.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/analytics/data/datasources/analytics_remote_data.dart';
@@ -108,13 +109,13 @@ Future<void> setupInjection() async {
       () => SettingsRepositoryImpl(injection()));
   injection.registerLazySingleton<NotificationRepository>(
       () => NotificationRepositoriesImpl(injection()));
-  injection.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(injection()));
 
   //* Services
   injection.registerLazySingleton(() => AudioService());
   injection.registerLazySingleton(
       () => NotificationService(injection(), injection()));
+  injection
+      .registerLazySingleton(() => LaunchService(injection(), injection()));
 
   //* Usecases
 
@@ -158,7 +159,7 @@ Future<void> setupInjection() async {
   injection.registerFactory<LibraryCubit>(() => LibraryCubit(
       injection(), injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotesCubit(injection(), injection()));
-  injection.registerLazySingleton<AuthCubit>(() => AuthCubit(
+  injection.registerFactory<AuthCubit>(() => AuthCubit(
         injection(),
         injection(),
         injection(),
