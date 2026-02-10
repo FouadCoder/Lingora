@@ -91,7 +91,7 @@ Future<void> setupInjection() async {
   injection.registerLazySingleton<WordsRemoteData>(
       () => WordsRemoteDataImpl(injection()));
   injection.registerLazySingleton<NotificationRemoteDataSource>(
-      () => NotificationRemoteDataSourceImpl(injection()));
+      () => NotificationRemoteDataSourceImpl(injection(), injection()));
   injection.registerLazySingleton<AuthRemoteData>(
       () => AuthRemoteDataImpl(injection()));
 

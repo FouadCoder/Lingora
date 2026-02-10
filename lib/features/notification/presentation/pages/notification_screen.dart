@@ -143,11 +143,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: CustomState(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                       animation: "assets/animation/sleep_cat_alarm.json",
                       title: 'no_notifications_title'.tr(),
                       message: 'no_notifications_message'.tr(),
-                      titleColor: Theme.of(context).colorScheme.secondary,
+                      titleColor: Theme.of(context).colorScheme.primary,
                     ),
                   );
                 }

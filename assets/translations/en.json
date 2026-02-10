@@ -156,7 +156,7 @@
     "notifications_error_title": "Something went wrong",
     "notifications_error_message": "We’re having trouble loading your notifications right now. Try again in a bit",
     "refresh_limit_reached": "Refresh limit reached. Please wait before trying again",
-    "no_notifications_title": "Nap time — no alerts yet",
+    "no_notifications_title": "Nap time — No alerts yet",
     "no_notifications_message": "No new notifications yet. We'll let you know when something comes in",
     "retry": "Retry",
     "time_just_now": "Just now",

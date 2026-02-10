@@ -1,3 +1,4 @@
+import 'package:lingora/core/service/launch_service.dart';
 import 'package:lingora/features/notification/data/models/notification_model.dart';
 import 'package:lingora/features/notification/data/models/reminder_model.dart';
 import 'package:lingora/features/notification/domain/usecases/params/notification_params.dart';
@@ -13,8 +14,9 @@ abstract class NotificationRemoteDataSource {
 
 class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
   final SupabaseClient _supabaseClient;
+  final LaunchService _launchService;
 
-  NotificationRemoteDataSourceImpl(this._supabaseClient);
+  NotificationRemoteDataSourceImpl(this._supabaseClient, this._launchService);
 
   String get _userId => _supabaseClient.auth.currentUser!.id;
 
@@ -22,9 +24,11 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
   Future<List<NotificationModel>> getNotifications(
     NotificationParams params,
   ) async {
+    final firstOpenTime = await _launchService.getFirstUserOpenTime();
     final data = await _supabaseClient
         .from('notifications')
         .select()
+        .gte('created_at', firstOpenTime.toUtc().toIso8601String())
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
     return data.map((json) => NotificationModel.fromJson(json)).toList();

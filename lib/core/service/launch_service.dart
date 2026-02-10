@@ -10,12 +10,13 @@ class LaunchService {
   Future launch() async {
     try {
       await incrementAppOpenCount();
+      await saveFirstUserOpenTime();
       await _notificationService.login();
       await _notificationService.shouldRequestNotificationPermission();
     } catch (_) {}
   }
 
-  Future incrementAppOpenCount() async {
+  Future<void> incrementAppOpenCount() async {
     try {
       print("Incrementing app open count =-========================");
       int appOpenCount = await _box.get("app_open_count", defaultValue: 0);
@@ -26,5 +27,24 @@ class LaunchService {
   Future<int> getAppOpenCount() async {
     int appOpenCount = await _box.get("app_open_count", defaultValue: 0);
     return appOpenCount;
+  }
+
+  Future<void> saveFirstUserOpenTime() async {
+    try {
+      int openAppCount = await getAppOpenCount();
+      if (openAppCount == 1) {
+        await _box.put('first_user_open_time', DateTime.now());
+      }
+    } catch (_) {}
+  }
+
+  Future<DateTime> getFirstUserOpenTime() async {
+    try {
+      final firstOpenTime =
+          await _box.get("first_user_open_time", defaultValue: DateTime.now());
+      return firstOpenTime;
+    } catch (_) {
+      return DateTime.now();
+    }
   }
 }
