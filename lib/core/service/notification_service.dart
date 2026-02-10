@@ -7,12 +7,19 @@ class NotificationService {
   final Box _box;
 
   NotificationService(this._supabaseClient, this._box);
+  String? get _userId => _supabaseClient.auth.currentUser?.id;
 
-  Future login() async {
+  Future<void> login() async {
     try {
-      final userId = _supabaseClient.auth.currentUser?.id;
-      if (userId == null) return;
-      await OneSignal.login(userId);
+      if (_userId == null) return;
+      await OneSignal.login(_userId!);
+    } catch (_) {}
+  }
+
+  Future<void> logout() async {
+    try {
+      if (_userId == null) return;
+      await OneSignal.logout();
     } catch (_) {}
   }
 

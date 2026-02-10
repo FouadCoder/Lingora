@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/service/launch_service.dart';
+import 'package:lingora/core/service/notification_service.dart';
 import 'package:lingora/features/auth/domain/usecases/login_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:lingora/features/auth/domain/usecases/logout_usecase.dart';
@@ -14,9 +15,10 @@ class AuthCubit extends Cubit<AuthState> {
   final LogoutUseCase _logoutUseCase;
   final CheckSessionUseCase _checkSessionUseCase;
   final LaunchService _launchService;
+  final NotificationService _notificationService;
 
   AuthCubit(this._loginUseCase, this._signUpUseCase, this._logoutUseCase,
-      this._checkSessionUseCase, this._launchService)
+      this._checkSessionUseCase, this._launchService, this._notificationService)
       : super(AuthState());
 
   // Login
@@ -144,6 +146,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(state.copyWith(status: AuthAppStatus.loading));
       await _logoutUseCase();
+      await _notificationService.logout();
       emit(state.copyWith(status: AuthAppStatus.success));
     } catch (e) {
       emit(state.copyWith(status: AuthAppStatus.error));

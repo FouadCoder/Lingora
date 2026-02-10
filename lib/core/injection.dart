@@ -168,6 +168,7 @@ Future<void> setupInjection() async {
         injection(),
         injection(),
         injection(),
+        injection(),
       ));
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));
