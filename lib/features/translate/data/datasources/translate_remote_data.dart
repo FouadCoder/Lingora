@@ -15,6 +15,7 @@ class TranslateRemoteData {
       "translate_from": params.from,
       "translate_to": params.to,
     });
+
     return TranslateModel.fromJson(res.data);
   }
 }
