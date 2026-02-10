@@ -121,6 +121,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
     //* Auth Error
     catch (e) {
+      print("Auth signUp========================= Error: $e");
       // Account Exist
       if (e.toString().contains("User already registered")) {
         emit(state.copyWith(

@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         // Success
         if (state.status == AuthAppStatus.success && context.mounted) {
-          context.go('/home');
+          context.go('/translate');
         }
         // Error
         else if (state.status == AuthAppStatus.error) {

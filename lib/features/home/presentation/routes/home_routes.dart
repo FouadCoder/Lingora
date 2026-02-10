@@ -6,7 +6,7 @@ final homeRoutes = [
   GoRoute(
     path: "/home",
     builder: (context, state) => Nav(
-      indexPage: 10,
+      indexPage: 0,
     ),
   )
 ];

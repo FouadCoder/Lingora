@@ -5,6 +5,7 @@ import 'package:lingora/core/service/audio_service.dart';
 import 'package:lingora/core/service/launch_service.dart';
 import 'package:lingora/core/service/notification_service.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
+import 'package:lingora/features/translate/domain/usecases/translate_usecase.dart';
 import 'package:lingora/features/analytics/data/datasources/analytics_remote_data.dart';
 import 'package:lingora/features/analytics/data/repositories_impl/analytics_repository_impl.dart';
 import 'package:lingora/features/analytics/domain/repositories/analytics_repository.dart';
@@ -142,6 +143,8 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => UpdateNoteUsecase(injection()));
   // Audio
   injection.registerFactory(() => PlayAudioUsecase(injection()));
+  // Translate
+  injection.registerFactory(() => TranslateUsecase(injection()));
   // Favorites
   injection.registerFactory(() => AddToFavoritesUsecase(injection()));
   injection.registerFactory(() => RemoveFromFavoritesUsecase(injection()));

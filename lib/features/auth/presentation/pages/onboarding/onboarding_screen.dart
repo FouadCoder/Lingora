@@ -73,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               Container(
                 height: min(MediaQuery.of(context).size.height * 0.15, 250),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary, // top
+                  color: Theme.of(context).colorScheme.primary, // top
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(16),
                     bottomRight: Radius.circular(16),
@@ -123,7 +123,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                       text: currentIndex == onboardingData.length - 1
                           ? "get_statred".tr()
                           : "next".tr(),
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                       function: () async {
                         if (currentIndex != onboardingData.length - 1) {
                           pageController.nextPage(
@@ -136,6 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         await _rocketAnimationController.forward();
                         // Navigate to login after animation completes
                         if (mounted) {
+                          // ignore: use_build_context_synchronously
                           context.go('/login');
                         }
                       },

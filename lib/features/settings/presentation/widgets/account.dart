@@ -88,7 +88,7 @@ class _AccountWidgetState extends State<AccountWidget> {
               bool isLoading = state.status == AuthAppStatus.loading;
               return CustomButton(
                   text: "logout".tr(),
-                  color: Colors.red.withValues(alpha: 0.5),
+                  color: Theme.of(context).colorScheme.onSurface,
                   isLoading: isLoading,
                   border: Border.all(
                       color: Theme.of(context)
