@@ -16,11 +16,14 @@ class NotificationCubit extends Cubit<NotificationState> {
 
   Future<void> getNotifications() async {
     try {
-      // If loaded before
-      if (state.notifications.isNotEmpty) {
+      // If loaded before and has notifications, or already confirmed empty
+      if (state.notifications.isNotEmpty ||
+          state.status == NotificationStatus.empty) {
         emit(
           state.copyWith(
-            status: NotificationStatus.success,
+            status: state.notifications.isNotEmpty
+                ? NotificationStatus.success
+                : NotificationStatus.empty,
             notifications: state.notifications,
           ),
         );

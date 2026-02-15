@@ -22,6 +22,18 @@ class ReminderCubit extends Cubit<ReminderState> {
   ) : super(ReminderState());
 
   Future<void> getReminders() async {
+    // If loaded before and has notifications, or already confirmed empty
+    if (state.reminders.isNotEmpty || state.status == ReminderStatus.empty) {
+      emit(
+        state.copyWith(
+          status: state.reminders.isNotEmpty
+              ? ReminderStatus.success
+              : ReminderStatus.empty,
+          reminders: state.reminders,
+        ),
+      );
+      return;
+    }
     _offset = 0;
     emit(state.copyWith(status: ReminderStatus.loading));
 

@@ -131,7 +131,7 @@ class _WordCardState extends State<WordCard> {
                   '“ ${widget.word.examples[0]} ”',
                   style: theme.bodyMedium,
                   maxLines: 2,
-                  textAlign: isRightSide(widget.word.translateTo!.code)
+                  textAlign: isRightSide(widget.word.translateFrom!.code)
                       ? TextAlign.right
                       : TextAlign.left,
                   overflow: TextOverflow.ellipsis,

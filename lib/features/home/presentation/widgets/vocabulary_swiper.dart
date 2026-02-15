@@ -45,11 +45,11 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
   @override
   Widget build(BuildContext context) {
     Widget emptyWordsWidget = CustomState(
-      animation: 'assets/animation/cat_sleeping.json',
-      title: 'nothing_here'.tr(),
-      message: 'nothing_here_message'.tr(),
+      animation: 'assets/animation/cat_sleep_orange.json',
+      title: 'empty_library_title'.tr(),
+      message: 'empty_library_message'.tr(),
+      color: Theme.of(context).colorScheme.surface,
     );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -82,7 +82,7 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                state.libraryWords.isEmpty || state.libraryWords.length < 3
+                state.libraryWords.length < 3
                     ? emptyWordsWidget
                     : SizedBox(
                         height: 250,
@@ -110,15 +110,10 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
               color: Theme.of(context).colorScheme.surface,
             );
           } else if (state.status == LibraryStatus.empty) {
-            return CustomState(
-              animation: 'assets/animation/cat_sleep_orange.json',
-              title: 'empty_library_title'.tr(),
-              message: 'empty_library_message'.tr(),
-              color: Theme.of(context).colorScheme.surface,
-            );
+            return emptyWordsWidget;
+          } else {
+            return Container();
           }
-
-          return Container();
         }),
       ],
     );
