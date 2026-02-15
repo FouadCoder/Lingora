@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
 import 'package:lingora/core/widgets/examples_widget.dart';
@@ -8,14 +7,14 @@ import 'package:lingora/core/widgets/synonyms_widget.dart';
 import 'package:lingora/core/widgets/meaning_widget.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/presentation/widgets/note_widget.dart';
+import 'package:lingora/features/words/presentation/widgets/reminder_switch_widget.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_outputs.dart';
 import 'package:lingora/core/widgets/app_container.dart';
-import 'package:lingora/core/widgets/custom_swtich.dart';
 
 class WordDetailsScreen extends StatefulWidget {
-  final WordEntity model;
+  final WordEntity word;
 
-  const WordDetailsScreen({super.key, required this.model});
+  const WordDetailsScreen({super.key, required this.word});
 
   @override
   State<WordDetailsScreen> createState() => _WordDetailsScreenState();
@@ -36,12 +35,12 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
               children: [
                 // Word Info
                 WordInfoCard(
-                  original: widget.model.original,
-                  pos: widget.model.pos,
-                  pronunciation: widget.model.pronunciation,
-                  word: widget.model,
-                  lang: widget.model.translateFrom!.code,
-                  collectionType: widget.model.collection.collectionType,
+                  original: widget.word.original,
+                  pos: widget.word.pos,
+                  pronunciation: widget.word.pronunciation,
+                  word: widget.word,
+                  lang: widget.word.translateFrom!.code,
+                  collectionType: widget.word.collection.collectionType,
                 ),
 
                 SizedBox(
@@ -50,8 +49,8 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Translated
                 WordTranslatedCard(
-                  translated: widget.model.translated,
-                  lang: widget.model.translateTo!.code,
+                  translated: widget.word.translated,
+                  lang: widget.word.translateTo!.code,
                 ),
 
                 SizedBox(
@@ -60,8 +59,8 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Meaning
                 MeaningWidget(
-                  meaning: widget.model.meaning,
-                  languageCode: widget.model.translateTo!.code,
+                  meaning: widget.word.meaning,
+                  languageCode: widget.word.translateTo!.code,
                 ),
                 SizedBox(
                   height: AppDimens.cardBetween,
@@ -69,7 +68,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Synonyms
                 SynonymsWidget(
-                  synonyms: widget.model.synonyms,
+                  synonyms: widget.word.synonyms,
                 ),
 
                 SizedBox(
@@ -77,8 +76,8 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 ),
                 // Examples
                 ExamplesWidget(
-                  examples: widget.model.examples,
-                  languageCode: widget.model.translateFrom!.code,
+                  examples: widget.word.examples,
+                  languageCode: widget.word.translateFrom!.code,
                 ),
 
                 SizedBox(
@@ -87,35 +86,21 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Notes
                 LibraryNotes(
-                  noteEntity: widget.model.note,
-                  word: widget.model,
+                  noteEntity: widget.word.note,
+                  word: widget.word,
                 ),
 
                 // Reminders
-                SizedBox(
-                  height: AppDimens.sectionBetween,
+                ReminderSwitchWidget(
+                  word: widget.word,
                 ),
-                CustomSwtich(
-                    title: 'reminders_title'.tr(),
-                    description: activeNotifications
-                        ? 'reminders_active'.tr()
-                        : 'reminders_inactive'.tr(),
-                    onChanged: (value) {
-                      setState(() {
-                        activeNotifications = value;
-                      });
-                    },
-                    controller: ValueNotifier(activeNotifications),
-                    icon: activeNotifications
-                        ? HeroIcons.bell
-                        : HeroIcons.bellSlash),
 
                 // Translated at
                 SizedBox(
                   height: AppDimens.sectionBetween,
                 ),
                 Text(
-                  "${'translated_at'.tr()} ${widget.model.createdAt.toReadableDate()}",
+                  "${'translated_at'.tr()} ${widget.word.createdAt.toReadableDate()}",
                   style: theme.bodySmall,
                 ),
               ],

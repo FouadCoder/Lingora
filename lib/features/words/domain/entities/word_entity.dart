@@ -3,8 +3,8 @@ import 'package:lingora/features/words/domain/entities/collection_entity.dart';
 import 'package:lingora/features/words/domain/entities/note_entity.dart';
 
 class WordEntity {
-  final String? id;
-  final String? userId;
+  final String id;
+  final String userId;
   final String? categoryId;
   final String original;
   final String translated;
@@ -23,8 +23,8 @@ class WordEntity {
   final bool isFavorite;
 
   const WordEntity({
-    this.id,
-    this.userId,
+    required this.id,
+    required this.userId,
     this.categoryId,
     required this.original,
     required this.translated,

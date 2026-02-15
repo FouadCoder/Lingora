@@ -17,7 +17,7 @@ final libraryRoutes = [
       path: '/library/:id',
       builder: (context, state) {
         final extra = state.extra as WordEntity;
-        return WordDetailsScreen(model: extra);
+        return WordDetailsScreen(word: extra);
       }),
   GoRoute(
     path: '/collections/:collectionType',

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/notification/domain/usecases/active_reminder_usecase.dart';
 import 'package:lingora/features/notification/domain/usecases/get_reminders_usecase.dart';
@@ -10,6 +11,7 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 class ReminderCubit extends Cubit<ReminderState> {
   final GetRemindersUseCase _getRemindersUseCase;
   final ActiveReminderUseCase _activeReminderUseCase;
+  // ignore: unused_field
   final UnactiveReminderUseCase _unactiveReminderUseCase;
 
   int _offset = 0;
@@ -90,7 +92,10 @@ class ReminderCubit extends Cubit<ReminderState> {
       await _activeReminderUseCase(word);
 
       emit(state.copyWith(actionStatus: ReminderStatus.success));
+    } on NetworkException {
+      emit(state.copyWith(actionStatus: ReminderStatus.networkError));
     } catch (e) {
+      print("Error active reminder ================ $e");
       emit(state.copyWith(actionStatus: ReminderStatus.error));
     }
   }

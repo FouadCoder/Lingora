@@ -56,7 +56,7 @@ class _WordCardState extends State<WordCard> {
           transitionDuration: const Duration(milliseconds: 400),
           openBuilder: (context, openContainer) {
             return WordDetailsScreen(
-              model: widget.word,
+              word: widget.word,
             );
           },
           closedBuilder: (context, openContainer) {

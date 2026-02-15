@@ -173,5 +173,7 @@
     "how_reminders_work_message": "Active words will appear in your daily or weekly review notifications. Toggle off words you've mastered to focus on new vocabulary",
     "learn_new_words": "Learn New Words",
     "go_to_library": "View Your Library",
-    "create_first_reminder": "Create your first reminder by translating and saving a word"
+    "create_first_reminder": "Create your first reminder by translating and saving a word",
+    "reminder_set_success": "Reminder set successfully!",
+    "reminder_set_error": "Couldn't set reminder. Please try again"
 }

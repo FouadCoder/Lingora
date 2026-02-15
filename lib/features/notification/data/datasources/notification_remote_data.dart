@@ -49,7 +49,8 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
 
   @override
   Future<void> activeReminder(ReminderParams params) async {
-    await _supabaseClient.functions.invoke('reminders', body: {
+    print("Start active reminder ======================");
+    final res = await _supabaseClient.functions.invoke('reminders', body: {
       'userId': _userId,
       'title': params.title,
       'message': params.message,
@@ -57,6 +58,7 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
       'remindAt': params.remindAt,
       'isActive': true
     });
+    print("Active reminder data ============= ${res.data}");
   }
 
   @override

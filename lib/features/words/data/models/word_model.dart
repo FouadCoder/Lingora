@@ -5,8 +5,8 @@ import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
 class WordModel {
-  final String? id;
-  final String? userId;
+  final String id;
+  final String userId;
   final String? categoryId;
   final String original;
   final String translated;
@@ -25,8 +25,8 @@ class WordModel {
   final bool isFavorite;
 
   const WordModel({
-    this.id,
-    this.userId,
+    required this.id,
+    required this.userId,
     this.categoryId,
     required this.original,
     required this.translated,
