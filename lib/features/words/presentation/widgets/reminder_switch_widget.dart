@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/core/widgets/status/network_error_status.dart';
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -30,7 +31,7 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
         SizedBox(height: 16),
         BlocListener<ReminderCubit, ReminderState>(
           listener: (context, state) {
-            // Handle success state
+            // success
             if (state.actionStatus == ReminderStatus.success) {
               showSnackBar(
                 context,
@@ -40,14 +41,16 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
               );
             }
 
-            // Handle error state
-            if (state.actionStatus == ReminderStatus.error) {
+            // error
+            else if (state.actionStatus == ReminderStatus.error) {
               showSnackBar(
                 context,
                 message: 'reminder_set_error'.tr(),
                 icon: HeroIcons.exclamationTriangle,
                 iconColor: Colors.red,
               );
+            } else if (state.actionStatus == ReminderStatus.networkError) {
+              showErrorNetworkSnackBar(context);
             }
           },
           child: CustomSwtich(

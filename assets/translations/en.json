@@ -175,5 +175,5 @@
     "go_to_library": "View Your Library",
     "create_first_reminder": "Create your first reminder by translating and saving a word",
     "reminder_set_success": "Reminder set successfully!",
-    "reminder_set_error": "Couldn't set reminder. Please try again"
+    "reminder_set_error": "Failed to set reminder"
 }
