@@ -180,7 +180,7 @@ class LibraryCubit extends Cubit<LibraryState> {
       emit(state.copyWith(actionStatus: LibraryActionStatus.loading));
       // Update
       final newCollection = await updateWordCollectionUsecase.call(
-          CollectionsParams(wordId: word.id!, collectionType: collection.name));
+          CollectionsParams(wordId: word.id, collectionType: collection.name));
       // Replace word from memoery
       final updatedWord = word.copyWith(collection: newCollection);
       refreshWord(updatedWord);

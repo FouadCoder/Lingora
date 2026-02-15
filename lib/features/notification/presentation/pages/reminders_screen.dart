@@ -118,8 +118,8 @@ class _RemindersScreenState extends State<RemindersScreen> {
                             if (index < state.reminders.length) {
                               final reminder = state.reminders[index];
                               return ReminderWidget(
-                                translate: reminder.wordId,
-                                original: reminder.remindAt.toString(),
+                                translate: reminder.translated,
+                                original: reminder.original,
                                 isActive: reminder.isActive,
                                 onChanged: (bool isActive) {
                                   context

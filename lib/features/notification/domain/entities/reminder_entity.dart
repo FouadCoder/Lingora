@@ -1,5 +1,3 @@
-import 'package:lingora/features/words/domain/entities/word_entity.dart';
-
 class ReminderEntity {
   final String id;
   final String userId;
@@ -8,8 +6,9 @@ class ReminderEntity {
   final bool isActive;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final WordEntity word;
   final DateTime? deletedAt;
+  final String original;
+  final String translated;
 
   ReminderEntity({
     required this.id,
@@ -19,7 +18,8 @@ class ReminderEntity {
     required this.isActive,
     required this.createdAt,
     required this.updatedAt,
-    required this.word,
+    required this.original,
+    required this.translated,
     this.deletedAt,
   });
 
@@ -31,7 +31,8 @@ class ReminderEntity {
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
-    WordEntity? word,
+    String? original,
+    String? translated,
     DateTime? deletedAt,
   }) {
     return ReminderEntity(
@@ -42,7 +43,8 @@ class ReminderEntity {
       isActive: isActive ?? this.isActive,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      word: word ?? this.word,
+      original: original ?? this.original,
+      translated: translated ?? this.translated,
       deletedAt: deletedAt ?? this.deletedAt,
     );
   }

@@ -57,7 +57,10 @@ class ReminderCubit extends Cubit<ReminderState> {
           hasMore: reminders.length >= 15,
         ));
       }
-    } catch (_) {
+    } on NetworkException {
+      emit(state.copyWith(status: ReminderStatus.networkError));
+    } catch (e) {
+      print("Error getting reminders ============ $e");
       emit(state.copyWith(status: ReminderStatus.error));
     }
   }
@@ -94,8 +97,7 @@ class ReminderCubit extends Cubit<ReminderState> {
       emit(state.copyWith(actionStatus: ReminderStatus.success));
     } on NetworkException {
       emit(state.copyWith(actionStatus: ReminderStatus.networkError));
-    } catch (e) {
-      print("Error active reminder ================ $e");
+    } catch (_) {
       emit(state.copyWith(actionStatus: ReminderStatus.error));
     }
   }

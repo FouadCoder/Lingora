@@ -1,5 +1,4 @@
 import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
-import 'package:lingora/features/words/data/models/word_model.dart';
 
 class ReminderModel {
   final String id;
@@ -10,7 +9,8 @@ class ReminderModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
-  final WordModel word;
+  final String original;
+  final String translated;
 
   ReminderModel({
     required this.id,
@@ -20,7 +20,8 @@ class ReminderModel {
     required this.isActive,
     required this.createdAt,
     required this.updatedAt,
-    required this.word,
+    required this.original,
+    required this.translated,
     this.deletedAt,
   });
 
@@ -29,14 +30,15 @@ class ReminderModel {
       id: json['id'],
       userId: json['user_id'],
       wordId: json['word_id'],
-      remindAt: DateTime.parse(json['remind_at']),
+      remindAt: DateTime.tryParse(json['remind_at']) ?? DateTime.now(),
       isActive: json['is_active'] ?? true,
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null
           ? DateTime.parse(json['deleted_at'])
           : null,
-      word: WordModel.fromJson(json['translated_words']),
+      original: json['translated_words']['original'] ?? '',
+      translated: json['translated_words']['translated'] ?? '',
     );
   }
 
@@ -62,8 +64,9 @@ class ReminderModel {
       isActive: isActive,
       createdAt: createdAt,
       updatedAt: updatedAt,
-      word: word.toEntity(),
       deletedAt: deletedAt,
+      original: original,
+      translated: translated,
     );
   }
 }

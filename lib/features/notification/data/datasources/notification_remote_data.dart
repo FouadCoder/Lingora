@@ -40,10 +40,11 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
   ) async {
     final data = await _supabaseClient
         .from('reminders')
-        .select('translated_words(*)')
+        .select('*, translated_words(original , translated)')
         .eq("user_id", _userId)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
+    print("Reminders data ============ ${data}");
     return data.map((json) => ReminderModel.fromJson(json)).toList();
   }
 

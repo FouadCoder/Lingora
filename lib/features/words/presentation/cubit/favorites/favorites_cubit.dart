@@ -82,11 +82,6 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     try {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
 
-      // Check if wordId is Null
-      if (word.id == null) {
-        emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
-        return;
-      }
       await addToFavoritesUsecase.call(FavoritesParams(wordId: word.id));
 
       // Update the word
