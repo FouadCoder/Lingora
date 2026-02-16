@@ -14,7 +14,6 @@ import 'package:lingora/features/notification/presentation/cubit/reminders/remin
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
 import 'package:lingora/features/notification/presentation/widgets/reminder_loading_card.dart';
 import 'package:lingora/features/notification/presentation/widgets/reminder_widget.dart';
-import 'package:lingora/features/notification/presentation/widgets/notification_loading_card.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class RemindersScreen extends StatefulWidget {
@@ -128,7 +127,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                                 },
                               );
                             }
-                            return NotificationLoadingCard();
+                            return ReminderLoadingCard();
                           },
                         ),
                       ),

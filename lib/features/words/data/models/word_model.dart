@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/features/notification/data/models/reminder_model.dart';
 import 'package:lingora/features/words/data/models/collection_model.dart';
 import 'package:lingora/features/words/data/models/note_model.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -23,6 +24,8 @@ class WordModel {
   final DateTime updatedAt;
   final DateTime? deletedAt;
   final bool isFavorite;
+  final ReminderModel? reminderModel;
+  final bool activeReminder;
 
   const WordModel({
     required this.id,
@@ -43,6 +46,8 @@ class WordModel {
     required this.createdAt,
     this.deletedAt,
     this.isFavorite = false,
+    this.activeReminder = false,
+    this.reminderModel,
   });
 
   factory WordModel.fromJson(Map<String, dynamic> json) {
@@ -84,31 +89,36 @@ class WordModel {
       deletedAt: json['deleted_at'] != null
           ? DateTime.tryParse(json['deleted_at']!)
           : null,
+      reminderModel: (json['reminders'] as List?)?.isNotEmpty == true
+          ? ReminderModel.fromJson((json['reminders'] as List).first)
+          : null,
+      activeReminder: (json['reminders'] as List?)?.isNotEmpty == true,
     );
   }
 
   // To Entity
   WordEntity toEntity() {
     return WordEntity(
-      id: id,
-      userId: userId,
-      categoryId: categoryId,
-      original: original,
-      translated: translated,
-      pos: pos,
-      pronunciation: pronunciation,
-      meaning: meaning,
-      examples: examples,
-      synonyms: synonyms,
-      translateFrom: translateFrom,
-      translateTo: translateTo,
-      note: note.toEntity(),
-      collection: collection.toEntity(),
-      isFavorite: isFavorite,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      deletedAt: deletedAt,
-    );
+        id: id,
+        userId: userId,
+        categoryId: categoryId,
+        original: original,
+        translated: translated,
+        pos: pos,
+        pronunciation: pronunciation,
+        meaning: meaning,
+        examples: examples,
+        synonyms: synonyms,
+        translateFrom: translateFrom,
+        translateTo: translateTo,
+        note: note.toEntity(),
+        collection: collection.toEntity(),
+        isFavorite: isFavorite,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        deletedAt: deletedAt,
+        reminder: reminderModel?.toEntity(),
+        activeReminder: activeReminder);
   }
 
   // To Empty
@@ -132,6 +142,8 @@ class WordModel {
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       deletedAt: null,
+      reminderModel: null,
+      activeReminder: false,
     );
   }
 }

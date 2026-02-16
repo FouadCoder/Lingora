@@ -1,4 +1,5 @@
 import 'package:lingora/data/langauges_list.dart';
+import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/words/domain/entities/collection_entity.dart';
 import 'package:lingora/features/words/domain/entities/note_entity.dart';
 
@@ -15,12 +16,14 @@ class WordEntity {
   final List<String> synonyms;
   final Language? translateFrom;
   final Language? translateTo;
-  final NoteEntity note;
-  final CollectionEntity collection;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
   final bool isFavorite;
+  final NoteEntity note;
+  final CollectionEntity collection;
+  final ReminderEntity? reminder;
+  final bool activeReminder;
 
   const WordEntity({
     required this.id,
@@ -41,6 +44,8 @@ class WordEntity {
     required this.updatedAt,
     this.deletedAt,
     this.isFavorite = false,
+    this.reminder,
+    this.activeReminder = false,
   });
 
   WordEntity copyWith({
@@ -62,6 +67,8 @@ class WordEntity {
     DateTime? updatedAt,
     DateTime? deletedAt,
     bool? isFavorite,
+    ReminderEntity? reminder,
+    bool? activeReminder,
   }) {
     return WordEntity(
       id: id ?? this.id,
@@ -82,6 +89,8 @@ class WordEntity {
       updatedAt: updatedAt ?? this.updatedAt,
       deletedAt: deletedAt ?? this.deletedAt,
       isFavorite: isFavorite ?? this.isFavorite,
+      reminder: reminder ?? this.reminder,
+      activeReminder: activeReminder ?? this.activeReminder,
     );
   }
 }

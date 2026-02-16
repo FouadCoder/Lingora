@@ -11,10 +11,12 @@ import 'package:lingora/core/widgets/custom_swtich.dart';
 
 class ReminderSwitchWidget extends StatefulWidget {
   final WordEntity word;
+  final void Function(WordEntity updatedWord)? onReminderChange;
 
   const ReminderSwitchWidget({
     super.key,
     required this.word,
+    this.onReminderChange,
   });
 
   @override
@@ -22,7 +24,13 @@ class ReminderSwitchWidget extends StatefulWidget {
 }
 
 class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
-  bool activeNotifications = false;
+  late bool isOptimisticReminder;
+
+  @override
+  void initState() {
+    super.initState();
+    isOptimisticReminder = widget.word.activeReminder;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +41,11 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
           listener: (context, state) {
             // success
             if (state.actionStatus == ReminderStatus.success) {
+              // Call the callback if provided with the updated word from state
+              if (state.word != null) {
+                widget.onReminderChange?.call(state.word!);
+              }
+
               showSnackBar(
                 context,
                 message: 'reminder_set_success'.tr(),
@@ -43,6 +56,9 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
 
             // error
             else if (state.actionStatus == ReminderStatus.error) {
+              setState(() {
+                isOptimisticReminder = !isOptimisticReminder;
+              });
               showSnackBar(
                 context,
                 message: 'reminder_set_error'.tr(),
@@ -50,24 +66,27 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
                 iconColor: Colors.red,
               );
             } else if (state.actionStatus == ReminderStatus.networkError) {
+              setState(() {
+                isOptimisticReminder = !isOptimisticReminder;
+              });
               showErrorNetworkSnackBar(context);
             }
           },
           child: CustomSwtich(
             title: 'reminders_title'.tr(),
-            description: activeNotifications
+            description: isOptimisticReminder
                 ? 'reminders_active'.tr()
                 : 'reminders_inactive'.tr(),
             onChanged: (value) {
               setState(() {
-                activeNotifications = value;
+                isOptimisticReminder = value;
               });
-              if (activeNotifications) {
+              if (isOptimisticReminder) {
                 context.read<ReminderCubit>().activeReminder(widget.word);
               }
             },
-            controller: ValueNotifier(activeNotifications),
-            icon: activeNotifications ? HeroIcons.bell : HeroIcons.bellSlash,
+            controller: ValueNotifier(isOptimisticReminder),
+            icon: isOptimisticReminder ? HeroIcons.bell : HeroIcons.bellSlash,
           ),
         ),
       ],

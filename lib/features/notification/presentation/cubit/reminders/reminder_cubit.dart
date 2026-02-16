@@ -93,16 +93,22 @@ class ReminderCubit extends Cubit<ReminderState> {
       emit(state.copyWith(actionStatus: ReminderStatus.loading));
       final reminder = await _activeReminderUseCase(word);
 
+      // Update the word with active reminder
+      final updatedWord =
+          word.copyWith(activeReminder: true, reminder: reminder);
+
       // Insert in list
       if (state.status == ReminderStatus.empty ||
           state.status == ReminderStatus.success) {
         emit(state.copyWith(
             actionStatus: ReminderStatus.success,
-            reminders: [reminder, ...state.reminders]));
+            reminders: [reminder, ...state.reminders],
+            word: updatedWord));
       } else {
         // Success without insert on list
         emit(state.copyWith(
           actionStatus: ReminderStatus.success,
+          word: updatedWord,
         ));
       }
     } on NetworkException {

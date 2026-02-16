@@ -1,4 +1,5 @@
 import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
+import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
 enum ReminderStatus {
   initial,
@@ -17,6 +18,7 @@ class ReminderState {
   final List<ReminderEntity> reminders;
   final bool isLoadingMore;
   final bool hasMore;
+  final WordEntity? word;
 
   const ReminderState({
     this.status = ReminderStatus.initial,
@@ -24,6 +26,7 @@ class ReminderState {
     this.reminders = const [],
     this.isLoadingMore = false,
     this.hasMore = true,
+    this.word,
   });
 
   ReminderState copyWith({
@@ -32,6 +35,7 @@ class ReminderState {
     List<ReminderEntity>? reminders,
     bool? isLoadingMore,
     bool? hasMore,
+    WordEntity? word,
   }) {
     return ReminderState(
       status: status ?? this.status,
@@ -39,6 +43,7 @@ class ReminderState {
       reminders: reminders ?? this.reminders,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       hasMore: hasMore ?? this.hasMore,
+      word: word ?? this.word,
     );
   }
 }
