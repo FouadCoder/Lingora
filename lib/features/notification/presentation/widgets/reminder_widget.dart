@@ -7,6 +7,7 @@ class ReminderWidget extends StatelessWidget {
   final String original;
   final bool isActive;
   final ValueChanged<bool>? onChanged;
+  final bool isLoading;
 
   const ReminderWidget({
     super.key,
@@ -14,6 +15,7 @@ class ReminderWidget extends StatelessWidget {
     required this.original,
     required this.isActive,
     this.onChanged,
+    this.isLoading = false,
   });
 
   @override
@@ -46,11 +48,22 @@ class ReminderWidget extends StatelessWidget {
             ),
             // Toggle switch
             SizedBox(width: AppDimens.paddingM),
-            Switch(
-              value: isActive,
-              onChanged: onChanged,
-              activeThumbColor: Theme.of(context).colorScheme.primary,
-            ),
+            isLoading
+                ? SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  )
+                : Switch(
+                    value: isActive,
+                    onChanged: onChanged,
+                    activeThumbColor: Theme.of(context).colorScheme.primary,
+                  ),
           ],
         ),
       ),

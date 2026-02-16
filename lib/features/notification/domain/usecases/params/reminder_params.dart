@@ -1,6 +1,6 @@
 class ReminderParams {
   final int? offset;
-  final String userId;
+  final String? userId;
   final String? wordId;
   final String? title;
   final String? message;
@@ -10,7 +10,7 @@ class ReminderParams {
   final String? original;
   final String? translated;
   ReminderParams(
-      {required this.userId,
+      {this.userId,
       this.wordId,
       this.title,
       this.message,

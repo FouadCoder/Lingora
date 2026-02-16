@@ -3,6 +3,7 @@ import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/notification/domain/usecases/active_reminder_usecase.dart';
 import 'package:lingora/features/notification/domain/usecases/get_reminders_usecase.dart';
+import 'package:lingora/features/notification/domain/usecases/params/reminder_params.dart';
 import 'package:lingora/features/notification/domain/usecases/unactive_reminder_usecase.dart';
 import 'package:lingora/features/notification/domain/usecases/params/notification_params.dart';
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
@@ -11,7 +12,6 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 class ReminderCubit extends Cubit<ReminderState> {
   final GetRemindersUseCase _getRemindersUseCase;
   final ActiveReminderUseCase _activeReminderUseCase;
-  // ignore: unused_field
   final UnactiveReminderUseCase _unactiveReminderUseCase;
 
   int _offset = 0;
@@ -28,16 +28,17 @@ class ReminderCubit extends Cubit<ReminderState> {
     if (state.reminders.isNotEmpty || state.status == ReminderStatus.empty) {
       emit(
         state.copyWith(
-          status: state.reminders.isNotEmpty
-              ? ReminderStatus.success
-              : ReminderStatus.empty,
-          reminders: state.reminders,
-        ),
+            status: state.reminders.isNotEmpty
+                ? ReminderStatus.success
+                : ReminderStatus.empty,
+            reminders: state.reminders,
+            actionStatus: ReminderStatus.initial),
       );
       return;
     }
     _offset = 0;
-    emit(state.copyWith(status: ReminderStatus.loading));
+    emit(state.copyWith(
+        status: ReminderStatus.loading, actionStatus: ReminderStatus.initial));
 
     try {
       final reminders = await _getRemindersUseCase(
@@ -93,22 +94,19 @@ class ReminderCubit extends Cubit<ReminderState> {
       emit(state.copyWith(actionStatus: ReminderStatus.loading));
       final reminder = await _activeReminderUseCase(word);
 
-      // Update the word with active reminder
-      final updatedWord =
-          word.copyWith(activeReminder: true, reminder: reminder);
-
       // Insert in list
       if (state.status == ReminderStatus.empty ||
           state.status == ReminderStatus.success) {
         emit(state.copyWith(
             actionStatus: ReminderStatus.success,
             reminders: [reminder, ...state.reminders],
-            word: updatedWord));
+            wordId: word.id,
+            reminder: reminder));
       } else {
         // Success without insert on list
         emit(state.copyWith(
           actionStatus: ReminderStatus.success,
-          word: updatedWord,
+          wordId: word.id,
         ));
       }
     } on NetworkException {
@@ -121,21 +119,36 @@ class ReminderCubit extends Cubit<ReminderState> {
 
   Future<void> unactiveReminder(String reminderId) async {
     try {
-      // await _unactiveReminderUseCase(reminderId);
+      emit(state.copyWith(
+          actionStatus: ReminderStatus.loading,
+          reminderIdToRemove: reminderId));
+      print("Start removing the reminder ================= ");
+      await _unactiveReminderUseCase(
+          ReminderParams(reminderId: reminderId, isActive: false));
+      print("Done  removing the reminder ================= ");
+      // Remove from reminders list
+      final updatedReminders = state.reminders
+          .where((reminder) => reminder.id != reminderId)
+          .toList();
 
-      // Update the reminder in the local state
-      final updatedReminders = state.reminders.map((reminder) {
-        // Assuming reminder has an id and isActive property
-        // You'll need to adjust this based on your actual model
-        if (reminder.id == reminderId) {
-          return reminder.copyWith(isActive: false);
-        }
-        return reminder;
-      }).toList();
+      print("Done  removing From the list  ================= ");
 
-      emit(state.copyWith(reminders: updatedReminders));
+      // Get the wordId from the removed reminder
+      final reminderToRemove = state.reminders
+          .where((reminder) => reminder.id == reminderId)
+          .firstOrNull;
+
+      print("Done updatethe word  From the list  ================= ");
+
+      emit(state.copyWith(
+        reminders: updatedReminders,
+        wordId: reminderToRemove?.wordId,
+        actionStatus: ReminderStatus.removed,
+      ));
+    } on NetworkException {
+      emit(state.copyWith(actionStatus: ReminderStatus.networkError));
     } catch (e) {
-      emit(state.copyWith(status: ReminderStatus.error));
+      emit(state.copyWith(actionStatus: ReminderStatus.error));
     }
   }
 }

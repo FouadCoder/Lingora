@@ -14,6 +14,7 @@ import 'package:lingora/features/notification/presentation/cubit/reminders/remin
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
 import 'package:lingora/features/notification/presentation/widgets/reminder_loading_card.dart';
 import 'package:lingora/features/notification/presentation/widgets/reminder_widget.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class RemindersScreen extends StatefulWidget {
@@ -54,7 +55,8 @@ class _RemindersScreenState extends State<RemindersScreen> {
               );
             }
             // Network Error
-            else if (state.status == ReminderStatus.networkError) {
+            else if (state.status == ReminderStatus.networkError ||
+                state.actionStatus == ReminderStatus.networkError) {
               showErrorNetworkSnackBar(context);
             }
             // Refresh Limit Exceeded
@@ -64,6 +66,17 @@ class _RemindersScreenState extends State<RemindersScreen> {
                 message: 'refresh_limit_reached'.tr(),
                 icon: HeroIcons.clock,
                 iconColor: Theme.of(context).colorScheme.primary,
+              );
+            }
+            // Reminder removed success
+            else if (state.actionStatus == ReminderStatus.removed) {
+              context.read<LibraryCubit>().refreshWord(
+                  wordId: state.wordId!, activeReminder: false, reminder: null);
+              showSnackBar(
+                context,
+                message: 'reminder_removed_success'.tr(),
+                icon: HeroIcons.checkCircle,
+                iconColor: Colors.green,
               );
             }
           },
@@ -116,10 +129,16 @@ class _RemindersScreenState extends State<RemindersScreen> {
                           itemBuilder: (context, index) {
                             if (index < state.reminders.length) {
                               final reminder = state.reminders[index];
+                              bool isLoading = state.actionStatus ==
+                                      ReminderStatus.loading &&
+                                  state.reminders[index].id ==
+                                      state.reminderIdToRemove;
+
                               return ReminderWidget(
                                 translate: reminder.translated,
                                 original: reminder.original,
                                 isActive: reminder.isActive,
+                                isLoading: isLoading,
                                 onChanged: (bool isActive) {
                                   context
                                       .read<ReminderCubit>()

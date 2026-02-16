@@ -8,15 +8,14 @@ import 'package:lingora/features/notification/presentation/cubit/reminders/remin
 import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_state.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 
 class ReminderSwitchWidget extends StatefulWidget {
   final WordEntity word;
-  final void Function(WordEntity updatedWord)? onReminderChange;
 
   const ReminderSwitchWidget({
     super.key,
     required this.word,
-    this.onReminderChange,
   });
 
   @override
@@ -37,18 +36,31 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
     return Column(
       children: [
         SizedBox(height: 16),
-        BlocListener<ReminderCubit, ReminderState>(
+        BlocConsumer<ReminderCubit, ReminderState>(
           listener: (context, state) {
-            // success
+            // success - reminder activated
             if (state.actionStatus == ReminderStatus.success) {
-              // Call the callback if provided with the updated word from state
-              if (state.word != null) {
-                widget.onReminderChange?.call(state.word!);
-              }
+              context.read<LibraryCubit>().refreshWord(
+                  wordId: state.wordId!,
+                  activeReminder: true,
+                  reminder: state.reminder);
 
               showSnackBar(
                 context,
                 message: 'reminder_set_success'.tr(),
+                icon: HeroIcons.checkCircle,
+                iconColor: Colors.green,
+              );
+            }
+
+            // removed
+            else if (state.actionStatus == ReminderStatus.removed) {
+              context.read<LibraryCubit>().refreshWord(
+                  wordId: state.wordId!, activeReminder: false, reminder: null);
+
+              showSnackBar(
+                context,
+                message: 'reminder_removed_success'.tr(),
                 icon: HeroIcons.checkCircle,
                 iconColor: Colors.green,
               );
@@ -72,22 +84,30 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
               showErrorNetworkSnackBar(context);
             }
           },
-          child: CustomSwtich(
-            title: 'reminders_title'.tr(),
-            description: isOptimisticReminder
-                ? 'reminders_active'.tr()
-                : 'reminders_inactive'.tr(),
-            onChanged: (value) {
-              setState(() {
-                isOptimisticReminder = value;
-              });
-              if (isOptimisticReminder) {
-                context.read<ReminderCubit>().activeReminder(widget.word);
-              }
-            },
-            controller: ValueNotifier(isOptimisticReminder),
-            icon: isOptimisticReminder ? HeroIcons.bell : HeroIcons.bellSlash,
-          ),
+          builder: (context, state) {
+            final isLoading = state.actionStatus == ReminderStatus.loading;
+            return CustomSwtich(
+              title: 'reminders_title'.tr(),
+              description: isOptimisticReminder
+                  ? 'reminders_active'.tr()
+                  : 'reminders_inactive'.tr(),
+              onChanged: (value) {
+                setState(() {
+                  isOptimisticReminder = value;
+                });
+                if (isOptimisticReminder) {
+                  context.read<ReminderCubit>().activeReminder(widget.word);
+                } else {
+                  context
+                      .read<ReminderCubit>()
+                      .unactiveReminder(widget.word.id);
+                }
+              },
+              controller: ValueNotifier(isOptimisticReminder),
+              icon: isOptimisticReminder ? HeroIcons.bell : HeroIcons.bellSlash,
+              isLoading: isLoading,
+            );
+          },
         ),
       ],
     );
