@@ -45,7 +45,6 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
 
-    print("Redmienr data ============== $data");
     return data.map((json) => ReminderModel.fromJson(json)).toList();
   }
 

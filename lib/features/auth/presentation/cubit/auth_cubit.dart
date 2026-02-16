@@ -123,7 +123,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
     //* Auth Error
     catch (e) {
-      print("Auth signUp========================= Error: $e");
       // Account Exist
       if (e.toString().contains("User already registered")) {
         emit(state.copyWith(
@@ -157,7 +156,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> checkSession() async {
     try {
       emit(state.copyWith(status: AuthAppStatus.checkingSession));
-      print("Checking session Start =-========================");
       // Check current user
       final session = await _checkSessionUseCase();
       if (session != null) {
@@ -170,14 +168,10 @@ class AuthCubit extends Cubit<AuthState> {
         final openCount = await _launchService.getAppOpenCount();
         bool isFirstOpen = openCount == 1;
         if (isFirstOpen) {
-          print(
-              " First Open user count -- $openCount -- =-========================");
           emit(state.copyWith(status: AuthAppStatus.newUser));
         }
 
         if (!isFirstOpen) {
-          print(
-              " unauthenticated user -- $openCount --  =-========================");
           emit(state.copyWith(status: AuthAppStatus.unauthenticated));
         }
       }

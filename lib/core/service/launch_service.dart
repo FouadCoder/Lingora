@@ -19,8 +19,6 @@ class LaunchService {
   Future<void> incrementAppOpenCount() async {
     try {
       int appOpenCount = await _box.get("app_open_count", defaultValue: 0);
-      print(
-          "Incrementing app open count =-======================== ${appOpenCount + 1}");
       await _box.put('app_open_count', appOpenCount + 1);
     } catch (_) {}
   }

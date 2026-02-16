@@ -48,15 +48,12 @@ class LevelCubit extends Cubit<LevelState> {
       _xp = response['xp'] as int;
       _level = Level.getNextLevel(_xp);
 
-      print(
-          "=================================== XP: ${response['xp']} // Level ${_level!.number}   Requried XP ${_level!.requiredXp} ");
       emit(state.copyWith(
         status: LevelStatus.success,
         level: _level,
         xp: _xp,
       ));
     } catch (e) {
-      print("=================================== Error getting XP: $e");
       emit(state.copyWith(
         status: LevelStatus.failure,
       ));
