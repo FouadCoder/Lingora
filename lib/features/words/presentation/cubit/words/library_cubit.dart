@@ -2,6 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
+import 'package:lingora/features/words/domain/entities/note_entity.dart';
+import 'package:lingora/features/words/domain/entities/collection_entity.dart';
+import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_library_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_words_by_collection_usecase.dart';
@@ -181,9 +184,8 @@ class LibraryCubit extends Cubit<LibraryState> {
       // Update
       final newCollection = await updateWordCollectionUsecase.call(
           CollectionsParams(wordId: word.id, collectionType: collection.name));
-      // Replace word from memoery
-      final updatedWord = word.copyWith(collection: newCollection);
-      refreshWord(updatedWord);
+      // Replace word from memory
+      refreshWord(wordId: word.id, collection: newCollection);
       // Remove the word
       final updatedCollectionsWords =
           state.collectionsWords.where((w) => w.id != word.id).toList();
@@ -204,11 +206,41 @@ class LibraryCubit extends Cubit<LibraryState> {
   }
 
   // Replace or update word on memory
-  void refreshWord(WordEntity word) async {
+  void refreshWord({
+    required String wordId,
+    String? original,
+    String? translated,
+    String? pos,
+    String? pronunciation,
+    String? meaning,
+    List<String>? examples,
+    List<String>? synonyms,
+    bool? isFavorite,
+    bool? activeReminder,
+    NoteEntity? note,
+    CollectionEntity? collection,
+    ReminderEntity? reminder,
+  }) async {
     try {
       final currentWords = state.libraryWords;
       final updatedWords = currentWords.map((w) {
-        return w.id == word.id ? word : w;
+        if (w.id == wordId) {
+          return w.copyWith(
+            original: original,
+            translated: translated,
+            pos: pos,
+            pronunciation: pronunciation,
+            meaning: meaning,
+            examples: examples,
+            synonyms: synonyms,
+            isFavorite: isFavorite,
+            activeReminder: activeReminder,
+            note: note,
+            collection: collection,
+            reminder: reminder,
+          );
+        }
+        return w;
       }).toList();
       emit(state.copyWith(libraryWords: updatedWords));
     } catch (_) {}

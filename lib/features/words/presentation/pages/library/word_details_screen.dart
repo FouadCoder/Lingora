@@ -96,7 +96,11 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 ReminderSwitchWidget(
                   word: widget.word,
                   onReminderChange: (updatedWord) {
-                    context.read<LibraryCubit>().refreshWord(updatedWord);
+                    context.read<LibraryCubit>().refreshWord(
+                          wordId: updatedWord.id,
+                          activeReminder: updatedWord.activeReminder,
+                          reminder: updatedWord.reminder,
+                        );
                   },
                 ),
 
