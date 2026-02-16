@@ -6,6 +6,6 @@ import 'package:lingora/features/notification/domain/usecases/params/reminder_pa
 abstract class NotificationRepository {
   Future<List<NotificationEntity>> getNotifications(NotificationParams params);
   Future<List<ReminderEntity>> getReminders(NotificationParams params);
-  Future<void> activeReminder(ReminderParams params);
+  Future<ReminderEntity> activeReminder(ReminderParams params);
   Future<void> unactiveReminder(ReminderParams params);
 }

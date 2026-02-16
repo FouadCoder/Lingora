@@ -37,8 +37,8 @@ class ReminderModel {
       deletedAt: json['deleted_at'] != null
           ? DateTime.parse(json['deleted_at'])
           : null,
-      original: json['translated_words']['original'] ?? '',
-      translated: json['translated_words']['translated'] ?? '',
+      original: json['translated_words']?['original'] as String? ?? '',
+      translated: json['translated_words']?['translated'] as String? ?? '',
     );
   }
 

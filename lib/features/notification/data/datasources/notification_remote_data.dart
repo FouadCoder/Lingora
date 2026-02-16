@@ -8,7 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class NotificationRemoteDataSource {
   Future<List<NotificationModel>> getNotifications(NotificationParams params);
   Future<List<ReminderModel>> getReminders(NotificationParams params);
-  Future<void> activeReminder(ReminderParams params);
+  Future<ReminderModel> activeReminder(ReminderParams params);
   Future<void> unactiveReminder(ReminderParams params);
 }
 
@@ -44,13 +44,14 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
         .eq("user_id", _userId)
         .order('created_at', ascending: false)
         .range(params.offset, params.offset + 15 - 1);
-    print("Reminders data ============ ${data}");
+
+    print("Redmienr data ============== $data");
     return data.map((json) => ReminderModel.fromJson(json)).toList();
   }
 
   @override
-  Future<void> activeReminder(ReminderParams params) async {
-    await _supabaseClient.functions.invoke('reminders', body: {
+  Future<ReminderModel> activeReminder(ReminderParams params) async {
+    final res = await _supabaseClient.functions.invoke('reminders', body: {
       'userId': _userId,
       'title': params.title,
       'message': params.message,
@@ -58,6 +59,15 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
       'remind_at': params.remindAt,
       'isActive': true
     });
+
+    // Res
+    final body = res.data;
+    final data = body['data'];
+    data['translated_words'] = {
+      'original': params.original,
+      'translated': params.translated,
+    };
+    return ReminderModel.fromJson(data);
   }
 
   @override

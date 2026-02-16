@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:lingora/features/notification/data/reminder_templates.dart';
+import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/notification/domain/repositories/notification_repository.dart';
 import 'package:lingora/features/notification/domain/usecases/params/reminder_params.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
@@ -10,18 +11,19 @@ class ActiveReminderUseCase {
 
   ActiveReminderUseCase(this.repository);
 
-  Future<void> call(WordEntity word) async {
+  Future<ReminderEntity> call(WordEntity word) async {
     DateTime remindAt = getReminderTime();
     Map<String, String> notification = generateReminder(word);
 
     final params = ReminderParams(
-      userId: word.userId,
-      wordId: word.id,
-      title: notification['title'],
-      message: notification['message'],
-      remindAt: remindAt.toIso8601String(),
-      isActive: true,
-    );
+        userId: word.userId,
+        wordId: word.id,
+        title: notification['title'],
+        message: notification['message'],
+        remindAt: remindAt.toIso8601String(),
+        isActive: true,
+        translated: word.translated,
+        original: word.original);
 
     return await repository.activeReminder(params);
   }

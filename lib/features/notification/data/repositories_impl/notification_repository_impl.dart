@@ -41,14 +41,15 @@ class NotificationRepositoriesImpl implements NotificationRepository {
   }
 
   @override
-  Future<void> activeReminder(ReminderParams params) async {
+  Future<ReminderEntity> activeReminder(ReminderParams params) async {
     // Check Internet
     if (!await NetworkService().isConnect()) {
       throw NetworkException();
     }
 
-    // Call
-    await _remoteDataSource.activeReminder(params);
+    // Call and get the created reminder
+    final reminderModel = await _remoteDataSource.activeReminder(params);
+    return reminderModel.toEntity();
   }
 
   @override

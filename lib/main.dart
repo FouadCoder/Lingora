@@ -48,8 +48,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<TranslateCubit>(
-              create: (context) =>
-                  injection<TranslateCubit>()), // Get Translated words
+              create: (context) => injection<TranslateCubit>()), // Translate
           BlocProvider<LibraryCubit>(
               create: (context) => injection<LibraryCubit>()), // Library
           BlocProvider<NotesCubit>(

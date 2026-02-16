@@ -7,6 +7,8 @@ class ReminderParams {
   final String? remindAt;
   final bool isActive;
   final String? reminderId;
+  final String? original;
+  final String? translated;
   ReminderParams(
       {required this.userId,
       this.wordId,
@@ -15,5 +17,7 @@ class ReminderParams {
       this.remindAt,
       required this.isActive,
       this.reminderId,
-      this.offset});
+      this.offset,
+      this.original,
+      this.translated});
 }
