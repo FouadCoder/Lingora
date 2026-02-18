@@ -63,9 +63,10 @@ class _RemindersScreenState extends State<RemindersScreen> {
             else if (state.actionStatus == ReminderStatus.limitExceeded) {
               showSnackBar(
                 context,
-                message: 'refresh_limit_reached'.tr(),
+                message: 'refresh_wait'
+                    .tr(namedArgs: {'minutes': state.minutesLeft.toString()}),
                 icon: HeroIcons.clock,
-                iconColor: Theme.of(context).colorScheme.primary,
+                iconColor: Colors.yellow,
               );
             }
             // Reminder removed success
@@ -105,7 +106,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                     borderRadius: BorderRadius.circular(AppDimens.radiusL),
                     child: LiquidPullToRefresh(
                       onRefresh: () =>
-                          context.read<ReminderCubit>().getReminders(),
+                          context.read<ReminderCubit>().refreshReminders(),
                       backgroundColor: Colors.black,
                       color: Theme.of(context).colorScheme.primary,
                       showChildOpacityTransition: false,

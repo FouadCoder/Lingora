@@ -23,9 +23,10 @@ class ReminderCubit extends Cubit<ReminderState> {
     this._unactiveReminderUseCase,
   ) : super(ReminderState());
 
-  Future<void> getReminders() async {
+  Future<void> getReminders({bool forceRefresh = false}) async {
     // If loaded before and has notifications, or already confirmed empty
-    if (state.reminders.isNotEmpty || state.status == ReminderStatus.empty) {
+    if (!forceRefresh &&
+        (state.reminders.isNotEmpty || state.status == ReminderStatus.empty)) {
       emit(
         state.copyWith(
             status: state.reminders.isNotEmpty
@@ -157,6 +158,30 @@ class ReminderCubit extends Cubit<ReminderState> {
       emit(state.copyWith(actionStatus: ReminderStatus.networkError));
     } catch (e) {
       emit(state.copyWith(actionStatus: ReminderStatus.error));
+    }
+  }
+
+  Future<void> refreshReminders() async {
+    DateTime now = DateTime.now();
+
+    if (lastRefresh == null) {
+      await getReminders(forceRefresh: true);
+      lastRefresh = now;
+      return;
+    }
+
+    int minutesLeft = now.difference(lastRefresh!).inMinutes;
+    int minutesRemaining = 15 - minutesLeft;
+
+    if (minutesLeft >= 15) {
+      await getReminders(forceRefresh: true);
+      lastRefresh = now;
+    } else {
+      emit(
+        state.copyWith(
+            actionStatus: ReminderStatus.limitExceeded,
+            minutesLeft: minutesRemaining),
+      );
     }
   }
 }

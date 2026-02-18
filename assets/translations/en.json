@@ -176,5 +176,6 @@
     "create_first_reminder": "Create your first reminder by translating and saving a word",
     "reminder_set_success": "Reminder set successfully!",
     "reminder_removed_success": "Reminder cancelled successfully",
-    "reminder_set_error": "Unable to complete the request"
+    "reminder_set_error": "Unable to complete the request",
+    "refresh_wait": "Refresh limit reached, You can refresh in {minutes} minute(s)"
 }

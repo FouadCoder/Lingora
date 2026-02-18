@@ -21,6 +21,7 @@ class ReminderState {
   final bool hasMore;
   final String? wordId;
   final String? reminderIdToRemove;
+  final int? minutesLeft;
 
   const ReminderState(
       {this.status = ReminderStatus.initial,
@@ -30,7 +31,8 @@ class ReminderState {
       this.isLoadingMore = false,
       this.hasMore = true,
       this.wordId,
-      this.reminderIdToRemove});
+      this.reminderIdToRemove,
+      this.minutesLeft});
 
   ReminderState copyWith({
     ReminderStatus? status,
@@ -41,16 +43,17 @@ class ReminderState {
     bool? hasMore,
     String? wordId,
     String? reminderIdToRemove,
+    int? minutesLeft,
   }) {
     return ReminderState(
-      status: status ?? this.status,
-      actionStatus: actionStatus ?? this.actionStatus,
-      reminders: reminders ?? this.reminders,
-      reminder: reminder ?? this.reminder,
-      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
-      hasMore: hasMore ?? this.hasMore,
-      wordId: wordId ?? this.wordId,
-      reminderIdToRemove: reminderIdToRemove ?? this.reminderIdToRemove,
-    );
+        status: status ?? this.status,
+        actionStatus: actionStatus ?? this.actionStatus,
+        reminders: reminders ?? this.reminders,
+        reminder: reminder ?? this.reminder,
+        isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+        hasMore: hasMore ?? this.hasMore,
+        wordId: wordId ?? this.wordId,
+        reminderIdToRemove: reminderIdToRemove ?? this.reminderIdToRemove,
+        minutesLeft: minutesLeft ?? this.minutesLeft);
   }
 }

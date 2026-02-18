@@ -89,10 +89,10 @@ class WordModel {
       deletedAt: json['deleted_at'] != null
           ? DateTime.tryParse(json['deleted_at']!)
           : null,
-      reminderModel: (json['reminders'] as List?)?.isNotEmpty == true
-          ? ReminderModel.fromJson((json['reminders'] as List).first)
+      reminderModel: json['reminders'] != null
+          ? ReminderModel.fromJson(json['reminders'] as Map<String, dynamic>)
           : null,
-      activeReminder: (json['reminders'] as List?)?.isNotEmpty == true,
+      activeReminder: json['reminders'] != null,
     );
   }
 
