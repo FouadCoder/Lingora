@@ -105,9 +105,9 @@ class ReminderCubit extends Cubit<ReminderState> {
       } else {
         // Success without insert on list
         emit(state.copyWith(
-          actionStatus: ReminderStatus.success,
-          wordId: word.id,
-        ));
+            actionStatus: ReminderStatus.success,
+            wordId: word.id,
+            reminder: reminder));
       }
     } on NetworkException {
       emit(state.copyWith(actionStatus: ReminderStatus.networkError));
@@ -117,34 +117,42 @@ class ReminderCubit extends Cubit<ReminderState> {
     }
   }
 
-  Future<void> unactiveReminder(String reminderId) async {
+  Future<void> unactiveReminder(String reminderId, String wordId) async {
     try {
       emit(state.copyWith(
           actionStatus: ReminderStatus.loading,
           reminderIdToRemove: reminderId));
-      print("Start removing the reminder ================= ");
+
       await _unactiveReminderUseCase(
           ReminderParams(reminderId: reminderId, isActive: false));
-      print("Done  removing the reminder ================= ");
-      // Remove from reminders list
-      final updatedReminders = state.reminders
-          .where((reminder) => reminder.id != reminderId)
-          .toList();
-
-      print("Done  removing From the list  ================= ");
 
       // Get the wordId from the removed reminder
-      final reminderToRemove = state.reminders
-          .where((reminder) => reminder.id == reminderId)
-          .firstOrNull;
+      bool isExistonReminderList =
+          state.reminders.any((reminder) => reminder.id == reminderId);
 
-      print("Done updatethe word  From the list  ================= ");
+      // Remove from list if exist
+      if (isExistonReminderList) {
+        final reminderToRemove =
+            state.reminders.firstWhere((reminder) => reminder.id == reminderId);
+        // Remove from reminders list
+        final updatedReminders = state.reminders
+            .where((reminder) => reminder.id != reminderId)
+            .toList();
 
-      emit(state.copyWith(
-        reminders: updatedReminders,
-        wordId: reminderToRemove?.wordId,
-        actionStatus: ReminderStatus.removed,
-      ));
+        emit(state.copyWith(
+          reminders: updatedReminders,
+          wordId: reminderToRemove.wordId,
+          actionStatus: ReminderStatus.removed,
+        ));
+      }
+
+      // If not exist
+      if (!isExistonReminderList) {
+        emit(state.copyWith(
+          wordId: wordId,
+          actionStatus: ReminderStatus.removed,
+        ));
+      }
     } on NetworkException {
       emit(state.copyWith(actionStatus: ReminderStatus.networkError));
     } catch (e) {

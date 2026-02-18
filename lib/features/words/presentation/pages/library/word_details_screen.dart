@@ -90,9 +90,13 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   word: widget.word,
                 ),
 
+                SizedBox(
+                  height: AppDimens.sectionBetween,
+                ),
+
                 // Reminders
                 ReminderSwitchWidget(
-                  word: widget.word,
+                  wordId: widget.word.id,
                 ),
 
                 // Translated at
