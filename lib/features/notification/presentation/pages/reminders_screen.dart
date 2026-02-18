@@ -63,6 +63,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
             else if (state.actionStatus == ReminderStatus.limitExceeded) {
               showSnackBar(
                 context,
+                title: 'refresh_limit_reached_title'.tr(),
                 message: 'refresh_wait'
                     .tr(namedArgs: {'minutes': state.minutesLeft.toString()}),
                 icon: HeroIcons.clock,
