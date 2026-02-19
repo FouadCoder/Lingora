@@ -2,7 +2,14 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 
 enum LibraryStatus { initial, loading, success, failure, empty, networkError }
 
-enum LibraryActionStatus { initial, loading, success, failure, networkError }
+enum LibraryActionStatus {
+  initial,
+  loading,
+  success,
+  failure,
+  networkError,
+  limitExceeded
+}
 
 class LibraryState {
   final LibraryStatus status;
@@ -13,6 +20,7 @@ class LibraryState {
   final bool isLoadingMore;
   final bool hasMore;
   final bool hasMoreCollections;
+  final int? minutesUntilRefresh;
 
   const LibraryState({
     this.status = LibraryStatus.initial,
@@ -23,6 +31,7 @@ class LibraryState {
     this.isLoadingMore = false,
     this.hasMore = true,
     this.hasMoreCollections = true,
+    this.minutesUntilRefresh,
   });
 
   LibraryState copyWith({
@@ -34,6 +43,7 @@ class LibraryState {
     bool? isLoadingMore,
     bool? hasMore,
     bool? hasMoreCollections,
+    int? minutesUntilRefresh,
   }) {
     return LibraryState(
       status: status ?? this.status,
@@ -44,6 +54,7 @@ class LibraryState {
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       hasMore: hasMore ?? this.hasMore,
       hasMoreCollections: hasMoreCollections ?? this.hasMoreCollections,
+      minutesUntilRefresh: minutesUntilRefresh ?? this.minutesUntilRefresh,
     );
   }
 }

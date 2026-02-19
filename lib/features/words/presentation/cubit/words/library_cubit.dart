@@ -30,8 +30,9 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   int _offset = 0;
   int _collectionsOffset = 0;
+  DateTime? lastRefresh;
 
-  void loadMoreLibrary() async {
+  Future<void> loadMoreLibrary() async {
     try {
       // Check if already loading
       if (state.isLoadingMore || !state.hasMore) return;
@@ -56,7 +57,7 @@ class LibraryCubit extends Cubit<LibraryState> {
     } catch (_) {}
   }
 
-  void getLibrary() async {
+  Future<void> getLibrary({bool forceRefresh = false}) async {
     try {
       // If loaded already
       if (state.libraryWords.isNotEmpty) {
@@ -97,6 +98,30 @@ class LibraryCubit extends Cubit<LibraryState> {
     } catch (e) {
       print("Error getting word ============== $e");
       emit(state.copyWith(status: LibraryStatus.failure));
+    }
+  }
+
+  Future<void> refreshLibrary() async {
+    DateTime now = DateTime.now();
+
+    if (lastRefresh == null) {
+      await getLibrary(forceRefresh: true);
+      lastRefresh = now;
+      return;
+    }
+
+    int minutesLeft = now.difference(lastRefresh!).inMinutes;
+    int minutesRemaining = 5 - minutesLeft;
+
+    if (minutesLeft >= 5) {
+      await getLibrary(forceRefresh: true);
+      lastRefresh = now;
+    } else {
+      emit(
+        state.copyWith(
+            actionStatus: LibraryActionStatus.limitExceeded,
+            minutesUntilRefresh: minutesRemaining),
+      );
     }
   }
 

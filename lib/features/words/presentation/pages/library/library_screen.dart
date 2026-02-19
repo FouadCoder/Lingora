@@ -15,6 +15,7 @@ import 'package:lingora/features/words/presentation/widgets/word_card_loading.da
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/custom_status.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -77,136 +78,174 @@ class _LibraryScreenState extends State<LibraryScreen> {
               iconColor: Theme.of(context).colorScheme.error,
             );
           }
+          // Refresh Limit Exceeded
+          if (state.actionStatus == LibraryActionStatus.limitExceeded) {
+            showSnackBar(
+              context,
+              title: 'refresh_limit_reached_title'.tr(),
+              message: 'refresh_wait'.tr(
+                  namedArgs: {'minutes': state.minutesUntilRefresh.toString()}),
+              icon: HeroIcons.clock,
+              iconColor: Colors.yellow,
+            );
+          }
         },
         builder: (context, state) {
           return AppContainer(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  BlocBuilder<LibraryCubit, LibraryState>(
-                      builder: (context, state) {
-                    if (state.status == LibraryStatus.loading) {
-                      // Loading
-                      return MasonryGridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 8,
-                        gridDelegate:
-                            SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: getCrossAxisCount(),
-                        ),
-                        crossAxisSpacing: AppDimens.cardBetween,
-                        mainAxisSpacing: AppDimens.cardBetween,
-                        itemBuilder: (context, index) {
-                          return LibraryLoadingCard();
+            child: Column(
+              children: [
+                BlocBuilder<LibraryCubit, LibraryState>(
+                    builder: (context, state) {
+                  if (state.status == LibraryStatus.loading) {
+                    // Loading
+                    return MasonryGridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 8,
+                      gridDelegate:
+                          SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: getCrossAxisCount(),
+                      ),
+                      crossAxisSpacing: AppDimens.cardBetween,
+                      mainAxisSpacing: AppDimens.cardBetween,
+                      itemBuilder: (context, index) {
+                        return LibraryLoadingCard();
+                      },
+                    );
+                  }
+
+                  // Success
+                  else if (state.status == LibraryStatus.success) {
+                    return Expanded(
+                        child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(AppDimens.radiusL),
+                            child: LiquidPullToRefresh(
+                                onRefresh: () => context
+                                    .read<LibraryCubit>()
+                                    .refreshLibrary(),
+                                backgroundColor: Colors.black,
+                                color: Theme.of(context).colorScheme.primary,
+                                showChildOpacityTransition: false,
+                                height: 100,
+                                springAnimationDurationInMilliseconds: 500,
+                                child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: AppDimens.paddingS),
+                                    child: CustomScrollView(
+                                      controller: _scrollController,
+                                      slivers: [
+                                        // Collections
+                                        SliverToBoxAdapter(
+                                          child: Text(
+                                            "collections".tr(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium,
+                                          ),
+                                        ),
+                                        SliverToBoxAdapter(
+                                          child: SizedBox(
+                                            height:
+                                                AppDimens.titleContentBetween,
+                                          ),
+                                        ),
+                                        SliverToBoxAdapter(
+                                            child: CollectionsLibrary()),
+
+                                        SliverToBoxAdapter(
+                                          child: SizedBox(
+                                            height: AppDimens.sectionBetween,
+                                          ),
+                                        ),
+                                        // Words
+                                        SliverToBoxAdapter(
+                                          child: Text(
+                                            "learning_feed".tr(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium,
+                                          ),
+                                        ),
+                                        SliverToBoxAdapter(
+                                          child: SizedBox(
+                                            height:
+                                                AppDimens.titleContentBetween,
+                                          ),
+                                        ),
+
+                                        // Words List
+                                        SliverMasonryGrid.count(
+                                          crossAxisCount: getCrossAxisCount(),
+                                          mainAxisSpacing:
+                                              AppDimens.cardBetween,
+                                          crossAxisSpacing:
+                                              AppDimens.cardBetween,
+                                          childCount:
+                                              state.libraryWords.length +
+                                                  (state.isLoadingMore ? 6 : 0),
+                                          itemBuilder: (context, index) {
+                                            if (index <
+                                                state.libraryWords.length) {
+                                              return WordCard(
+                                                  word: state
+                                                      .libraryWords[index]);
+                                            }
+                                            return LibraryLoadingCard();
+                                          },
+                                        )
+                                      ],
+                                    )))));
+                  }
+
+                  // Empty
+                  else if (state.status == LibraryStatus.empty) {
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: CustomState(
+                        color: Theme.of(context).colorScheme.primary,
+                        animation: "assets/animation/empty_box_character.json",
+                        title: 'empty_library_title'.tr(),
+                        message: 'empty_library_message'.tr(),
+                        buttonText: 'learn_new_words'.tr(),
+                        onTap: () => context.push('/translate'),
+                        titleColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    );
+                  }
+
+                  // Network Error
+                  else if (state.status == LibraryStatus.networkError) {
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: NetworkErrorView(
+                        onTap: () {
+                          context.read<LibraryCubit>().getLibrary();
                         },
-                      );
-                    }
+                      ),
+                    );
+                  }
 
-                    // Success
-                    else if (state.status == LibraryStatus.success) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Collections
-                          Text(
-                            "collections".tr(),
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          SizedBox(
-                            height: AppDimens.titleContentBetween,
-                          ),
-                          CollectionsLibrary(),
-
-                          SizedBox(
-                            height: AppDimens.sectionBetween,
-                          ),
-                          // Words
-                          Text(
-                            "learning_feed".tr(),
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          SizedBox(
-                            height: AppDimens.titleContentBetween,
-                          ),
-
-                          // Words
-                          MasonryGridView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: state.libraryWords.length +
-                                (state.isLoadingMore ? 6 : 0),
-                            gridDelegate:
-                                SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: getCrossAxisCount(),
-                            ),
-                            crossAxisSpacing: AppDimens.cardBetween,
-                            mainAxisSpacing: AppDimens.cardBetween,
-                            itemBuilder: (context, index) {
-                              if (index < state.libraryWords.length) {
-                                return WordCard(
-                                  word: state.libraryWords[index],
-                                );
-                              }
-                              return LibraryLoadingCard();
-                            },
-                          ),
-                        ],
-                      );
-                    }
-
-                    // Empty
-                    else if (state.status == LibraryStatus.empty) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: CustomState(
-                          color: Theme.of(context).colorScheme.primary,
-                          animation:
-                              "assets/animation/empty_box_character.json",
-                          title: 'empty_library_title'.tr(),
-                          message: 'empty_library_message'.tr(),
-                          buttonText: 'learn_new_words'.tr(),
-                          onTap: () => context.push('/translate'),
-                          titleColor: Theme.of(context).colorScheme.primary,
-                        ),
-                      );
-                    }
-
-                    // Network Error
-                    else if (state.status == LibraryStatus.networkError) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: NetworkErrorView(
-                          onTap: () {
-                            context.read<LibraryCubit>().getLibrary();
-                          },
-                        ),
-                      );
-                    }
-
-                    // Error
-                    else if (state.status == LibraryStatus.failure) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: CustomState(
-                          textColor: Colors.white,
-                          color: Theme.of(context).colorScheme.primary,
-                          animation: "assets/animation/error_boat_orange.json",
-                          title: 'error_words_title'.tr(),
-                          message: 'error_words_message'.tr(),
-                          buttonText: 'try_again'.tr(),
-                          onTap: () {
-                            context.read<LibraryCubit>().getLibrary();
-                          },
-                        ),
-                      );
-                    }
-                    return Container();
-                  })
-                ],
-              ),
+                  // Error
+                  else if (state.status == LibraryStatus.failure) {
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: CustomState(
+                        textColor: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
+                        animation: "assets/animation/error_boat_orange.json",
+                        title: 'error_words_title'.tr(),
+                        message: 'error_words_message'.tr(),
+                        buttonText: 'try_again'.tr(),
+                        onTap: () {
+                          context.read<LibraryCubit>().getLibrary();
+                        },
+                      ),
+                    );
+                  }
+                  return Container();
+                })
+              ],
             ),
           );
         },
