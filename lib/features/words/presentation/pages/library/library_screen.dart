@@ -98,19 +98,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     builder: (context, state) {
                   if (state.status == LibraryStatus.loading) {
                     // Loading
-                    return MasonryGridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 8,
-                      gridDelegate:
-                          SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: getCrossAxisCount(),
+                    return Expanded(
+                      child: MasonryGridView.builder(
+                        itemCount: 8,
+                        gridDelegate:
+                            SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: getCrossAxisCount(),
+                        ),
+                        crossAxisSpacing: AppDimens.cardBetween,
+                        mainAxisSpacing: AppDimens.cardBetween,
+                        itemBuilder: (context, index) {
+                          return LibraryLoadingCard();
+                        },
                       ),
-                      crossAxisSpacing: AppDimens.cardBetween,
-                      mainAxisSpacing: AppDimens.cardBetween,
-                      itemBuilder: (context, index) {
-                        return LibraryLoadingCard();
-                      },
                     );
                   }
 

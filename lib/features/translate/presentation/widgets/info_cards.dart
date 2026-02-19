@@ -22,6 +22,7 @@ class InfoCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final hasWordInfo = model.original.trim().isNotEmpty;
     final hasTranslated = model.translated.trim().isNotEmpty;
     final hasMeaning = model.meaning.trim().isNotEmpty;
     final hasExamples = model.examples.isNotEmpty;

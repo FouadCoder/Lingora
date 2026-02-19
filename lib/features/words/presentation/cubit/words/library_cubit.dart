@@ -205,8 +205,8 @@ class LibraryCubit extends Cubit<LibraryState> {
   void updateWordCollection(WordEntity word, CollectionType collection) async {
     try {
       // If loading already
-      if (state.actionStatus == LibraryActionStatus.loading) return;
-      emit(state.copyWith(actionStatus: LibraryActionStatus.loading));
+      if (state.collectionActionStatus == LibraryActionStatus.loading) return;
+      emit(state.copyWith(collectionActionStatus: LibraryActionStatus.loading));
       // Update
       final newCollection = await updateWordCollectionUsecase.call(
           CollectionsParams(wordId: word.id, collectionType: collection.name));
@@ -216,12 +216,13 @@ class LibraryCubit extends Cubit<LibraryState> {
       final updatedCollectionsWords =
           state.collectionsWords.where((w) => w.id != word.id).toList();
       emit(state.copyWith(
-          actionStatus: LibraryActionStatus.success,
+          collectionActionStatus: LibraryActionStatus.success,
           collectionsWords: updatedCollectionsWords));
     } on NetworkException {
-      emit(state.copyWith(actionStatus: LibraryActionStatus.networkError));
+      emit(state.copyWith(
+          collectionActionStatus: LibraryActionStatus.networkError));
     } catch (e) {
-      emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
+      emit(state.copyWith(collectionActionStatus: LibraryActionStatus.failure));
     }
   }
 
@@ -268,7 +269,9 @@ class LibraryCubit extends Cubit<LibraryState> {
         }
         return w;
       }).toList();
-      emit(state.copyWith(libraryWords: updatedWords));
+      emit(state.copyWith(
+          libraryWords: updatedWords,
+          collectionActionStatus: LibraryActionStatus.initial));
     } catch (_) {}
   }
 }

@@ -64,7 +64,7 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
         }
       },
       child: IconCard(
-        icon: HeroIcons.heart,
+        iconWidget: Icon(Icons.favorite),
         iconColor: isOptimisticFavorite
             ? Colors.red
             : Theme.of(context).colorScheme.primary,
