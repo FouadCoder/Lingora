@@ -3,7 +3,7 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 class FavoriteEntity {
   final String id;
   final String userId;
-  final String translatedWordId;
+  final String wordId;
   final DateTime createdAt;
   final DateTime? deletedAt;
   final WordEntity word;
@@ -11,7 +11,7 @@ class FavoriteEntity {
   const FavoriteEntity({
     required this.id,
     required this.userId,
-    required this.translatedWordId,
+    required this.wordId,
     required this.createdAt,
     this.deletedAt,
     required this.word,
@@ -20,7 +20,7 @@ class FavoriteEntity {
   FavoriteEntity copyWith({
     String? id,
     String? userId,
-    String? translatedWordId,
+    String? wordId,
     DateTime? createdAt,
     DateTime? deletedAt,
     WordEntity? word,
@@ -28,7 +28,7 @@ class FavoriteEntity {
     return FavoriteEntity(
       id: id ?? this.id,
       userId: userId ?? this.userId,
-      translatedWordId: translatedWordId ?? this.translatedWordId,
+      wordId: wordId ?? this.wordId,
       createdAt: createdAt ?? this.createdAt,
       deletedAt: deletedAt ?? this.deletedAt,
       word: word ?? this.word,

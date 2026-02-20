@@ -200,46 +200,60 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
                   // Empty
                   else if (state.status == LibraryStatus.empty) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: CustomState(
-                        color: Theme.of(context).colorScheme.primary,
-                        animation: "assets/animation/empty_box_character.json",
-                        title: 'empty_library_title'.tr(),
-                        message: 'empty_library_message'.tr(),
-                        buttonText: 'learn_new_words'.tr(),
-                        onTap: () => context.push('/translate'),
-                        titleColor: Theme.of(context).colorScheme.primary,
+                    return Expanded(
+                      child: SingleChildScrollView(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: CustomState(
+                            color: Theme.of(context).colorScheme.primary,
+                            animation:
+                                "assets/animation/empty_box_character.json",
+                            title: 'empty_library_title'.tr(),
+                            message: 'empty_library_message'.tr(),
+                            buttonText: 'learn_new_words'.tr(),
+                            onTap: () => context.push('/translate'),
+                            titleColor: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
                       ),
                     );
                   }
 
                   // Network Error
                   else if (state.status == LibraryStatus.networkError) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: NetworkErrorView(
-                        onTap: () {
-                          context.read<LibraryCubit>().getLibrary();
-                        },
+                    return Expanded(
+                      child: SingleChildScrollView(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: NetworkErrorView(
+                            onTap: () {
+                              context.read<LibraryCubit>().getLibrary();
+                            },
+                          ),
+                        ),
                       ),
                     );
                   }
 
                   // Error
                   else if (state.status == LibraryStatus.failure) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: CustomState(
-                        textColor: Colors.white,
-                        color: Theme.of(context).colorScheme.primary,
-                        animation: "assets/animation/error_boat_orange.json",
-                        title: 'error_words_title'.tr(),
-                        message: 'error_words_message'.tr(),
-                        buttonText: 'try_again'.tr(),
-                        onTap: () {
-                          context.read<LibraryCubit>().getLibrary();
-                        },
+                    return Expanded(
+                      child: SingleChildScrollView(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: CustomState(
+                            textColor: Colors.white,
+                            color: Theme.of(context).colorScheme.primary,
+                            animation:
+                                "assets/animation/error_boat_orange.json",
+                            title: 'error_words_title'.tr(),
+                            message: 'error_words_message'.tr(),
+                            buttonText: 'try_again'.tr(),
+                            onTap: () {
+                              context.read<LibraryCubit>().getLibrary();
+                            },
+                          ),
+                        ),
                       ),
                     );
                   }

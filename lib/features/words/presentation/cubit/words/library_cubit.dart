@@ -232,6 +232,10 @@ class LibraryCubit extends Cubit<LibraryState> {
     } catch (_) {}
   }
 
+  WordEntity getWordById(String id) {
+    return state.libraryWords.firstWhere((w) => w.id == id);
+  }
+
   // Replace or update word on memory
   void refreshWord({
     required String wordId,

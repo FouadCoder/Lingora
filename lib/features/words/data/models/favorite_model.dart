@@ -4,7 +4,7 @@ import 'package:lingora/features/words/data/models/word_model.dart';
 class FavoriteModel {
   final String id;
   final String userId;
-  final String translatedWordId;
+  final String wordId;
   final DateTime createdAt;
   final DateTime? deletedAt;
   final WordModel word;
@@ -12,7 +12,7 @@ class FavoriteModel {
   const FavoriteModel({
     required this.id,
     required this.userId,
-    required this.translatedWordId,
+    required this.wordId,
     required this.createdAt,
     this.deletedAt,
     required this.word,
@@ -22,7 +22,7 @@ class FavoriteModel {
     return FavoriteModel(
       id: json['id'] ?? '',
       userId: json['user_id'] ?? '',
-      translatedWordId: json['translated_word_id'] ?? '',
+      wordId: json['word_id'] ?? '',
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null
           ? DateTime.tryParse(json['deleted_at']!)
@@ -37,7 +37,7 @@ class FavoriteModel {
     return {
       'id': id,
       'user_id': userId,
-      'translated_word_id': translatedWordId,
+      'word_id': wordId,
       'created_at': createdAt.toIso8601String(),
       'deleted_at': deletedAt?.toIso8601String(),
     };
@@ -46,7 +46,7 @@ class FavoriteModel {
   FavoriteModel copyWith({
     String? id,
     String? userId,
-    String? translatedWordId,
+    String? wordId,
     DateTime? createdAt,
     DateTime? deletedAt,
     WordModel? word,
@@ -54,7 +54,7 @@ class FavoriteModel {
     return FavoriteModel(
       id: id ?? this.id,
       userId: userId ?? this.userId,
-      translatedWordId: translatedWordId ?? this.translatedWordId,
+      wordId: wordId ?? this.wordId,
       createdAt: createdAt ?? this.createdAt,
       deletedAt: deletedAt ?? this.deletedAt,
       word: word ?? this.word,
@@ -65,7 +65,7 @@ class FavoriteModel {
     return FavoriteEntity(
       id: id,
       userId: userId,
-      translatedWordId: translatedWordId,
+      wordId: wordId,
       createdAt: createdAt,
       deletedAt: deletedAt,
       word: word.toEntity(),

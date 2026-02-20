@@ -123,7 +123,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
   Future addToFavorites(FavoritesParams params) async {
     await supabaseClient.from('favorites').insert({
       'user_id': _userId,
-      'translated_word_id': params.wordId,
+      'word_id': params.wordId,
     });
   }
 
@@ -134,6 +134,6 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .from('favorites')
         .delete()
         .eq('user_id', _userId)
-        .eq('translated_word_id', params.wordId!);
+        .eq('word_id', params.wordId!);
   }
 }

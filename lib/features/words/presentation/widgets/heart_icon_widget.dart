@@ -4,18 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/icon_card.dart';
-import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_state.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 
 class HeartIconWidget extends StatefulWidget {
-  final WordEntity word;
-  final void Function(WordEntity updatedWord)? onFavoriteChanged;
+  final String wordId;
 
   const HeartIconWidget({
     super.key,
-    required this.word,
-    this.onFavoriteChanged,
+    required this.wordId,
   });
 
   @override
@@ -28,7 +26,8 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
   @override
   void initState() {
     super.initState();
-    isOptimisticFavorite = widget.word.isFavorite;
+    final word = context.read<LibraryCubit>().getWordById(widget.wordId);
+    isOptimisticFavorite = word.isFavorite;
   }
 
   @override
@@ -37,23 +36,39 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
       listenWhen: (previous, current) =>
           previous.actionStatus != current.actionStatus,
       listener: (context, state) {
-        if (state.actionStatus == FavoriteActionStatus.added ||
-            state.actionStatus == FavoriteActionStatus.removed) {
-          // Call the callback if provided
-          widget.onFavoriteChanged?.call(state.word!);
+        if (state.actionStatus == FavoriteActionStatus.added) {
+          print(" =================== UI FAVRITE CUBIT IS TRUE ");
+          context.read<LibraryCubit>().refreshWord(
+                wordId: widget.wordId,
+                isFavorite: true,
+              );
 
           showSnackBar(
             context,
-            message: state.actionStatus == FavoriteActionStatus.added
-                ? 'word_added_to_favorites'.tr()
-                : 'word_removed_from_favorites'.tr(),
+            message: 'word_added_to_favorites'.tr(),
             icon: HeroIcons.heart,
             iconColor: Colors.red,
           );
-        } else if (state.actionStatus == FavoriteActionStatus.error) {
-          // Revert on error
+        }
+
+        // Removed
+        else if (state.actionStatus == FavoriteActionStatus.removed) {
+          print(" =================== UI FAVRITE CUBIT IS FALSE ");
+          context.read<LibraryCubit>().refreshWord(
+                wordId: widget.wordId,
+                isFavorite: false,
+              );
+          showSnackBar(
+            context,
+            message: 'word_removed_from_favorites'.tr(),
+            icon: HeroIcons.checkCircle,
+            iconColor: Colors.green,
+          );
+        }
+        // Error
+        else if (state.actionStatus == FavoriteActionStatus.error) {
           setState(() {
-            isOptimisticFavorite = widget.word.isFavorite;
+            isOptimisticFavorite = !isOptimisticFavorite;
           });
           showSnackBar(
             context,
@@ -64,21 +79,26 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
         }
       },
       child: IconCard(
-        iconWidget: Icon(Icons.favorite),
-        iconColor: isOptimisticFavorite
-            ? Colors.red
-            : Theme.of(context).colorScheme.primary,
+        iconWidget: Icon(
+          Icons.favorite,
+          color: isOptimisticFavorite ? Colors.red : Colors.white,
+        ),
         onTap: () {
           // Update UI instantly
           setState(() {
             isOptimisticFavorite = !isOptimisticFavorite;
           });
-
+          final word = context.read<LibraryCubit>().getWordById(widget.wordId);
+          print(
+              "Word ====================== ${word.original} == Is Favrite ? ${word.isFavorite}");
           // Call cubit
-          if (!widget.word.isFavorite) {
-            context.read<FavoritesCubit>().addToFavorites(widget.word);
+          if (word.isFavorite == false) {
+            print("Add To favroite cubit working ========================");
+            context.read<FavoritesCubit>().addToFavorites(word);
           } else {
-            context.read<FavoritesCubit>().removeFromFavorites(widget.word);
+            print(
+                "remove from favroite cubit working ========================");
+            context.read<FavoritesCubit>().removeFromFavorites(word);
           }
         },
       ),

@@ -101,13 +101,7 @@ class _WordCardState extends State<WordCard> {
                         children: [
                           //  Heart
                           HeartIconWidget(
-                            word: widget.word,
-                            onFavoriteChanged: (updatedWord) {
-                              context.read<LibraryCubit>().refreshWord(
-                                    wordId: updatedWord.id,
-                                    isFavorite: updatedWord.isFavorite,
-                                  );
-                            },
+                            wordId: widget.word.id,
                           ),
 
                           SizedBox(width: AppDimens.buttonTagHorizontal),

@@ -80,10 +80,7 @@ class WordModel {
               : CollectionModel.fromJson(
                   json['collections'] as Map<String, dynamic>))
           : CollectionModel.empty(),
-      isFavorite:
-          json['favorites'] != null && (json['favorites'] as List).isNotEmpty
-              ? true
-              : false,
+      isFavorite: json['favorites'] != null,
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null

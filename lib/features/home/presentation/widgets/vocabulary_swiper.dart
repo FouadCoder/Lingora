@@ -92,6 +92,8 @@ class _VocabularySwiperState extends State<VocabularySwiper> {
                           duration: const Duration(milliseconds: 400),
                           cardBuilder: (context, index, percentThresholdX,
                               percentThresholdY) {
+                            print(
+                                "VocabularySwiper ===== Word ${state.libraryWords[index].original} iS Favroite ?  ${state.libraryWords[index].isFavorite}");
                             return WordCard(
                               word: state.libraryWords[index],
                             );
