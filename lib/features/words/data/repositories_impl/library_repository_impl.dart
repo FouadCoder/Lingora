@@ -75,13 +75,14 @@ class LibraryRepositoryImpl implements LibraryRepository {
   }
 
   @override
-  Future<void> addToFavorites(FavoritesParams params) async {
+  Future<FavoriteEntity> addToFavorites(FavoritesParams params) async {
     // Check Internet
     if (!await NetworkService().isConnect()) {
       throw NetworkException();
     }
 
-    return await wordsRemoteData.addToFavorites(params);
+    final favoriteModel = await wordsRemoteData.addToFavorites(params);
+    return favoriteModel.toEntity();
   }
 
   @override

@@ -36,8 +36,9 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
       listenWhen: (previous, current) =>
           previous.actionStatus != current.actionStatus,
       listener: (context, state) {
+        if (state.wordId != widget.wordId) return;
+
         if (state.actionStatus == FavoriteActionStatus.added) {
-          print(" =================== UI FAVRITE CUBIT IS TRUE ");
           context.read<LibraryCubit>().refreshWord(
                 wordId: widget.wordId,
                 isFavorite: true,
@@ -53,7 +54,6 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
 
         // Removed
         else if (state.actionStatus == FavoriteActionStatus.removed) {
-          print(" =================== UI FAVRITE CUBIT IS FALSE ");
           context.read<LibraryCubit>().refreshWord(
                 wordId: widget.wordId,
                 isFavorite: false,
@@ -89,16 +89,12 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
             isOptimisticFavorite = !isOptimisticFavorite;
           });
           final word = context.read<LibraryCubit>().getWordById(widget.wordId);
-          print(
-              "Word ====================== ${word.original} == Is Favrite ? ${word.isFavorite}");
+
           // Call cubit
           if (word.isFavorite == false) {
-            print("Add To favroite cubit working ========================");
             context.read<FavoritesCubit>().addToFavorites(word);
           } else {
-            print(
-                "remove from favroite cubit working ========================");
-            context.read<FavoritesCubit>().removeFromFavorites(word);
+            context.read<FavoritesCubit>().removeFromFavorites(word.id);
           }
         },
       ),

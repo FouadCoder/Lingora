@@ -13,6 +13,6 @@ abstract class LibraryRepository {
   Future<CollectionEntity> updateWordCollection(CollectionsParams params);
   Future<NoteEntity> updateNote(NotesParams params);
   Future<List<FavoriteEntity>> getFavorites(FavoritesParams params);
-  Future<void> addToFavorites(FavoritesParams params);
+  Future<FavoriteEntity> addToFavorites(FavoritesParams params);
   Future<void> removeFromFavorites(FavoritesParams params);
 }

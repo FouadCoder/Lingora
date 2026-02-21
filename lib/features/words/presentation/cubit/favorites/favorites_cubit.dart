@@ -86,52 +86,68 @@ class FavoritesCubit extends Cubit<FavoritesState> {
 
   // Add to favorites
   void addToFavorites(WordEntity word) async {
-    print(
-        ' =========================== FavoritesCubit.addToFavorites - wordId: ${word.id}, isFavorite: ${word.isFavorite}');
     try {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
 
-      await addToFavoritesUsecase.call(FavoritesParams(wordId: word.id));
+      final favorite =
+          await addToFavoritesUsecase.call(FavoritesParams(wordId: word.id));
 
-      // Update the word
-      final updatedWord = word.copyWith(isFavorite: true);
-      print(
-          ' ===========================FavoritesCubit.addToFavorites - SUCCESS, emitting added status');
-      emit(state.copyWith(
-          actionStatus: FavoriteActionStatus.added, word: updatedWord));
+      // Insert in list
+      if (state.status == FavoriteStatus.empty ||
+          state.status == FavoriteStatus.success) {
+        emit(state.copyWith(
+            actionStatus: FavoriteActionStatus.added,
+            favorites: [favorite, ...state.favorites],
+            wordId: word.id));
+      } else {
+        // Success without insert on list
+        emit(state.copyWith(
+            actionStatus: FavoriteActionStatus.added, wordId: word.id));
+      }
     } on NetworkException {
-      print(
-          ' ===========================FavoritesCubit.addToFavorites - NETWORK ERROR');
       emit(state.copyWith(actionStatus: FavoriteActionStatus.networkError));
     } catch (e) {
-      print(
-          ' ===========================FavoritesCubit.addToFavorites - ERROR: $e');
       emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
     }
   }
 
   // Remove from favorites
-  void removeFromFavorites(WordEntity word) async {
-    print(
-        ' =========================== FavoritesCubit.removeFromFavorites - wordId: ${word.id}, isFavorite: ${word.isFavorite}');
+  void removeFromFavorites(String wordId) async {
     try {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
 
-      await removeFromFavoritesUsecase.call(FavoritesParams(wordId: word.id));
+      await removeFromFavoritesUsecase.call(FavoritesParams(wordId: wordId));
 
-      // Update the word
-      final updatedWord = word.copyWith(isFavorite: false);
-      print(
-          ' =========================== FavoritesCubit.removeFromFavorites - SUCCESS, emitting removed status');
-      emit(state.copyWith(
-          actionStatus: FavoriteActionStatus.removed, word: updatedWord));
+      // Check if favorite exists in list
+      bool isExistInFavoritesList =
+          state.favorites.any((favorite) => favorite.wordId == wordId);
+
+      // Remove from list if exist
+      if (isExistInFavoritesList) {
+        final favoriteToRemove =
+            state.favorites.firstWhere((favorite) => favorite.wordId == wordId);
+        // Remove from favorites list
+        final updatedFavorites = state.favorites
+            .where((favorite) => favorite.wordId != wordId)
+            .toList();
+
+        emit(state.copyWith(
+          favorites: updatedFavorites,
+          wordId: favoriteToRemove.wordId,
+          actionStatus: FavoriteActionStatus.removed,
+        ));
+      }
+
+      // If not exist
+      if (!isExistInFavoritesList) {
+        emit(state.copyWith(
+          wordId: wordId,
+          actionStatus: FavoriteActionStatus.removed,
+        ));
+      }
     } on NetworkException {
-      print(
-          ' =========================== FavoritesCubit.removeFromFavorites - NETWORK ERROR');
       emit(state.copyWith(actionStatus: FavoriteActionStatus.networkError));
     } catch (e) {
-      print(
-          ' ===========================FavoritesCubit.removeFromFavorites - ERROR: $e');
       emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
     }
   }

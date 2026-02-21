@@ -5,7 +5,6 @@ class FavoriteEntity {
   final String userId;
   final String wordId;
   final DateTime createdAt;
-  final DateTime? deletedAt;
   final WordEntity word;
 
   const FavoriteEntity({
@@ -13,7 +12,6 @@ class FavoriteEntity {
     required this.userId,
     required this.wordId,
     required this.createdAt,
-    this.deletedAt,
     required this.word,
   });
 
@@ -22,7 +20,6 @@ class FavoriteEntity {
     String? userId,
     String? wordId,
     DateTime? createdAt,
-    DateTime? deletedAt,
     WordEntity? word,
   }) {
     return FavoriteEntity(
@@ -30,7 +27,6 @@ class FavoriteEntity {
       userId: userId ?? this.userId,
       wordId: wordId ?? this.wordId,
       createdAt: createdAt ?? this.createdAt,
-      deletedAt: deletedAt ?? this.deletedAt,
       word: word ?? this.word,
     );
   }

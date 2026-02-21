@@ -6,7 +6,6 @@ class FavoriteModel {
   final String userId;
   final String wordId;
   final DateTime createdAt;
-  final DateTime? deletedAt;
   final WordModel word;
 
   const FavoriteModel({
@@ -14,7 +13,6 @@ class FavoriteModel {
     required this.userId,
     required this.wordId,
     required this.createdAt,
-    this.deletedAt,
     required this.word,
   });
 
@@ -24,9 +22,6 @@ class FavoriteModel {
       userId: json['user_id'] ?? '',
       wordId: json['word_id'] ?? '',
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
-      deletedAt: json['deleted_at'] != null
-          ? DateTime.tryParse(json['deleted_at']!)
-          : null,
       word: json['translated_words'] != null
           ? WordModel.fromJson(json['translated_words'])
           : WordModel.empty(),
@@ -39,7 +34,6 @@ class FavoriteModel {
       'user_id': userId,
       'word_id': wordId,
       'created_at': createdAt.toIso8601String(),
-      'deleted_at': deletedAt?.toIso8601String(),
     };
   }
 
@@ -48,7 +42,6 @@ class FavoriteModel {
     String? userId,
     String? wordId,
     DateTime? createdAt,
-    DateTime? deletedAt,
     WordModel? word,
   }) {
     return FavoriteModel(
@@ -56,7 +49,6 @@ class FavoriteModel {
       userId: userId ?? this.userId,
       wordId: wordId ?? this.wordId,
       createdAt: createdAt ?? this.createdAt,
-      deletedAt: deletedAt ?? this.deletedAt,
       word: word ?? this.word,
     );
   }
@@ -67,7 +59,6 @@ class FavoriteModel {
       userId: userId,
       wordId: wordId,
       createdAt: createdAt,
-      deletedAt: deletedAt,
       word: word.toEntity(),
     );
   }

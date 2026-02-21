@@ -14,7 +14,7 @@ abstract class WordsRemoteData {
   Future<CollectionModel> updateWordCollection(CollectionsParams params);
   Future<NoteModel> updateNote(NotesParams params);
   Future<List<FavoriteModel>> getFavorites(FavoritesParams params);
-  Future addToFavorites(FavoritesParams params);
+  Future<FavoriteModel> addToFavorites(FavoritesParams params);
   Future removeFromFavorites(FavoritesParams params);
 }
 
@@ -106,7 +106,7 @@ class WordsRemoteDataImpl implements WordsRemoteData {
         .from('favorites')
         .select('''
             *,
-            translated_words:translated_word_id(*)
+            translated_words:word_id(*)
           ''')
         .eq('user_id', _userId)
         .order('created_at', ascending: false)
@@ -120,11 +120,16 @@ class WordsRemoteDataImpl implements WordsRemoteData {
 
   // Add to favorites
   @override
-  Future addToFavorites(FavoritesParams params) async {
-    await supabaseClient.from('favorites').insert({
+  Future<FavoriteModel> addToFavorites(FavoritesParams params) async {
+    final data = await supabaseClient.from('favorites').insert({
       'user_id': _userId,
       'word_id': params.wordId,
-    });
+    }).select('''
+            *,
+            translated_words:word_id(*)
+          ''');
+
+    return FavoriteModel.fromJson(data.first);
   }
 
   // Remove from favorites
