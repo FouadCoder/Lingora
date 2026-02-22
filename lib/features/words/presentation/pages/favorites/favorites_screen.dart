@@ -86,7 +86,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 }
 
                 // Success
-                if (state.status == FavoriteStatus.success) {
+                else if (state.status == FavoriteStatus.success) {
                   return MasonryGridView.builder(
                     controller: _scrollController,
                     padding: EdgeInsets.zero,
@@ -111,7 +111,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 }
 
                 // Empty
-                if (state.status == FavoriteStatus.empty) {
+                else if (state.status == FavoriteStatus.empty) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.80,
                     child: CustomState(
@@ -123,7 +123,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 }
 
                 // Network Error
-                if (state.status == FavoriteStatus.networkError) {
+                else if (state.status == FavoriteStatus.networkError) {
                   return NetworkErrorView(
                     onTap: () {
                       context.read<FavoritesCubit>().getFavorites();
@@ -132,7 +132,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 }
 
                 // Error
-                if (state.status == FavoriteStatus.error) {
+                else if (state.status == FavoriteStatus.error) {
                   return CustomState(
                     textColor: Colors.white,
                     color: Theme.of(context).colorScheme.primary,

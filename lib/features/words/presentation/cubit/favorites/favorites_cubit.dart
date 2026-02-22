@@ -28,13 +28,17 @@ class FavoritesCubit extends Cubit<FavoritesState> {
       if (state.favorites.isNotEmpty) {
         emit(state.copyWith(
           status: FavoriteStatus.success,
+          actionStatus: FavoriteActionStatus.idle,
           favorites: state.favorites,
         ));
         return;
       }
 
       // Get
-      emit(state.copyWith(status: FavoriteStatus.loading));
+      emit(state.copyWith(
+        status: FavoriteStatus.loading,
+        actionStatus: FavoriteActionStatus.idle,
+      ));
       final List<FavoriteEntity> favorites =
           await getFavoritesUsecase.call(FavoritesParams(offset: 0));
 
@@ -60,7 +64,10 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     try {
       if (state.isLoadingMore || !state.hasMore) return;
 
-      emit(state.copyWith(isLoadingMore: true));
+      emit(state.copyWith(
+        isLoadingMore: true,
+        actionStatus: FavoriteActionStatus.idle,
+      ));
       final List<FavoriteEntity> favorites =
           await getFavoritesUsecase.call(FavoritesParams(offset: state.offset));
 
@@ -82,17 +89,21 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     try {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
 
-      // Check if wordId is Null
-      if (word.id == null) {
-        emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
-        return;
-      }
-      await addToFavoritesUsecase.call(FavoritesParams(wordId: word.id));
+      final favorite =
+          await addToFavoritesUsecase.call(FavoritesParams(wordId: word.id));
 
-      // Update the word
-      final updatedWord = word.copyWith(isFavorite: true);
-      emit(state.copyWith(
-          actionStatus: FavoriteActionStatus.added, word: updatedWord));
+      // Insert in list
+      if (state.status == FavoriteStatus.empty ||
+          state.status == FavoriteStatus.success) {
+        emit(state.copyWith(
+            actionStatus: FavoriteActionStatus.added,
+            favorites: [favorite, ...state.favorites],
+            wordId: word.id));
+      } else {
+        // Success without insert on list
+        emit(state.copyWith(
+            actionStatus: FavoriteActionStatus.added, wordId: word.id));
+      }
     } on NetworkException {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.networkError));
     } catch (e) {
@@ -101,16 +112,39 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   }
 
   // Remove from favorites
-  void removeFromFavorites(WordEntity word) async {
+  void removeFromFavorites(String wordId) async {
     try {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.loading));
 
-      await removeFromFavoritesUsecase.call(FavoritesParams(wordId: word.id));
+      await removeFromFavoritesUsecase.call(FavoritesParams(wordId: wordId));
 
-      // Update the word
-      final updatedWord = word.copyWith(isFavorite: false);
-      emit(state.copyWith(
-          actionStatus: FavoriteActionStatus.removed, word: updatedWord));
+      // Check if favorite exists in list
+      bool isExistInFavoritesList =
+          state.favorites.any((favorite) => favorite.wordId == wordId);
+
+      // Remove from list if exist
+      if (isExistInFavoritesList) {
+        final favoriteToRemove =
+            state.favorites.firstWhere((favorite) => favorite.wordId == wordId);
+        // Remove from favorites list
+        final updatedFavorites = state.favorites
+            .where((favorite) => favorite.wordId != wordId)
+            .toList();
+
+        emit(state.copyWith(
+          favorites: updatedFavorites,
+          wordId: favoriteToRemove.wordId,
+          actionStatus: FavoriteActionStatus.removed,
+        ));
+      }
+
+      // If not exist
+      if (!isExistInFavoritesList) {
+        emit(state.copyWith(
+          wordId: wordId,
+          actionStatus: FavoriteActionStatus.removed,
+        ));
+      }
     } on NetworkException {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.networkError));
     } catch (e) {

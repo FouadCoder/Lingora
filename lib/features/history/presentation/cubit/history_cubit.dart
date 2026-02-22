@@ -70,6 +70,12 @@ class HistoryCubit extends Cubit<FetchHistoryState> {
       _offset += itemCount;
       bool hasMore = itemCount == 15;
 
+      // Empty state
+      if (history.isEmpty) {
+        emit(
+            state.copyWith(status: FetchHistoryStatus.empty, history: history));
+        return;
+      }
       // Success
       emit(state.copyWith(
           status: FetchHistoryStatus.success,

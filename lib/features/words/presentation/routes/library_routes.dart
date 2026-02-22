@@ -3,19 +3,21 @@ import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/pages/favorites/favorites_screen.dart';
 import 'package:lingora/features/words/presentation/pages/library/collection_words_screen.dart';
-import 'package:lingora/features/words/presentation/pages/library/library_screen.dart';
 import 'package:lingora/features/words/presentation/pages/library/word_details_screen.dart';
+import 'package:lingora/nav.dart';
 
 final libraryRoutes = [
   GoRoute(
     path: '/library',
-    builder: (context, state) => LibraryScreen(),
+    builder: (context, state) => Nav(
+      indexPage: 1,
+    ),
   ),
   GoRoute(
       path: '/library/:id',
       builder: (context, state) {
         final extra = state.extra as WordEntity;
-        return WordDetailsScreen(model: extra);
+        return WordDetailsScreen(word: extra);
       }),
   GoRoute(
     path: '/collections/:collectionType',

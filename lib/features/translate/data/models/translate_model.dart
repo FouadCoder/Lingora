@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
-import 'package:lingora/features/words/data/models/collection_model.dart';
 
 class TranslateModel {
-  final String? id;
-  final String? userId;
-  final String? categoryId;
+  final String id;
+  final String userId;
+  final String? collectionId;
   final String original;
   final String translated;
   final String pos;
@@ -16,15 +15,14 @@ class TranslateModel {
   final List<String> synonyms;
   final Language? translateFrom;
   final Language? translateTo;
-  final CollectionModel collectionModel;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
 
   const TranslateModel({
-    this.id,
-    this.userId,
-    this.categoryId,
+    required this.id,
+    required this.userId,
+    this.collectionId,
     required this.original,
     required this.translated,
     required this.pos,
@@ -34,7 +32,6 @@ class TranslateModel {
     this.synonyms = const [],
     required this.translateFrom,
     required this.translateTo,
-    required this.collectionModel,
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
@@ -44,7 +41,7 @@ class TranslateModel {
     return TranslateModel(
       id: json['id'],
       userId: json['user_id'],
-      categoryId: json['category_id'],
+      collectionId: json['collection_id'],
       original: json['original'] ?? "",
       translated: json['translated'] ?? "translation_not_found".tr(),
       pos: json['pos'] ?? "",
@@ -58,9 +55,6 @@ class TranslateModel {
       translateTo: json["translate_to"] != null
           ? LanguageData.getLanguageByCode(json["translate_to"])
           : LanguageData.getLanguageByCode("ar"),
-      collectionModel: json["collection"] != null
-          ? CollectionModel.fromJson(json["collection"])
-          : CollectionModel.empty(),
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
       deletedAt: json['deleted_at'] != null
@@ -74,7 +68,7 @@ class TranslateModel {
     return TranslateModel(
       id: '',
       userId: '',
-      categoryId: '',
+      collectionId: '',
       original: '',
       translated: '',
       pos: '',
@@ -84,7 +78,6 @@ class TranslateModel {
       synonyms: const [],
       translateFrom: LanguageData.getLanguageByCode("en"),
       translateTo: LanguageData.getLanguageByCode("ar"),
-      collectionModel: CollectionModel.empty(),
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       deletedAt: null,
@@ -96,7 +89,7 @@ class TranslateModel {
     return TranslateEntity(
       id: id,
       userId: userId,
-      categoryId: categoryId,
+      collectionId: collectionId,
       original: original,
       translated: translated,
       pos: pos,
@@ -106,7 +99,6 @@ class TranslateModel {
       synonyms: synonyms,
       translateFrom: translateFrom,
       translateTo: translateTo,
-      collection: collectionModel.toEntity(),
       createdAt: createdAt,
       updatedAt: updatedAt,
       deletedAt: deletedAt,

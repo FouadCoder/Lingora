@@ -9,12 +9,14 @@ class CustomSwtich extends StatelessWidget {
   final HeroIcons? icon;
   final ValueNotifier<bool> controller;
   final void Function(bool) onChanged;
+  final bool isLoading;
   const CustomSwtich({
     super.key,
     required this.title,
     required this.description,
     required this.onChanged,
     required this.controller,
+    this.isLoading = false,
     this.icon,
   });
 
@@ -51,22 +53,33 @@ class CustomSwtich extends StatelessWidget {
             ),
           ),
           SizedBox(width: AppDimens.elementBetween),
-          ValueListenableBuilder<bool>(
-            valueListenable: controller,
-            builder: (context, value, _) {
-              return Switch(
-                value: value,
-                onChanged: (val) {
-                  controller.value = val;
-                  onChanged(val);
-                },
-                activeThumbColor: theme.colorScheme.primary,
-                inactiveThumbColor: theme.colorScheme.surface,
-                inactiveTrackColor: theme.colorScheme.outline,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              );
-            },
-          ),
+          isLoading
+              ? SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                )
+              : ValueListenableBuilder<bool>(
+                  valueListenable: controller,
+                  builder: (context, value, _) {
+                    return Switch(
+                      value: value,
+                      onChanged: (val) {
+                        controller.value = val;
+                        onChanged(val);
+                      },
+                      activeThumbColor: theme.colorScheme.primary,
+                      inactiveThumbColor: theme.colorScheme.surface,
+                      inactiveTrackColor: theme.colorScheme.outline,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    );
+                  },
+                ),
         ],
       ),
     );

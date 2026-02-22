@@ -5,10 +5,8 @@ import 'package:lingora/core/widgets/app_card.dart';
 
 class ShortcutWidget extends StatelessWidget {
   final HeroIcons icon;
-  final String text;
   final VoidCallback? onTap;
-  const ShortcutWidget(
-      {super.key, required this.icon, required this.text, this.onTap});
+  const ShortcutWidget({super.key, required this.icon, this.onTap});
 
   @override
   Widget build(BuildContext context) {

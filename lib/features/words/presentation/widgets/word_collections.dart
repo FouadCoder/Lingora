@@ -35,7 +35,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
     return BlocListener<LibraryCubit, LibraryState>(
       listener: (context, state) {
         // Success
-        if (state.actionStatus == LibraryActionStatus.success) {
+        if (state.collectionActionStatus == LibraryActionStatus.success) {
           showSnackBar(
             context,
             message: 'word_added_to_collection'.tr(),
@@ -44,7 +44,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
           );
         }
         // Error
-        else if (state.actionStatus == LibraryActionStatus.failure) {
+        else if (state.collectionActionStatus == LibraryActionStatus.failure) {
           // Back the value again
           setState(() {
             collectionType = widget.collection;
@@ -55,7 +55,8 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
             icon: HeroIcons.exclamationTriangle,
             iconColor: Theme.of(context).colorScheme.error,
           );
-        } else if (state.actionStatus == LibraryActionStatus.networkError) {
+        } else if (state.collectionActionStatus ==
+            LibraryActionStatus.networkError) {
           // Back the value again
           setState(() {
             collectionType = widget.collection;
@@ -68,7 +69,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
         children: List.generate(CollectionType.values.length, (index) {
           bool isSelected = collectionType == CollectionType.values[index];
           final backgroundColor = (isSelected)
-              ? Theme.of(context).colorScheme.primary
+              ? Theme.of(context).colorScheme.shadow
               : Theme.of(context).colorScheme.onSurface;
 
           return GestureDetector(
@@ -88,9 +89,10 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
                       : 0),
               child: AppCard(
                   backgroundColor: backgroundColor,
-                  child: HeroIcon(
-                    CollectionType.values[index].icon,
-                    size: AppDimens.iconM,
+                  child: SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: Image.asset(CollectionType.values[index].imagePath),
                   )),
             ),
           );

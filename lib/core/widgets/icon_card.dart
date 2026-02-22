@@ -3,16 +3,18 @@ import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 
 class IconCard extends StatelessWidget {
-  final HeroIcons icon;
+  final HeroIcons? icon;
   final Color? background;
   final Color? iconColor;
   final VoidCallback? onTap;
+  final Widget? iconWidget;
   const IconCard(
       {super.key,
-      required this.icon,
+      this.icon,
       this.background,
       this.onTap,
-      this.iconColor});
+      this.iconColor,
+      this.iconWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +36,12 @@ class IconCard extends StatelessWidget {
                         .outline
                         .withValues(alpha: 0.1))),
             color: background ?? Theme.of(context).colorScheme.onSurface),
-        child: HeroIcon(
-          icon,
-          color: Theme.of(context).iconTheme.color,
-          size: AppDimens.iconL,
-        ),
+        child: iconWidget ??
+            HeroIcon(
+              icon ?? HeroIcons.heart,
+              color: iconColor ?? Theme.of(context).iconTheme.color,
+              size: AppDimens.iconL,
+            ),
       ),
     );
   }

@@ -15,13 +15,14 @@ import 'package:lingora/helper/direction_helper.dart';
 
 class WordCard extends StatefulWidget {
   final WordEntity word;
-  final bool? smallCard;
+  final bool smallCard;
+  final bool hidefavorite;
 
-  const WordCard({
-    super.key,
-    required this.word,
-    this.smallCard = false,
-  });
+  const WordCard(
+      {super.key,
+      required this.word,
+      this.smallCard = false,
+      this.hidefavorite = false});
 
   @override
   State<WordCard> createState() => _WordCardState();
@@ -56,7 +57,7 @@ class _WordCardState extends State<WordCard> {
           transitionDuration: const Duration(milliseconds: 400),
           openBuilder: (context, openContainer) {
             return WordDetailsScreen(
-              model: widget.word,
+              word: widget.word,
             );
           },
           closedBuilder: (context, openContainer) {
@@ -77,7 +78,7 @@ class _WordCardState extends State<WordCard> {
                           style: theme.titleMedium?.copyWith(
                             color: colorScheme.primary,
                           ),
-                          maxLines: widget.smallCard! ? 1 : 2,
+                          maxLines: widget.smallCard ? 1 : 2,
                           textAlign:
                               isRightSide(widget.word.translateFrom!.code)
                                   ? TextAlign.right
@@ -91,25 +92,21 @@ class _WordCardState extends State<WordCard> {
                           textAlign: isRightSide(widget.word.translateTo!.code)
                               ? TextAlign.right
                               : TextAlign.left,
-                          maxLines: widget.smallCard! ? 1 : 2,
+                          maxLines: widget.smallCard ? 1 : 2,
                         ),
                       ],
                     ),
-                    if (!widget.smallCard!)
+                    if (!widget.smallCard)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           //  Heart
-                          HeartIconWidget(
-                            word: widget.word,
-                            onFavoriteChanged: (updatedWord) {
-                              context
-                                  .read<LibraryCubit>()
-                                  .refreshWord(updatedWord);
-                            },
-                          ),
-
-                          SizedBox(width: AppDimens.buttonTagHorizontal),
+                          if (!widget.hidefavorite)
+                            HeartIconWidget(
+                              wordId: widget.word.id,
+                            ),
+                          if (!widget.hidefavorite)
+                            SizedBox(width: AppDimens.buttonTagHorizontal),
                           // Sound
                           IconCard(
                             icon: HeroIcons.speakerWave,
@@ -131,14 +128,14 @@ class _WordCardState extends State<WordCard> {
                   '“ ${widget.word.examples[0]} ”',
                   style: theme.bodyMedium,
                   maxLines: 2,
-                  textAlign: isRightSide(widget.word.translateTo!.code)
+                  textAlign: isRightSide(widget.word.translateFrom!.code)
                       ? TextAlign.right
                       : TextAlign.left,
                   overflow: TextOverflow.ellipsis,
                 ),
 
                 SizedBox(height: AppDimens.sectionSpacing),
-                if (!widget.smallCard!)
+                if (!widget.smallCard)
                   Divider(
                     color: Theme.of(context)
                         .colorScheme

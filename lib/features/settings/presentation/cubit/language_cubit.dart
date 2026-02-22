@@ -18,7 +18,6 @@ class LanguageCubit extends Cubit<LanguageState> {
     try {
       emit(state.copyWith(status: LanguageStatus.loading));
       final lang = await getLanguageUsecase.call();
-      print("Lan ========= ${lang!.name}");
 
       emit(state.copyWith(status: LanguageStatus.success, language: lang));
     } catch (e) {

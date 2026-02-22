@@ -16,9 +16,7 @@ class TranslateCubit extends Cubit<TranslateState> {
 
   // Update input text
   void updateInput(String text) {
-    emit(state.copyWith(
-      inputText: text,
-    ));
+    emit(state.copyWith(inputText: text, status: TranslateStatus.initial));
   }
 
   // Update selected languages
@@ -50,6 +48,8 @@ class TranslateCubit extends Cubit<TranslateState> {
         return;
       }
 
+      emit(state.copyWith(status: TranslateStatus.loading));
+
       // Create params
       final params = TranslateParams(
         input: state.inputText,
@@ -63,7 +63,6 @@ class TranslateCubit extends Cubit<TranslateState> {
     } on NetworkException {
       emit(state.copyWith(status: TranslateStatus.networkError));
     } catch (e) {
-      print("Error on translate ========== $e");
       emit(state.copyWith(status: TranslateStatus.failure));
     }
   }

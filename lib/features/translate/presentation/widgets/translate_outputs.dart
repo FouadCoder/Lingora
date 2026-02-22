@@ -51,10 +51,6 @@ class WordTranslatedCard extends StatelessWidget {
                     SizedBox(
                       width: AppDimens.buttonTagHorizontal,
                     ),
-                    IconCard(icon: HeroIcons.heart),
-                    SizedBox(
-                      width: AppDimens.buttonTagHorizontal,
-                    ),
                     IconCard(
                       icon: HeroIcons.speakerWave,
                       onTap: () {

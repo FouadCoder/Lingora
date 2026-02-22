@@ -2,6 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/core/exceptions/network_exception.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
+import 'package:lingora/features/words/domain/entities/note_entity.dart';
+import 'package:lingora/features/words/domain/entities/collection_entity.dart';
+import 'package:lingora/features/notification/domain/entities/reminder_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_library_usecase.dart';
 import 'package:lingora/features/words/domain/usecases/library_usecase/get_words_by_collection_usecase.dart';
@@ -27,8 +30,9 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   int _offset = 0;
   int _collectionsOffset = 0;
+  DateTime? lastRefresh;
 
-  void loadMoreLibrary() async {
+  Future<void> loadMoreLibrary() async {
     try {
       // Check if already loading
       if (state.isLoadingMore || !state.hasMore) return;
@@ -53,7 +57,7 @@ class LibraryCubit extends Cubit<LibraryState> {
     } catch (_) {}
   }
 
-  void getLibrary() async {
+  Future<void> getLibrary({bool forceRefresh = false}) async {
     try {
       // If loaded already
       if (state.libraryWords.isNotEmpty) {
@@ -92,7 +96,32 @@ class LibraryCubit extends Cubit<LibraryState> {
     } on NetworkException {
       emit(state.copyWith(status: LibraryStatus.networkError));
     } catch (e) {
+      print("Error getting word ============== $e");
       emit(state.copyWith(status: LibraryStatus.failure));
+    }
+  }
+
+  Future<void> refreshLibrary() async {
+    DateTime now = DateTime.now();
+
+    if (lastRefresh == null) {
+      await getLibrary(forceRefresh: true);
+      lastRefresh = now;
+      return;
+    }
+
+    int minutesLeft = now.difference(lastRefresh!).inMinutes;
+    int minutesRemaining = 5 - minutesLeft;
+
+    if (minutesLeft >= 5) {
+      await getLibrary(forceRefresh: true);
+      lastRefresh = now;
+    } else {
+      emit(
+        state.copyWith(
+            actionStatus: LibraryActionStatus.limitExceeded,
+            minutesUntilRefresh: minutesRemaining),
+      );
     }
   }
 
@@ -176,24 +205,24 @@ class LibraryCubit extends Cubit<LibraryState> {
   void updateWordCollection(WordEntity word, CollectionType collection) async {
     try {
       // If loading already
-      if (state.actionStatus == LibraryActionStatus.loading) return;
-      emit(state.copyWith(actionStatus: LibraryActionStatus.loading));
+      if (state.collectionActionStatus == LibraryActionStatus.loading) return;
+      emit(state.copyWith(collectionActionStatus: LibraryActionStatus.loading));
       // Update
       final newCollection = await updateWordCollectionUsecase.call(
-          CollectionsParams(wordId: word.id!, collectionType: collection.name));
-      // Replace word from memoery
-      final updatedWord = word.copyWith(collection: newCollection);
-      refreshWord(updatedWord);
+          CollectionsParams(wordId: word.id, collectionType: collection.name));
+      // Replace word from memory
+      refreshWord(wordId: word.id, collection: newCollection);
       // Remove the word
       final updatedCollectionsWords =
           state.collectionsWords.where((w) => w.id != word.id).toList();
       emit(state.copyWith(
-          actionStatus: LibraryActionStatus.success,
+          collectionActionStatus: LibraryActionStatus.success,
           collectionsWords: updatedCollectionsWords));
     } on NetworkException {
-      emit(state.copyWith(actionStatus: LibraryActionStatus.networkError));
+      emit(state.copyWith(
+          collectionActionStatus: LibraryActionStatus.networkError));
     } catch (e) {
-      emit(state.copyWith(actionStatus: LibraryActionStatus.failure));
+      emit(state.copyWith(collectionActionStatus: LibraryActionStatus.failure));
     }
   }
 
@@ -203,14 +232,50 @@ class LibraryCubit extends Cubit<LibraryState> {
     } catch (_) {}
   }
 
+  WordEntity getWordById(String id) {
+    return state.libraryWords.firstWhere((w) => w.id == id);
+  }
+
   // Replace or update word on memory
-  void refreshWord(WordEntity word) async {
+  void refreshWord({
+    required String wordId,
+    String? original,
+    String? translated,
+    String? pos,
+    String? pronunciation,
+    String? meaning,
+    List<String>? examples,
+    List<String>? synonyms,
+    bool? isFavorite,
+    bool? activeReminder,
+    NoteEntity? note,
+    CollectionEntity? collection,
+    ReminderEntity? reminder,
+  }) async {
     try {
       final currentWords = state.libraryWords;
       final updatedWords = currentWords.map((w) {
-        return w.id == word.id ? word : w;
+        if (w.id == wordId) {
+          return w.copyWith(
+            original: original,
+            translated: translated,
+            pos: pos,
+            pronunciation: pronunciation,
+            meaning: meaning,
+            examples: examples,
+            synonyms: synonyms,
+            isFavorite: isFavorite,
+            activeReminder: activeReminder,
+            note: note,
+            collection: collection,
+            reminder: reminder,
+          );
+        }
+        return w;
       }).toList();
-      emit(state.copyWith(libraryWords: updatedWords));
+      emit(state.copyWith(
+          libraryWords: updatedWords,
+          collectionActionStatus: LibraryActionStatus.initial));
     } catch (_) {}
   }
 }

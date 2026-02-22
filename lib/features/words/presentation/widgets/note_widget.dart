@@ -59,7 +59,10 @@ class _LibraryNotesState extends State<LibraryNotes> {
             initialNote = noteController.text;
           });
           // Refresh word
-          context.read<LibraryCubit>().refreshWord(state.word!);
+          context.read<LibraryCubit>().refreshWord(
+                wordId: state.word!.id,
+                note: state.word!.note,
+              );
         }
         // Error
         else if (state.status == NotesStatus.failure) {

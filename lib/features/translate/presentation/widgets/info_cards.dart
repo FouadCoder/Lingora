@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
-import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_outputs.dart';
-import 'package:lingora/core/widgets/header.dart';
-import 'package:lingora/core/widgets/app_card.dart';
+import 'package:lingora/core/widgets/examples_widget.dart';
+import 'package:lingora/core/widgets/synonyms_widget.dart';
+import 'package:lingora/core/widgets/meaning_widget.dart';
 
 class InfoCards extends StatelessWidget {
   final bool isDesktop;
@@ -24,15 +22,11 @@ class InfoCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
+    // final hasWordInfo = model.original.trim().isNotEmpty;
     final hasTranslated = model.translated.trim().isNotEmpty;
-    final hasWord = model.original.trim().isNotEmpty;
     final hasMeaning = model.meaning.trim().isNotEmpty;
     final hasExamples = model.examples.isNotEmpty;
     final hasSynonyms = model.synonyms.isNotEmpty;
-
-    // For text
-    bool isRightSideText = isRightSide(model.translateTo!.code);
 
     final List<Widget> availableCards = [
       if (hasTranslated)
@@ -40,17 +34,19 @@ class InfoCards extends StatelessWidget {
           translated: model.translated,
           lang: model.translateTo!.code,
         ),
-      if (hasWord)
-        // WordInfoCard(
-        //   original: model.original,
-        //   pos: model.pos,
-        //   pronunciation: model.pronunciation,
-        //   word: model,
-        //   lang: model.translateFrom!.code,
-        //   collectionType: model.collection.collectionType,
-        // ),
-        if (hasMeaning) _buildMeaningCard(theme, context, isRightSideText),
-      if (hasSynonyms) _buildSynonymsCard(theme, context),
+
+      // Meaning
+      if (hasMeaning)
+        MeaningWidget(
+          meaning: model.meaning,
+          languageCode: model.translateTo!.code,
+        ),
+
+      // Synonyms
+      if (hasSynonyms)
+        SynonymsWidget(
+          synonyms: model.synonyms,
+        ),
     ];
 
     int getCrossAxisCount() {
@@ -80,141 +76,19 @@ class InfoCards extends StatelessWidget {
                 return availableCards[index];
               },
             ),
-            SizedBox(
-              height: AppDimens.cardBetween,
-            ),
+            if (hasExamples)
+              SizedBox(
+                height: AppDimens.cardBetween,
+              ),
             // Examples
             if (hasExamples)
-              _buildExamplesCard(theme, context, isRightSideText),
+              ExamplesWidget(
+                examples: model.examples,
+                languageCode: model.translateFrom!.code,
+              ),
           ],
         );
       },
-    );
-  }
-
-  Widget _buildMeaningCard(
-      TextTheme theme, BuildContext context, bool isRightSide) {
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: isDesktop || isTablet ? 200 : 100, // Minimum height
-      ),
-      child: AppCard(
-        child: Column(
-          children: [
-            // Header with icon
-            Header(
-              icon: HeroIcons.lightBulb,
-              title: 'meaning'.tr(),
-            ),
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-
-            // Definition
-            Align(
-              alignment: isRightSide
-                  ? AlignmentDirectional.centerStart
-                  : AlignmentDirectional.centerEnd,
-              child: Text(
-                model.meaning,
-                style: theme.bodyMedium?.copyWith(
-                  height: 1.4,
-                ),
-                textAlign: isRightSide ? TextAlign.right : TextAlign.left,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildExamplesCard(
-      TextTheme theme, BuildContext context, bool isRightSide) {
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: isDesktop || isTablet ? 150 : 150, // Minimum height
-      ),
-      child: AppCard(
-        child: Column(
-          children: [
-            // Header with icon
-            Header(
-              icon: HeroIcons.chatBubbleLeftRight,
-              title: 'examples'.tr(),
-            ),
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-
-            // Example sentences
-            Wrap(
-              spacing: AppDimens.buttonTagHorizontal,
-              runSpacing: AppDimens.buttonTagHorizontal,
-              alignment: isRightSide ? WrapAlignment.end : WrapAlignment.start,
-              children: model.examples.map((example) {
-                return Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  child: Text(
-                    example,
-                    style: theme.bodySmall,
-                  ),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSynonymsCard(TextTheme theme, BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: isDesktop || isTablet ? 200 : 150,
-      ),
-      child: AppCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with icon
-            Header(
-              icon: HeroIcons.rectangleStack,
-              title: 'synonyms'.tr(),
-            ),
-            SizedBox(
-              height: AppDimens.sectionSpacing,
-            ),
-
-            Wrap(
-              spacing: AppDimens.buttonTagHorizontal,
-              runSpacing: AppDimens.buttonTagHorizontal,
-              children: model.synonyms
-                  .map((word) => _synonymChip(word, context))
-                  .toList(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _synonymChip(String word, BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: colorScheme.onPrimary,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        word,
-        style: Theme.of(context).textTheme.bodySmall,
-      ),
     );
   }
 }

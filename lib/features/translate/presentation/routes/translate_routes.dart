@@ -1,7 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:lingora/features/translate/presentation/pages/translate_screen.dart';
+import 'package:lingora/nav.dart';
 
 final translateRoutes = [
   GoRoute(
-      path: '/translate', builder: (context, state) => const TranslateScreen())
+      path: '/translate',
+      builder: (context, state) => Nav(
+            isFullScreen: true,
+          ))
 ];

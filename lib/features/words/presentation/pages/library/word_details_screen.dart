@@ -1,22 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
-import 'package:lingora/core/utils/platfrom.dart';
-import 'package:lingora/core/widgets/app_card.dart';
+import 'package:lingora/core/widgets/examples_widget.dart';
+import 'package:lingora/core/widgets/synonyms_widget.dart';
+import 'package:lingora/core/widgets/meaning_widget.dart';
 import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/presentation/widgets/note_widget.dart';
+import 'package:lingora/features/words/presentation/widgets/reminder_switch_widget.dart';
 import 'package:lingora/features/translate/presentation/widgets/translate_outputs.dart';
-import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/core/widgets/app_container.dart';
-import 'package:lingora/core/widgets/custom_swtich.dart';
-import 'package:lingora/core/widgets/header.dart';
 
 class WordDetailsScreen extends StatefulWidget {
-  final WordEntity model;
+  final WordEntity word;
 
-  const WordDetailsScreen({super.key, required this.model});
+  const WordDetailsScreen({super.key, required this.word});
 
   @override
   State<WordDetailsScreen> createState() => _WordDetailsScreenState();
@@ -37,12 +35,12 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
               children: [
                 // Word Info
                 WordInfoCard(
-                  original: widget.model.original,
-                  pos: widget.model.pos,
-                  pronunciation: widget.model.pronunciation,
-                  word: widget.model,
-                  lang: widget.model.translateFrom!.code,
-                  collectionType: widget.model.collection.collectionType,
+                  original: widget.word.original,
+                  pos: widget.word.pos,
+                  pronunciation: widget.word.pronunciation,
+                  word: widget.word,
+                  lang: widget.word.translateFrom!.code,
+                  collectionType: widget.word.collection.collectionType,
                 ),
 
                 SizedBox(
@@ -51,114 +49,35 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Translated
                 WordTranslatedCard(
-                  translated: widget.model.translated,
-                  lang: widget.model.translateTo!.code,
+                  translated: widget.word.translated,
+                  lang: widget.word.translateTo!.code,
                 ),
 
                 SizedBox(
-                  height: AppDimens.sectionBetween,
+                  height: AppDimens.cardBetween,
                 ),
 
                 // Meaning
-                Header(
-                  icon: HeroIcons.lightBulb,
-                  title: 'meaning'.tr(),
-                ),
-
-                SizedBox(
-                  height: AppDimens.sectionSpacing,
-                ),
-
-                // Definition
-                Align(
-                  alignment: isRightSide(widget.model.translateTo!.code)
-                      ? AlignmentDirectional.centerStart
-                      : AlignmentDirectional.centerEnd,
-                  child: Text(
-                    widget.model.meaning,
-                    style: theme.bodyMedium?.copyWith(
-                      height: 1.4,
-                    ),
-                    textAlign: isRightSide(widget.model.translateFrom!.code)
-                        ? TextAlign.right
-                        : TextAlign.left,
-                  ),
+                MeaningWidget(
+                  meaning: widget.word.meaning,
+                  languageCode: widget.word.translateTo!.code,
                 ),
                 SizedBox(
-                  height: AppDimens.sectionBetween,
+                  height: AppDimens.cardBetween,
                 ),
 
                 // Synonyms
-                Header(
-                  icon: HeroIcons.rectangleStack,
-                  title: 'synonyms'.tr(),
-                ),
-                SizedBox(
-                  height: AppDimens.sectionSpacing,
-                ),
-
-                Wrap(
-                  spacing: AppDimens.buttonTagHorizontal,
-                  runSpacing: AppDimens.buttonTagHorizontal,
-                  children: widget.model.synonyms
-                      .map((word) => _synonymChip(word, context))
-                      .toList(),
+                SynonymsWidget(
+                  synonyms: widget.word.synonyms,
                 ),
 
                 SizedBox(
-                  height: AppDimens.sectionBetween,
+                  height: AppDimens.cardBetween,
                 ),
                 // Examples
-
-                Header(
-                  icon: HeroIcons.chatBubbleLeftRight,
-                  title: 'examples'.tr(),
-                ),
-                SizedBox(
-                  height: AppDimens.sectionSpacing,
-                ),
-
-                // Example sentences
-                Align(
-                  alignment: isRightSide(widget.model.translateFrom!.code)
-                      ? AlignmentDirectional.centerEnd
-                      : AlignmentDirectional.centerStart,
-                  child: AppCard(
-                    width: AppPlatform.isPhone(context)
-                        ? MediaQuery.of(context).size.width
-                        : 500,
-                    child: Wrap(
-                      spacing: AppDimens.buttonTagHorizontal,
-                      runSpacing: AppDimens.buttonTagHorizontal,
-                      alignment: WrapAlignment.start,
-                      children:
-                          widget.model.examples.asMap().entries.map((entry) {
-                        final index = entry.key + 1;
-                        final example = entry.value;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              example,
-                              style: theme.bodyMedium,
-                            ),
-                            if (index != widget.model.examples.length)
-                              SizedBox(
-                                height: AppDimens.buttonTagHorizontal,
-                              ),
-                            if (index != widget.model.examples.length)
-                              Divider(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurface
-                                    .withValues(alpha: 0.2),
-                                height: 0.1,
-                              ),
-                          ],
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                ExamplesWidget(
+                  examples: widget.word.examples,
+                  languageCode: widget.word.translateFrom!.code,
                 ),
 
                 SizedBox(
@@ -167,62 +86,30 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
 
                 // Notes
                 LibraryNotes(
-                  noteEntity: widget.model.note,
-                  word: widget.model,
+                  noteEntity: widget.word.note,
+                  word: widget.word,
                 ),
 
-                // Reminders
                 SizedBox(
                   height: AppDimens.sectionBetween,
                 ),
-                CustomSwtich(
-                    title: 'reminders_title'.tr(),
-                    description: activeNotifications
-                        ? 'reminders_active'.tr()
-                        : 'reminders_inactive'.tr(),
-                    onChanged: (value) {
-                      setState(() {
-                        activeNotifications = value;
-                      });
-                    },
-                    controller: ValueNotifier(activeNotifications),
-                    icon: activeNotifications
-                        ? HeroIcons.bell
-                        : HeroIcons.bellSlash),
+
+                // Reminders
+                ReminderSwitchWidget(
+                  wordId: widget.word.id,
+                ),
 
                 // Translated at
                 SizedBox(
                   height: AppDimens.sectionBetween,
                 ),
                 Text(
-                  "${'translated_at'.tr()} ${widget.model.createdAt.toReadableDate()}",
+                  "${'translated_at'.tr()} ${widget.word.createdAt.toReadableDate()}",
                   style: theme.bodySmall,
                 ),
               ],
             ),
           ),
         ));
-  }
-
-  Widget _synonymChip(String word, BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-              color: Theme.of(context)
-                  .colorScheme
-                  .outline
-                  .withValues(alpha: 0.1))),
-      child: Text(
-        word,
-        style: Theme.of(context)
-            .textTheme
-            .bodySmall
-            ?.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color),
-      ),
-    );
   }
 }

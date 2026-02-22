@@ -12,9 +12,11 @@ import 'package:sidebarx/sidebarx.dart';
 
 class Nav extends StatefulWidget {
   final int indexPage;
+  final bool isFullScreen;
   const Nav({
     super.key,
     this.indexPage = 10, // Fake number
+    this.isFullScreen = false,
   });
 
   @override
@@ -24,13 +26,14 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   late int currentPage;
   late List pages;
-  bool isCenterScreen = true;
+  bool? isCenterScreen;
   late SidebarXController controllerSideBar;
 
   @override
   void initState() {
     super.initState();
     currentPage = widget.indexPage;
+    isCenterScreen = widget.isFullScreen;
     controllerSideBar =
         SidebarXController(selectedIndex: widget.indexPage, extended: false);
 
@@ -69,7 +72,7 @@ class _NavState extends State<Nav> {
                 ),
               ],
             )
-          : isCenterScreen
+          : isCenterScreen!
               ? TranslateScreen()
               : pages[currentPage],
       floatingActionButton: FloatingActionButton(

@@ -164,9 +164,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.80,
                 child: CustomState(
-                    animation: "assets/animation/empty_box_character.json",
-                    title: 'emptyHistoryTitle'.tr(),
-                    message: 'emptyHistoryMessage'.tr()),
+                  animation: "assets/animation/empty_box_character.json",
+                  title: 'emptyHistoryTitle'.tr(),
+                  message: 'emptyHistoryMessage'.tr(),
+                  titleColor: Theme.of(context).colorScheme.primary,
+                ),
               );
             }
 

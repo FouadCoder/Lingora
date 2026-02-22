@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/config/theme/light_theme.dart';
 import 'package:lingora/core/injection.dart';
+import 'package:lingora/core/service/launch_service.dart';
 import 'package:lingora/cubit/cubit_app.dart';
 import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
+import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/notifications/notification_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
@@ -21,6 +25,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setupInjection();
+
+  final launchService = injection<LaunchService>();
+  await launchService.launch();
 
   runApp(EasyLocalization(
     supportedLocales: const [
@@ -41,8 +48,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<TranslateCubit>(
-              create: (context) =>
-                  injection<TranslateCubit>()), // Get Translated words
+              create: (context) => injection<TranslateCubit>()), // Translate
           BlocProvider<LibraryCubit>(
               create: (context) => injection<LibraryCubit>()), // Library
           BlocProvider<NotesCubit>(
@@ -58,12 +64,17 @@ class MyApp extends StatelessWidget {
               create: (context) => injection<ThemeCubit>()), // Theme
           BlocProvider<FavoritesCubit>(
               create: (context) => injection<FavoritesCubit>()), // Favorites
-
-          //TODO adjust the cuibits below
-          BlocProvider<AuthAppCubit>(
-            create: (context) => AuthAppCubit()..launch(),
+          BlocProvider<NotificationCubit>(
+              create: (context) =>
+                  injection<NotificationCubit>()), // Notification
+          BlocProvider<ReminderCubit>(
+              create: (context) => injection<ReminderCubit>()), // Reminder
+          BlocProvider<AuthCubit>(
+            create: (context) => injection<AuthCubit>()..checkSession(),
             lazy: false,
           ), // Auth
+
+          //TODO adjust the cubits below
           BlocProvider<LevelCubit>(create: (context) => LevelCubit()), // Level
         ],
         child: BlocListener<LanguageCubit, LanguageState>(
