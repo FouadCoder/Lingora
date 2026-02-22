@@ -45,6 +45,7 @@ dependencies:
   liquid_pull_to_refresh: ^3.0.1
   flutter_dotenv: ^6.0.0
   onesignal_flutter: ^5.4.0
+  audioplayers: ^6.5.1
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +60,7 @@ flutter:
     - assets/animation/
     - assets/logo/
     - assets/icons/
+    - assets/sound/
     - .env
 
 flutter_launcher_icons:

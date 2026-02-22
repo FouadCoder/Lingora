@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,6 +23,20 @@ class ReminderSwitchWidget extends StatefulWidget {
 }
 
 class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
+  late AudioPlayer audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer = AudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final libraryState = context.watch<LibraryCubit>().state;
@@ -40,6 +55,8 @@ class _ReminderSwitchWidgetState extends State<ReminderSwitchWidget> {
                 activeReminder: true,
                 reminder: state.reminder,
               );
+
+          audioPlayer.play(AssetSource('sound/reminder.mp3'));
 
           showSnackBar(
             context,

@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,21 +25,25 @@ class TranslateScreen extends StatefulWidget {
 
 class _TranslateScreenState extends State<TranslateScreen> {
   final TextEditingController _inputController = TextEditingController();
+  late AudioPlayer audioPlayer;
   late Language translateFrom;
   late Language translateTo;
 
   @override
   void initState() {
     super.initState();
+
     final initial = context.read<TranslateCubit>().state;
     _inputController.text = initial.inputText;
     translateFrom = initial.sourceLanguage;
     translateTo = initial.targetLanguage;
+    audioPlayer = AudioPlayer();
   }
 
   @override
   void dispose() {
     _inputController.dispose();
+    audioPlayer.dispose();
     super.dispose();
   }
 
@@ -71,6 +76,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
             break;
 
           case TranslateStatus.success:
+            audioPlayer.play(AssetSource('sound/translate_sound.mp3'));
             showSnackBar(
               context,
               message: 'translation_success_points'.tr(),
