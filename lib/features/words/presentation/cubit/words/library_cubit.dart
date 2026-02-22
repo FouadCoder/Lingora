@@ -96,7 +96,6 @@ class LibraryCubit extends Cubit<LibraryState> {
     } on NetworkException {
       emit(state.copyWith(status: LibraryStatus.networkError));
     } catch (e) {
-      print("Error getting word ============== $e");
       emit(state.copyWith(status: LibraryStatus.failure));
     }
   }

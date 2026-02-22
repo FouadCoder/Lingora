@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
+import 'package:lingora/core/widgets/words/translated_widget.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
-import 'package:lingora/features/translate/presentation/widgets/translate_outputs.dart';
-import 'package:lingora/core/widgets/examples_widget.dart';
-import 'package:lingora/core/widgets/synonyms_widget.dart';
-import 'package:lingora/core/widgets/meaning_widget.dart';
+import 'package:lingora/core/widgets/words/examples_widget.dart';
+import 'package:lingora/core/widgets/words/synonyms_widget.dart';
+import 'package:lingora/core/widgets/words/meaning_widget.dart';
 
 class InfoCards extends StatelessWidget {
   final bool isDesktop;
