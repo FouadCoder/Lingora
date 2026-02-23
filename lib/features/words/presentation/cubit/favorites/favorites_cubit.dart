@@ -25,9 +25,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
   void getFavorites() async {
     try {
       // Check if there data exist
-      if (state.favorites.isNotEmpty) {
+      if (state.favorites.isNotEmpty || state.status == FavoriteStatus.empty) {
         emit(state.copyWith(
-          status: FavoriteStatus.success,
+          status: state.favorites.isNotEmpty
+              ? FavoriteStatus.success
+              : FavoriteStatus.empty,
           actionStatus: FavoriteActionStatus.idle,
           favorites: state.favorites,
         ));
@@ -150,5 +152,10 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     } catch (e) {
       emit(state.copyWith(actionStatus: FavoriteActionStatus.error));
     }
+  }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    emit(FavoritesState());
   }
 }

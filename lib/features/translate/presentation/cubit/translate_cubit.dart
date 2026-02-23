@@ -73,4 +73,9 @@ class TranslateCubit extends Cubit<TranslateState> {
       await playAudioUsecase.call(word, lang: lang);
     } catch (_) {}
   }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    emit(const TranslateState());
+  }
 }

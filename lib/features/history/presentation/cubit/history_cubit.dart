@@ -52,9 +52,13 @@ class HistoryCubit extends Cubit<FetchHistoryState> {
   Future<void> fetchHistory() async {
     try {
       // If already loaded
-      if (state.history.isNotEmpty) {
+      if (state.history.isNotEmpty ||
+          state.status == FetchHistoryStatus.empty) {
         emit(state.copyWith(
-            status: FetchHistoryStatus.success, history: state.history));
+            status: state.history.isNotEmpty
+                ? FetchHistoryStatus.success
+                : FetchHistoryStatus.empty,
+            history: state.history));
         return;
       }
 
@@ -86,5 +90,10 @@ class HistoryCubit extends Cubit<FetchHistoryState> {
     } catch (e) {
       emit(state.copyWith(status: FetchHistoryStatus.failure));
     }
+  }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    emit(const FetchHistoryState());
   }
 }

@@ -59,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           showSnackBar(
             context,
             message: message,
-            icon: HeroIcons.exclamationTriangle,
+            icon: HeroIcons.informationCircle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }

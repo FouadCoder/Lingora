@@ -119,4 +119,10 @@ class NotificationCubit extends Cubit<NotificationState> {
       );
     }
   }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    _offset = 0;
+    emit(NotificationState());
+  }
 }

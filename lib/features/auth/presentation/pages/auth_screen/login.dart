@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
           showSnackBar(
             context,
             message: message,
-            icon: HeroIcons.exclamationTriangle,
+            icon: HeroIcons.informationCircle,
             iconColor: Theme.of(context).colorScheme.error,
           );
         }

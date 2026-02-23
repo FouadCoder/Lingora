@@ -60,8 +60,8 @@ class LevelCubit extends Cubit<LevelState> {
     }
   }
 
-  // Clear XP
-  void clear() {
+  // Reset cubit state (for logout)
+  void reset() {
     _xp = 0;
     _level = null;
     emit(const LevelState());

@@ -60,9 +60,13 @@ class LibraryCubit extends Cubit<LibraryState> {
   Future<void> getLibrary({bool forceRefresh = false}) async {
     try {
       // If loaded already
-      if (state.libraryWords.isNotEmpty) {
+      if (state.libraryWords.isNotEmpty ||
+          state.status == LibraryStatus.empty) {
         emit(state.copyWith(
-            status: LibraryStatus.success, libraryWords: state.libraryWords));
+            status: state.libraryWords.isNotEmpty
+                ? LibraryStatus.success
+                : LibraryStatus.empty,
+            libraryWords: state.libraryWords));
         return;
       }
       emit(state.copyWith(status: LibraryStatus.loading));
@@ -276,5 +280,12 @@ class LibraryCubit extends Cubit<LibraryState> {
           libraryWords: updatedWords,
           collectionActionStatus: LibraryActionStatus.initial));
     } catch (_) {}
+  }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    _offset = 0;
+    _collectionsOffset = 0;
+    emit(const LibraryState());
   }
 }

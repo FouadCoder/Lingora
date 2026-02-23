@@ -31,4 +31,9 @@ class NotesCubit extends Cubit<NotesState> {
       emit(state.copyWith(status: NotesStatus.failure));
     }
   }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    emit(NotesState());
+  }
 }

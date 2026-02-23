@@ -85,4 +85,9 @@ class AnalyticsCubit extends Cubit<UserAnalyticsState> {
           monthlyActivityStatus: UserAnalyticsRequestStatus.failure));
     }
   }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    emit(const UserAnalyticsState());
+  }
 }

@@ -184,4 +184,11 @@ class ReminderCubit extends Cubit<ReminderState> {
       );
     }
   }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    _offset = 0;
+    lastRefresh = null;
+    emit(ReminderState());
+  }
 }

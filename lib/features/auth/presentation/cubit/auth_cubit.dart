@@ -179,4 +179,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(status: AuthAppStatus.unauthenticated));
     }
   }
+
+  // Reset cubit state (for logout)
+  void reset() {
+    emit(AuthState());
+  }
 }

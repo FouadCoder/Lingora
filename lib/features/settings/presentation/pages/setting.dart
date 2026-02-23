@@ -9,14 +9,23 @@ import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/app_container.dart';
 import 'package:lingora/core/widgets/custom_swtich.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
+import 'package:lingora/cubit/cubit_app.dart';
+import 'package:lingora/features/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:lingora/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:lingora/features/auth/presentation/cubit/auth_state.dart';
+import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/notifications/notification_cubit.dart';
+import 'package:lingora/features/notification/presentation/cubit/reminders/reminder_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
 import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
 import 'package:lingora/features/settings/presentation/cubit/theme_state.dart';
 import 'package:lingora/features/settings/presentation/widgets/account.dart';
 import 'package:lingora/features/settings/presentation/widgets/language_switcher.dart';
+import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/notes/notes_cubit.dart';
+import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -48,6 +57,17 @@ class _SettingScreenState extends State<SettingScreen> {
       listener: (context, state) {
         // success
         if (state.status == AuthAppStatus.success && context.mounted) {
+          // Reset ALL user data cubits
+          context.read<TranslateCubit>().reset();
+          context.read<LibraryCubit>().reset();
+          context.read<NotesCubit>().reset();
+          context.read<AnalyticsCubit>().reset();
+          context.read<HistoryCubit>().reset();
+          context.read<FavoritesCubit>().reset();
+          context.read<NotificationCubit>().reset();
+          context.read<ReminderCubit>().reset();
+          context.read<AuthCubit>().reset();
+          context.read<LevelCubit>().reset();
           context.go('/login');
         }
 
