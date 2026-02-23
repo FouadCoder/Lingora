@@ -3,10 +3,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/words/translated_widget.dart';
+import 'package:lingora/core/widgets/words/word_info_widget.dart';
 import 'package:lingora/features/translate/domain/entities/translate_entity.dart';
 import 'package:lingora/core/widgets/words/examples_widget.dart';
 import 'package:lingora/core/widgets/words/synonyms_widget.dart';
 import 'package:lingora/core/widgets/words/meaning_widget.dart';
+import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 
 class InfoCards extends StatelessWidget {
   final bool isDesktop;
@@ -22,13 +24,24 @@ class InfoCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final hasWordInfo = model.original.trim().isNotEmpty;
+    final hasWordInfo = model.original.trim().isNotEmpty;
     final hasTranslated = model.translated.trim().isNotEmpty;
     final hasMeaning = model.meaning.trim().isNotEmpty;
     final hasExamples = model.examples.isNotEmpty;
     final hasSynonyms = model.synonyms.isNotEmpty;
 
     final List<Widget> availableCards = [
+      if (hasWordInfo)
+        WordInfoCard(
+          original: model.original,
+          pos: model.pos,
+          pronunciation: model.pronunciation,
+          wordId: model.id,
+          lang: model.translateFrom!.code,
+          collectionType: CollectionType.learning,
+          hideCollection: true,
+        ),
+
       if (hasTranslated)
         WordTranslatedCard(
           translated: model.translated,

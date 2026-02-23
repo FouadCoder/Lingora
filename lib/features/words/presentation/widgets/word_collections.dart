@@ -7,15 +7,15 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/flushbar.dart';
 import 'package:lingora/core/widgets/status/network_error_status.dart';
-import 'package:lingora/features/words/domain/entities/word_entity.dart';
 import 'package:lingora/features/words/domain/enums/collection_enum.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_state.dart';
 
 class WordCollectionsWidget extends StatefulWidget {
-  final WordEntity word;
+  final String wordId;
   final CollectionType? collection;
-  const WordCollectionsWidget({super.key, required this.word, this.collection});
+  const WordCollectionsWidget(
+      {super.key, required this.wordId, this.collection});
 
   @override
   State<WordCollectionsWidget> createState() => _WordCollectionsWidgetState();
@@ -79,7 +79,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
               });
               if (collectionType != widget.collection) {
                 context.read<LibraryCubit>().updateWordCollection(
-                    widget.word, CollectionType.values[index]);
+                    widget.wordId, CollectionType.values[index]);
               }
             },
             child: Container(

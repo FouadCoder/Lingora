@@ -69,6 +69,8 @@ class WordTranslatedCard extends StatelessWidget {
               textAlign: isRightSide(lang) ? TextAlign.right : TextAlign.left,
               style: theme.titleMedium?.copyWith(
                 height: 1.4,
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],

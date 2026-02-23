@@ -39,7 +39,7 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   original: widget.word.original,
                   pos: widget.word.pos,
                   pronunciation: widget.word.pronunciation,
-                  word: widget.word,
+                  wordId: widget.word.id,
                   lang: widget.word.translateFrom!.code,
                   collectionType: widget.word.collection.collectionType,
                 ),

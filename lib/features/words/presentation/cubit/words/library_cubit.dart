@@ -201,19 +201,19 @@ class LibraryCubit extends Cubit<LibraryState> {
     }
   }
 
-  void updateWordCollection(WordEntity word, CollectionType collection) async {
+  void updateWordCollection(String wordId, CollectionType collection) async {
     try {
       // If loading already
       if (state.collectionActionStatus == LibraryActionStatus.loading) return;
       emit(state.copyWith(collectionActionStatus: LibraryActionStatus.loading));
       // Update
       final newCollection = await updateWordCollectionUsecase.call(
-          CollectionsParams(wordId: word.id, collectionType: collection.name));
+          CollectionsParams(wordId: wordId, collectionType: collection.name));
       // Replace word from memory
-      refreshWord(wordId: word.id, collection: newCollection);
-      // Remove the word
+      refreshWord(wordId: wordId, collection: newCollection);
+      // Remove word
       final updatedCollectionsWords =
-          state.collectionsWords.where((w) => w.id != word.id).toList();
+          state.collectionsWords.where((w) => w.id != wordId).toList();
       emit(state.copyWith(
           collectionActionStatus: LibraryActionStatus.success,
           collectionsWords: updatedCollectionsWords));

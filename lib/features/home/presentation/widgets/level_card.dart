@@ -29,7 +29,11 @@ class _UserProgressCardState extends State<UserProgressCard> {
     return BlocBuilder<LevelCubit, LevelState>(builder: (context, state) {
       // Loading
       if (state.status == LevelStatus.loading) {
-        return LevelCard(xp: "loading".tr(), requiredXp: "0");
+        return LevelCard(
+          xp: "",
+          requiredXp: "",
+          isLoading: true,
+        );
       }
 
       // Success
@@ -40,7 +44,7 @@ class _UserProgressCardState extends State<UserProgressCard> {
       }
 
       // Error
-      return LevelCard(xp: "error".tr(), requiredXp: "0");
+      return LevelCard(xp: "--/-- XP", requiredXp: "");
     });
   }
 }
@@ -48,7 +52,12 @@ class _UserProgressCardState extends State<UserProgressCard> {
 class LevelCard extends StatelessWidget {
   final String xp;
   final String requiredXp;
-  const LevelCard({super.key, required this.xp, required this.requiredXp});
+  final bool isLoading;
+  const LevelCard(
+      {super.key,
+      required this.xp,
+      required this.requiredXp,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +101,7 @@ class LevelCard extends StatelessWidget {
                       height: AppDimens.subElementBetween,
                     ),
                     Text(
-                      xp,
+                      isLoading ? "loading".tr() : xp,
                       style: Theme.of(context).textTheme.displayLarge,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -138,7 +147,7 @@ class LevelCard extends StatelessWidget {
               Flexible(
                 fit: FlexFit.loose,
                 child: Text(
-                  "$xp/$requiredXp XP",
+                  isLoading ? "--/-- XP" : "$xp/$requiredXp XP",
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
