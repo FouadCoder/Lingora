@@ -104,6 +104,7 @@ class _WordCardState extends State<WordCard> {
                           if (!widget.hidefavorite)
                             HeartIconWidget(
                               wordId: widget.word.id,
+                              isFavorite: widget.word.isFavorite,
                             ),
                           if (!widget.hidefavorite)
                             SizedBox(width: AppDimens.buttonTagHorizontal),

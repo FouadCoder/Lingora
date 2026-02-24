@@ -10,8 +10,10 @@ import 'package:lingora/features/words/presentation/cubit/words/library_cubit.da
 
 class HeartIconWidget extends StatefulWidget {
   final String wordId;
+  final bool isFavorite;
 
-  const HeartIconWidget({super.key, required this.wordId});
+  const HeartIconWidget(
+      {super.key, required this.wordId, required this.isFavorite});
 
   @override
   State<HeartIconWidget> createState() => _HeartIconWidgetState();
@@ -23,8 +25,7 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
   @override
   void initState() {
     super.initState();
-    final word = context.read<LibraryCubit>().getWordById(widget.wordId);
-    isOptimisticFavorite = word.isFavorite;
+    isOptimisticFavorite = widget.isFavorite;
   }
 
   @override

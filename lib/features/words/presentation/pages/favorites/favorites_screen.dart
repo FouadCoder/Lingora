@@ -100,6 +100,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     crossAxisSpacing: AppDimens.cardBetween,
                     mainAxisSpacing: AppDimens.cardBetween,
                     itemBuilder: (context, index) {
+                      for (var item in state.favorites) {
+                        print(
+                            "Heart Icon widget =========== WORD === ${item.word.original}    ===${item.word.isFavorite}");
+                      }
                       if (index < state.favorites.length) {
                         return WordCard(
                           word: state.favorites[index].word,

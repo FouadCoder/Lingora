@@ -44,7 +44,7 @@ class _UserProgressCardState extends State<UserProgressCard> {
       }
 
       // Error
-      return LevelCard(xp: "--/-- XP", requiredXp: "");
+      return LevelCard(xp: "error".tr(), requiredXp: "");
     });
   }
 }

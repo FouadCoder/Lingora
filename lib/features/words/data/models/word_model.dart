@@ -118,6 +118,53 @@ class WordModel {
         activeReminder: activeReminder);
   }
 
+  // CopyWith
+  WordModel copyWith({
+    String? id,
+    String? userId,
+    String? categoryId,
+    String? original,
+    String? translated,
+    String? pos,
+    String? pronunciation,
+    String? meaning,
+    List<String>? examples,
+    List<String>? synonyms,
+    Language? translateFrom,
+    Language? translateTo,
+    NoteModel? note,
+    CollectionModel? collection,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    DateTime? deletedAt,
+    bool? isFavorite,
+    ReminderModel? reminderModel,
+    bool? activeReminder,
+  }) {
+    return WordModel(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      categoryId: categoryId ?? this.categoryId,
+      original: original ?? this.original,
+      translated: translated ?? this.translated,
+      pos: pos ?? this.pos,
+      pronunciation: pronunciation ?? this.pronunciation,
+      meaning: meaning ?? this.meaning,
+      examples: examples ?? this.examples,
+      synonyms: synonyms ?? this.synonyms,
+      translateFrom: translateFrom ?? this.translateFrom,
+      translateTo: translateTo ?? this.translateTo,
+      note: note ?? this.note,
+      collection: collection ?? this.collection,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      isFavorite: isFavorite ?? this.isFavorite,
+      reminderModel: reminderModel ?? this.reminderModel,
+      activeReminder: activeReminder ?? this.activeReminder,
+    );
+  }
+
   // To Empty
   factory WordModel.empty() {
     return WordModel(

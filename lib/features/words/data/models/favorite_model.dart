@@ -24,6 +24,7 @@ class FavoriteModel {
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       word: json['translated_words'] != null
           ? WordModel.fromJson(json['translated_words'])
+              .copyWith(isFavorite: true)
           : WordModel.empty(),
     );
   }
