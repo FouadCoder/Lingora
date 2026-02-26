@@ -100,9 +100,9 @@ class _AccountWidgetState extends State<AccountWidget> {
                     showSadMessageIfuserLogout(context);
                   },
                   icon: Icons.logout,
-                  iconColor: Colors.white,
+                  iconColor: Theme.of(context).iconTheme.color,
                   borderRadius: AppDimens.radiusL,
-                  textColor: Colors.white);
+                  textColor: Theme.of(context).textTheme.bodyMedium?.color);
             },
           );
 

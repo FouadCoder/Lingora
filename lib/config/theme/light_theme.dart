@@ -3,20 +3,20 @@ import 'package:lingora/config/theme/app_colors.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
-  scaffoldBackgroundColor: AppColors.lightBgDark,
+  scaffoldBackgroundColor: AppColors.lightBackground,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.lightBgDark,
-    foregroundColor: AppColors.text,
+    backgroundColor: AppColors.lightBackground,
+    foregroundColor: AppColors.lightText,
     elevation: 0,
     surfaceTintColor: Colors.transparent,
   ),
   colorScheme: const ColorScheme.light(
-    primary: AppColors.lightText,
-    onPrimary: AppColors.lightBgLight,
-    secondary: AppColors.brandOrange,
-    surface: AppColors.lightBg,
+    primary: AppColors.brandOrange,
+    onPrimary: AppColors.lightOnSurface,
+    secondary: AppColors.brandSecondary,
+    surface: AppColors.lightSurface,
     onSecondary: AppColors.text,
-    onSurface: AppColors.lightBg,
+    onSurface: AppColors.lightOnSurface,
     outline: AppColors.textMuted,
     shadow: Colors.black12,
   ),

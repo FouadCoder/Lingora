@@ -69,7 +69,7 @@ class _WordCollectionsWidgetState extends State<WordCollectionsWidget> {
         children: List.generate(CollectionType.values.length, (index) {
           bool isSelected = collectionType == CollectionType.values[index];
           final backgroundColor = (isSelected)
-              ? Theme.of(context).colorScheme.shadow
+              ? Theme.of(context).colorScheme.primary
               : Theme.of(context).colorScheme.onSurface;
 
           return GestureDetector(

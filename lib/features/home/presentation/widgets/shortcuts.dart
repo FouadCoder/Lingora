@@ -18,7 +18,7 @@ class ShortcutsHome extends StatelessWidget {
       children: List.generate(shortcuts.length, (index) {
         return Expanded(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 4),
+            margin: EdgeInsets.symmetric(horizontal: 1.5),
             child: ShortcutWidget(
               icon: shortcuts[index]["icon"],
               onTap: () {

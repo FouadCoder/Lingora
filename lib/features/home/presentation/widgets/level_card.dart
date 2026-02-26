@@ -89,7 +89,10 @@ class LevelCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    HeroIcon(HeroIcons.checkBadge),
+                    HeroIcon(
+                      HeroIcons.checkBadge,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                     SizedBox(
                       height: AppDimens.sectionSpacing,
                     ),

@@ -61,7 +61,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<LanguageCubit>(
               create: (context) => injection<LanguageCubit>()), // Language
           BlocProvider<ThemeCubit>(
-              create: (context) => injection<ThemeCubit>()), // Theme
+              create: (context) =>
+                  injection<ThemeCubit>()..getTheme()), // Theme
           BlocProvider<FavoritesCubit>(
               create: (context) => injection<FavoritesCubit>()), // Favorites
           BlocProvider<NotificationCubit>(

@@ -85,7 +85,7 @@ class _NavState extends State<Nav> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: Icon(
           Icons.translate_rounded,
-          color: Theme.of(context).iconTheme.color,
+          color: Theme.of(context).colorScheme.onPrimary,
           size: 28,
         ),
       ),
