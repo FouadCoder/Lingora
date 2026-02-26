@@ -40,6 +40,7 @@ class _SignupSuccessScreenState extends State<SignupSuccessScreen>
         message: 'signup_success_message'.tr(),
         buttonText: 'signup_success_button'.tr(),
         color: Theme.of(context).colorScheme.primary,
+        textColor: Colors.white,
         onTap: () {
           context.go('/home');
         },

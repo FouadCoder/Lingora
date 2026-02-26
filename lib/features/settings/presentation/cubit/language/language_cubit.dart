@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/features/settings/domain/usecases/get_language_usecase.dart';
 import 'package:lingora/features/settings/domain/usecases/save_language_usecase.dart';
-import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
+import 'package:lingora/features/settings/presentation/cubit/language/language_state.dart';
 
 class LanguageCubit extends Cubit<LanguageState> {
   final GetLanguageUsecase getLanguageUsecase;

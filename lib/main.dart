@@ -13,10 +13,10 @@ import 'package:lingora/features/words/presentation/cubit/favorites/favorites_cu
 import 'package:lingora/features/history/presentation/cubit/history_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/words/library_cubit.dart';
 import 'package:lingora/features/words/presentation/cubit/notes/notes_cubit.dart';
-import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
-import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
-import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
-import 'package:lingora/features/settings/presentation/cubit/theme_state.dart';
+import 'package:lingora/features/settings/presentation/cubit/language/language_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/language/language_state.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme/theme_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme/theme_state.dart';
 import 'package:lingora/features/translate/presentation/cubit/translate_cubit.dart';
 import 'package:lingora/config/router/routes.dart';
 import 'package:lingora/config/theme/dark_theme.dart';

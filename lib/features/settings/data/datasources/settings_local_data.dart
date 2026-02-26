@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/features/settings/presentation/cubit/theme_state.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme/theme_state.dart';
 
 class SettingsLocalData {
   final db = Hive.box("db");
@@ -21,5 +22,11 @@ class SettingsLocalData {
   Future getTheme() async {
     String themeName = await db.get("theme", defaultValue: "dark");
     return ThemeState.values.firstWhere((element) => element.name == themeName);
+  }
+
+  ThemeState getSystemTheme() {
+    final brightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    return brightness == Brightness.dark ? ThemeState.dark : ThemeState.light;
   }
 }

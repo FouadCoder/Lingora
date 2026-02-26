@@ -212,6 +212,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             message: 'empty_library_message'.tr(),
                             buttonText: 'learn_new_words'.tr(),
                             onTap: () => context.push('/translate'),
+                            textColor: Colors.white,
                             titleColor: Theme.of(context).colorScheme.primary,
                           ),
                         ),

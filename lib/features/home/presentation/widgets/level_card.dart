@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:lingora/config/theme/app_colors.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/cubit/cubit_app.dart';
@@ -98,14 +99,20 @@ class LevelCard extends StatelessWidget {
                     ),
                     Text(
                       "your_points".tr(),
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: Colors.white),
                     ),
                     SizedBox(
                       height: AppDimens.subElementBetween,
                     ),
                     Text(
                       isLoading ? "loading".tr() : xp,
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayLarge
+                          ?.copyWith(color: Colors.white),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
@@ -127,7 +134,7 @@ class LevelCard extends StatelessWidget {
                       ? MediaQuery.of(context).size.width * 0.30
                       : 150,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
+                      color: AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(10)),
                   child: Lottie.asset("assets/animation/trophy_2.json",
                       repeat: false))
@@ -142,7 +149,10 @@ class LevelCard extends StatelessWidget {
             children: [
               Text(
                 "progress_to_next_level".tr(),
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Colors.white),
               ),
               SizedBox(
                 width: AppDimens.subElementBetween,
@@ -151,10 +161,8 @@ class LevelCard extends StatelessWidget {
                 fit: FlexFit.loose,
                 child: Text(
                   isLoading ? "--/-- XP" : "$xp/$requiredXp XP",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ],
@@ -167,7 +175,7 @@ class LevelCard extends StatelessWidget {
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppDimens.radiusL),
-                color: Theme.of(context).scaffoldBackgroundColor),
+                color: AppColors.darkBackground),
             child: LinearPercentIndicator(
               lineHeight: 8,
               percent: getProgress(xp, requiredXp),
@@ -177,7 +185,7 @@ class LevelCard extends StatelessWidget {
               animation: true,
               animationDuration: 800,
               curve: Curves.easeInOut,
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor: AppColors.darkBackground,
             ),
           )
         ],

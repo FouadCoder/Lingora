@@ -162,9 +162,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(state.copyWith(
           status: AuthAppStatus.authenticated,
         ));
-      }
-      // authenticated
-      else {
+      } else {
         final openCount = await _launchService.getAppOpenCount();
         bool isFirstOpen = openCount == 1;
         if (isFirstOpen) {

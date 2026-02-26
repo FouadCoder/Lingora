@@ -52,10 +52,11 @@ import 'package:lingora/features/settings/data/repositories_impl/settings_reposi
 import 'package:lingora/features/settings/domain/repositories/settings_repository.dart';
 import 'package:lingora/features/settings/domain/usecases/get_language_usecase.dart';
 import 'package:lingora/features/settings/domain/usecases/get_theme_usecase.dart';
+import 'package:lingora/features/settings/domain/usecases/get_system_theme_usecase.dart';
 import 'package:lingora/features/settings/domain/usecases/save_language_usecase.dart';
 import 'package:lingora/features/settings/domain/usecases/set_theme_usecase.dart';
-import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
-import 'package:lingora/features/settings/presentation/cubit/theme_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/language/language_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/theme/theme_cubit.dart';
 import 'package:lingora/features/translate/data/datasources/translate_remote_data.dart';
 import 'package:lingora/features/translate/data/repositories_impl/translate_repository_impl.dart';
 import 'package:lingora/features/translate/domain/repositories/translate_repository.dart';
@@ -139,6 +140,7 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => GetLanguageUsecase(injection()));
   injection.registerFactory(() => SetThemeUsecase(injection()));
   injection.registerFactory(() => GetThemeUsecase(injection()));
+  injection.registerFactory(() => GetSystemThemeUsecase(injection()));
   // Notes
   injection.registerFactory(() => UpdateNoteUsecase(injection()));
   // Audio
@@ -174,7 +176,8 @@ Future<void> setupInjection() async {
       () => AnalyticsCubit(injection(), injection(), injection()));
   injection.registerFactory(() => HistoryCubit(injection(), injection()));
   injection.registerFactory(() => LanguageCubit(injection(), injection()));
-  injection.registerFactory(() => ThemeCubit(injection(), injection()));
+  injection.registerFactory(
+      () => ThemeCubit(injection(), injection(), injection(), injection()));
   injection.registerFactory(
       () => FavoritesCubit(injection(), injection(), injection(), injection()));
   injection.registerFactory(() => NotificationCubit(injection()));

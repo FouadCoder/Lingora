@@ -168,6 +168,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                       buttonText: 'go_to_library'.tr(),
                       onTap: () => context.push('/library'),
                       titleColor: Theme.of(context).colorScheme.primary,
+                      textColor: Colors.white,
                     ),
                   );
                 }

@@ -5,8 +5,8 @@ import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/data/langauges_list.dart';
-import 'package:lingora/features/settings/presentation/cubit/language_cubit.dart';
-import 'package:lingora/features/settings/presentation/cubit/language_state.dart';
+import 'package:lingora/features/settings/presentation/cubit/language/language_cubit.dart';
+import 'package:lingora/features/settings/presentation/cubit/language/language_state.dart';
 
 class LanguageSwitcher extends StatefulWidget {
   const LanguageSwitcher({super.key});
