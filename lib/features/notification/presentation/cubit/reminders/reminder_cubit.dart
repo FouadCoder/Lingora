@@ -38,8 +38,11 @@ class ReminderCubit extends Cubit<ReminderState> {
       return;
     }
     _offset = 0;
-    emit(state.copyWith(
-        status: ReminderStatus.loading, actionStatus: ReminderStatus.initial));
+    if (!forceRefresh) {
+      emit(state.copyWith(
+          status: ReminderStatus.loading,
+          actionStatus: ReminderStatus.initial));
+    }
 
     try {
       final reminders = await _getRemindersUseCase(

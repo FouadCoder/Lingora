@@ -37,7 +37,8 @@ class LibraryCubit extends Cubit<LibraryState> {
       // Check if already loading
       if (state.isLoadingMore || !state.hasMore) return;
 
-      emit(state.copyWith(isLoadingMore: true));
+      emit(state.copyWith(
+          isLoadingMore: true, actionStatus: LibraryActionStatus.initial));
 
       // Get library
       final libraryWords =
@@ -50,7 +51,8 @@ class LibraryCubit extends Cubit<LibraryState> {
       emit(state.copyWith(
           isLoadingMore: false,
           libraryWords: [...state.libraryWords, ...libraryWords],
-          hasMore: hasMore));
+          hasMore: hasMore,
+          actionStatus: LibraryActionStatus.initial));
     } on NetworkException {
       emit(state.copyWith(
           isLoadingMore: false, status: LibraryStatus.networkError));
@@ -59,9 +61,10 @@ class LibraryCubit extends Cubit<LibraryState> {
 
   Future<void> getLibrary({bool forceRefresh = false}) async {
     try {
-      // If loaded already
-      if (state.libraryWords.isNotEmpty ||
-          state.status == LibraryStatus.empty) {
+      // If loaded already and not forcing refresh
+      if (!forceRefresh &&
+          (state.libraryWords.isNotEmpty ||
+              state.status == LibraryStatus.empty)) {
         emit(state.copyWith(
             status: state.libraryWords.isNotEmpty
                 ? LibraryStatus.success
@@ -69,7 +72,10 @@ class LibraryCubit extends Cubit<LibraryState> {
             libraryWords: state.libraryWords));
         return;
       }
-      emit(state.copyWith(status: LibraryStatus.loading));
+
+      if (!forceRefresh) {
+        emit(state.copyWith(status: LibraryStatus.loading));
+      }
 
       // If user is not logged in
       final userId = supabaseClient.auth.currentUser?.id;

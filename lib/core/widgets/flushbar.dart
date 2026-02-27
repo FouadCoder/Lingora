@@ -18,7 +18,7 @@ void showSnackBar(
     duration: const Duration(seconds: 4),
     flushbarPosition: FlushbarPosition.BOTTOM,
     shouldIconPulse: false,
-    backgroundColor: Theme.of(context).colorScheme.onPrimary,
+    backgroundColor: Theme.of(context).colorScheme.onSurface,
     dismissDirection: FlushbarDismissDirection.HORIZONTAL,
     borderRadius: BorderRadius.circular(12),
     titleColor: Theme.of(context).textTheme.titleMedium?.color,

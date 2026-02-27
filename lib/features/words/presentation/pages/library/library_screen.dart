@@ -82,7 +82,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
           if (state.actionStatus == LibraryActionStatus.limitExceeded) {
             showSnackBar(
               context,
-              title: 'refresh_limit_reached_title'.tr(),
               message: 'refresh_wait'.tr(
                   namedArgs: {'minutes': state.minutesUntilRefresh.toString()}),
               icon: HeroIcons.clock,
