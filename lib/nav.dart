@@ -68,7 +68,9 @@ class _NavState extends State<Nav> {
 
                 // Content
                 Expanded(
-                  child: pages[controllerSideBar.selectedIndex],
+                  child: controllerSideBar.selectedIndex < pages.length
+                      ? pages[controllerSideBar.selectedIndex]
+                      : pages[0], // Default to home screen
                 ),
               ],
             )
