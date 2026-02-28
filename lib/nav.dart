@@ -8,14 +8,14 @@ import 'package:lingora/features/analytics/presentation/pages/insights_screen.da
 import 'package:lingora/features/settings/presentation/pages/setting.dart';
 import 'package:lingora/core/widgets/app_sidebar.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:sidebarx/sidebarx.dart';
 
 class Nav extends StatefulWidget {
   final int indexPage;
   final bool isFullScreen;
+
   const Nav({
     super.key,
-    this.indexPage = 10, // Fake number
+    this.indexPage = 0,
     this.isFullScreen = false,
   });
 
@@ -25,89 +25,93 @@ class Nav extends StatefulWidget {
 
 class _NavState extends State<Nav> {
   late int currentPage;
-  late List pages;
-  bool? isCenterScreen;
-  late SidebarXController controllerSideBar;
+  late List<Widget> pages;
+  late List<Widget> sideBarPages;
+  late bool isCenterScreen;
 
   @override
   void initState() {
     super.initState();
     currentPage = widget.indexPage;
     isCenterScreen = widget.isFullScreen;
-    controllerSideBar =
-        SidebarXController(selectedIndex: widget.indexPage, extended: false);
-
-    controllerSideBar.addListener(() {
-      setState(() {
-        currentPage = controllerSideBar.selectedIndex;
-      });
-    });
 
     pages = [
-      HomeScreen(),
-      LibraryScreen(),
-      InsightsScreen(),
-      SettingScreen(),
+      const HomeScreen(),
+      const LibraryScreen(),
+      const InsightsScreen(),
+      const SettingScreen(),
+    ];
+
+    sideBarPages = [
+      const HomeScreen(),
+      const TranslateScreen(),
+      const LibraryScreen(),
+      const InsightsScreen(),
+      const SettingScreen(),
     ];
   }
 
   @override
-  void dispose() {
-    controllerSideBar.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final isDesktop = AppPlatform.isDesktop(context);
+
     return Scaffold(
-      body: AppPlatform.isDesktop(context)
+      body: isDesktop
           ? Row(
               children: [
-                // Side bar
-                AppSidebar(controller: controllerSideBar),
-
-                // Content
+                AppSidebar(
+                  selectedIndex: currentPage,
+                  extended: isDesktop,
+                  onDestinationSelected: (index) {
+                    setState(() {
+                      currentPage = index;
+                    });
+                  },
+                ),
                 Expanded(
-                  child: controllerSideBar.selectedIndex < pages.length
-                      ? pages[controllerSideBar.selectedIndex]
-                      : pages[0], // Default to home screen
+                  child: sideBarPages[currentPage],
                 ),
               ],
             )
-          : isCenterScreen!
-              ? TranslateScreen()
+          : isCenterScreen
+              ? const TranslateScreen()
               : pages[currentPage],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() {
-          isCenterScreen = true;
-          currentPage = 10; // Fake number
-        }),
-        elevation: 6,
-        shape: const CircleBorder(),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: Icon(
-          Icons.translate_rounded,
-          color: Theme.of(context).colorScheme.onPrimary,
-          size: 28,
-        ),
-      ),
+      floatingActionButton: isDesktop
+          ? null
+          : FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  isCenterScreen = true;
+                });
+              },
+              elevation: 6,
+              shape: const CircleBorder(),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: Icon(
+                Icons.translate_rounded,
+                color: Theme.of(context).colorScheme.onPrimary,
+                size: 28,
+              ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: AppPlatform.isDesktop(context)
+      bottomNavigationBar: isDesktop
           ? null
           : AnimatedBottomNavigationBar(
-              icons: [
+              icons: const [
                 TablerIcons.home,
                 TablerIcons.book,
                 TablerIcons.chart_bar,
                 TablerIcons.settings,
               ],
               activeIndex: currentPage,
-              onTap: (i) => setState(() {
-                isCenterScreen = false;
-                currentPage = i;
-              }),
-              notchMargin: 18,
+              onTap: (i) {
+                setState(() {
+                  isCenterScreen = false;
+                  currentPage = i;
+                });
+              },
               gapLocation: GapLocation.center,
+              notchMargin: 18,
               notchSmoothness: NotchSmoothness.defaultEdge,
               backgroundColor: Theme.of(context).colorScheme.surface,
               activeColor: Theme.of(context).colorScheme.primary,

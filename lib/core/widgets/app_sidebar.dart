@@ -1,106 +1,99 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:sidebarx/sidebarx.dart';
+import 'package:lingora/core/utils/app_constants.dart';
+import 'package:lottie/lottie.dart';
 
 class AppSidebar extends StatelessWidget {
-  final SidebarXController controller;
+  final int selectedIndex;
+  final ValueChanged<int> onDestinationSelected;
+  final bool extended;
 
   const AppSidebar({
     super.key,
-    required this.controller,
+    required this.selectedIndex,
+    required this.onDestinationSelected,
+    this.extended = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    final divider =
-        Divider(color: Theme.of(context).colorScheme.surface, height: 1);
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return SidebarX(
-      controller: controller,
-      theme: SidebarXTheme(
-        margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow,
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        hoverColor: Theme.of(context).colorScheme.onPrimary,
-        hoverTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary),
-        hoverIconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.primary),
-        selectedItemTextPadding: const EdgeInsets.only(left: 50),
-        itemTextPadding:
-            const EdgeInsets.only(left: 50), // Increased spacing even more
-        itemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.transparent,
-            width: 1,
-          ),
-        ),
-        selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-        textStyle: Theme.of(context).textTheme.bodyMedium,
-        selectedTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary),
-        iconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.primary,
-          size: 20,
-        ),
-        selectedIconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.primary,
-          size: 20,
-        ),
+    return NavigationRail(
+      extended: extended,
+      selectedIndex: selectedIndex,
+      onDestinationSelected: onDestinationSelected,
+      backgroundColor: colorScheme.surface,
+      useIndicator: true,
+      indicatorColor: colorScheme.primary,
+      leading: leadingWidget(context),
+
+      // selected
+      selectedIconTheme: IconThemeData(
+        color: colorScheme.onPrimary,
       ),
-      extendedTheme: SidebarXTheme(
-        width: 250, // Increased width for better spacing
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow,
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
+      selectedLabelTextStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: colorScheme.primary,
       ),
-      footerDivider: divider,
-      footerItems: [],
-      items: [
-        SidebarXItem(
-          icon: Icons.home_rounded,
-          label: "home".tr(),
+
+      // unselected
+      unselectedIconTheme: IconThemeData(
+        color: Theme.of(context).iconTheme.color,
+      ),
+      unselectedLabelTextStyle: TextStyle(
+        color: Theme.of(context).textTheme.titleMedium?.color,
+      ),
+
+      destinations: [
+        NavigationRailDestination(
+          icon: const Icon(Icons.home_rounded),
+          label: Text("home".tr()),
         ),
-        SidebarXItem(
-          icon: Icons.translate_rounded,
-          label: "translate".tr(),
+        NavigationRailDestination(
+          icon: const Icon(Icons.translate_rounded),
+          label: Text("translate".tr()),
         ),
-        SidebarXItem(
-          icon: Icons.book_rounded,
-          label: "library".tr(),
+        NavigationRailDestination(
+          icon: const Icon(Icons.book_rounded),
+          label: Text("library".tr()),
         ),
-        SidebarXItem(
-          icon: Icons.insert_chart_outlined,
-          label: "Insights".tr(),
+        NavigationRailDestination(
+          icon: const Icon(Icons.insert_chart_outlined),
+          label: Text("Insights".tr()),
         ),
-        SidebarXItem(
-          icon: Icons.settings,
-          label: "settings".tr(),
+        NavigationRailDestination(
+          icon: const Icon(Icons.settings),
+          label: Text("settings".tr()),
         ),
       ],
     );
   }
+}
+
+Widget leadingWidget(BuildContext context) {
+  return Container(
+    margin: EdgeInsets.symmetric(
+        vertical: AppDimens.sectionBetween,
+        horizontal: AppDimens.buttonTagHorizontal),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        // App Icon
+        Lottie.asset(
+          "assets/animation/world_language.json",
+          height: 32,
+          width: 32,
+        ),
+        SizedBox(
+          width: AppDimens.buttonTagHorizontal,
+        ),
+        // App name
+        Text(
+          "Lingora",
+          style: Theme.of(context).textTheme.displayLarge,
+        )
+      ],
+    ),
+  );
 }

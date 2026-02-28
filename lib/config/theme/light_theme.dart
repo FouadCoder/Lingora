@@ -21,6 +21,10 @@ ThemeData lightTheme = ThemeData(
     shadow: Colors.black12,
   ),
 
+  iconTheme: IconThemeData(
+    color: Colors.black,
+  ),
+
   // Buttons
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
