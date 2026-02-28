@@ -56,15 +56,7 @@ class _TranslationInputState extends State<TranslationInput> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(1),
-                    border: Border(
-                      left: BorderSide(
-                        color: theme.colorScheme.primary,
-                        width: 4,
-                      ),
-                    )),
+                padding: EdgeInsets.all(AppDimens.paddingM),
                 child: Text(
                   state.sourceLanguage.name,
                   style: theme.textTheme.bodySmall?.copyWith(

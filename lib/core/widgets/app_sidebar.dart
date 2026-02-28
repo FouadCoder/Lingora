@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lottie/lottie.dart';
 
@@ -29,41 +30,43 @@ class AppSidebar extends StatelessWidget {
       leading: leadingWidget(context),
 
       // selected
+
       selectedIconTheme: IconThemeData(
         color: colorScheme.onPrimary,
       ),
       selectedLabelTextStyle: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: colorScheme.primary,
-      ),
+          fontWeight: FontWeight.bold,
+          color: colorScheme.primary,
+          fontSize: Theme.of(context).textTheme.titleMedium?.fontSize),
 
       // unselected
       unselectedIconTheme: IconThemeData(
         color: Theme.of(context).iconTheme.color,
       ),
       unselectedLabelTextStyle: TextStyle(
-        color: Theme.of(context).textTheme.titleMedium?.color,
-      ),
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).textTheme.titleMedium?.color,
+          fontSize: Theme.of(context).textTheme.titleMedium?.fontSize),
 
       destinations: [
         NavigationRailDestination(
-          icon: const Icon(Icons.home_rounded),
-          label: Text("home".tr()),
-        ),
-        NavigationRailDestination(
-          icon: const Icon(Icons.translate_rounded),
+          icon: const Icon(TablerIcons.sparkles),
           label: Text("translate".tr()),
         ),
         NavigationRailDestination(
-          icon: const Icon(Icons.book_rounded),
+          icon: const Icon(TablerIcons.home),
+          label: Text("home".tr()),
+        ),
+        NavigationRailDestination(
+          icon: const Icon(TablerIcons.book),
           label: Text("library".tr()),
         ),
         NavigationRailDestination(
-          icon: const Icon(Icons.insert_chart_outlined),
+          icon: const Icon(TablerIcons.chart_bar),
           label: Text("Insights".tr()),
         ),
         NavigationRailDestination(
-          icon: const Icon(Icons.settings),
+          icon: const Icon(TablerIcons.settings),
           label: Text("settings".tr()),
         ),
       ],

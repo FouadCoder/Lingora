@@ -28,9 +28,7 @@ class AuthGate extends StatelessWidget {
               ),
             );
           } else if (state.status == AuthAppStatus.authenticated) {
-            return const Nav(
-              isFullScreen: true,
-            );
+            return const Nav();
           } else if (state.status == AuthAppStatus.newUser) {
             return const OnboardingScreen();
           } else {

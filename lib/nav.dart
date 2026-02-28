@@ -11,12 +11,10 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 
 class Nav extends StatefulWidget {
   final int indexPage;
-  final bool isFullScreen;
 
   const Nav({
     super.key,
     this.indexPage = 0,
-    this.isFullScreen = false,
   });
 
   @override
@@ -26,28 +24,17 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   late int currentPage;
   late List<Widget> pages;
-  late List<Widget> sideBarPages;
-  late bool isCenterScreen;
-
   @override
   void initState() {
     super.initState();
     currentPage = widget.indexPage;
-    isCenterScreen = widget.isFullScreen;
 
     pages = [
-      const HomeScreen(),
-      const LibraryScreen(),
-      const InsightsScreen(),
-      const SettingScreen(),
-    ];
-
-    sideBarPages = [
-      const HomeScreen(),
-      const TranslateScreen(),
-      const LibraryScreen(),
-      const InsightsScreen(),
-      const SettingScreen(),
+      TranslateScreen(),
+      HomeScreen(),
+      LibraryScreen(),
+      InsightsScreen(),
+      SettingScreen(),
     ];
   }
 
@@ -69,35 +56,16 @@ class _NavState extends State<Nav> {
                   },
                 ),
                 Expanded(
-                  child: sideBarPages[currentPage],
+                  child: pages[currentPage],
                 ),
               ],
             )
-          : isCenterScreen
-              ? const TranslateScreen()
-              : pages[currentPage],
-      floatingActionButton: isDesktop
-          ? null
-          : FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  isCenterScreen = true;
-                });
-              },
-              elevation: 6,
-              shape: const CircleBorder(),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: Icon(
-                Icons.translate_rounded,
-                color: Theme.of(context).colorScheme.onPrimary,
-                size: 28,
-              ),
-            ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          : pages[currentPage],
       bottomNavigationBar: isDesktop
           ? null
           : AnimatedBottomNavigationBar(
-              icons: const [
+              icons: [
+                TablerIcons.sparkles,
                 TablerIcons.home,
                 TablerIcons.book,
                 TablerIcons.chart_bar,
@@ -106,13 +74,9 @@ class _NavState extends State<Nav> {
               activeIndex: currentPage,
               onTap: (i) {
                 setState(() {
-                  isCenterScreen = false;
                   currentPage = i;
                 });
               },
-              gapLocation: GapLocation.center,
-              notchMargin: 18,
-              notchSmoothness: NotchSmoothness.defaultEdge,
               backgroundColor: Theme.of(context).colorScheme.surface,
               activeColor: Theme.of(context).colorScheme.primary,
               inactiveColor: Theme.of(context).iconTheme.color,
