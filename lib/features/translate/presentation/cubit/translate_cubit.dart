@@ -42,6 +42,7 @@ class TranslateCubit extends Cubit<TranslateState> {
 
   Future<void> translate() async {
     try {
+      print("Input =================== ${state.inputText}");
       // If input is empty
       if (state.inputText.trim().isEmpty) {
         emit(state.copyWith(status: TranslateStatus.empty));

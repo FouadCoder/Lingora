@@ -54,6 +54,9 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.start,
         ),
+        SizedBox(
+          height: AppDimens.titleContentBetween,
+        ),
         BlocConsumer<AnalyticsCubit, UserAnalyticsState>(
           listener: (context, state) {
             if (state.userAnalyticsStatus ==

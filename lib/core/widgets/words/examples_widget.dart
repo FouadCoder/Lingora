@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/helper/direction_helper.dart';
 import 'package:lingora/core/widgets/app_card.dart';
 import 'package:lingora/core/widgets/header.dart';
@@ -27,9 +26,6 @@ class ExamplesWidget extends StatelessWidget {
           ? AlignmentDirectional.centerEnd
           : AlignmentDirectional.centerStart,
       child: AppCard(
-        width: AppPlatform.isPhone(context)
-            ? MediaQuery.of(context).size.width
-            : 500,
         child: Column(
           children: [
             // Header with icon

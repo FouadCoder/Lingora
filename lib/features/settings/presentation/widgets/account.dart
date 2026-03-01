@@ -121,11 +121,11 @@ class _AccountWidgetState extends State<AccountWidget> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                exportButton,
+                Expanded(child: exportButton),
                 SizedBox(
                   width: AppDimens.buttonTagHorizontal,
                 ),
-                logoutButton
+                Expanded(child: logoutButton)
               ],
             );
           }

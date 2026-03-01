@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:lingora/core/utils/app_constants.dart';
-import 'package:lottie/lottie.dart';
 
 class AppSidebar extends StatelessWidget {
   final int selectedIndex;
@@ -27,8 +26,9 @@ class AppSidebar extends StatelessWidget {
       backgroundColor: colorScheme.surface,
       useIndicator: true,
       indicatorColor: colorScheme.primary,
-      leading: leadingWidget(context),
-
+      leading: SizedBox(
+        height: AppDimens.sectionSpacing,
+      ),
       // selected
 
       selectedIconTheme: IconThemeData(
@@ -38,6 +38,9 @@ class AppSidebar extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: colorScheme.primary,
           fontSize: Theme.of(context).textTheme.titleMedium?.fontSize),
+      indicatorShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
 
       // unselected
       unselectedIconTheme: IconThemeData(
@@ -63,7 +66,7 @@ class AppSidebar extends StatelessWidget {
         ),
         NavigationRailDestination(
           icon: const Icon(TablerIcons.chart_bar),
-          label: Text("Insights".tr()),
+          label: Text("insights".tr()),
         ),
         NavigationRailDestination(
           icon: const Icon(TablerIcons.settings),
@@ -72,31 +75,4 @@ class AppSidebar extends StatelessWidget {
       ],
     );
   }
-}
-
-Widget leadingWidget(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.symmetric(
-        vertical: AppDimens.sectionBetween,
-        horizontal: AppDimens.buttonTagHorizontal),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        // App Icon
-        Lottie.asset(
-          "assets/animation/world_language.json",
-          height: 32,
-          width: 32,
-        ),
-        SizedBox(
-          width: AppDimens.buttonTagHorizontal,
-        ),
-        // App name
-        Text(
-          "Lingora",
-          style: Theme.of(context).textTheme.displayLarge,
-        )
-      ],
-    ),
-  );
 }

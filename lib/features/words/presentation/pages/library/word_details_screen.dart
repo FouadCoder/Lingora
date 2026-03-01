@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/extensions/datetime_style.dart';
+import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/words/examples_widget.dart';
 import 'package:lingora/core/widgets/words/synonyms_widget.dart';
 import 'package:lingora/core/widgets/words/meaning_widget.dart';
@@ -34,35 +35,47 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Word Info
-                WordInfoCard(
-                  original: widget.word.original,
-                  pos: widget.word.pos,
-                  pronunciation: widget.word.pronunciation,
-                  wordId: widget.word.id,
-                  lang: widget.word.translateFrom!.code,
-                  collectionType: widget.word.collection.collectionType,
-                ),
+                // Word info & translate
+                LayoutBuilder(builder: (context, _) {
+                  Widget wordcardWidget = WordInfoCard(
+                    original: widget.word.original,
+                    pos: widget.word.pos,
+                    pronunciation: widget.word.pronunciation,
+                    wordId: widget.word.id,
+                    lang: widget.word.translateFrom!.code,
+                    collectionType: widget.word.collection.collectionType,
+                  );
 
-                SizedBox(
-                  height: AppDimens.subElementBetween,
-                ),
+                  Widget translatedcardWidget = WordTranslatedCard(
+                    translated: widget.word.translated,
+                    lang: widget.word.translateTo!.code,
+                  );
+                  if (!AppPlatform.isPhone(context)) {
+                    return IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(child: wordcardWidget),
+                          SizedBox(
+                            width: AppDimens.subElementBetween,
+                          ),
+                          Expanded(child: translatedcardWidget),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        wordcardWidget,
+                        SizedBox(
+                          height: AppDimens.subElementBetween,
+                        ),
+                        translatedcardWidget,
+                      ],
+                    );
+                  }
+                }),
 
-                // Translated
-                WordTranslatedCard(
-                  translated: widget.word.translated,
-                  lang: widget.word.translateTo!.code,
-                ),
-
-                SizedBox(
-                  height: AppDimens.cardBetween,
-                ),
-
-                // Meaning
-                MeaningWidget(
-                  meaning: widget.word.meaning,
-                  languageCode: widget.word.translateTo!.code,
-                ),
                 SizedBox(
                   height: AppDimens.cardBetween,
                 ),
@@ -75,11 +88,42 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                 SizedBox(
                   height: AppDimens.cardBetween,
                 ),
-                // Examples
-                ExamplesWidget(
-                  examples: widget.word.examples,
-                  languageCode: widget.word.translateFrom!.code,
-                ),
+                // Examples & Meaning
+                LayoutBuilder(builder: (context, _) {
+                  Widget examplesWidget = ExamplesWidget(
+                    examples: widget.word.examples,
+                    languageCode: widget.word.translateFrom!.code,
+                  );
+                  Widget meaningWidget = MeaningWidget(
+                    meaning: widget.word.meaning,
+                    languageCode: widget.word.translateTo!.code,
+                  );
+
+                  if (!AppPlatform.isPhone(context)) {
+                    return IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(child: examplesWidget),
+                          SizedBox(
+                            width: AppDimens.subElementBetween,
+                          ),
+                          Expanded(child: meaningWidget),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        examplesWidget,
+                        SizedBox(
+                          height: AppDimens.subElementBetween,
+                        ),
+                        meaningWidget,
+                      ],
+                    );
+                  }
+                }),
 
                 SizedBox(
                   height: AppDimens.sectionBetween,

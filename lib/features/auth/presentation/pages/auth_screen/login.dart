@@ -72,10 +72,10 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                   height: AppPlatform.isPhone(context)
                       ? MediaQuery.of(context).size.height * 0.20
-                      : 300,
+                      : 250,
                   width: AppPlatform.isPhone(context)
                       ? MediaQuery.of(context).size.width
-                      : 300,
+                      : 250,
                   child: Lottie.asset("assets/animation/space_man.json")),
 
               SizedBox(

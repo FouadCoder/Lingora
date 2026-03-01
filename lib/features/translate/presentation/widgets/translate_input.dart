@@ -31,6 +31,8 @@ class _TranslationInputState extends State<TranslationInput> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    // Initialize with current state input text
+    _controller.text = context.read<TranslateCubit>().state.inputText;
   }
 
   @override
