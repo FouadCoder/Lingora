@@ -77,6 +77,7 @@ class _NavState extends State<Nav> {
                   currentPage = i;
                 });
               },
+              gapLocation: GapLocation.none,
               backgroundColor: Theme.of(context).colorScheme.surface,
               activeColor: Theme.of(context).colorScheme.primary,
               inactiveColor: Theme.of(context).iconTheme.color,
