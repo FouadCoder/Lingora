@@ -215,7 +215,7 @@ class LanguageData {
     Language(
       name: 'Spanish',
       nativeName: 'Español Europeo',
-      code: 'es-es',
+      code: 'es',
       flag: '🇪🇸',
       region: 'Europe',
     ),

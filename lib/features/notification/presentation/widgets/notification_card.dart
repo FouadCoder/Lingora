@@ -28,7 +28,7 @@ class NotificationCard extends StatelessWidget {
         children: [
           // Icon
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: const EdgeInsets.only(right: 16.0, left: 16.0),
             child: IconCard(
               icon: icon ?? HeroIcons.bell,
               iconColor: iconColor ?? Theme.of(context).colorScheme.primary,

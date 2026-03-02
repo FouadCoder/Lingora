@@ -33,7 +33,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
         'ar',
         'ru',
         'de',
-        'es-es',
+        'es',
       ].contains(lang.code);
     }).toList();
 
@@ -141,7 +141,9 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                 },
                 child: AppCard(
                     backgroundColor: theme.colorScheme.onSurface,
-                    child: Text(isLoading ? "" : state.language!.name)),
+                    child: Text(isLoading
+                        ? ""
+                        : state.language!.name.toLowerCase().tr())),
               );
             },
           )
