@@ -38,7 +38,7 @@ class LanguageCubit extends Cubit<LanguageState> {
       final appOpenCount = await launchService.getAppOpenCount();
       // First open
       if (appOpenCount == 1) {
-        final systemLanguage = await getLanguageUsecase.call();
+        final systemLanguage = await getSystemLanguageUsecase.call();
         await setLanguage(systemLanguage!);
         emit(state.copyWith(
             status: LanguageStatus.success, language: systemLanguage));

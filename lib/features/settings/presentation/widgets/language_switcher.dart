@@ -80,7 +80,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                           size: AppDimens.iconL,
                         ),
                         SizedBox(width: AppDimens.sectionSpacing),
-                        Text(languages[index].name,
+                        Text(languages[index].name.toLowerCase().tr(),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: isSelected
                                   ? Theme.of(context).colorScheme.primary

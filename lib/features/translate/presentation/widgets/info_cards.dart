@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lingora/core/utils/app_constants.dart';
 import 'package:lingora/core/utils/platfrom.dart';
 import 'package:lingora/core/widgets/words/translated_widget.dart';
@@ -31,78 +30,118 @@ class InfoCards extends StatelessWidget {
     final hasExamples = model.examples.isNotEmpty;
     final hasSynonyms = model.synonyms.isNotEmpty;
 
-    final List<Widget> availableCards = [
-      if (hasWordInfo)
-        WordInfoCard(
-          original: model.original,
-          pos: model.pos,
-          pronunciation: model.pronunciation,
-          wordId: model.id,
-          lang: model.translateFrom!.code,
-          collectionType: CollectionType.learning,
-          hideCollection: true,
-        ),
-
-      if (hasTranslated)
-        WordTranslatedCard(
-          translated: model.translated,
-          lang: model.translateTo!.code,
-        ),
-
-      // Meaning
-      if (hasMeaning)
-        MeaningWidget(
-          meaning: model.meaning,
-          languageCode: model.translateTo!.code,
-        ),
-
-      // Synonyms
-      if (hasSynonyms)
-        SynonymsWidget(
-          synonyms: model.synonyms,
-        ),
-    ];
-
-    int getCrossAxisCount() {
-      if (AppPlatform.isDesktop(context)) {
-        return availableCards.length; // desktop: all in one row
-      }
-      if (AppPlatform.isTablet(context)) return 2; // tablet
-      return 1; // phone
+    // If no word info, only show translated card
+    if (!hasWordInfo && hasTranslated) {
+      return WordTranslatedCard(
+        translated: model.translated,
+        lang: model.translateTo!.code,
+      );
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Column(
-          children: [
-            MasonryGridView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics:
-                  const NeverScrollableScrollPhysics(), // so it fits inside scroll
-              itemCount: availableCards.length,
-              gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: getCrossAxisCount(),
+    // If no word info and no translation, return empty
+    if (!hasWordInfo) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      children: [
+        // Word info & translate
+        LayoutBuilder(builder: (context, _) {
+          Widget wordcardWidget = WordInfoCard(
+            original: model.original,
+            pos: model.pos,
+            pronunciation: model.pronunciation,
+            wordId: model.id,
+            lang: model.translateFrom!.code,
+            collectionType: CollectionType.learning,
+            hideCollection: true,
+          );
+
+          Widget translatedcardWidget = WordTranslatedCard(
+            translated: model.translated,
+            lang: model.translateTo!.code,
+          );
+
+          if (!AppPlatform.isPhone(context)) {
+            return IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: wordcardWidget),
+                  SizedBox(
+                    width: AppDimens.subElementBetween,
+                  ),
+                  if (hasTranslated) Expanded(child: translatedcardWidget),
+                ],
               ),
-              crossAxisSpacing: AppDimens.cardBetween,
-              mainAxisSpacing: AppDimens.cardBetween,
-              itemBuilder: (context, index) {
-                return availableCards[index];
-              },
-            ),
-            if (hasExamples)
-              SizedBox(
-                height: AppDimens.cardBetween,
-              ),
-            // Examples
-            if (hasExamples)
-              ExamplesWidget(
-                examples: model.examples,
-                languageCode: model.translateFrom!.code,
-              ),
-          ],
-        );
-      },
+            );
+          } else {
+            return Column(
+              children: [
+                wordcardWidget,
+                SizedBox(
+                  height: AppDimens.subElementBetween,
+                ),
+                if (hasTranslated) translatedcardWidget,
+              ],
+            );
+          }
+        }),
+
+        if (hasSynonyms) ...[
+          SizedBox(
+            height: AppDimens.cardBetween,
+          ),
+          // Synonyms
+          SynonymsWidget(
+            synonyms: model.synonyms,
+          ),
+        ],
+
+        if (hasMeaning || hasExamples) ...[
+          SizedBox(
+            height: AppDimens.cardBetween,
+          ),
+          // Examples & Meaning
+          LayoutBuilder(builder: (context, _) {
+            Widget examplesWidget = ExamplesWidget(
+              examples: model.examples,
+              languageCode: model.translateFrom!.code,
+            );
+            Widget meaningWidget = MeaningWidget(
+              meaning: model.meaning,
+              languageCode: model.translateTo!.code,
+            );
+
+            if (!AppPlatform.isPhone(context)) {
+              return IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (hasExamples) Expanded(child: examplesWidget),
+                    if (hasExamples && hasMeaning)
+                      SizedBox(
+                        width: AppDimens.subElementBetween,
+                      ),
+                    if (hasMeaning) Expanded(child: meaningWidget),
+                  ],
+                ),
+              );
+            } else {
+              return Column(
+                children: [
+                  if (hasMeaning) meaningWidget,
+                  if (hasMeaning && hasExamples)
+                    SizedBox(
+                      height: AppDimens.subElementBetween,
+                    ),
+                  if (hasExamples) examplesWidget,
+                ],
+              );
+            }
+          }),
+        ],
+      ],
     );
   }
 }
