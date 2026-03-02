@@ -148,7 +148,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .colorScheme
                             .outline
                             .withValues(alpha: 0.1)),
-                    function: () {},
+                    function: () {
+                      showSnackBar(context,
+                          message: "feature_not_ready".tr(),
+                          icon: HeroIcons.wrenchScrewdriver,
+                          iconColor: Theme.of(context).colorScheme.primary);
+                    },
                     textColor: Theme.of(context).textTheme.bodyMedium?.color);
 
                 if (AppPlatform.isPhone(context)) {

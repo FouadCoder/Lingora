@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:lingora/data/langauges_list.dart';
 import 'package:lingora/features/settings/data/datasources/settings_local_data.dart';
 import 'package:lingora/features/settings/domain/repositories/settings_repository.dart';
@@ -18,6 +19,15 @@ class SettingsRepositoryImpl implements SettingsRepository {
   @override
   Future<Language?> getLanguage() async {
     return await localData.getLanguage();
+  }
+
+  @override
+  Future<Language?> getSystemLanguage() async {
+    Locale systemLang = await localData.getSystemLanguage();
+    Language? language =
+        LanguageData.getLanguageByCode(systemLang.languageCode);
+
+    return language;
   }
 
   // Theme

@@ -249,18 +249,6 @@ class LanguageData {
     ),
   ];
 
-  // Get languages by region
-  static List<Language> getLanguagesByRegion(String region) {
-    return languages.where((lang) => lang.region == region).toList();
-  }
-
-  // Get languages excluding specific codes
-  static List<Language> getLanguagesExcluding(List<String> excludeCodes) {
-    return languages
-        .where((lang) => !excludeCodes.contains(lang.code))
-        .toList();
-  }
-
   // Get popular languages (first 20)
   static List<Language> getPopularLanguages() {
     return languages.take(20).toList();

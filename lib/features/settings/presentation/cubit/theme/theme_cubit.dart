@@ -34,10 +34,4 @@ class ThemeCubit extends Cubit<ThemeState> {
       emit(them);
     }
   }
-
-  // Get System Theme
-  Future<void> getSystemTheme() async {
-    ThemeState systemTheme = await getSystemThemeUsecase.call();
-    emit(systemTheme);
-  }
 }

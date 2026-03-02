@@ -115,11 +115,11 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                   } else {
                     return Column(
                       children: [
-                        examplesWidget,
+                        meaningWidget,
                         SizedBox(
                           height: AppDimens.subElementBetween,
                         ),
-                        meaningWidget,
+                        examplesWidget,
                       ],
                     );
                   }

@@ -111,7 +111,12 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    showSnackBar(context,
+                        message: "feature_not_ready".tr(),
+                        icon: HeroIcons.wrenchScrewdriver,
+                        iconColor: Theme.of(context).colorScheme.primary);
+                  },
                   child: Text(
                     'forgot_password'.tr(),
                     style: Theme.of(context).textTheme.bodySmall,
@@ -150,7 +155,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .colorScheme
                                 .outline
                                 .withValues(alpha: 0.1)),
-                        function: () {},
+                        function: () {
+                          showSnackBar(context,
+                              message: "feature_not_ready".tr(),
+                              icon: HeroIcons.wrenchScrewdriver,
+                              iconColor: Theme.of(context).colorScheme.primary);
+                        },
                         textColor:
                             Theme.of(context).textTheme.bodyMedium?.color);
 

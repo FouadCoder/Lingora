@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:lingora/data/langauges_list.dart';
@@ -13,6 +15,11 @@ class SettingsLocalData {
   Future<Language?> getLanguage() async {
     String langCode = await db.get("language", defaultValue: "en");
     return LanguageData.getLanguageByCode(langCode);
+  }
+
+  Future<Locale> getSystemLanguage() async {
+    Locale systemLocale = PlatformDispatcher.instance.locale;
+    return systemLocale;
   }
 
   Future saveTheme(ThemeState them) async {

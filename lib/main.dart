@@ -62,7 +62,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<HistoryCubit>(
               create: (context) => injection<HistoryCubit>()), // History
           BlocProvider<LanguageCubit>(
-              create: (context) => injection<LanguageCubit>()), // Language
+              create: (context) =>
+                  injection<LanguageCubit>()..getLanguage()), // Language
           BlocProvider<ThemeCubit>(
               create: (context) =>
                   injection<ThemeCubit>()..getTheme()), // Theme

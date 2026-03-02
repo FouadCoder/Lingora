@@ -5,6 +5,7 @@ import 'package:lingora/core/service/audio_service.dart';
 import 'package:lingora/core/service/launch_service.dart';
 import 'package:lingora/core/service/notification_service.dart';
 import 'package:lingora/core/usecases/play_audio_usecase.dart';
+import 'package:lingora/features/settings/domain/usecases/get_system_language_usecase.dart';
 import 'package:lingora/features/translate/domain/usecases/translate_usecase.dart';
 import 'package:lingora/features/analytics/data/datasources/analytics_remote_data.dart';
 import 'package:lingora/features/analytics/data/repositories_impl/analytics_repository_impl.dart';
@@ -141,6 +142,7 @@ Future<void> setupInjection() async {
   injection.registerFactory(() => SetThemeUsecase(injection()));
   injection.registerFactory(() => GetThemeUsecase(injection()));
   injection.registerFactory(() => GetSystemThemeUsecase(injection()));
+  injection.registerFactory(() => GetSystemLanguageUsecase(injection()));
   // Notes
   injection.registerFactory(() => UpdateNoteUsecase(injection()));
   // Audio
@@ -175,7 +177,8 @@ Future<void> setupInjection() async {
   injection.registerFactory<AnalyticsCubit>(
       () => AnalyticsCubit(injection(), injection(), injection()));
   injection.registerFactory(() => HistoryCubit(injection(), injection()));
-  injection.registerFactory(() => LanguageCubit(injection(), injection()));
+  injection.registerFactory(
+      () => LanguageCubit(injection(), injection(), injection(), injection()));
   injection.registerFactory(
       () => ThemeCubit(injection(), injection(), injection(), injection()));
   injection.registerFactory(
