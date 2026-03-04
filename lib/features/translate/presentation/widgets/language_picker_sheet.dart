@@ -49,7 +49,7 @@ class LanguagePickerSheet extends StatelessWidget {
                 Text(
                   'select_language'.tr(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.white,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
                         fontWeight: FontWeight.w600,
                       ),
                 ),

@@ -200,19 +200,29 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   // Empty
                   else if (state.status == LibraryStatus.empty) {
                     return Expanded(
-                      child: SingleChildScrollView(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          child: CustomState(
-                            color: Theme.of(context).colorScheme.primary,
-                            animation:
-                                "assets/animation/empty_box_character.json",
-                            title: 'empty_library_title'.tr(),
-                            message: 'empty_library_message'.tr(),
-                            buttonText: 'learn_new_words'.tr(),
-                            onTap: () => context.push('/translate'),
-                            textColor: Colors.white,
-                            titleColor: Theme.of(context).colorScheme.primary,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(AppDimens.radiusL),
+                        child: LiquidPullToRefresh(
+                          onRefresh: () =>
+                              context.read<LibraryCubit>().refreshLibrary(),
+                          backgroundColor: Colors.black,
+                          color: Theme.of(context).colorScheme.primary,
+                          showChildOpacityTransition: false,
+                          height: 100,
+                          springAnimationDurationInMilliseconds: 500,
+                          child: Container(
+                            margin: EdgeInsets.only(top: AppDimens.paddingS),
+                            child: CustomState(
+                              color: Theme.of(context).colorScheme.primary,
+                              animation:
+                                  "assets/animation/empty_box_character.json",
+                              title: 'empty_library_title'.tr(),
+                              message: 'empty_library_message'.tr(),
+                              buttonText: 'learn_new_words'.tr(),
+                              onTap: () => context.push('/translate'),
+                              textColor: Colors.white,
+                              titleColor: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ),
                       ),

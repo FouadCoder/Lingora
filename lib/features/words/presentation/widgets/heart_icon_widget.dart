@@ -36,11 +36,6 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
       listener: (context, state) {
         if (state.wordId != widget.wordId) return;
 
-        for (var item in state.favorites) {
-          print(
-              "Heart Icon widget =========== WORD === ${item.word.original}    ===${item.word.isFavorite}");
-        }
-
         if (state.actionStatus == FavoriteActionStatus.added) {
           context.read<LibraryCubit>().refreshWord(
                 wordId: widget.wordId,
@@ -84,7 +79,7 @@ class _HeartIconWidgetState extends State<HeartIconWidget> {
       child: IconCard(
         iconWidget: Icon(
           Icons.favorite,
-          color: isOptimisticFavorite ? Colors.red : Colors.white,
+          color: isOptimisticFavorite ? Colors.red : Colors.grey,
         ),
         onTap: () {
           // Update UI instantly

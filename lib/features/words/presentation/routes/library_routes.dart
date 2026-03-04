@@ -10,7 +10,7 @@ final libraryRoutes = [
   GoRoute(
     path: '/library',
     builder: (context, state) => Nav(
-      indexPage: 1,
+      indexPage: 2,
     ),
   ),
   GoRoute(
