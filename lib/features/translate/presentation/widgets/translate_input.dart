@@ -105,6 +105,7 @@ class _TranslationInputState extends State<TranslationInput> {
               text: 'translate_button'.tr(),
               color: theme.colorScheme.primary,
               function: () {
+                FocusScope.of(context).unfocus();
                 context.read<TranslateCubit>().translate();
               },
               textColor:

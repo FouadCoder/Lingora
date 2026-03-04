@@ -105,6 +105,7 @@ class _LibraryNotesState extends State<LibraryNotes> {
                     isLoading: isLoading,
                     color: Theme.of(context).colorScheme.primary,
                     function: () {
+                      FocusScope.of(context).unfocus();
                       context
                           .read<NotesCubit>()
                           .updateNote(noteController.text.trim(), widget.word!);
