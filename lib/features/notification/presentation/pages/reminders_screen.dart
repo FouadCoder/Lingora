@@ -168,7 +168,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                       buttonText: 'go_to_library'.tr(),
                       onTap: () => context.push('/library'),
                       titleColor: Theme.of(context).colorScheme.primary,
-                      textColor: Colors.white,
+                      buttonTextColor: Colors.white,
                     ),
                   );
                 }
@@ -188,7 +188,7 @@ class _RemindersScreenState extends State<RemindersScreen> {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: CustomState(
-                      textColor: Colors.white,
+                      buttonTextColor: Colors.white,
                       color: Theme.of(context).colorScheme.primary,
                       animation: "assets/animation/error_boat_orange.json",
                       title: 'reminders_error_title'.tr(),

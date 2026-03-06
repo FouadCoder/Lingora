@@ -153,7 +153,7 @@ class _CollectionWordsScreenState extends State<CollectionWordsScreen> {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: CustomState(
-                      textColor: Colors.white,
+                      buttonTextColor: Colors.white,
                       color: Theme.of(context).colorScheme.secondary,
                       animation: "assets/animation/error_boat_orange.json",
                       title: 'error_words_title'.tr(),

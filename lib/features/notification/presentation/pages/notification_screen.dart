@@ -167,7 +167,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: CustomState(
-                      textColor: Colors.white,
+                      buttonTextColor: Colors.white,
                       color: Theme.of(context).colorScheme.primary,
                       animation: "assets/animation/error_boat_orange.json",
                       title: 'notifications_error_title'.tr(),

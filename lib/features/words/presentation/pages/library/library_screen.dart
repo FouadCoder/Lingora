@@ -220,7 +220,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               message: 'empty_library_message'.tr(),
                               buttonText: 'learn_new_words'.tr(),
                               onTap: () => context.push('/translate'),
-                              textColor: Colors.white,
+                              buttonTextColor: Colors.white,
                               titleColor: Theme.of(context).colorScheme.primary,
                             ),
                           ),
@@ -236,6 +236,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height,
                           child: NetworkErrorView(
+                            isFullScreen: false,
                             onTap: () {
                               context.read<LibraryCubit>().getLibrary();
                             },
@@ -252,7 +253,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height,
                           child: CustomState(
-                            textColor: Colors.white,
+                            buttonTextColor: Colors.white,
                             color: Theme.of(context).colorScheme.primary,
                             animation:
                                 "assets/animation/error_boat_orange.json",

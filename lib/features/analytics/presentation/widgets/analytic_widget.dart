@@ -139,7 +139,7 @@ class _AnalyticeWidgetState extends State<AnalyticeWidget> {
                 if (state.userAnalyticsStatus ==
                     UserAnalyticsRequestStatus.failure) {
                   return CustomState(
-                    textColor: Colors.white,
+                    buttonTextColor: Colors.white,
                     color: Theme.of(context).colorScheme.primary,
                     animation: "assets/animation/error_boat_orange.json",
                     title: 'analytics_error_title'.tr(),

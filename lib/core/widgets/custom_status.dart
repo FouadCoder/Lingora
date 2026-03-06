@@ -12,8 +12,8 @@ class CustomState extends StatelessWidget {
   final String message;
   final VoidCallback? onTap;
   final String? buttonText;
+  final Color? buttonTextColor;
   final LinearGradient? gradient;
-  final Color? textColor;
   final Color? color;
   final Color? titleColor;
   final Border? border;
@@ -26,8 +26,8 @@ class CustomState extends StatelessWidget {
     required this.message,
     this.onTap,
     this.buttonText,
+    this.buttonTextColor,
     this.isFullScreen = false,
-    this.textColor,
     this.gradient,
     this.titleColor,
     this.color,
@@ -95,7 +95,7 @@ class CustomState extends StatelessWidget {
                       gradient: gradient,
                       function: onTap ?? () {},
                       border: border,
-                      textColor: textColor)
+                      textColor: buttonTextColor)
               ],
             ),
           ),

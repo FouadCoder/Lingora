@@ -129,6 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isLoading: isLoading,
                         color: Theme.of(context).colorScheme.primary,
                         function: () {
+                          FocusScope.of(context).unfocus();
                           context.read<AuthCubit>().signUp(
                               emailController.text,
                               passwordController.text,

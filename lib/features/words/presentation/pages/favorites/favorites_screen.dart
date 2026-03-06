@@ -125,7 +125,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       message: 'empty_favorites_message'.tr(),
                       buttonText: 'go_to_library'.tr(),
                       onTap: () => context.push('/library'),
-                      textColor: Colors.white,
+                      buttonTextColor: Colors.white,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   );
@@ -143,7 +143,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 // Error
                 else if (state.status == FavoriteStatus.error) {
                   return CustomState(
-                    textColor: Colors.white,
+                    buttonTextColor: Colors.white,
                     color: Theme.of(context).colorScheme.primary,
                     animation: "assets/animation/error_boat_orange.json",
                     title: 'error_favorites_title'.tr(),

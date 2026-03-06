@@ -138,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: 'login_button'.tr(),
                         color: Theme.of(context).colorScheme.primary,
                         function: () {
+                          FocusScope.of(context).unfocus();
                           context.read<AuthCubit>().login(
                               emailController.text, passwordController.text);
                         },

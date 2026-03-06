@@ -20,6 +20,7 @@ class NetworkErrorView extends StatelessWidget {
       onTap: onTap,
       color: Theme.of(context).colorScheme.primary,
       isFullScreen: isFullScreen,
+      buttonTextColor: Colors.white,
     );
   }
 }
