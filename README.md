@@ -1,11 +1,52 @@
 # Lingora – Go Beyond Translation
 
-A language companion that turns quick translations into real learning, with examples, synonyms, notes, reminders, favorites, and progress insights that help new words stick.
+**Lingora** is a language companion that turns simple translations into deeper learning.  
+Instead of just translating a word, the app provides extra context that helps users better understand and remember vocabulary.
 
-**Developer:** Mahmoud Fouad  
-**GitHub:** [https://github.com/FouadCoder](https://github.com/FouadCoder)
+The goal is simple: **make translation more useful for language learners.**
 
-**Built with:** Flutter (Android, iOS, Web)  
-**Database & API:** Supabase & Edge Functions  
-**Notifications:** OneSignal  
-**Purpose:** Translation & vocabulary learning
+---
+
+## App Preview
+
+See how the app looks:
+
+https://portfolio-8lj.pages.dev/lingora
+
+---
+
+## Tech Stack
+
+- **Framework:** Flutter (Android, iOS, Web)
+- **Backend:** Supabase
+- **Server Logic:** Supabase Edge Functions
+- **Notifications:** OneSignal
+
+---
+
+## Architecture
+
+The project is built with a structure designed to remain **scalable and maintainable**, making it easier to extend the app and add new features over time.
+
+---
+
+## Purpose
+
+Lingora explores how translation tools can go beyond simple word lookup and support language learning through richer information and context.
+
+---
+
+## Repository
+
+Source Code:  
+https://github.com/FouadCoder/Lingora
+
+---
+
+## Author
+
+**Mahmoud Fouad**  
+Flutter Developer
+
+GitHub:  
+https://github.com/FouadCoder
