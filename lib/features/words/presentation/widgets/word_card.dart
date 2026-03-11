@@ -69,32 +69,37 @@ class _WordCardState extends State<WordCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Original
-                        Text(
-                          widget.word.original,
-                          style: theme.titleMedium?.copyWith(
-                            color: colorScheme.primary,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Original
+                          Text(
+                            widget.word.original,
+                            style: theme.titleMedium?.copyWith(
+                              color: colorScheme.primary,
+                            ),
+                            maxLines: widget.smallCard ? 1 : 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign:
+                                isRightSide(widget.word.translateFrom!.code)
+                                    ? TextAlign.right
+                                    : TextAlign.left,
                           ),
-                          maxLines: widget.smallCard ? 1 : 2,
-                          textAlign:
-                              isRightSide(widget.word.translateFrom!.code)
-                                  ? TextAlign.right
-                                  : TextAlign.left,
-                        ),
-                        SizedBox(width: AppDimens.subElementBetween),
-                        // Translated
-                        Text(
-                          widget.word.translated,
-                          style: theme.titleMedium,
-                          textAlign: isRightSide(widget.word.translateTo!.code)
-                              ? TextAlign.right
-                              : TextAlign.left,
-                          maxLines: widget.smallCard ? 1 : 2,
-                        ),
-                      ],
+                          SizedBox(width: AppDimens.subElementBetween),
+                          // Translated
+                          Text(
+                            widget.word.translated,
+                            style: theme.titleMedium,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign:
+                                isRightSide(widget.word.translateTo!.code)
+                                    ? TextAlign.right
+                                    : TextAlign.left,
+                            maxLines: widget.smallCard ? 1 : 2,
+                          ),
+                        ],
+                      ),
                     ),
                     if (!widget.smallCard)
                       Row(
