@@ -147,23 +147,22 @@ class LevelCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "progress_to_next_level".tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: Colors.white),
+              Expanded(
+                child: Text(
+                  "progress_to_next_level".tr(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: Colors.white),
+                ),
               ),
               SizedBox(
                 width: AppDimens.subElementBetween,
               ),
-              Flexible(
-                fit: FlexFit.loose,
-                child: Text(
-                  isLoading ? "--/-- XP" : "$xp/$requiredXp XP",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
+              Text(
+                isLoading ? "--/-- XP" : "$xp/$requiredXp XP",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ],
           ),
